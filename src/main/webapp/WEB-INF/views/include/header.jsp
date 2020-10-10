@@ -21,7 +21,18 @@
 </head>
 <body>
 
-<header>
-    <img src="${path}/img/Xasquatch.png"/>
-    <a href="${path}/">home ${path}</a>
+<header id="main-header">
+    <a href="${path}/" id="header-left">
+        <img src="${path}/img/Xasquatch.png"/>
+        <h1>My Blog</h1>
+    </a>
+    <div id="header-right">
+        <div>
+            menu text
+        </div>
+        <div>
+            something
+        </div>
+
+    </div>
 </header>

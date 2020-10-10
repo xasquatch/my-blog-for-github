@@ -25,7 +25,7 @@ public class ServletAppContext implements WebMvcConfigurer{
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		WebMvcConfigurer.super.addResourceHandlers(registry);
-//		registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
+		registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
 //		registry.addResourceHandler("/img/**").addResourceLocations("/img/");
 //		registry.addResourceHandler("/css/**").addResourceLocations("/css/");
 //		registry.addResourceHandler("/js/**").addResourceLocations("/js/");
