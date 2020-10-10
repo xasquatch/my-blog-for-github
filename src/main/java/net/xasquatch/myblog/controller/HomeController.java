@@ -16,4 +16,11 @@ public class HomeController {
         return "index";
     }
 
+    @RequestMapping(value = "/board", method = {RequestMethod.GET, RequestMethod.POST})
+    public String board(Model model){
+        model.addAttribute("mainContents","board");
+
+        return "index";
+    }
+
 }

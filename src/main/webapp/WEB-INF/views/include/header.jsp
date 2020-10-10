@@ -27,11 +27,21 @@
         <h1>My Blog</h1>
     </a>
     <div id="header-right">
-        <div>
-            menu text
+        <div class="dropdown">
+            <button class="btn btn-lg btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+            </ul>
         </div>
         <div>
-            something
+            <button type="button" class="btn btn-lg btn-primary" aria-label="Justify" onclick="location.href='${path}/board'">
+                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+            </button>
         </div>
 
     </div>

@@ -30,16 +30,15 @@
     flex-direction: row-reverse;
     font-weight: bold;
     font-size: 30px;
-    max-font-size: 20px;
 
 }
 
 #header-right > * {
-    margin: 0 10px;
+    margin: auto 5px;
 }
 
 #main-footer {
-    display: block;
+    width: 100%;
     position: fixed;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.8);
