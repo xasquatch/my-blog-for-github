@@ -1,0 +1,6 @@
+#main-footer {
+    position: fixed;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+}
