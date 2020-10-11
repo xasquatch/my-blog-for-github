@@ -18,7 +18,7 @@ public class ServletAppContext implements WebMvcConfigurer{
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		WebMvcConfigurer.super.configureViewResolvers(registry);
-		registry.jsp("webapp/WEB-INF/views/", ".jsp");
+		registry.jsp("/webapp/WEB-INF/views/", ".jsp");
 	}
 	
 	// 정적 파일의 경로를 매핑한다.

@@ -29,11 +29,11 @@
     </a>
     <div id="header-right">
         <div class="dropdown">
-            <button class="btn btn-lg btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+            <button class="btn btn-lg btn-default dropdown-toggle" type="button" id="board-font"
                     data-toggle="dropdown" aria-expanded="true">
                 <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="board-font">
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
