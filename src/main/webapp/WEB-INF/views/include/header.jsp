@@ -3,6 +3,11 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
+    <%--meta data--%>
+    <meta charset="UTF-8">
+    <meta name="keyword" content="github, blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <%--custom css --%>
     <link rel="stylesheet" href="${path}/css/style.css">
     <link rel="stylesheet" href="${path}/css/reset.css">

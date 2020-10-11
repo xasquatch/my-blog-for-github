@@ -3,14 +3,14 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <section id="board">
-    <div id="board-bar">
+    <div id="board-bar" class="well">
 
-        <button type="button" class="btn btn-default" onclick="insertImage();">
+        <button type="button" class="btn btn-default btn-lg" onclick="insertImage();">
             <span class="glyphicon glyphicon-picture"></span>
         </button>
 
         <div class="dropdown">
-            <button type="button" class="btn btn-default dropdown-toggle" id="board-font" data-toggle="dropdown"
+            <button type="button" class="btn btn-default btn btn-lg dropdown-toggle" id="board-font" data-toggle="dropdown"
                     aria-expanded="true">
                 <span class="glyphicon glyphicon-font" id="board-font-name"></span>
             </button>
@@ -37,45 +37,44 @@
             </ul>
         </div>
 
-        <button type="button" class="btn btn-default" onclick="document.execCommand('bold');">
+        <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('bold');">
             <span class="glyphicon glyphicon-bold"></span>
         </button>
 
-        <button type="button" class="btn btn-default" onclick="document.execCommand('Italic');">
+        <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('Italic');">
             <span class="glyphicon glyphicon-italic"></span>
         </button>
 
-        <button type="button" class="btn btn-default" onclick="document.execCommand('indent');">
+        <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('indent');">
             <span class="glyphicon glyphicon-indent-left"></span>
         </button>
 
-        <button type="button" class="btn btn-default" onclick="document.execCommand('outdent');">
+        <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('outdent');">
             <span class="glyphicon glyphicon-indent-right"></span>
         </button>
 
-        <button type="button" class="btn btn-default" onclick="document.execCommand('justifyLeft');">
+        <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('justifyLeft');">
             <span class="glyphicon glyphicon-align-left"></span>
         </button>
 
-        <button type="button" class="btn btn-default" onclick="document.execCommand('justifyCenter')">
+        <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('justifyCenter')">
             <span class="glyphicon glyphicon-align-center"></span>
         </button>
 
-        <button type="button" class="btn btn-default" onclick="document.execCommand('justifyRight')">
+        <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('justifyRight')">
             <span class="glyphicon glyphicon-align-right"></span>
         </button>
 
-        <button type="button" class="btn btn-default" onclick="document.execCommand('justifyFull')">
+        <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('justifyFull')">
             <span class="glyphicon glyphicon-align-justify"></span>
         </button>
 
     </div>
     <div id="board-contents-fake" class="well" contentEditable="true">
-
     </div>
     <form action="${path}/board/upload" id="board-form-tag" method="POST">
         <textarea id="board-contents-real" class="hidden"></textarea>
-        <input id="board-upload-btn" class="btn btn-default" value="upload" onclick="uploadBoard()">
+        <input id="board-upload-btn" class="btn btn-default" type="button" value="upload" onclick="uploadBoard()">
     </form>
 
 </section>
@@ -87,7 +86,6 @@
         // var uploadFormBtn = document.querySelector('#board-upload-btn');
         realContents.innerHTML = document.querySelector('#board-contents-fake').innerHTML
 
-        alert(realContents.innerHTML);
         boardForm.submit();
     }
 
@@ -98,7 +96,7 @@
     }
 
     function insertImage() {
-        
+
     }
 
 
