@@ -1,34 +1,43 @@
 @charset "UTF-8";
+@font-face {
+    font-family: 'Dotkey';
+    src: url(https://xasquatch.net/3_font/DungGeunMo.eot);
+    src: url(https://xasquatch.net/3_font/DungGeunMo.ttf) format('truetype');
+}
+
+*:not(#board-contents-fake):not(.glyphicon) {
+    font-family: Dotkey ,monospace;
+    font-weight: bold;
+}
+
 #main-header {
     display: grid;
     grid-template-columns: 250px 1fr;
-    position: sticky;
     top: 0;
     padding: 10px;
-
 }
 
 #header-left {
     display: flex;
     width: 230px;
-    background-color: black;
-    color: white !important;
     border-radius: 20px;
 }
 
 #header-left > img {
-    width: 70px;
-    height: 70px;
+    width: 40px;
+    height: 40px;
 }
 
 #header-left > h1 {
     font-weight: bold;
     margin: auto 0;
+    font-size: 40px;
 }
 
 #header-right {
     display: flex;
     flex-direction: row-reverse;
+    flex-wrap: wrap;
     font-weight: bold;
     font-size: 30px;
 
@@ -41,7 +50,19 @@
 #main-footer {
     width: 100%;
     position: fixed;
+    text-align: center;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 1);
     color: white;
+}
+
+.flex-row{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.flex-col{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 }

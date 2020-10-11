@@ -17,5 +17,11 @@
 
 #board-contents-fake {
     height: 50vh;
+    font-family: 맑은 고딕, monospace;
+}
 
+#board-contents-image > img {
+    cursor: pointer;
+    max-width: 150px;
+    max-height: 150px;
 }
