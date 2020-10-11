@@ -1,3 +1,4 @@
+@charset "UTF-8";
 a{
     color: inherit !important;
     text-decoration: none !important;
@@ -5,4 +6,8 @@ a{
 a:HOVER{
     color: inherit !important;
     text-decoration: none !important;
+}
+blockquote {
+    font-size: inherit !important;
+
 }

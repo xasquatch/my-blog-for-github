@@ -6,6 +6,7 @@
     <%--custom css --%>
     <link rel="stylesheet" href="${path}/css/style.css">
     <link rel="stylesheet" href="${path}/css/reset.css">
+    <link rel="stylesheet" href="${path}/css/board-style.css">
     <%--END: custom css --%>
 
     <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -17,7 +18,7 @@
     <script src="${path}/js/script.js"></script>
     <%--END: custom script--%>
 
-    <title>Title</title>
+    <title>my blog for github</title>
 </head>
 <body>
 
@@ -28,7 +29,8 @@
     </a>
     <div id="header-right">
         <div class="dropdown">
-            <button class="btn btn-lg btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+            <button class="btn btn-lg btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                    data-toggle="dropdown" aria-expanded="true">
                 <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
             </button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
@@ -39,7 +41,7 @@
             </ul>
         </div>
         <div>
-            <button type="button" class="btn btn-lg btn-primary" aria-label="Justify" onclick="location.href='${path}/board'">
+            <button type="button" class="btn btn-lg btn-primary" onclick="location.href='${path}/board'">
                 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
             </button>
         </div>

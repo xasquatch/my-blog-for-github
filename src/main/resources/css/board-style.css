@@ -1,0 +1,5 @@
+@charset "UTF-8";
+
+#board-bar{
+    display: flex;
+}
