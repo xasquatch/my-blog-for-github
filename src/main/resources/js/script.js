@@ -34,40 +34,5 @@ var board = {
         fontName.value = element.innerText;
         document.execCommand('fontName', false, fontName.value);
 
-    }
-
+    },
 }
-
-
-// -------------------------------------------
-
-
-function SettingInsertImage() {
-    var contentsImgs = document.querySelectorAll('#board-contents-image > img');
-
-    for (let i = 0; i < contentsImgs.length; i++) {
-        contentsImgs[i].addEventListener('click', function () {
-            document.execCommand('insertImage', false, this.src);
-            document.querySelector('#board-contents-thumbnail').innerHTML = '<img src=\"' + this.src + '\">';
-        });
-    }
-}
-
-function SettingThumbnailImage() {
-    var thumbnailImg = document.querySelector('#board-contents-thumbnail');
-
-    thumbnailImg.addEventListener('click', function () {
-            this.innerHTML = '';
-
-        }
-    );
-
-}
-
-
-function init() {
-    SettingThumbnailImage();
-    SettingInsertImage();
-}
-
-init();

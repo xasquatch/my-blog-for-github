@@ -78,7 +78,7 @@
             var fakeBoard = document.querySelector('#board-contents-fake');
             fakeBoard.innerHTML = sessionStorage.getItem('sessionData');
             fakeBoard.onkeypress = function (e) {
-                if (e.keyCode === 13){
+                if (e.keyCode === 13) {
                     e.preventDefault();
                     document.execCommand('insertLineBreak');
                 }
@@ -105,7 +105,7 @@
     </div>
 
 
-    <form action="${path}/board/upload" id="board-form-tag" method="POST">
+    <form action="${path}/board/upload" id="board-form-tag" method="POST" style="text-align: center;">
         <textarea id="board-contents-real" class="hidden"></textarea>
         <input id="board-upload-btn" class="btn btn-danger" type="button" value="upload" onclick="board.upload()">
         <input id="board-cancel-btn" class="btn btn-default" type="button" value="cancel"
@@ -121,7 +121,7 @@
             '' +
             '</section>' +
             '<form action="${path}/board/upload" enctype="multipart/form-data" method="POST">' +
-            '<input type="file" class="btn btn-default" placeholder="upload" accept="image/png, image/jpg , image/bmp" multiple onchange="addUploadImage(event); ">' +
+            '<input type="file" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">' +
             '</form>');
         var confirmBtn = document.querySelector('#modal-confirm-btn');
         confirmBtn.setAttribute('onclick', 'ConfirmUploadImages();');
@@ -133,6 +133,7 @@
             reader.onload = function (event) {
                 var img = document.createElement("img");
                 img.setAttribute("src", event.target.result);
+                img.setAttribute("onload", 'board.resizeImg(this);');
                 document.querySelector("#board-upload").appendChild(img);
             };
             reader.readAsDataURL(image);
@@ -144,5 +145,39 @@
         document.querySelector("#modal-close-btn").click();
         SettingInsertImage();
     }
+
+// --------------------------
+
+    function SettingInsertImage() {
+        var contentsImgs = document.querySelectorAll('#board-contents-image > img');
+
+        for (let i = 0; i < contentsImgs.length; i++) {
+            contentsImgs[i].addEventListener('click', function (e) {
+                document.execCommand('insertImage', false, this.src);
+                document.querySelector('#board-contents-thumbnail').innerHTML = '<img src=\"' + this.src + '\">';
+
+            });
+        }
+    }
+
+    function SettingThumbnailImage() {
+        var thumbnailImg = document.querySelector('#board-contents-thumbnail');
+
+        thumbnailImg.addEventListener('click', function () {
+                this.innerHTML = '';
+
+            }
+        );
+
+    }
+
+
+    function boardInit() {
+        SettingThumbnailImage();
+        SettingInsertImage();
+    }
+
+    boardInit();
+
 
 </script>
