@@ -5,9 +5,8 @@
     src: url(https://xasquatch.net/3_font/DungGeunMo.ttf) format('truetype');
 }
 
-*:not(#board-contents-fake):not(.glyphicon) {
+*:not(#board-contents-fake):not(.glyphicon):not(#board-contents-fake *) {
     font-family: Dotkey ,monospace;
-    font-weight: bold;
 }
 
 #main-header {

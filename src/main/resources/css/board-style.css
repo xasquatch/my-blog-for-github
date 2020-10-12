@@ -17,8 +17,6 @@
 
 #board-contents-fake {
     min-height: 50vh;
-    font-weight: normal;
-    font-family: 맑은 고딕, monospace;
 }
 #board-contents-fake img{
     cursor: pointer;
@@ -38,8 +36,8 @@
 
 #board-contents-thumbnail > img, #board-contents-image > img {
     cursor: pointer;
-    max-width: 180px;
-    max-height: 180px;
+    max-width: 150px;
+    max-height: 150px;
     margin: 5px;
     transition: 1s all;
 }
@@ -53,7 +51,7 @@
 
 #board-upload > img {
     margin: 5px;
-    max-width: 180px;
-    max-height: 180px;
+    max-width: 150px;
+    max-height: 150px;
     transition: 1s all;
 }
