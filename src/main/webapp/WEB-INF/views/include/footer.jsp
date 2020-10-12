@@ -16,8 +16,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="modal.changeForm('','')">Close</button>
-                <button type="button" class="btn btn-danger">Confirm</button>
+                <button type="button" id="modal-close-btn" class="btn btn-default" data-dismiss="modal" onclick="modal.changeForm('','');">Close</button>
+                <button type="button" id="modal-confirm-btn" class="btn btn-danger">Confirm</button>
             </div>
         </div>
     </div>

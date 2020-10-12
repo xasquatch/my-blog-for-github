@@ -6,58 +6,32 @@
     <div id="board-bar" class="well">
 
         <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal"
-                onclick="UploadImage();">
+                onclick="uploadImages();">
             <span class="glyphicon glyphicon-picture"></span>
         </button>
 
         <div class="dropdown">
-            <button type="button" class="btn btn-default btn btn-lg dropdown-toggle" id="board-font"
-                    data-toggle="dropdown"
-                    aria-expanded="true">
+            <button type="button" class="btn btn-default btn btn-lg dropdown-toggle" id="board-font" data-toggle="dropdown" aria-expanded="true">
                 <span class="glyphicon glyphicon-font" id="board-font-name"></span>
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="board-font">
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"
-                                           onclick="board.changeFont(this);">Georgia</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Palatino
-                    Linotype</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Book
-                    Antiqua</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Times
-                    New
-                    Roman</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Arial</a>
-                </li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"
-                                           onclick="board.changeFont(this);">Helvetica</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Arial
-                    Black</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Impact</a>
-                </li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Lucida
-                    Sans Unicode</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Tahoma</a>
-                </li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"
-                                           onclick="board.changeFont(this);">Verdana</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Courier
-                    New</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Lucida
-                    Console</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"
-                                           onclick="board.changeFont(this);">initial</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">맑은
-                    고딕</a>
-                </li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"
-                                           onclick="board.changeFont(this);">궁서체</a>
-                </li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"
-                                           onclick="board.changeFont(this);">돋움체</a>
-                </li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"
-                                           onclick="board.changeFont(this);">굴림체</a>
-                </li>
+                <li role="presentation"><a role="menuitem" style="font-family: Georgia;" tabindex="-1" href="#" onclick="board.changeFont(this);">Georgia</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: Palatino Linotype;" tabindex="-1" href="#" onclick="board.changeFont(this);">Palatino Linotype</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: Book Antiqua;" tabindex="-1" href="#" onclick="board.changeFont(this);">Book Antiqua</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: Times New Roman;" tabindex="-1" href="#" onclick="board.changeFont(this);">Times New Roman</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: Arial;" tabindex="-1" href="#" onclick="board.changeFont(this);">Arial</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: Helvetica;" tabindex="-1" href="#" onclick="board.changeFont(this);">Helvetica</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: Arial Black;" tabindex="-1" href="#" onclick="board.changeFont(this);">Arial Black</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: Impact;" tabindex="-1" href="#" onclick="board.changeFont(this);">Impact</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: Lucida Sans Unicode;" tabindex="-1" href="#" onclick="board.changeFont(this);">Lucida Sans Unicode</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: Tahoma;" tabindex="-1" href="#" onclick="board.changeFont(this);">Tahoma</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: Verdana;" tabindex="-1" href="#" onclick="board.changeFont(this);">Verdana</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: Courier New;" tabindex="-1" href="#" onclick="board.changeFont(this);">Courier New</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: Lucida Console;" tabindex="-1" href="#" onclick="board.changeFont(this);">Lucida Console</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: 맑은 고딕;" tabindex="-1" href="#" onclick="board.changeFont(this);">맑은 고딕</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: 궁서체;" tabindex="-1" href="#" onclick="board.changeFont(this);">궁서체</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: 돋움체;" tabindex="-1" href="#" onclick="board.changeFont(this);">돋움체</a></li>
+                <li role="presentation"><a role="menuitem" style="font-family: 굴림체;" tabindex="-1" href="#" onclick="board.changeFont(this);">굴림체</a></li>
 
             </ul>
         </div>
@@ -101,36 +75,30 @@
 
     <div id="board-contents-fake" class="well" contentEditable="true">
         <script>
-            document.querySelector('#board-contents-fake').innerHTML = sessionStorage.getItem('sessionData');
+            var fakeBoard = document.querySelector('#board-contents-fake');
+            fakeBoard.innerHTML = sessionStorage.getItem('sessionData');
+            fakeBoard.onkeypress = function (e) {
+                if (e.keyCode === 13){
+                    e.preventDefault();
+                    document.execCommand('insertLineBreak');
+                }
+            }
+
         </script>
     </div>
 
     <div style="display: grid; grid-template-columns: 200px 1fr;">
         <div>
-            Thumbnail (click to remove)
+            Thumbnail<BR>
+            (click to remove)
             <div id="board-contents-thumbnail" class="well" style="">
             </div>
         </div>
 
         <div>
-            Insert To Click
+            Insert To Click<BR>
+            (click to add Images)
             <div id="board-contents-image" class="well">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
-                <img src="${path}/img/Xasquatch.png">
                 <img src="${path}/img/Xasquatch.png">
             </div>
         </div>
@@ -147,11 +115,34 @@
 </section>
 
 <script>
-    // TODO: 이미지 업로드창 레이아웃 짜야함
-    function UploadImage() {
-        modal.changeForm('Image Upload', '이미지 뭐 어케 할지 정하고')
-
+    function uploadImages() {
+        modal.changeForm('Image Upload',
+            '<section class="thumbnail" id="board-upload">' +
+            '' +
+            '</section>' +
+            '<form action="${path}/board/upload" enctype="multipart/form-data" method="POST">' +
+            '<input type="file" class="btn btn-default" placeholder="upload" accept="image/png, image/jpg , image/bmp" multiple onchange="addUploadImage(event); ">' +
+            '</form>');
+        var confirmBtn = document.querySelector('#modal-confirm-btn');
+        confirmBtn.setAttribute('onclick', 'ConfirmUploadImages();');
     }
 
+    function addUploadImage(event) {
+        for (var image of event.target.files) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                var img = document.createElement("img");
+                img.setAttribute("src", event.target.result);
+                document.querySelector("#board-upload").appendChild(img);
+            };
+            reader.readAsDataURL(image);
+        }
+    }
+
+    function ConfirmUploadImages() {
+        document.querySelector("#board-contents-image").innerHTML += document.querySelector("#board-upload").innerHTML;
+        document.querySelector("#modal-close-btn").click();
+        SettingInsertImage();
+    }
 
 </script>

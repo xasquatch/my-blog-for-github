@@ -4,8 +4,6 @@ var modal = {
     myModalBody: document.querySelector('.modal-body'),
 
     changeForm: function (title, body) {
-        console.log(modal.myModalTitle);
-        console.log(modal.myModalBody);
         modal.myModalTitle.innerHTML = title;
         modal.myModalBody.innerHTML = body;
 

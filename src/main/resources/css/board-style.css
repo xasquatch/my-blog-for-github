@@ -16,16 +16,22 @@
 }
 
 #board-contents-fake {
-    height: 50vh;
+    min-height: 50vh;
+    font-weight: normal;
     font-family: 맑은 고딕, monospace;
 }
-
+#board-contents-fake img{
+    cursor: pointer;
+    max-width: 1000px;
+    max-height: 1000px;
+}
 #board-contents-thumbnail, #board-contents-image {
     height: 200px;
     box-sizing: border-box;
     text-align: center;
 }
-#board-contents-image{
+
+#board-contents-image {
     max-width: 100%;
     overflow: auto;
 }
@@ -35,4 +41,19 @@
     max-width: 180px;
     max-height: 180px;
     margin: 5px;
+    transition: 1s all;
+}
+
+#board-upload {
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 200px;
+}
+
+#board-upload > img {
+    margin: 5px;
+    max-width: 180px;
+    max-height: 180px;
+    transition: 1s all;
 }
