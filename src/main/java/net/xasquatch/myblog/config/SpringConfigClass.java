@@ -38,5 +38,8 @@ public class SpringConfigClass implements WebApplicationInitializer {
         FilterRegistration.Dynamic filter = servletContext.addFilter("encodingFilter", CharacterEncodingFilter.class);
         filter.setInitParameter("encoding", "UTF-8");
         filter.addMappingForServletNames(null, false, "dispatcher");
+
+
+
     }
 }
