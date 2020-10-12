@@ -17,12 +17,22 @@
 
 #board-contents-fake {
     min-height: 50vh;
+    height: auto !important;
 }
 #board-contents-fake img{
-    cursor: pointer;
-    max-width: 1000px;
-    max-height: 1000px;
+    cursor: grab;
+    max-width: 80vw;
+    max-height: 80vh;
 }
+
+@media (min-width: 1200px){
+    #board-contents-fake img{
+        cursor: pointer;
+        max-width: 1000px;
+        max-height: 1000px;
+    }
+}
+
 #board-contents-thumbnail, #board-contents-image {
     height: 200px;
     box-sizing: border-box;

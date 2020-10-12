@@ -26,7 +26,7 @@
 <header id="main-header">
     <a href="${path}/" id="header-left">
         <img src="${path}/img/Xasquatch.png"/>
-        <h1>My Blog</h1>
+        <h1 id="test">My Blog</h1>
     </a>
     <div id="header-right">
         <div>

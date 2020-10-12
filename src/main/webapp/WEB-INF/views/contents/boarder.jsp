@@ -3,6 +3,14 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <section id="board">
+
+    <div class="input-group">
+        <div class="input-group-addon"><b>Keyword</b></div>
+        <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="Life, health....etc">
+    </div>
+
+    <input type="text" id="board-title-fake" class="form-control" placeholder="Title" maxlength="50">
+
     <div id="board-bar" class="well">
 
         <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal"
@@ -73,19 +81,20 @@
         </div>
     </div>
 
-    <div id="board-contents-fake" class="well" contentEditable="true">
-        <script>
-            var fakeBoard = document.querySelector('#board-contents-fake');
-            fakeBoard.innerHTML = sessionStorage.getItem('sessionData');
-            fakeBoard.onkeypress = function (e) {
-                if (e.keyCode === 13) {
-                    e.preventDefault();
-                    document.execCommand('insertLineBreak');
-                }
-            }
-
-        </script>
+    <div id="board-contents-fake" class="form-control" contentEditable="true">
     </div>
+    <script>
+        document.querySelector('#board-keyword-fake').value = sessionStorage.getItem('sessionKeywordData');
+        document.querySelector('#board-title-fake').value = sessionStorage.getItem('sessionTitleData');
+        document.querySelector('#board-contents-fake').innerHTML = sessionStorage.getItem('sessionContentsData');
+        document.querySelector('#board-contents-fake').onkeypress = function (e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+                document.execCommand('insertLineBreak');
+            }
+        }
+
+    </script>
 
     <div style="display: grid; grid-template-columns: 200px 1fr;">
         <div>
@@ -105,8 +114,11 @@
     </div>
 
 
+    <%--실제 전송폼--%>
     <form action="${path}/board/upload" id="board-form-tag" method="POST" style="text-align: center;">
-        <textarea id="board-contents-real" class="hidden"></textarea>
+        <input type="text" id="board-keyword-real" class="hidden" maxlength="25">
+        <input type="text" id="board-title-real" class="hidden" maxlength="50">
+        <textarea name="boardContents" id="board-contents-real" class="hidden"></textarea>
         <input id="board-upload-btn" class="btn btn-danger" type="button" value="upload" onclick="board.upload()">
         <input id="board-cancel-btn" class="btn btn-default" type="button" value="cancel"
                onclick="board.save();location.href = '${path}/';">
@@ -133,7 +145,6 @@
             reader.onload = function (event) {
                 var img = document.createElement("img");
                 img.setAttribute("src", event.target.result);
-                img.setAttribute("onload", 'board.resizeImg(this);');
                 document.querySelector("#board-upload").appendChild(img);
             };
             reader.readAsDataURL(image);
@@ -146,7 +157,7 @@
         SettingInsertImage();
     }
 
-// --------------------------
+    // --------------------------
 
     function SettingInsertImage() {
         var contentsImgs = document.querySelectorAll('#board-contents-image > img');
