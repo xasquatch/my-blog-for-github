@@ -23,7 +23,8 @@
                     Linotype</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Book
                     Antiqua</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Times New
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Times
+                    New
                     Roman</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">Arial</a>
                 </li>
@@ -45,13 +46,17 @@
                     Console</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#"
                                            onclick="board.changeFont(this);">initial</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">맑은 고딕</a>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">맑은
+                    고딕</a>
                 </li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">궁서체</a>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"
+                                           onclick="board.changeFont(this);">궁서체</a>
                 </li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">돋움체</a>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"
+                                           onclick="board.changeFont(this);">돋움체</a>
                 </li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="board.changeFont(this);">굴림체</a>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"
+                                           onclick="board.changeFont(this);">굴림체</a>
                 </li>
 
             </ul>
@@ -93,20 +98,50 @@
             </button>
         </div>
     </div>
+
     <div id="board-contents-fake" class="well" contentEditable="true">
         <script>
             document.querySelector('#board-contents-fake').innerHTML = sessionStorage.getItem('sessionData');
         </script>
     </div>
-    Insert To Click
-    <div id="board-contents-image" class="well">
-        <img src="${path}/img/Xasquatch.png">
+
+    <div style="display: grid; grid-template-columns: 200px 1fr;">
+        <div>
+            Thumbnail (click to remove)
+            <div id="board-contents-thumbnail" class="well" style="">
+            </div>
+        </div>
+
+        <div>
+            Insert To Click
+            <div id="board-contents-image" class="well">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+                <img src="${path}/img/Xasquatch.png">
+            </div>
+        </div>
     </div>
+
 
     <form action="${path}/board/upload" id="board-form-tag" method="POST">
         <textarea id="board-contents-real" class="hidden"></textarea>
         <input id="board-upload-btn" class="btn btn-danger" type="button" value="upload" onclick="board.upload()">
-        <input id="board-cancel-btn" class="btn btn-default" type="button" value="cancel" onclick="board.save();location.href = '${path}/';">
+        <input id="board-cancel-btn" class="btn btn-default" type="button" value="cancel"
+               onclick="board.save();location.href = '${path}/';">
     </form>
 
 </section>
