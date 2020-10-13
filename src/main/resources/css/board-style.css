@@ -18,8 +18,12 @@
 #board-contents-fake {
     min-height: 50vh;
     height: auto !important;
+}
+
+#board-contents-fake {
     font-family: auto;
 }
+
 #board-contents-fake img{
     cursor: grab;
     max-width: 80vw;
