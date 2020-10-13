@@ -18,6 +18,7 @@
 #board-contents-fake {
     min-height: 50vh;
     height: auto !important;
+    font-family: auto;
 }
 #board-contents-fake img{
     cursor: grab;

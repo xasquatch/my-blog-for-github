@@ -1,15 +1,14 @@
 @charset "UTF-8";
 @font-face {
     font-family: 'Dotkey';
-    src: url(https://xasquatch.net/3_font/DungGeunMo.ttf) format('truetype');
-    src: url(https://xasquatch.net/3_font/DungGeunMo.eot);
-    /*src: url(font/DungGeunMo.woff2) format('woff2');*/
-    /*src: url(font/DungGeunMo.woff) format('woff');*/
-    /*src: url(font/DungGeunMo.ttf) format('truetype');*/
-    /*src: url(font/DungGeunMo.otf) format('opentype');*/
-    /*src: url(font/DungGeunMo.eot);*/
+    src: url(../font/DungGeunMo.woff2) format('woff2'),
+        url(../font/DungGeunMo.woff) format('woff'),
+        url(../font/DungGeunMo.ttf) format('truetype'),
+        url(../font/DungGeunMo.otf) format('opentype'),
+        url(../font/DungGeunMo.eot);
 }
-*:not(#board-contents-fake):not(.glyphicon):not(#board-contents-fake *) {
+
+*:not(#board-contents-fake):not(.glyphicon):not(font):not(b):not(i):not(blockquote):not(span):not(div) {
     font-family: Dotkey, monospace;
 }
 
