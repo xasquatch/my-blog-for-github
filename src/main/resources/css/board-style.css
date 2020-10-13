@@ -1,13 +1,5 @@
 @charset "UTF-8";
 
-#board {
-    max-width: 1200px;
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    margin: 0 auto;
-}
-
 #board-bar {
     display: flex;
     flex-wrap: wrap;

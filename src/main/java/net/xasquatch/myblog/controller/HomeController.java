@@ -1,11 +1,9 @@
 package net.xasquatch.myblog.controller;
 
+import net.xasquatch.myblog.model.Test;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HomeController {
@@ -27,5 +25,13 @@ public class HomeController {
     public String upload(Model model) {
 
         return "forward:/board";
+    }
+    @PostMapping("/user/sign-up")
+    public String signUp(Model model, @ModelAttribute Test user){
+        model.addAttribute("mainContents", "home");
+
+        user.setEmail("xasquatch@gmail.com");
+
+        return "index";
     }
 }

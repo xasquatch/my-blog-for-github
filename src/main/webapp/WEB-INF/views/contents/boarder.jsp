@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<section id="board">
+<section class="wrap">
 
     <div class="input-group">
         <div class="input-group-addon"><b>Keyword</b></div>
@@ -108,7 +108,7 @@
             Insert To Click<BR>
             (click to add Images)
             <div id="board-contents-image" class="well">
-                <img src="${path}/img/Xasquatch.png">
+<%--image here--%>
             </div>
         </div>
     </div>

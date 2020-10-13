@@ -2,10 +2,10 @@
 @font-face {
     font-family: 'Dotkey';
     src: url(../font/DungGeunMo.woff2) format('woff2'),
-        url(../font/DungGeunMo.woff) format('woff'),
-        url(../font/DungGeunMo.ttf) format('truetype'),
-        url(../font/DungGeunMo.otf) format('opentype'),
-        url(../font/DungGeunMo.eot);
+    url(../font/DungGeunMo.woff) format('woff'),
+    url(../font/DungGeunMo.ttf) format('truetype'),
+    url(../font/DungGeunMo.otf) format('opentype'),
+    url(../font/DungGeunMo.eot);
 }
 
 *:not(#board-contents-fake):not(.glyphicon):not(font):not(b):not(i):not(blockquote):not(span):not(div) {
@@ -68,4 +68,49 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+}
+
+.wrap {
+    max-width: 1200px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.wrap-min {
+    max-width: 600px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+/*--------------------------home.jsp------------------*/
+#home-banner {
+    width: 100%;
+    min-height: 50vh;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: black;
+    color: white;
+
+}
+
+#user-sign-contents {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    font-weight: bold;
+}
+
+#user-sign-contents > .btn {
+    border-radius: 30px;
+}
+
+.xasquatch-btn-logo {
+    max-width: 32px;
+    max-height: 32px;
+
+
 }
