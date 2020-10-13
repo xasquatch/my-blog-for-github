@@ -112,5 +112,12 @@
     max-width: 32px;
     max-height: 32px;
 
+}
 
+#user-signup>.input-group{
+    width: 100%;
+}
+
+#user-signup .input-group-addon{
+    width: 150px;
 }

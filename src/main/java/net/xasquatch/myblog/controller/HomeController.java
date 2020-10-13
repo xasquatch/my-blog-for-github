@@ -30,7 +30,7 @@ public class HomeController {
     public String signUp(Model model, @ModelAttribute Test user){
         model.addAttribute("mainContents", "home");
 
-        user.setEmail("xasquatch@gmail.com");
+        System.out.println("/user/sign-up");
 
         return "index";
     }

@@ -58,24 +58,66 @@
         </button>
     </div>
 
+    <form>
+
+
+    </form>
+
+
 </section>
 
 <script>
     function singUp() {
         modal.changeForm('Sign Up',
-            '<form class="" action="${path}/user/sign-up" method="POST">' +
-            '<div class="input-group">' +
-            '<div class="input-group-addon">Email</div>' +
-            '<input class="form-control" type="text"  placeholder="xxxxxxx@xxxxx.com" path="email">' +
-            '</div>' +
-            '<form>');
+            '<form class="form-horizontal" id="user-signup" action="${path}/user/sign-up" method="POST">                                                 ' +
+            '<div class="input-group">                                                                                                                   ' +
+            '<div class="input-group-addon">Email</div>                                                                                                  ' +
+            '<input class="form-control" type="email" placeholder="xxxxxxx@gmail.com">                                                                   ' +
+            '</div>                                                                                                                                      ' +
+            '<div class="input-group">                                                                                                                   ' +
+            '<div class="input-group-addon">Password</div>                                                                                               ' +
+            '<input class="form-control" type="password" placeholder="your Password">                                                                    ' +
+            '<input class="form-control" type="password" placeholder="Password Confirm">                                                                 ' +
+            '</div>                                                                                                                                      ' +
+            '<div class="input-group">                                                                                                                   ' +
+            '<div class="input-group-addon">Name</div>                                                                                                   ' +
+            '<input class="form-control" type="text" placeholder="ex) Jordan">                                                                           ' +
+            '</div>                                                                                                                                      ' +
+            '<div class="input-group">                                                                                                                   ' +
+            '<div class="input-group-addon">Profile Image</div>                                                                                          ' +
+            '<input type="file" class="form-control" onchange="addUploadImage(event)";>                                                                                                    ' +
+            '<div class="form-control" style="height: auto;">                                                                                            ' +
+            '<img id="user-signup-img" src="${path}/img/login/default-profile.png">                                                                      ' +
+            '</div>                                                                                                                                      ' +
+            '</div>                                                                                                                                      ' +
+            '<div class="input-group">                                                                                                                   ' +
+            '<div class="input-group-addon">Agreement</div>                                                                                              ' +
+            '<div class="form-control" style="height: auto;">                                                                                            ' +
+            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>                                       ' +
+            '<label><input type="checkbox" name="membersAgreement">I agree</label>                                                                       ' +
+            '<HR style="margin-top: 3px; margin-bottom: 3px;">                                                                                           ' +
+            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>              ' +
+            '<label><input type="checkbox" name="collectionAndUse">I agree</label>                                                                       ' +
+            '</div>                                                                                                                                      ' +
+            '</div>                                                                                                                                      ' +
+            '</form>');
         var confirmBtn = document.querySelector('#modal-confirm-btn');
         confirmBtn.setAttribute('onclick', 'ConfirmSignUp();');
     }
 
+    function addUploadImage(event) {
+        for (var image of event.target.files) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                var img = document.querySelector("#user-signup-img");
+                img.setAttribute("src", event.target.result);
+            };
+            reader.readAsDataURL(image);
+        }
+    }
+
     function ConfirmSignUp() {
-        //여기에 submit버튼
-        document.querySelector("#modal-close-btn").click();
+        document.querySelector("#user-signup").submit();
         document.querySelector("#modal-close-btn").click();
     }
 
