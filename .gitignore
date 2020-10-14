@@ -1,3 +1,4 @@
 
 target/myblog-1.0.0.war
 target/
+src/main/webapp/WEB-INF/db/

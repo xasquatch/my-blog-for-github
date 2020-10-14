@@ -1,11 +1,10 @@
 package net.xasquatch.myblog.controller;
 
+import net.xasquatch.myblog.model.Test;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class HomeController {
@@ -24,8 +23,17 @@ public class HomeController {
     }
 
     @PostMapping("/board/upload")
-    public String upload(Model model) {
+    public String upload(Model model ,@RequestPart(required=false)MultipartFile[] file) {
 
         return "forward:/board";
+    }
+
+    @PostMapping("/user/sign-up")
+    public String signUp(Model model, @ModelAttribute Test user ,@RequestPart(required=false)MultipartFile[] file){
+        model.addAttribute("mainContents", "home");
+
+        System.out.println("/user/sign-up");
+
+        return "forward:/";
     }
 }

@@ -1,13 +1,5 @@
 @charset "UTF-8";
 
-#board {
-    max-width: 1200px;
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    margin: 0 auto;
-}
-
 #board-bar {
     display: flex;
     flex-wrap: wrap;
@@ -19,18 +11,14 @@
     min-height: 50vh;
     height: auto !important;
 }
-#board-contents-fake img{
-    cursor: grab;
-    max-width: 80vw;
-    max-height: 80vh;
+
+#board-contents-fake {
+    font-family: auto;
 }
 
-@media (min-width: 1200px){
-    #board-contents-fake img{
-        cursor: pointer;
-        max-width: 1000px;
-        max-height: 1000px;
-    }
+#board-contents-fake img{
+    cursor: grab;
+    max-width: 100%;
 }
 
 #board-contents-thumbnail, #board-contents-image {

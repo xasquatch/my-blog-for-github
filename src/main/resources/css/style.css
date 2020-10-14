@@ -1,15 +1,14 @@
 @charset "UTF-8";
 @font-face {
     font-family: 'Dotkey';
-    src: url(https://xasquatch.net/3_font/DungGeunMo.ttf) format('truetype');
-    src: url(https://xasquatch.net/3_font/DungGeunMo.eot);
-    /*src: url(font/DungGeunMo.woff2) format('woff2');*/
-    /*src: url(font/DungGeunMo.woff) format('woff');*/
-    /*src: url(font/DungGeunMo.ttf) format('truetype');*/
-    /*src: url(font/DungGeunMo.otf) format('opentype');*/
-    /*src: url(font/DungGeunMo.eot);*/
+    src: url(../font/DungGeunMo.woff2) format('woff2'),
+    url(../font/DungGeunMo.woff) format('woff'),
+    url(../font/DungGeunMo.ttf) format('truetype'),
+    url(../font/DungGeunMo.otf) format('opentype'),
+    url(../font/DungGeunMo.eot);
 }
-*:not(#board-contents-fake):not(.glyphicon):not(#board-contents-fake *) {
+
+*:not(#board-contents-fake):not(.glyphicon):not(font):not(b):not(i):not(blockquote):not(span):not(div) {
     font-family: Dotkey, monospace;
 }
 
@@ -58,7 +57,9 @@
     background-color: rgba(0, 0, 0, 1);
     color: white;
 }
-
+.opacity-0{
+    opacity: 0;
+}
 .flex-row {
     display: flex;
     flex-wrap: wrap;
@@ -69,4 +70,64 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+}
+
+.wrap {
+    max-width: 1200px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.wrap-min {
+    max-width: 600px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+/*--------------------------home.jsp------------------*/
+#home-banner {
+    width: 100%;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+#home-banner > video{
+    width: 100%;
+    max-width: 460px;
+}
+#home-banner > h1{
+    transition: 1s all;
+
+}
+
+
+#user-sign-contents {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    font-weight: bold;
+}
+
+#user-sign-contents > .btn {
+    border-radius: 30px;
+}
+
+.xasquatch-btn-logo {
+    max-width: 32px;
+    max-height: 32px;
+
+}
+
+#user-signup>.input-group{
+    width: 100%;
+}
+
+#user-signup .input-group-addon{
+    width: 150px;
 }
