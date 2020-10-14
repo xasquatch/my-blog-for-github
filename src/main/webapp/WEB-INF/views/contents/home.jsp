@@ -12,7 +12,7 @@
 <section class="wrap-min">
 
 
-    <form class="form-horizontal">
+    <form class="form-horizontal" id="home-login">
         <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
@@ -146,6 +146,8 @@
     function ConfirmSignUp() {
         document.querySelector("#user-signup").submit();
         document.querySelector("#modal-close-btn").click();
+
+        window.alert('completed upload!');
     }
 
 
