@@ -30,6 +30,12 @@
     </a>
     <div id="header-right">
         <button type="button" id="mobile-hamburger" class="btn btn-danger" onclick="popUpAside();">
+            <script>
+                window.onload = function () {
+                    if (!document.querySelector('#main-aside'))
+                        document.querySelector('#mobile-hamburger').style.display = 'none';
+                }
+            </script>
             <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
         </button>
         <button type="button" class="btn btn-danger" onclick="location.href='${path}/board/view'">
