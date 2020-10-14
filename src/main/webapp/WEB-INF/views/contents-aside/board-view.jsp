@@ -15,10 +15,10 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="boardListViewCount">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">10</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">20</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">50</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">100</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:ChangeBoardListCount(10);">10</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:ChangeBoardListCount(20);">20</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:ChangeBoardListCount(50);">50</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:ChangeBoardListCount(100);">100</a></li>
                 </ul>
             </div>
             <button type="button" class="btn btn-success" onclick="location.href='${path}/board/create'">
@@ -42,7 +42,8 @@
 
                 </td>
                 <td>
-                    <img src="${path}/img/Xasquatch.png">
+                    <img class="img-rounded"
+                         src="${path}/img/Xasquatch.png">
                     마 이게 콘텐츠다! 아나! 아냐고! 내 아픔을 아나! 뭐아는데!
                 </td>
                 <td>
@@ -51,5 +52,38 @@
             </tr>
             </tbody>
         </table>
+        <div class="btn-toolbar" role="toolbar" style="margin: 0 auto">
+            <div class="btn-group" role="group" aria-label="left group">
+                <button type="button" class="btn btn-default" onclick="">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </button>
+            </div>
+            <div class="btn-group" role="group" aria-label="list group">
+                <button type="button" class="btn btn-default">
+                    1
+                </button>
+                <button type="button" class="btn btn-default">2</button>
+                <button type="button" class="btn btn-default">3</button>
+                <button type="button" class="btn btn-default">4</button>
+                <button type="button" class="btn btn-default">5</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="right group">
+                <button type="button" class="btn btn-default" onclick="">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+
+                </button>
+            </div>
+        </div>
     </article>
 </section>
+
+
+<script>
+    function ChangeBoardListCount(count) {
+        var boardListCount = document.querySelector('#board-list-count');
+        boardListCount.innerHTML = count;
+
+        //-----------그 다음 페이지 재호출하여 갯수 재지정
+    }
+
+</script>

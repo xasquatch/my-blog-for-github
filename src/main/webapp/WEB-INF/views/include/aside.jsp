@@ -3,8 +3,14 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <aside id="main-aside" class="forward-to-top">
-    hi aside
+    <a href="javascript:alert('hi')">greet</a>
 
 
 </aside>
 
+<script>
+    function popUpAside() {
+        document.querySelector('#main-aside').classList.toggle('forward-to-top');
+    }
+
+</script>

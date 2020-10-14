@@ -29,14 +29,14 @@
         <h1 id="test">My Blog</h1>
     </a>
     <div id="header-right">
-        <div>
-            <button type="button" class="btn btn-lg btn-danger" onclick="location.href='${path}/board/view'">
-                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-            </button>
-            <button type="button" class="btn btn-lg btn-danger" onclick="location.href='${path}/user/information'">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-            </button>
-        </div>
-
+        <button type="button" id="mobile-hamburger" class="btn btn-danger" onclick="popUpAside();">
+            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-danger" onclick="location.href='${path}/board/view'">
+            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-danger" onclick="location.href='${path}/user/information'">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        </button>
     </div>
 </header>
