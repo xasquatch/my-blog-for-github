@@ -2,11 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<section id="board">
+<section class="wrap">
 
     <div class="input-group">
         <div class="input-group-addon"><b>Keyword</b></div>
-        <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="Life, health....etc">
+        <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="ex) Life, health....etc">
     </div>
 
     <input type="text" id="board-title-fake" class="form-control" placeholder="Title" maxlength="50">
@@ -108,14 +108,14 @@
             Insert To Click<BR>
             (click to add Images)
             <div id="board-contents-image" class="well">
-                <img src="${path}/img/Xasquatch.png">
+<%--image here--%>
             </div>
         </div>
     </div>
 
 
     <%--실제 전송폼--%>
-    <form action="${path}/board/upload" id="board-form-tag" method="POST" style="text-align: center;">
+    <form action="${path}/board/upload" enctype="multipart/form-data" id="board-form-tag" method="POST" style="text-align: center;">
         <input type="text" id="board-keyword-real" class="hidden" maxlength="25">
         <input type="text" id="board-title-real" class="hidden" maxlength="50">
         <textarea name="boardContents" id="board-contents-real" class="hidden"></textarea>
@@ -132,9 +132,10 @@
             '<section class="thumbnail" id="board-upload">' +
             '' +
             '</section>' +
-            '<form action="${path}/board/upload" enctype="multipart/form-data" method="POST">' +
-            '<input type="file" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">' +
-            '</form>');
+            <%--'<form action="${path}/board/upload" enctype="multipart/form-data" method="POST">' +--%>
+            '<input type="file" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">'
+            //+ '</form>'
+        );
         var confirmBtn = document.querySelector('#modal-confirm-btn');
         confirmBtn.setAttribute('onclick', 'ConfirmUploadImages();');
     }
