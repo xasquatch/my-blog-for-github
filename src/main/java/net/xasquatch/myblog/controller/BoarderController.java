@@ -2,10 +2,7 @@ package net.xasquatch.myblog.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -25,7 +22,7 @@ public class BoarderController {
         return "forward:/board/view";
     }
 
-    @PostMapping("/view")
+    @RequestMapping(value = "/view", method = {RequestMethod.GET, RequestMethod.POST})
     public String view(Model model) {
 
         model.addAttribute("mainContents", "board-view");
