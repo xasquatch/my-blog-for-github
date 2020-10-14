@@ -57,7 +57,9 @@
     background-color: rgba(0, 0, 0, 1);
     color: white;
 }
-
+.opacity-0{
+    opacity: 0;
+}
 .flex-row {
     display: flex;
     flex-wrap: wrap;
@@ -89,13 +91,21 @@
 /*--------------------------home.jsp------------------*/
 #home-banner {
     width: 100%;
-    min-height: 50vh;
     margin: 10px auto;
     padding: 10px;
     background-color: black;
     color: white;
+    text-align: center;
+}
+#home-banner > video{
+    width: 100%;
+    max-width: 460px;
+}
+#home-banner > h1{
+    transition: 1s all;
 
 }
+
 
 #user-sign-contents {
     display: flex;

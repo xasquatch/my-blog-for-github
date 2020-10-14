@@ -18,16 +18,7 @@
 
 #board-contents-fake img{
     cursor: grab;
-    max-width: 80vw;
-    max-height: 80vh;
-}
-
-@media (min-width: 1200px){
-    #board-contents-fake img{
-        cursor: pointer;
-        max-width: 1000px;
-        max-height: 1000px;
-    }
+    max-width: 100%;
 }
 
 #board-contents-thumbnail, #board-contents-image {
