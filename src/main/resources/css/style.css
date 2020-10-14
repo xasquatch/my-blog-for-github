@@ -12,6 +12,8 @@
     font-family: Dotkey, monospace;
 }
 
+/*-------------header, footer, aside----------------*/
+
 #main-header {
     display: grid;
     grid-template-columns: 250px 1fr;
@@ -57,9 +59,45 @@
     background-color: rgba(0, 0, 0, 1);
     color: white;
 }
-.opacity-0{
+
+#main-aside {
+    padding: 10px;
+    width: 200px;
+    font-size: 2rem;
+    font-weight: bold;
+    transition: all 1s;
+    
+}
+
+@media (max-width: 1200px) {
+    #main-aside {
+        display: block;
+        position: fixed;
+        padding: 150px 5vw 20px 5vw;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        overflow-x: hidden;
+        overflow-y: auto;
+        z-index: 1000;
+        left: 0;
+        text-align: center;
+        transition: all 1s;
+    }
+
+    .forward-to-top {
+        top: -100%;
+    }
+}
+
+/*END: header, footer, aside----------------*/
+
+/*----------------general setting---------------*/
+.opacity-0 {
     opacity: 0;
 }
+
 .flex-row {
     display: flex;
     flex-wrap: wrap;
@@ -88,7 +126,28 @@
     margin: 0 auto;
 }
 
+.wrap-grid {
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+@media (max-width: 1200px) {
+    .wrap-grid {
+        max-width: 1200px;
+        display: block;
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+
+}
+
+/*END: general setting---------------*/
+
 /*--------------------------home.jsp------------------*/
+
 #home-banner {
     width: 100%;
     margin: 10px auto;
@@ -97,15 +156,16 @@
     color: white;
     text-align: center;
 }
-#home-banner > video{
+
+#home-banner > video {
     width: 100%;
     max-width: 460px;
 }
-#home-banner > h1{
+
+#home-banner > h1 {
     transition: 1s all;
 
 }
-
 
 #user-sign-contents {
     display: flex;
@@ -124,10 +184,23 @@
 
 }
 
-#user-signup>.input-group{
+#user-signup > .input-group {
     width: 100%;
 }
 
-#user-signup .input-group-addon{
+#user-signup .input-group-addon {
     width: 150px;
 }
+
+/*END: home.jsp------------------*/
+/*----------contents-aside-------*/
+.wrap-grid > section {
+    display: block;
+    max-width: 1000px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+/*END: contents-aside-------*/

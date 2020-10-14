@@ -30,8 +30,11 @@
     </a>
     <div id="header-right">
         <div>
-            <button type="button" class="btn btn-lg btn-danger" onclick="location.href='${path}/board'">
+            <button type="button" class="btn btn-lg btn-danger" onclick="location.href='${path}/board/create'">
                 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-lg btn-danger" onclick="location.href='${path}/user/information'">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             </button>
         </div>
 

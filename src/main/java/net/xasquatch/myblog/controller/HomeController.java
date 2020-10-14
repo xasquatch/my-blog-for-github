@@ -15,25 +15,5 @@ public class HomeController {
 
         return "index";
     }
-    @RequestMapping(value = "/board", method = {RequestMethod.GET, RequestMethod.POST})
-    public String board(Model model) {
-        model.addAttribute("mainContents", "board");
 
-        return "index";
-    }
-
-    @PostMapping("/board/upload")
-    public String upload(Model model ,@RequestPart(required=false)MultipartFile[] file) {
-
-        return "forward:/board";
-    }
-
-    @PostMapping("/user/sign-up")
-    public String signUp(Model model, @ModelAttribute Test user ,@RequestPart(required=false)MultipartFile[] file){
-        model.addAttribute("mainContents", "home");
-
-        System.out.println("/user/sign-up");
-
-        return "forward:/";
-    }
 }

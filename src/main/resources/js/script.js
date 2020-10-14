@@ -29,16 +29,11 @@ var board = {
         realTitle.value = board.fakeTitle.value
         realContents.innerHTML = board.fakeContents.innerHTML
 
-
-        console.log('Keyword: '+ realKeyword.value);
-        console.log('Title: '+ realTitle.value);
-        console.log('Contents: '+ realContents.innerHTML);
-
         board.save();
 
         boardForm.submit();
 
-        window.alert('completed upload!')
+        window.alert('completed upload!');
     },
     save: function () {
         sessionStorage.setItem('sessionKeywordData', board.fakeKeyword.value);

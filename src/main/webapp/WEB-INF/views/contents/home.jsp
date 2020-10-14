@@ -146,6 +146,8 @@
     function ConfirmSignUp() {
         document.querySelector("#user-signup").submit();
         document.querySelector("#modal-close-btn").click();
+
+        window.alert('completed upload!');
     }
 
 
