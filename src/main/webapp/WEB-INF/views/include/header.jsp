@@ -38,7 +38,7 @@
             </script>
             <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
         </button>
-        <button type="button" class="btn btn-danger" onclick="location.href='${path}/board/view'">
+        <button type="button" class="btn btn-danger" onclick="location.href='${path}/board/view/list'">
             <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
         </button>
         <button type="button" class="btn btn-danger" onclick="location.href='${path}/user/information'">

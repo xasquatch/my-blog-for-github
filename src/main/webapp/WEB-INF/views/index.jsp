@@ -10,28 +10,26 @@
 
     </c:when>
 
-    <c:when test="${mainContents == 'board'}">
-        <jsp:include page="contents/boarder-create.jsp"/>
-
-    </c:when>
-
 </c:choose>
 
-<c:choose>
-    <c:when test="${mainContents == 'board-view'}">
-        <section class="wrap-grid">
-            <jsp:include page="include/aside.jsp"/>
-            <jsp:include page="contents-aside/board-view.jsp"/>
-        </section>
-    </c:when>
+<section class="wrap-grid">
+    <jsp:include page="include/aside.jsp"/>
 
-    <c:when test="${mainContents == 'user-info'}">
-        <section class="wrap-grid">
-            <jsp:include page="include/aside.jsp"/>
-            <jsp:include page="contents-aside/user-information.jsp"/>
-        </section>
-    </c:when>
+    <c:choose>
+        <c:when test="${mainContents == 'board-create'}">
+            <jsp:include page="contents/board/board-create.jsp"/>
+        </c:when>
 
-</c:choose>
+        <c:when test="${mainContents == 'board-view-list'}">
+            <jsp:include page="contents/board/board-view.jsp"/>
+        </c:when>
+
+        <c:when test="${mainContents == 'user-info'}">
+            <jsp:include page="contents/user-info/user-information.jsp"/>
+        </c:when>
+    </c:choose>
+
+</section>
+
 
 <jsp:include page="include/footer.jsp"/>

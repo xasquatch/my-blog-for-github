@@ -11,18 +11,21 @@ import org.springframework.web.multipart.MultipartFile;
 public class MemberController {
 
     @PostMapping("/sign-up")
-    public String signUp(Model model, @ModelAttribute Test user , @RequestPart(required=false) MultipartFile[] file){
+    public String signUp(Model model, @RequestPart(required=false) MultipartFile[] file){
         model.addAttribute("mainContents", "home");
 
-        System.out.println("/user/sign-up");
+        return "forward:/user/information";
+    }
+    @PostMapping("/update")
+    public String update(Model model, @ModelAttribute Test user , @RequestPart(required=false) MultipartFile[] file){
+        model.addAttribute("mainContents", "home");
 
-        return "forward:/";
+        return "forward:/user/information";
     }
 
     @RequestMapping(value = "/information", method = {RequestMethod.GET,RequestMethod.POST})
     public String info(Model model){
         model.addAttribute("mainContents","user-info");
-
 
         return "index";
     }

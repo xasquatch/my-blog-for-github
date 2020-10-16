@@ -23,6 +23,9 @@
     </div>
 </div>
 
+<div id="main-footer-proto">
+    <BR><BR>
+</div>
 <footer id="main-footer">
     Develop by Xasquatch, https://xasquatch.net
 </footer>

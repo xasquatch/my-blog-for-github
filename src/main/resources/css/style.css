@@ -55,6 +55,7 @@
 #main-footer {
     width: 100%;
     position: fixed;
+    z-index: 2000;
     text-align: center;
     bottom: 0;
     background-color: rgba(0, 0, 0, 1);

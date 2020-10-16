@@ -31,7 +31,6 @@
             <thead>
             <tr>
                 <th>Title</th>
-                <th>Contents</th>
                 <th width="200">Date Created</th>
             </tr>
             </thead>
@@ -42,16 +41,12 @@
 
                 </td>
                 <td>
-                    <img class="img-rounded"
-                         src="${path}/img/Xasquatch.png">
-                    마 이게 콘텐츠다! 아나! 아냐고! 내 아픔을 아나! 뭐아는데!
-                </td>
-                <td>
                     <%= new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>
                 </td>
             </tr>
             </tbody>
         </table>
+    </article>
         <div class="btn-toolbar" role="toolbar" style="margin: 0 auto">
             <div class="btn-group" role="group" aria-label="left group">
                 <button type="button" class="btn btn-default" onclick="">
@@ -74,7 +69,6 @@
                 </button>
             </div>
         </div>
-    </article>
 </section>
 
 

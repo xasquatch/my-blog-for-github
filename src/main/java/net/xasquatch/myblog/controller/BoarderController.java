@@ -11,7 +11,7 @@ public class BoarderController {
 
     @RequestMapping(value = "/create", method = {RequestMethod.GET, RequestMethod.POST})
     public String board(Model model) {
-        model.addAttribute("mainContents", "board");
+        model.addAttribute("mainContents", "board-create");
 
         return "index";
     }
@@ -19,13 +19,21 @@ public class BoarderController {
     @PostMapping("/upload")
     public String upload(Model model ,@RequestPart(required=false) MultipartFile[] file) {
 
-        return "forward:/board/view";
+        return "forward:/board/view/list";
     }
 
-    @RequestMapping(value = "/view", method = {RequestMethod.GET, RequestMethod.POST})
-    public String view(Model model) {
+    @RequestMapping(value = "/view/list", method = {RequestMethod.GET, RequestMethod.POST})
+    public String viewList(Model model) {
 
-        model.addAttribute("mainContents", "board-view");
+        model.addAttribute("mainContents", "board-view-list");
+
+        return "index";
+    }
+    // 임시
+    @RequestMapping(value = "/view/detail", method = {RequestMethod.GET, RequestMethod.POST})
+    public String viewDetail(Model model) {
+
+        model.addAttribute("mainContents", "board-view-detail");
 
         return "index";
     }
