@@ -48,3 +48,78 @@ var board = {
 
     },
 }
+
+var textScript = {
+
+    insertText: function (tagName, insertTextValue, interval, callback) {
+
+        var frontSpan = document.createElement('span');
+        var backSpan = document.createElement('span');
+        backSpan.className = 'input-character';
+        document.querySelector(tagName).appendChild(frontSpan);
+        document.querySelector(tagName).appendChild(backSpan);
+
+        var timeCount = true;
+        var loopCount = 0;
+        var intervalAddr = setInterval(function () {
+            try {
+
+                var character = insertTextValue.charAt(loopCount);
+
+                if (insertTextValue.length === loopCount) {
+                    throw 'go catch';
+
+// 문자중에 lessthan이 나올 떄 greater than을 찾아 태그로 묶어서 삽입
+
+                } else if (character === '<') {
+                    var insertTextsubstr = insertTextValue.substr(loopCount, insertTextValue.length);
+                    var tagEnd = insertTextsubstr.indexOf('>');
+                    var substrText = insertTextsubstr.substr(0, tagEnd + 1);
+
+                    var closeTag = '</' + substrText.substr(1, substrText.length);
+                    var localTagName = substrText.substr(1, substrText.length - 2);
+
+                    if (insertTextsubstr.indexOf(closeTag) !== -1) {
+                        var localTag = document.createElement(localTagName);
+                        // localTag.id = 'localTag' + intervalAddr;
+                        frontSpan.appendChild(localTag);
+
+                        var localInsertText = insertTextsubstr.substr(substrText.length, insertTextsubstr.indexOf(closeTag) - substrText.length);
+                        // new Textjs.insertText('#'+localTag.id, localInsertText, 1);
+                        localTag.innerHTML = localInsertText;
+
+                        timeCount = true;
+                        loopCount += insertTextsubstr.indexOf(closeTag) + closeTag.length;
+
+
+                    } else {
+                        frontSpan.innerHTML += substrText;
+                        timeCount = true;
+                        loopCount += substrText.length;
+
+                    }
+
+                } else if (timeCount === true) {
+                    backSpan.innerHTML = insertTextValue.charAt(loopCount);
+                    timeCount = false;
+
+                } else {
+                    frontSpan.innerHTML += backSpan.innerHTML;
+                    backSpan.innerHTML = '';
+                    timeCount = true;
+                    loopCount++;
+
+                }
+
+            } catch (error) {
+                clearInterval(intervalAddr);
+                intervalAddr = null;
+                try {
+                    callback();
+                } catch (error) {
+                    console.log('Ended writing Text');
+                }
+            }
+        }, interval);
+    }
+};

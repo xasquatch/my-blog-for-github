@@ -138,9 +138,15 @@
 .wrap-grid {
     max-width: 1200px;
     display: grid;
+    padding: 10px;
     grid-template-columns: 200px 1fr;
     box-sizing: border-box;
     margin: 0 auto;
+}
+.wrap-grid>section{
+    margin: 0 auto;
+    padding: 10px;
+
 }
 
 @media (max-width: 1200px) {
@@ -156,6 +162,11 @@
 /*END: general setting---------------*/
 
 /*--------------------------home.jsp------------------*/
+
+.input-character{
+    background-color: rgba(37, 92, 194, 1);
+    filter: invert(100%);
+}
 
 #home-banner {
     width: 100%;

@@ -26,13 +26,13 @@
 <header id="main-header">
     <a href="${path}/" id="header-left">
         <img src="${path}/img/Xasquatch.png"/>
-        <h1 id="test">My Blog</h1>
+        <h1 id="main-header-logo"></h1>
     </a>
     <div id="header-right">
         <button type="button" id="mobile-hamburger" class="btn btn-danger" onclick="popUpAside();">
             <script>
                 window.onload = function () {
-                    if (!document.querySelector('#main-aside'))
+                    if (!document.querySelector('#main-aside') || document.querySelector('#main-aside').innerText === '')
                         document.querySelector('#mobile-hamburger').style.display = 'none';
                 }
             </script>
@@ -46,3 +46,9 @@
         </button>
     </div>
 </header>
+<script>
+    window.addEventListener('DOMContentLoaded', function(){
+
+        textScript.insertText('#main-header-logo', 'My Blog', 20);
+    });
+</script>
