@@ -1,5 +1,5 @@
-<%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
@@ -32,43 +32,60 @@
             <tr>
                 <th>Title</th>
                 <th width="200">Date Created</th>
+                <th width="60">Update</th>
+                <th width="60">Delete</th>
             </tr>
             </thead>
             <tbody>
-            <tr style="cursor:pointer;" onclick="location.href='#'">
-                <td>
+            <tr>
+                <td style="cursor:pointer;" onclick="location.href='${path}/board/view/detail/1'">
                     마 이게 타이틀이다! 알겠나! 잘 보고 배우자 열심히하자 화이팅
-
                 </td>
                 <td>
                     <%= new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>
+                </td>
+                <td align="center">
+                    <span class="glyphicon glyphicon-cog"
+                          style="cursor:pointer;" onclick="location.href='#'"></span>
+                </td>
+                <td align="center">
+                    <span class="glyphicon glyphicon-trash"
+                          style="cursor:pointer;" onclick="location.href='#'"></span>
                 </td>
             </tr>
             </tbody>
         </table>
     </article>
-        <div class="btn-toolbar" role="toolbar" style="margin: 0 auto">
-            <div class="btn-group" role="group" aria-label="left group">
-                <button type="button" class="btn btn-default" onclick="">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </button>
-            </div>
-            <div class="btn-group" role="group" aria-label="list group">
-                <button type="button" class="btn btn-default">
-                    1
-                </button>
-                <button type="button" class="btn btn-default">2</button>
-                <button type="button" class="btn btn-default">3</button>
-                <button type="button" class="btn btn-default">4</button>
-                <button type="button" class="btn btn-default">5</button>
-            </div>
-            <div class="btn-group" role="group" aria-label="right group">
-                <button type="button" class="btn btn-default" onclick="">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-
-                </button>
-            </div>
+    <div class="btn-toolbar" role="toolbar" style="margin: 0 auto">
+        <div class="btn-group" role="group" aria-label="left group">
+            <button type="button" class="btn btn-default" onclick="location.href='#'">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
         </div>
+        <div class="btn-group" role="group" aria-label="list group">
+            <button type="button" class="btn btn-default" onclick="location.href='#'">
+                1
+            </button>
+            <button type="button" class="btn btn-default">
+                2
+            </button>
+            <button type="button" class="btn btn-default">
+                3
+            </button>
+            <button type="button" class="btn btn-default">
+                4
+            </button>
+            <button type="button" class="btn btn-default">
+                5
+            </button>
+        </div>
+        <div class="btn-group" role="group" aria-label="right group">
+            <button type="button" class="btn btn-default" onclick="location.href='#'">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+
+            </button>
+        </div>
+    </div>
 </section>
 
 

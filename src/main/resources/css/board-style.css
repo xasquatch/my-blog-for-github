@@ -10,9 +10,6 @@
 #board-contents-fake {
     min-height: 50vh;
     height: auto !important;
-}
-
-#board-contents-fake {
     font-family: auto;
 }
 
@@ -52,6 +49,10 @@
     max-width: 150px;
     max-height: 150px;
     transition: 1s all;
+}
+
+#board-view-contents{
+    font-size: 1.5em;
 }
 
 .board-list-title{

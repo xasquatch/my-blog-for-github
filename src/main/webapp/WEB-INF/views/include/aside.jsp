@@ -4,51 +4,63 @@
 <c:set var="mainContents" value="${requestScope.mainContents}"/>
 
 <aside id="main-aside" class="forward-to-top">
-<c:choose>
-    <c:when test="${mainContents == 'board-view-detail' || mainContents == 'board-view-list' || mainContents == 'board-create'}">
-    <h2 style="font-weight: bold;">
-        Board<BR>Management
-    </h2>
-    <hr>
-    <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
-        <li role="presentation">
-            <a href="${path}/board/create">Write on a Blog</a>
-        </li>
-        <li role="presentation">
-            <a href="${path}/board/view/list">My Writing List</a>
-        </li>
-        <li role="presentation">
-            <a href="#">.beta</a>
-        </li>
-    </ul>
-    </c:when>
+    <c:choose>
+        <c:when test="${mainContents == 'board-view-detail' || mainContents == 'board-view-list' || mainContents == 'board-create'}">
+            <h2 style="font-weight: bold;">
+                Board<BR>Management
+            </h2>
+            <hr>
+            <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
+                <li role="presentation">
+                    <a href="${path}/board/create">Write on a Blog</a>
+                </li>
+                <li role="presentation">
+                    <a href="${path}/board/view/list">My Writing List</a>
+                </li>
+                <li role="presentation">
+                    <a href="#">.beta</a>
+                </li>
+            </ul>
+        </c:when>
 
-    <c:when test="${mainContents == 'user-info'}">
-        <h2 style="font-weight: bold;">
-            My Page
-        </h2>
-        <hr>
-        <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
-            <li role="presentation">
-                <a href="${path}/user/information">My Information</a>
-            </li>
-            <li role="presentation">
-                <a href="#">.beta</a>
-            </li>
-            <li role="presentation">
-                <a href="#">.beta</a>
-            </li>
-        </ul>
-    </c:when>
+        <c:when test="${mainContents == 'user-info'}">
+            <h2 style="font-weight: bold;">
+                My Page
+            </h2>
+            <hr>
+            <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
+                <li role="presentation">
+                    <a href="${path}/user/information">My Information</a>
+                </li>
+                <li role="presentation">
+                    <a href="#">.beta</a>
+                </li>
+                <li role="presentation">
+                    <a href="#">.beta</a>
+                </li>
+            </ul>
+        </c:when>
 
-</c:choose>
+    </c:choose>
 
 </aside>
 
 
 <script>
+
+    var mainAside = document.querySelector('#main-aside');
+
     function popUpAside() {
-        document.querySelector('#main-aside').classList.toggle('forward-to-top');
+        mainAside.classList.toggle('forward-to-top');
     }
+
+    // css sticky 속성이 부모태그가 그리드인 상태에서는 적용되지가 않아서
+    // TOP padding값을 주는 것으로 sticky 구현
+    window.addEventListener('scroll', function () {
+        if (mainAside.classList.contains('forward-to-top')) {
+            mainAside.style.paddingTop = window.pageYOffset;
+        }
+    });
+
 
 </script>
