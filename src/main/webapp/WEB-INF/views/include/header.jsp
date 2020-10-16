@@ -51,4 +51,23 @@
 
         textScript.insertText('#main-header-logo', 'My Blog', 20);
     });
+
+    var mainHeader = document.querySelector('#main-header');
+
+    // TOP padding값을 주는 것으로 sticky 구현
+    window.addEventListener('scroll', function () {
+        if (mainHeader.style.marginTop < window.pageYOffset) {
+            mainHeader.style.position='fixed';
+            mainHeader.style.top=0;
+            mainHeader.style.zIndex=2000;
+
+        }else{
+            mainHeader.style.position='static';
+            mainHeader.style.top='';
+
+        }
+    });
+
+
+
 </script>

@@ -79,8 +79,9 @@
         display: block;
         position: fixed;
         padding: 100px 5vw 20px 5vw;
-        width: 100%;
+        width: 100vw;
         height: 100%;
+        box-sizing: border-box;
         background-color: rgba(0, 0, 0, 0.5);
         color: white;
         overflow-x: hidden;
@@ -91,7 +92,7 @@
     }
 
     .forward-to-top {
-        top: -100%;
+        bottom: -100%;
     }
 
     #mobile-hamburger {
