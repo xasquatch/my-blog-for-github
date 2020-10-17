@@ -1,7 +1,7 @@
 package net.xasquatch.myblog.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import net.xasquatch.myblog.model.Test;
+import net.xasquatch.myblog.model.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +17,14 @@ public class MemberController {
         log.debug("Controller {}: {}","Member", "signUp");
         model.addAttribute("mainContents", "home");
 
-        return "forward:/user/information";
+        return "index";
     }
     @PostMapping("/update")
-    public String update(Model model, @ModelAttribute Test user , @RequestPart(required=false) MultipartFile[] file){
+    public String update(Model model, @ModelAttribute Member user , @RequestPart(required=false) MultipartFile[] file){
         log.debug("Controller {}: {}","Member", "update");
         model.addAttribute("mainContents", "home");
 
-        return "forward:/user/information";
+        return "redirect:/user/information";
     }
 
     @RequestMapping(value = "/information", method = {RequestMethod.GET,RequestMethod.POST})

@@ -12,6 +12,7 @@ var modal = {
 
 }
 
+
 var board = {
 
     fakeKeyword: document.querySelector('#board-keyword-fake'),
@@ -123,3 +124,72 @@ var textScript = {
         }, interval);
     }
 };
+
+var ajax = {
+
+    submit: function (method, url, contentsType) {
+        var XMLHttpRequest = new XMLHttpRequest();
+        var xhr = ajax.addEvent(XMLHttpRequest);
+
+        var result = null;
+        var contentsType = null;
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === xhr.DONE && (xhr.status === 200 || xhr.status === 201)) {
+                result = xhr.response;
+
+            } else {
+                result = xhr.response;
+            }
+
+        };
+
+        if (method.toUpperCase() === 'GET') {
+            xhr.open(method, url);
+        } else if (method.toUpperCase() === 'POST') {
+            method = 'POST';
+            xhr.open(method, url);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        }
+
+        xhr.send();
+        return result;
+
+    },
+
+    addEvent: function (XMLHttpRequest) {
+
+        XMLHttpRequest.addEventListener("progress", ajax.updateProgress);
+        XMLHttpRequest.addEventListener("load", ajax.transferComplete);
+        XMLHttpRequest.addEventListener("loadend", ajax.loadEnd);
+        XMLHttpRequest.addEventListener("error", ajax.transferFailed);
+        XMLHttpRequest.addEventListener("abort", ajax.transferCanceled);
+
+        return XMLHttpRequest;
+
+    },
+
+    updateProgress: function () {
+        console.log('updateProgress');
+    },
+
+    transferComplete: function () {
+        console.log('transferComplete');
+
+    },
+
+    transferFailed: function () {
+        console.log('transferFailed');
+
+    },
+
+    transferCanceled: function () {
+        console.log('transferCanceled');
+
+    },
+
+    loadEnd: function () {
+        console.log('loadEnd');
+
+    }
+}

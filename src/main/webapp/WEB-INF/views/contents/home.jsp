@@ -16,13 +16,13 @@
         <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Email" required>
             </div>
         </div>
         <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                <input type="password" class="form-control" id="inputPassword3" placeholder="Password" required>
             </div>
         </div>
         <div class="form-group">
@@ -42,15 +42,15 @@
     </form>
 
     <div id="user-sign-contents">
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"  onclick="oAuth(this);">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
             <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/google.png"><BR>
             &nbsp;Google&nbsp;
         </button>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"  onclick="oAuth(this);">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
             <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/GitHub-Mark-32px.png"><BR>
             &nbsp;Github&nbsp;
         </button>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"  onclick="oAuth(this);">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
             <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/facebook.png"> <BR>
             Facebook
         </button>
@@ -65,11 +65,10 @@
 
     </form>
 
-
 </section>
 
 <script>
-    
+
     function oAuth(target) {
 //회원인지 확인먼저 필요(미구현)
 
@@ -99,20 +98,20 @@
             '<form class="form-horizontal" id="user-signup" action="${path}/user/sign-up" method="POST">                                                 ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Email</div>                                                                                                  ' +
-            '<input class="form-control" type="email" placeholder="xxxxxxx@gmail.com">                                                                   ' +
+            '<input class="form-control" type="email" name="email" placeholder="xxxxxxx@gmail.com" required">                                                                   ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Password</div>                                                                                               ' +
-            '<input class="form-control" type="password" placeholder="your Password">                                                                    ' +
-            '<input class="form-control" type="password" placeholder="Password Confirm">                                                                 ' +
+            '<input class="form-control" type="password" id="user-signup-pwd" name="pwd" required placeholder="your Password">                                                                    ' +
+            '<input class="form-control" type="password" name="pwdConfirm" placeholder="Password Confirm" required onchange="confirmPwd(this)">                                                                 ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Name</div>                                                                                                   ' +
-            '<input class="form-control" type="text" placeholder="ex) Jordan">                                                                           ' +
+            '<input class="form-control" type="text" name="name" placeholder="ex) Jordan" required>                                                                           ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Profile Image</div>                                                                                          ' +
-            '<input type="file" class="form-control" onchange="addUploadImage(event)";>                                                                  ' +
+            '<input type="file" class="form-control" name="img" required onchange="addUploadImage(event)";>                                                                  ' +
             '<div class="form-control" style="height: auto;">                                                                                            ' +
             '<img id="user-signup-img" src="${path}/img/login/default-profile.png" alt="Default Image" style="max-width:100%">                           ' +
             '</div>                                                                                                                                      ' +
@@ -121,16 +120,29 @@
             '<div class="input-group-addon">Agreement</div>                                                                                              ' +
             '<div class="form-control" style="height: auto;">                                                                                            ' +
             '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>                                       ' +
-            '<label><input type="checkbox" name="membersAgreement">I agree</label>                                                                       ' +
+            '<label><input type="checkbox" name="membersAgreement" required>I agree</label>                                                                       ' +
             '<HR style="margin-top: 3px; margin-bottom: 3px;">                                                                                           ' +
             '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>              ' +
-            '<label><input type="checkbox" name="collectionAndUse">I agree</label>                                                                       ' +
+            '<label><input type="checkbox" name="collectionAndUse" required>I agree</label>                                                                       ' +
             '</div>                                                                                                                                      ' +
             '</div>                                                                                                                                      ' +
+            '<input type="submit" id="user-signup-submit" class="hidden">                                                                                                                                      ' +
             '</form>');
         var confirmBtn = document.querySelector('#modal-confirm-btn');
         confirmBtn.setAttribute('onclick', 'ConfirmSignUp();');
     }
+
+    function confirmPwd(element) {
+        var pwd = document.querySelector('#user-signup-pwd');
+        if (pwd.value === element.value) {
+            alert('성공');
+        } else {
+            element.value = '';
+        }
+
+
+    }
+
 
     function addUploadImage(event) {
         for (var image of event.target.files) {
@@ -144,10 +156,13 @@
     }
 
     function ConfirmSignUp() {
-        document.querySelector("#user-signup").submit();
-        document.querySelector("#modal-close-btn").click();
+        document.querySelector("#user-signup-submit").click();
+// 성공값 반환
+        if(true){
+            document.querySelector("#modal-close-btn").click();
 
-        window.alert('completed upload!');
+            window.alert('completed upload!');
+        }
     }
 
 
