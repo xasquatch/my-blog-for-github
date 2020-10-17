@@ -51,10 +51,6 @@
     transition: 1s all;
 }
 
-#board-view-contents{
-    font-size: 1.5em;
-}
-
 .board-list-title{
     display: flex;
     justify-content: space-between;
@@ -69,4 +65,10 @@
 .board-list-contents>table td>img{
     width: 5rem;
     max-height: 5rem;
+}
+
+.board-list-count button{
+    min-width: 30px !important;
+    height: 30px !important;
+
 }

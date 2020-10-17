@@ -3,7 +3,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <c:set var="mainContents" value="${requestScope.mainContents}"/>
 
-<aside id="main-aside" class="forward-to-top">
+<aside id="main-aside" class="forward-to-top dot-key">
     <c:choose>
         <c:when test="${mainContents == 'board-view-detail' || mainContents == 'board-view-list' || mainContents == 'board-create'}">
             <h2 style="font-weight: bold;">

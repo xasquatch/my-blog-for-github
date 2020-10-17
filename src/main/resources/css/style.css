@@ -7,8 +7,12 @@
     url(../font/DungGeunMo.otf) format('opentype'),
     url(../font/DungGeunMo.eot);
 }
-
+/*
 *:not(#board-contents-fake):not(.glyphicon):not(font):not(b):not(i):not(blockquote):not(span):not(div) {
+    font-family: Dotkey, monospace;
+}
+*/
+.dot-key{
     font-family: Dotkey, monospace;
 }
 
@@ -19,6 +23,8 @@
     grid-template-columns: 200px 1fr;
     top: 0;
     padding: 10px;
+    background-color: white;
+    width: 100%;
 }
 
 #header-left {
@@ -79,7 +85,7 @@
         display: block;
         position: fixed;
         padding: 100px 5vw 20px 5vw;
-        width: 100vw;
+        width: 100%;
         height: 100%;
         box-sizing: border-box;
         background-color: rgba(0, 0, 0, 0.5);

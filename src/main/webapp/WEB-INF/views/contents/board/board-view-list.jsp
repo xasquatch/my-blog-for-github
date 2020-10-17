@@ -56,7 +56,12 @@
             </tbody>
         </table>
     </article>
-    <div class="btn-toolbar" role="toolbar" style="margin: 0 auto">
+    <div class="btn-toolbar board-list-count" role="toolbar" style="margin: 0 auto">
+        <div class="btn-group" role="group" aria-label="most left group">
+            <button type="button" class="btn btn-default" onclick="location.href='#'">
+                <span class="glyphicon glyphicon-backward"></span>
+            </button>
+        </div>
         <div class="btn-group" role="group" aria-label="left group">
             <button type="button" class="btn btn-default" onclick="location.href='#'">
                 <span class="glyphicon glyphicon-chevron-left"></span>
@@ -82,7 +87,11 @@
         <div class="btn-group" role="group" aria-label="right group">
             <button type="button" class="btn btn-default" onclick="location.href='#'">
                 <span class="glyphicon glyphicon-chevron-right"></span>
-
+            </button>
+        </div>
+        <div class="btn-group" role="group" aria-label="most right group">
+            <button type="button" class="btn btn-default" onclick="location.href='#'">
+                <span class="glyphicon glyphicon-forward"></span>
             </button>
         </div>
     </div>

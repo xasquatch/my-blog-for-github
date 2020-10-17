@@ -4,12 +4,12 @@
 <%@ taglib prefix="sForm" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<section id="home-banner">
+<section id="home-banner" class="dot-key">
 
     something special
 
 </section>
-<section class="wrap-min">
+<section class="wrap-min dot-key">
 
 
     <form class="form-horizontal" id="home-login">

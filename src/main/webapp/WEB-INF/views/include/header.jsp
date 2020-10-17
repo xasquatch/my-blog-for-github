@@ -23,7 +23,7 @@
 </head>
 <body>
 
-<header id="main-header">
+<header id="main-header" class="dot-key">
     <a href="${path}/" id="header-left">
         <img src="${path}/img/Xasquatch.png"/>
         <h1 id="main-header-logo"></h1>

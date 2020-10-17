@@ -4,7 +4,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade dot-key" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -26,7 +26,7 @@
 <div id="main-footer-proto">
     <BR><BR>
 </div>
-<footer id="main-footer">
+<footer id="main-footer" class="dot-key">
     Develop by Xasquatch, https://xasquatch.net
 </footer>
 
