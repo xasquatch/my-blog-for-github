@@ -127,34 +127,53 @@ var textScript = {
 
 var ajax = {
 
-    submit: function (method, url, contentsType) {
-        var XMLHttpRequest = new XMLHttpRequest();
-        var xhr = ajax.addEvent(XMLHttpRequest);
+    SetContentsType: function (inputContentsType, contentsType) {
+        if (inputContentsType === '' || inputContentsType === null) {
+            contentsType = 'application/x-www-form-urlencoded; charset=utf-8';
+
+        } else if (inputContentsType === 'form') {
+            contentsType = 'multipart/form-data; charset=utf-8';
+
+        } else if (inputContentsType === 'json') {
+            contentsType = 'application/json; charset=utf-8';
+
+        }
+        return contentsType;
+    },
+
+    json : 'application/json',
+    form : 'multipart/form-data',
+
+    submit: function (method, url, inputContentsType, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr = ajax.addEvent(xhr);
 
         var result = null;
         var contentsType = null;
 
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === xhr.DONE && (xhr.status === 200 || xhr.status === 201)) {
-                result = xhr.response;
+            if (xhr.readyState === xhr.DONE) {
+                if (xhr.status === 200 || xhr.status === 201) {
+                    result = xhr.response;
+                    callback(result);
 
-            } else {
-                result = xhr.response;
+                } else {
+                    result = xhr.response;
+                    alert('잘못 된 접근 입니다 다시 시도해주세요');
+                }
             }
-
         };
 
         if (method.toUpperCase() === 'GET') {
             xhr.open(method, url);
         } else if (method.toUpperCase() === 'POST') {
             method = 'POST';
+            contentsType = ajax.SetContentsType(inputContentsType, contentsType);
             xhr.open(method, url);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('Content-Type', contentsType);
         }
 
         xhr.send();
-        return result;
-
     },
 
     addEvent: function (XMLHttpRequest) {
