@@ -95,23 +95,23 @@
 
     function singUp() {
         modal.changeForm('Sign Up',
-            '<form class="form-horizontal" id="user-signup" action="${path}/user/sign-up" method="POST">                                                 ' +
+            '<form class="form-horizontal" id="user-signup" action="${path}/user/sign-up" method="POST" enctype="multipart/form-data">                   ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Email</div>                                                                                                  ' +
-            '<input class="form-control" type="email" name="email" placeholder="xxxxxxx@gmail.com" required">                                                                   ' +
+            '<input class="form-control" type="email" name="email" placeholder="xxxxxxx@gmail.com" required>                                             ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Password</div>                                                                                               ' +
-            '<input class="form-control" type="password" id="user-signup-pwd" name="pwd" required placeholder="your Password">                                                                    ' +
-            '<input class="form-control" type="password" name="pwdConfirm" placeholder="Password Confirm" required onchange="confirmPwd(this)">                                                                 ' +
+            '<input class="form-control" type="password" id="user-signup-pwd" name="pwd" required placeholder="your Password">                           ' +
+            '<input class="form-control" type="password" name="pwdConfirm" placeholder="Password Confirm" required onchange="confirmPwd(this)">          ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Name</div>                                                                                                   ' +
-            '<input class="form-control" type="text" name="name" placeholder="ex) Jordan" required>                                                                           ' +
+            '<input class="form-control" type="text" name="name" placeholder="ex) Jordan" required>                                                      ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Profile Image</div>                                                                                          ' +
-            '<input type="file" class="form-control" name="img" required onchange="addUploadImage(event)";>                                                                  ' +
+            '<input type="file" class="form-control" name="img" onchange="addUploadImage(event, this)">                                                  ' +
             '<div class="form-control" style="height: auto;">                                                                                            ' +
             '<img id="user-signup-img" src="${path}/img/login/default-profile.png" alt="Default Image" style="max-width:100%">                           ' +
             '</div>                                                                                                                                      ' +
@@ -125,8 +125,7 @@
             '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>              ' +
             '<label><input type="checkbox" name="collectionAndUse" required>I agree</label>                                                                       ' +
             '</div>                                                                                                                                      ' +
-            '</div>                                                                                                                                      ' +
-            '<input type="submit" id="user-signup-submit" class="hidden">                                                                                                                                      ' +
+            '</div>                                                                                                                                                                                            ' +
             '</form>');
         var confirmBtn = document.querySelector('#modal-confirm-btn');
         confirmBtn.setAttribute('onclick', 'ConfirmSignUp();');
@@ -135,7 +134,6 @@
     function confirmPwd(element) {
         var pwd = document.querySelector('#user-signup-pwd');
         if (pwd.value === element.value) {
-            alert('성공');
         } else {
             element.value = '';
         }
@@ -144,26 +142,44 @@
     }
 
 
-    function addUploadImage(event) {
-        for (var image of event.target.files) {
-            var reader = new FileReader();
-            reader.onload = function (event) {
-                var img = document.querySelector("#user-signup-img");
-                img.setAttribute("src", event.target.result);
-            };
-            reader.readAsDataURL(image);
-        }
+    function addUploadImage(event, element) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var img = document.querySelector('#user-signup-img');
+            img.setAttribute('src', event.target.result);
+            element.setAttribute('src', event.target.result);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+        console.log(element);
+
     }
 
     function ConfirmSignUp() {
-        document.querySelector("#user-signup-submit").click();
-// 성공값 반환
-        if(true){
-            document.querySelector("#modal-close-btn").click();
+        document.querySelector("#user-signup").submit();
 
-            window.alert('completed upload!');
-        }
     }
 
+    function serializedForm(targetForm) {
+        var aParams = new Array();
+
+        for (var i = 0; i < targetForm.elements.length; i++) {
+            var data = encodeURIComponent(targetForm.elements[i].name);
+            data += "=";
+            data += encodeURIComponent(targetForm.elements[i].value);
+            aParams.push(data)
+        }
+
+        return aParams.join("&");
+    }
+
+
+    function signUpAjax() {
+        ajax.submit('POST', '${path}/user/sign-up', '', function (result) {
+
+            alert(result);
+
+        }, serializedForm(document.querySelector("#user-signup")));
+
+    }
 
 </script>

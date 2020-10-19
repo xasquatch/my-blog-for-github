@@ -127,24 +127,24 @@ var textScript = {
 
 var ajax = {
 
-    SetContentsType: function (inputContentsType, contentsType) {
-        if (inputContentsType === '' || inputContentsType === null) {
-            contentsType = 'application/x-www-form-urlencoded; charset=utf-8';
+    json : 'application/json; charset=utf-8',
+    form : 'multipart/form-data; charset=utf-8',
 
-        } else if (inputContentsType === 'form') {
-            contentsType = 'multipart/form-data; charset=utf-8';
+    SetContentsType: function (inputContentsType) {
+        var contentsType = 'application/x-www-form-urlencoded; charset=utf-8';
 
-        } else if (inputContentsType === 'json') {
-            contentsType = 'application/json; charset=utf-8';
+        if (inputContentsType.toUpperCase() === 'FORM') {
+            contentsType = ajax.form;
+
+        } else if (inputContentsType.toUpperCase() === 'JSON') {
+            contentsType = ajax.json;
 
         }
         return contentsType;
     },
 
-    json : 'application/json',
-    form : 'multipart/form-data',
 
-    submit: function (method, url, inputContentsType, callback) {
+    submit: function (method, url, inputContentsType, callback, sendData) {
         var xhr = new XMLHttpRequest();
         xhr = ajax.addEvent(xhr);
 
@@ -166,14 +166,15 @@ var ajax = {
 
         if (method.toUpperCase() === 'GET') {
             xhr.open(method, url);
+            xhr.send();
         } else if (method.toUpperCase() === 'POST') {
             method = 'POST';
-            contentsType = ajax.SetContentsType(inputContentsType, contentsType);
+            contentsType = ajax.SetContentsType(inputContentsType);
             xhr.open(method, url);
-            xhr.setRequestHeader('Content-Type', contentsType);
+            xhr.setRequestHeader('Content-type', contentsType);
+            xhr.send(sendData);
         }
 
-        xhr.send();
     },
 
     addEvent: function (XMLHttpRequest) {

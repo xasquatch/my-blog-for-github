@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 // 스캔할 패키지를 지정한다.
 @ComponentScan("net.xasquatch.myblog.controller")
-@ComponentScan("net.xasquatch.myblog.repository")
 @ComponentScan("net.xasquatch.myblog.service")
 @ComponentScan("net.xasquatch.myblog.model")
 public class ServletAppContext implements WebMvcConfigurer{
