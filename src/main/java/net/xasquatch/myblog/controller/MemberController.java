@@ -28,7 +28,7 @@ public class MemberController {
         boolean signUpResult = memberService.save(member);
 
         System.out.println("member:"+member.toString());
-        System.out.println("request = " + request.getParameter("email"));
+        System.out.println("request = " + (request.getParameter("img").equals("")));
         model.addAttribute("mainContents", "home");
 
         if (signUpResult) {

@@ -128,7 +128,7 @@
             '</div>                                                                                                                                                                                            ' +
             '</form>');
         var confirmBtn = document.querySelector('#modal-confirm-btn');
-        confirmBtn.setAttribute('onclick', 'ConfirmSignUp();');
+        confirmBtn.setAttribute('onclick', 'signUpAjax();');
     }
 
     function confirmPwd(element) {
