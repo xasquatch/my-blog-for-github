@@ -3,23 +3,23 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <section class="dot-key">
-    <form class="form-horizontal" id="user-signup" action="${path}/user/update" method="POST">
+    <form class="form-horizontal" id="user-signup" action="${path}/user/update" enctype="multipart/form-data" method="POST">
         <div class="input-group">
             <div class="input-group-addon">Email</div>
-            <input class="form-control" type="email" placeholder="xxxxxxx@gmail.com" value="" required>
+            <input class="form-control" type="email" name="email" placeholder="xxxxxxx@gmail.com" value="" readonly>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Password</div>
-            <input class="form-control" type="password" placeholder="your Password" required>
-            <input class="form-control" type="password" placeholder="Password Confirm" required>
+            <input class="form-control" type="password" name="pwd" placeholder="your Password" required>
+            <input class="form-control" type="password" name="pwdConfirm" placeholder="Password Confirm" required>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Name</div>
-            <input class="form-control" type="text" placeholder="ex) Jordan" required>
+            <input class="form-control" type="text" name="name" placeholder="ex) Jordan" required>
         </div>
         <div class="input-group">
-            <div class="input-group-addon">Profile Image</div >
-            <input type="file" class="form-control" onchange="addUploadImage(event);" required>
+            <div class="input-group-addon">Profile Image</div>
+            <input type="file" class="form-control" name="img" onchange="addUploadImage(event);">
             <div class="form-control" style="height: auto;">
                 <img id="user-signup-img" src="${path}/img/login/default-profile.png" alt="Default Image" style="max-width:100%">
             </div>
@@ -34,13 +34,12 @@
 
 <script>
     function addUploadImage(event) {
-        for (var image of event.target.files) {
-            var reader = new FileReader();
-            reader.onload = function (event) {
-                var img = document.querySelector("#user-signup-img");
-                img.setAttribute("src", event.target.result);
-            };
-            reader.readAsDataURL(image);
-        }
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var img = document.querySelector("#user-signup-img");
+            img.setAttribute("src", event.target.result);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+
     }
 </script>

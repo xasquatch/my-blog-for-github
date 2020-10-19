@@ -6,10 +6,13 @@ import net.xasquatch.myblog.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletRequest;
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -19,41 +22,78 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @PostMapping("/sign-up")
-    @ResponseBody
-    public String signUp(Model model, Member member, ServletRequest request) {
-        log.debug("Controller {}: {}", "Member", "signUp");
-
-
-        boolean signUpResult = memberService.save(member);
-
-        System.out.println("member:"+member.toString());
-        System.out.println("request = " + (request.getParameter("img").equals("")));
-        model.addAttribute("mainContents", "home");
-
-        if (signUpResult) {
-            return "success";
-
-        } else {
-            return "fail";
-
-        }
-
-    }
-
-    @PostMapping("/update")
-    public String update(Model model, @ModelAttribute Member user, @RequestPart(required = false) MultipartFile[] file) {
-        log.debug("Controller {}: {}", "Member", "update");
-        model.addAttribute("mainContents", "home");
-
-        return "redirect:/user/information";
-    }
-
+/*TODO: infomation페이지 이동*/
     @RequestMapping(value = "/information", method = {RequestMethod.GET, RequestMethod.POST})
     public String info(Model model) {
         log.debug("Controller {}: {}", "Member", "information");
         model.addAttribute("mainContents", "user-info");
 
         return "index";
+    }
+
+
+
+/*TODO:로그인*/
+    @PostMapping("/login")
+    public String login(Model model, Member member) {
+        log.debug("Controller {}: {}", "login", "signUp");
+
+        boolean result = false;
+        result = memberService.login(member);
+
+        if (result) {
+            model.addAttribute("mainContents", "dashboard");
+            model.addAttribute("locationPage", "/");
+            return "index";
+
+        } else {
+            model.addAttribute("systemMsg", "[로그인 실패] 알 수 없는 이유로 로그인에 실패하였습니다. 다시 시도해주시기바랍니다.");
+            model.addAttribute("locationPage", "/");
+            return "forward:/";
+
+        }
+    }
+
+/*TODO:회원가입*/
+    @PostMapping("/sign-up")
+    public String signUp(Model model, Member member) {
+        log.debug("Controller {}: {}", "Member", "signUp");
+
+        boolean result = false;
+        result = memberService.save(member);
+
+        System.out.println("member:" + member.toString());
+
+        if (result) {
+            model.addAttribute("systemMsg", "[회원가입 완료] 로그인 후 서비스 이용바랍니다.");
+            model.addAttribute("locationPage", "/");
+        } else {
+            model.addAttribute("systemMsg", "[회원가입 실패] 알 수 없는 이유로 회원가입에 실패하였습니다. 다시 시도해주시기바랍니다.");
+            model.addAttribute("locationPage", "/");
+        }
+            return "forward:/";
+    }
+
+/*TODO:회원 정보수정*/
+    @PostMapping("/update")
+    public String update(Model model, @RequestParam("img") MultipartFile file) throws IOException {
+        Member member = Member.builder().name("홍길").pwd("123").email("이메일").build();
+
+        log.debug("Controller {}: {}", "member update", member.toString()+file.isEmpty());
+
+        boolean result = false;
+        result = memberService.update(member, file);
+
+
+        if (result) {
+            model.addAttribute("systemMsg", "[회원정보 수정완료] 수정된 내 정보 페이지로 이동합니다.");
+        }else{
+            model.addAttribute("systemMsg", "[회원정보 실패] 내 정보 페이지로 이동합니다.");
+        }
+        model.addAttribute("locationPage", "/user/information");
+
+
+        return "forward:/user/information";
+
     }
 }

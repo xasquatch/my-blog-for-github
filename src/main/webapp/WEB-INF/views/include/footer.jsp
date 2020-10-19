@@ -23,6 +23,16 @@
     </div>
 </div>
 
+<c:if test="${requestScope.systemMsg != null}">
+    <script>
+        window.alert('${requestScope.systemMsg}');
+        <c:if test="${requestScope.locationPage != null}">
+        location.href='${path}${requestScope.locationPage}';
+        </c:if>
+    </script>
+</c:if>
+
+
 <div id="main-footer-proto">
     <BR><BR>
 </div>

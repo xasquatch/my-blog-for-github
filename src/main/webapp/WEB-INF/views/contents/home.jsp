@@ -12,7 +12,7 @@
 <section class="wrap-min dot-key">
 
 
-    <form class="form-horizontal" id="home-login">
+    <form class="form-horizontal" id="home-login" action="${path}/user/login" method="POST">
         <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
@@ -95,7 +95,7 @@
 
     function singUp() {
         modal.changeForm('Sign Up',
-            '<form class="form-horizontal" id="user-signup" action="${path}/user/sign-up" method="POST" enctype="multipart/form-data">                   ' +
+            '<form class="form-horizontal" id="user-signup" action="${path}/user/sign-up" method="POST">                                                 ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Email</div>                                                                                                  ' +
             '<input class="form-control" type="email" name="email" placeholder="xxxxxxx@gmail.com" required>                                             ' +
@@ -110,13 +110,6 @@
             '<input class="form-control" type="text" name="name" placeholder="ex) Jordan" required>                                                      ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
-            '<div class="input-group-addon">Profile Image</div>                                                                                          ' +
-            '<input type="file" class="form-control" name="img" onchange="addUploadImage(event, this)">                                                  ' +
-            '<div class="form-control" style="height: auto;">                                                                                            ' +
-            '<img id="user-signup-img" src="${path}/img/login/default-profile.png" alt="Default Image" style="max-width:100%">                           ' +
-            '</div>                                                                                                                                      ' +
-            '</div>                                                                                                                                      ' +
-            '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Agreement</div>                                                                                              ' +
             '<div class="form-control" style="height: auto;">                                                                                            ' +
             '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>                                       ' +
@@ -126,9 +119,10 @@
             '<label><input type="checkbox" name="collectionAndUse" required>I agree</label>                                                                       ' +
             '</div>                                                                                                                                      ' +
             '</div>                                                                                                                                                                                            ' +
+            '<input type="submit" class="hidden" id="user-signup-submit">                                                                       ' +
             '</form>');
         var confirmBtn = document.querySelector('#modal-confirm-btn');
-        confirmBtn.setAttribute('onclick', 'signUpAjax();');
+        confirmBtn.setAttribute('onclick', 'ConfirmSignUp();');
     }
 
     function confirmPwd(element) {
@@ -141,23 +135,11 @@
 
     }
 
-
-    function addUploadImage(event, element) {
-        var reader = new FileReader();
-        reader.onload = function (event) {
-            var img = document.querySelector('#user-signup-img');
-            img.setAttribute('src', event.target.result);
-            element.setAttribute('src', event.target.result);
-        };
-        reader.readAsDataURL(event.target.files[0]);
-        console.log(element);
-
-    }
-
     function ConfirmSignUp() {
-        document.querySelector("#user-signup").submit();
+        document.querySelector("#user-signup-submit").click();
 
     }
+/*
 
     function serializedForm(targetForm) {
         var aParams = new Array();
@@ -171,15 +153,8 @@
 
         return aParams.join("&");
     }
+*/
 
 
-    function signUpAjax() {
-        ajax.submit('POST', '${path}/user/sign-up', '', function (result) {
-
-            alert(result);
-
-        }, serializedForm(document.querySelector("#user-signup")));
-
-    }
 
 </script>

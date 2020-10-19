@@ -3,14 +3,15 @@ package net.xasquatch.myblog.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+
 
 @Configuration
 public class RootAppContext {
 
     @Bean
-    public CommonsMultipartResolver fileUpload() {
-        return new CommonsMultipartResolver();
+    public StandardServletMultipartResolver fileUpload() {
+        return new StandardServletMultipartResolver();
     }
 
     @Bean
@@ -21,6 +22,4 @@ public class RootAppContext {
 
         return msg;
     }
-
-
 }
