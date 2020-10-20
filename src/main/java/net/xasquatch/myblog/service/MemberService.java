@@ -13,7 +13,7 @@ public interface MemberService {
 
     public boolean view(Member member);
 
-    public boolean update(Member member, MultipartFile file) throws IOException;
+    public boolean update(Member member);
 
     public boolean delete(Member member);
 

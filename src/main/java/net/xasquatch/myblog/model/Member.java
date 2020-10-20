@@ -2,6 +2,7 @@ package net.xasquatch.myblog.model;
 
 import lombok.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Builder
 @Setter
@@ -16,5 +17,6 @@ public class Member {
     public String pwd;
     public String name;
     public String img;
+    public MultipartFile imgFile;
 
 }

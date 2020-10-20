@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 // 스캔할 패키지를 지정한다.
 @ComponentScan("net.xasquatch.myblog.controller")
 @ComponentScan("net.xasquatch.myblog.service")
-@ComponentScan("net.xasquatch.myblog.model")
+@ComponentScan("net.xasquatch.myblog.repository")
 public class ServletAppContext implements WebMvcConfigurer{
 	// Controller의 메서드가 반환하는 jsp의 이름 앞뒤에 경로와 확장자를 붙혀주도록 설정한다.
 	@Override
@@ -33,14 +33,9 @@ public class ServletAppContext implements WebMvcConfigurer{
 //		registry.addResourceHandler("/js/**").addResourceLocations("/js/");
 		registry.addResourceHandler("/**").addResourceLocations("/resources/");
 	}
+
+
+
+
+
 }
-
-
-
-
-
-
-
-
-
-

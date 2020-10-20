@@ -22,4 +22,12 @@ public class RootAppContext {
 
         return msg;
     }
+
+    @Bean
+    public StandardServletMultipartResolver multipartResolver(){
+
+        return new StandardServletMultipartResolver();
+    }
+
+
 }

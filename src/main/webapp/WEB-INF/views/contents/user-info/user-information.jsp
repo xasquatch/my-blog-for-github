@@ -19,7 +19,7 @@
         </div>
         <div class="input-group">
             <div class="input-group-addon">Profile Image</div>
-            <input type="file" class="form-control" name="img" onchange="addUploadImage(event);">
+            <input type="file" class="form-control" name="imgFile" onchange="addUploadImage(event);">
             <div class="form-control" style="height: auto;">
                 <img id="user-signup-img" src="${path}/img/login/default-profile.png" alt="Default Image" style="max-width:100%">
             </div>

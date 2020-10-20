@@ -76,13 +76,12 @@ public class MemberController {
 
 /*TODO:회원 정보수정*/
     @PostMapping("/update")
-    public String update(Model model, @RequestParam("img") MultipartFile file) throws IOException {
-        Member member = Member.builder().name("홍길").pwd("123").email("이메일").build();
+    public String update(Model model, Member member){
 
-        log.debug("Controller {}: {}", "member update", member.toString()+file.isEmpty());
+        log.debug("Controller {}: {}", "member update", member.toString());
 
         boolean result = false;
-        result = memberService.update(member, file);
+        result = memberService.update(member);
 
 
         if (result) {
