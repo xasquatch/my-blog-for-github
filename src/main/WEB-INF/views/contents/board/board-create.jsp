@@ -119,7 +119,10 @@
         <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
         <input type="text" id="board-title-real" name="title" class="hidden" maxlength="50">
         <textarea id="board-contents-real" name="contents" class="hidden"></textarea>
-        <input type="file" id="board-files-real" name="imgFiles" class="btn btn-default hidden" multiple>
+<%--        <input type="file" id="board-files-real" name="imgFiles" class="btn btn-default hidden" multiple>--%>
+        <div id="board-files-real">
+
+        </div>
         <input id="board-upload-btn" class="btn btn-danger" type="button" value="upload" onclick="board.upload()">
         <input id="board-reset-btn" class="btn btn-default" type="reset" value="reset" onclick="board.reset()">
         <input id="board-cancel-btn" class="btn btn-default" type="button" value="cancel"
@@ -157,7 +160,12 @@
 
     function ConfirmUploadImages() {
         document.querySelector('#board-contents-image').innerHTML += document.querySelector('#board-upload').innerHTML;
-        document.querySelector('#board-upload-files').cloneNode(true);
+        var cloneFileTag = document.querySelector('#board-upload-files').cloneNode(true);
+        var realFilesTag = document.querySelector('#board-files-real')
+        cloneFileTag.setAttribute('name','imgFiles');
+        cloneFileTag.classList.add('hidden');
+        realFilesTag.appendChild(cloneFileTag);
+        // document.querySelector('#board-files-real')
         document.querySelector('#modal-close-btn').click();
         SettingInsertImage();
     }
