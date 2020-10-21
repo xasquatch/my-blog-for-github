@@ -3,12 +3,9 @@ package net.xasquatch.myblog.service.implement;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.MemberService;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -40,9 +37,10 @@ public class MemberServiceImpl implements MemberService {
         MultipartFile file = member.getImgFile();
 
         log.info("update: {}", member.toString());
-
-        try (InputStream fin = file.getInputStream();
-             OutputStream fos = new FileOutputStream(new SimpleDateFormat("yyyyMMdd").format(new Date())+".jpg")) {
+        log.info("{}",System.getProperty("user.dir"));
+        try {
+            InputStream fin = file.getInputStream();
+             OutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"/"+member.getName()+new SimpleDateFormat("yyyyMMdd").format(new Date())+".jpg");
             // 복사 파일명
 
             while (true) {

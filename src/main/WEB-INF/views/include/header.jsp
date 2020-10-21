@@ -7,6 +7,8 @@
     <meta charset="UTF-8">
     <meta name="keyword" content="github, blog">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
 
     <%--custom css --%>
     <link rel="stylesheet" href="${path}/css/style.css">
@@ -42,13 +44,14 @@
         <button type="button" class="btn btn-danger" onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/user/log-out'">
             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
         </button>
-
         <button type="button" class="btn btn-danger header-menu-btn" onclick="location.href='${path}/board/view/list'">
             <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
         </button>
         <button type="button" class="btn btn-danger header-menu-btn" onclick="location.href='${path}/user/information'">
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
         </button>
+
+
     </div>
 </header>
 <script>

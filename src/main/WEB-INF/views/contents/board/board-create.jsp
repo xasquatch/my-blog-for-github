@@ -121,7 +121,7 @@
         <textarea name="boardContents" id="board-contents-real" class="hidden"></textarea>
         <input id="board-upload-btn" class="btn btn-danger" type="button" value="upload" onclick="board.upload()">
         <input id="board-cancel-btn" class="btn btn-default" type="button" value="cancel"
-               onclick="board.save();location.href = '../../../../..';">
+               onclick="board.save();location.href = '../../../..';">
     </form>
 
 </section>

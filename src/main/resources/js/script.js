@@ -127,11 +127,11 @@ var textScript = {
 
 var ajax = {
 
-    json : 'application/json; charset=utf-8',
-    form : 'multipart/form-data; charset=utf-8',
+    json : 'application/json',
+    form : 'multipart/form-data',
 
     SetContentsType: function (inputContentsType) {
-        var contentsType = 'application/x-www-form-urlencoded; charset=utf-8';
+        var contentsType = 'application/x-www-form-urlencoded';
 
         if (inputContentsType.toUpperCase() === 'FORM') {
             contentsType = ajax.form;

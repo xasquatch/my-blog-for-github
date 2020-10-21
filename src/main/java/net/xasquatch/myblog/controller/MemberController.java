@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+
 @Slf4j
 @Controller
 @RequestMapping("/user")
@@ -56,7 +59,7 @@ public class MemberController {
         result = memberService.login(member);
 
         if (result) {
-            model.addAttribute("mainContents", "????????");
+            model.addAttribute("mainContents", "main");
             model.addAttribute("locationPage", "/");
             return "index";
 
@@ -70,13 +73,13 @@ public class MemberController {
 
     /*TODO:회원가입*/
     @PostMapping("/sign-up")
-    public String signUp(Model model, Member member) {
+    public String signUp(Model model, Member member){
+
         log.debug("Controller {}: {}", "Member", "signUp");
+
 
         boolean result = false;
         result = memberService.save(member);
-
-        System.out.println("member:" + member.toString());
 
         if (result) {
             model.addAttribute("systemMsg", "[회원가입 완료] 로그인 후 서비스 이용바랍니다.");

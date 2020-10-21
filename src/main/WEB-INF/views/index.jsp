@@ -10,6 +10,10 @@
         <jsp:include page="contents/home.jsp"/>
 
     </c:when>
+    <c:when test="${mainContents == 'main'}">
+        <jsp:include page="contents/main.jsp"/>
+
+    </c:when>
 
 </c:choose>
 
