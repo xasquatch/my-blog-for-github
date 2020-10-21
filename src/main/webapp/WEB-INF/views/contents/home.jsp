@@ -6,7 +6,14 @@
 
 <section id="home-banner" class="dot-key">
 
-    something special
+    <script>
+        var banner = document.querySelector('#home-banner');
+        banner.style.backgroundImage = 'url("${path}/img/가자.gif")';
+        banner.style.backgroundPositionX = 'center';
+        banner.style.backgroundRepeat = 'no-repeat';
+        banner.style.backgroundSize = 'auto 30vh';
+        banner.style.height = '30vh';
+    </script>
 
 </section>
 <section class="wrap-min dot-key">
@@ -160,24 +167,21 @@
     }
 
 
+    /*
 
+        function serializedForm(targetForm) {
+            var aParams = new Array();
 
-/*
+            for (var i = 0; i < targetForm.elements.length; i++) {
+                var data = encodeURIComponent(targetForm.elements[i].name);
+                data += "=";
+                data += encodeURIComponent(targetForm.elements[i].value);
+                aParams.push(data)
+            }
 
-    function serializedForm(targetForm) {
-        var aParams = new Array();
-
-        for (var i = 0; i < targetForm.elements.length; i++) {
-            var data = encodeURIComponent(targetForm.elements[i].name);
-            data += "=";
-            data += encodeURIComponent(targetForm.elements[i].value);
-            aParams.push(data)
+            return aParams.join("&");
         }
-
-        return aParams.join("&");
-    }
-*/
-
+    */
 
 
 </script>
