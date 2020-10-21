@@ -32,6 +32,15 @@
         <c:when test="${mainContents == 'user-info'}">
             <jsp:include page="contents/user-info/user-information.jsp"/>
         </c:when>
+
+        <c:when test="${mainContents == 'user-dashBoard'}">
+            <jsp:include page="contents/user-info/user-dashBoard.jsp"/>
+        </c:when>
+
+        <c:when test="${mainContents == 'user-log-out'}">
+            <jsp:include page="contents/user-info/user-log-out.jsp"/>
+        </c:when>
+
     </c:choose>
 
 </section>

@@ -4,45 +4,34 @@
 <c:set var="mainContents" value="${requestScope.mainContents}"/>
 
 <aside id="main-aside" class="forward-to-top dot-key">
-    <c:choose>
-        <c:when test="${mainContents == 'board-view-detail' || mainContents == 'board-view-list' || mainContents == 'board-create'}">
-            <h2 style="font-weight: bold;">
-                Board<BR>Management
-            </h2>
-            <hr>
-            <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
-                <li role="presentation">
-                    <a href="${path}/board/create">Write on a Blog</a>
-                </li>
-                <li role="presentation">
-                    <a href="${path}/board/view/list">My Writing List</a>
-                </li>
-                <li role="presentation">
-                    <a href="#">.beta</a>
-                </li>
-            </ul>
-        </c:when>
-
-        <c:when test="${mainContents == 'user-info'}">
-            <h2 style="font-weight: bold;">
-                My Page
-            </h2>
-            <hr>
-            <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
-                <li role="presentation">
-                    <a href="${path}/user/information">My Information</a>
-                </li>
-                <li role="presentation">
-                    <a href="#">.beta</a>
-                </li>
-                <li role="presentation">
-                    <a href="#">.beta</a>
-                </li>
-            </ul>
-        </c:when>
-
-    </c:choose>
-
+    <c:if test="${mainContents != 'home' && mainContents != 'user-log-out' }">
+    <h2 style="font-weight: bold;">
+        Board<BR>Management
+    </h2>
+    <hr>
+    <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
+        <li role="presentation">
+            <a href="${path}/board/create">Write on a Blog</a>
+        </li>
+        <li role="presentation">
+            <a href="${path}/board/view/list">My Writing List</a>
+        </li>
+    </ul>
+    <BR>
+    <BR>
+    <h2 style="font-weight: bold;">
+        My Page
+    </h2>
+    <hr>
+    <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
+        <li role="presentation">
+            <a href="${path}/user/information">Information</a>
+        </li>
+        <li role="presentation">
+            <a href="${path}/user/dashBoard">DashBoard</a>
+        </li>
+    </ul>
+    </c:if>
 </aside>
 
 

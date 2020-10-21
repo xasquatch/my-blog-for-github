@@ -95,7 +95,7 @@
 
     function singUp() {
         modal.changeForm('Sign Up',
-            '<form class="form-horizontal" id="user-signup" action="${path}/user/sign-up" method="POST">                                                 ' +
+            '<form class="form-horizontal" id="user-signup" action="${path}/user/sign-up" method="POST"  enctype="multipart/form-data">                  ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Email</div>                                                                                                  ' +
             '<input class="form-control" type="email" name="email" placeholder="xxxxxxx@gmail.com" required>                                             ' +
@@ -108,6 +108,13 @@
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Name</div>                                                                                                   ' +
             '<input class="form-control" type="text" name="name" placeholder="ex) Jordan" required>                                                      ' +
+            '</div>                                                                                                                                      ' +
+            '<div class="input-group">                                                                                                                   ' +
+            '<div class="input-group-addon">Profile Image</div>                                                                                          ' +
+            '<input type="file" class="form-control" name="imgFile" onchange="addUploadImage(event, this)">                                                  ' +
+            '<div class="form-control" style="height: auto;">                                                                                            ' +
+            '<img id="user-signup-img" src="${path}/img/login/default-profile.png" alt="Default Image" style="max-width:100%">                           ' +
+            '</div>                                                                                                                                      ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Agreement</div>                                                                                              ' +
@@ -136,9 +143,25 @@
     }
 
     function ConfirmSignUp() {
-        document.querySelector("#user-signup-submit").click();
+        document.querySelector('#user-signup-submit').click();
 
     }
+
+    function addUploadImage(event, element) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var img = document.querySelector('#user-signup-img');
+            img.setAttribute('src', event.target.result);
+            element.setAttribute('src', event.target.result);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+        console.log(element);
+
+    }
+
+
+
+
 /*
 
     function serializedForm(targetForm) {

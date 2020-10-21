@@ -9,10 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -22,7 +18,7 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-/*TODO: infomation페이지 이동*/
+    /*TODO: infomation페이지 이동*/
     @RequestMapping(value = "/information", method = {RequestMethod.GET, RequestMethod.POST})
     public String info(Model model) {
         log.debug("Controller {}: {}", "Member", "information");
@@ -31,9 +27,27 @@ public class MemberController {
         return "index";
     }
 
+    /*TODO: dashBoard페이지 이동*/
+    @RequestMapping(value = "/dashBoard", method = {RequestMethod.GET, RequestMethod.POST})
+    public String dashBoard(Model model) {
+        log.debug("Controller {}: {}", "Member", "dashBoard");
+        model.addAttribute("mainContents", "user-dashboard");
+
+        return "index";
+    }
 
 
-/*TODO:로그인*/
+    /*TODO: logOut페이지 이동*/
+    @RequestMapping(value = "/log-out", method = {RequestMethod.GET, RequestMethod.POST})
+    public String logOut(Model model) {
+        log.debug("Controller {}: {}", "Member", "log-out");
+        model.addAttribute("mainContents", "user-log-out");
+
+        return "index";
+    }
+
+
+    /*TODO:로그인*/
     @PostMapping("/login")
     public String login(Model model, Member member) {
         log.debug("Controller {}: {}", "login", "signUp");
@@ -42,7 +56,7 @@ public class MemberController {
         result = memberService.login(member);
 
         if (result) {
-            model.addAttribute("mainContents", "dashboard");
+            model.addAttribute("mainContents", "????????");
             model.addAttribute("locationPage", "/");
             return "index";
 
@@ -54,7 +68,7 @@ public class MemberController {
         }
     }
 
-/*TODO:회원가입*/
+    /*TODO:회원가입*/
     @PostMapping("/sign-up")
     public String signUp(Model model, Member member) {
         log.debug("Controller {}: {}", "Member", "signUp");
@@ -71,12 +85,12 @@ public class MemberController {
             model.addAttribute("systemMsg", "[회원가입 실패] 알 수 없는 이유로 회원가입에 실패하였습니다. 다시 시도해주시기바랍니다.");
             model.addAttribute("locationPage", "/");
         }
-            return "forward:/";
+        return "forward:/";
     }
 
-/*TODO:회원 정보수정*/
+    /*TODO:회원 정보수정*/
     @PostMapping("/update")
-    public String update(Model model, Member member){
+    public String update(Model model, Member member) {
 
         log.debug("Controller {}: {}", "member update", member.toString());
 
@@ -86,7 +100,7 @@ public class MemberController {
 
         if (result) {
             model.addAttribute("systemMsg", "[회원정보 수정완료] 수정된 내 정보 페이지로 이동합니다.");
-        }else{
+        } else {
             model.addAttribute("systemMsg", "[회원정보 실패] 내 정보 페이지로 이동합니다.");
         }
         model.addAttribute("locationPage", "/user/information");

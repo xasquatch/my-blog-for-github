@@ -79,8 +79,16 @@
 #mobile-hamburger {
     display: none;
 }
+@media (max-width: 600px) {
+
+
+}
 
 @media (max-width: 1200px) {
+    .header-menu-btn{
+        display: none !important;
+    }
+
     #main-aside {
         display: block;
         position: fixed;
@@ -96,7 +104,6 @@
         left: 0;
         text-align: center;
     }
-
     .forward-to-top {
         bottom: -100%;
     }
