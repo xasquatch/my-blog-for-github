@@ -26,9 +26,9 @@ var board = {
         var realTitle = document.querySelector('#board-title-real');
         var realContents = document.querySelector('#board-contents-real');
 
-        realKeyword.value = board.fakeKeyword.value
-        realTitle.value = board.fakeTitle.value
-        realContents.innerHTML = board.fakeContents.innerHTML
+        realKeyword.value = board.fakeKeyword.value;
+        realTitle.value = board.fakeTitle.value;
+        realContents.innerHTML = board.fakeContents.innerHTML;
 
         board.save();
 
@@ -48,6 +48,14 @@ var board = {
         document.execCommand('fontName', false, fontName.value);
 
     },
+    reset: function () {
+        if (confirm('작성 중인 내용을 초기화 하시겠습니까?')) {
+            board.fakeKeyword.innerHTML = '';
+            board.fakeTitle.innerHTML = '';
+            board.fakeContents.innerHTML = '';
+        }
+
+    }
 }
 
 var textScript = {

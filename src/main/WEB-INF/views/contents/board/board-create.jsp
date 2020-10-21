@@ -108,7 +108,7 @@
             Insert To Click<BR>
             (click to add Images)
             <div id="board-contents-image" class="well">
-<%--image here--%>
+                <%--image here--%>
             </div>
         </div>
     </div>
@@ -116,12 +116,14 @@
 
     <%--실제 전송폼--%>
     <form action="${path}/board/upload" enctype="multipart/form-data" id="board-form-tag" method="POST" style="text-align: center;">
-        <input type="text" id="board-keyword-real" class="hidden" maxlength="25">
-        <input type="text" id="board-title-real" class="hidden" maxlength="50">
-        <textarea name="boardContents" id="board-contents-real" class="hidden"></textarea>
+        <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
+        <input type="text" id="board-title-real" name="title" class="hidden" maxlength="50">
+        <textarea id="board-contents-real" name="contents" class="hidden"></textarea>
+        <input type="file" id="board-files-real" name="imgFiles" class="btn btn-default hidden" multiple>
         <input id="board-upload-btn" class="btn btn-danger" type="button" value="upload" onclick="board.upload()">
+        <input id="board-reset-btn" class="btn btn-default" type="reset" value="reset" onclick="board.reset()">
         <input id="board-cancel-btn" class="btn btn-default" type="button" value="cancel"
-               onclick="board.save();location.href = '../../../..';">
+               onclick="if (confirm('현재창을 임시저장하고 나가시겠습니까?'))board.save();history.back();">
     </form>
 
 </section>
@@ -133,7 +135,7 @@
             '' +
             '</section>' +
             <%--'<form action="${path}/board/upload" enctype="multipart/form-data" method="POST">' +--%>
-            '<input type="file" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">'
+            '<input type="file" id="board-upload-files" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">'
             //+ '</form>'
         );
         var confirmBtn = document.querySelector('#modal-confirm-btn');
@@ -141,6 +143,7 @@
     }
 
     function addUploadImage(event) {
+        document.querySelector("#board-upload").innerHTML = '';
         for (var image of event.target.files) {
             var reader = new FileReader();
             reader.onload = function (event) {
@@ -153,8 +156,9 @@
     }
 
     function ConfirmUploadImages() {
-        document.querySelector("#board-contents-image").innerHTML += document.querySelector("#board-upload").innerHTML;
-        document.querySelector("#modal-close-btn").click();
+        document.querySelector('#board-contents-image').innerHTML += document.querySelector('#board-upload').innerHTML;
+        document.querySelector('#board-upload-files').cloneNode(true);
+        document.querySelector('#modal-close-btn').click();
         SettingInsertImage();
     }
 

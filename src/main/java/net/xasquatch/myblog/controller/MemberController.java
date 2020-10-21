@@ -3,6 +3,7 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.MemberService;
+import net.xasquatch.myblog.service.implement.MemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,7 @@ import java.io.UnsupportedEncodingException;
 public class MemberController {
 
     @Autowired
-    private MemberService memberService;
+    private MemberServiceImpl memberService;
 
     /*TODO: infomation페이지 이동*/
     @RequestMapping(value = "/information", method = {RequestMethod.GET, RequestMethod.POST})
@@ -77,7 +78,7 @@ public class MemberController {
 
         log.debug("Controller {}: {}", "Member", "signUp");
 
-
+        log.debug("SIze : {}",member.getImgFile().getSize());
         boolean result = false;
         result = memberService.save(member);
 
