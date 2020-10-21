@@ -1,11 +1,11 @@
 package net.xasquatch.myblog.config;
 
+import net.xasquatch.myblog.interceptor.ControllerInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.config.annotation.*;
 
 // Spring MVC 프로젝트에 관련된 설정을 하는 클래스
 @Configuration
@@ -15,7 +15,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan("net.xasquatch.myblog.controller")
 @ComponentScan("net.xasquatch.myblog.service")
 @ComponentScan("net.xasquatch.myblog.repository")
+@ComponentScan("net.xasquatch.myblog.interceptor")
 public class ServletAppContext implements WebMvcConfigurer{
+
+	@Autowired
+	private HandlerInterceptor controllerInterceptor;
+
+
+
 	// Controller의 메서드가 반환하는 jsp의 이름 앞뒤에 경로와 확장자를 붙혀주도록 설정한다.
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -34,8 +41,11 @@ public class ServletAppContext implements WebMvcConfigurer{
 		registry.addResourceHandler("/**").addResourceLocations("/resources/");
 	}
 
-
-
-
-
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(controllerInterceptor)
+				.addPathPatterns("/**")
+				.excludePathPatterns("/login");
+		WebMvcConfigurer.super.addInterceptors(registry);
+	}
 }
