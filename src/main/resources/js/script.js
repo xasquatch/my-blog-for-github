@@ -29,7 +29,7 @@ var board = {
         realKeyword.value = board.fakeKeyword.value;
         realTitle.value = board.fakeTitle.value;
         realContents.innerHTML = board.fakeContents.innerHTML;
-
+console.log(realContents.innerHTML);
         board.save();
 
         boardForm.submit();

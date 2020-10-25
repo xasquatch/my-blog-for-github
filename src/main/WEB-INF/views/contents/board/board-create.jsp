@@ -83,7 +83,10 @@
 
     <div id="board-contents-fake" class="form-control" contentEditable="true">
     </div>
+
     <script>
+    // TODO: 세션스토리지 내에 저장
+
         document.querySelector('#board-keyword-fake').value = sessionStorage.getItem('sessionKeywordData');
         document.querySelector('#board-title-fake').value = sessionStorage.getItem('sessionTitleData');
         document.querySelector('#board-contents-fake').innerHTML = sessionStorage.getItem('sessionContentsData');
@@ -137,9 +140,7 @@
             '<section class="thumbnail" id="board-upload">' +
             '' +
             '</section>' +
-            <%--'<form action="${path}/board/upload" enctype="multipart/form-data" method="POST">' +--%>
             '<input type="file" id="board-upload-files" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">'
-            //+ '</form>'
         );
         var confirmBtn = document.querySelector('#modal-confirm-btn');
         confirmBtn.setAttribute('onclick', 'ConfirmUploadImages();');
@@ -160,11 +161,11 @@
 
     function ConfirmUploadImages() {
         document.querySelector('#board-contents-image').innerHTML += document.querySelector('#board-upload').innerHTML;
-        var cloneFileTag = document.querySelector('#board-upload-files').cloneNode(true);
-        var realFilesTag = document.querySelector('#board-files-real')
-        cloneFileTag.setAttribute('name','imgFiles');
-        cloneFileTag.classList.add('hidden');
-        realFilesTag.appendChild(cloneFileTag);
+        // var cloneFileTag = document.querySelector('#board-upload-files').cloneNode(true);
+        // var realFilesTag = document.querySelector('#board-files-real');
+        // cloneFileTag.setAttribute('name','imgFiles');
+        // cloneFileTag.classList.add('hidden');
+        // realFilesTag.appendChild(cloneFileTag);
         // document.querySelector('#board-files-real')
         document.querySelector('#modal-close-btn').click();
         SettingInsertImage();

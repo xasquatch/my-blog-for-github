@@ -26,11 +26,7 @@ public class BoarderController {
 
         log.debug("tostring : {}",board.toString());
 
-        for (MultipartFile i : board.getImgFiles()) {
-
-            log.info("이름 {}", i.getName());
-            log.info("용량 {}", i.getSize());
-        }
+        log.debug("contents: {}",board.getContents());
 
 
         log.debug("Controller {}: {}", "board", "upload");

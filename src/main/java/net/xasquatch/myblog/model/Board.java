@@ -15,9 +15,9 @@ public class Board {
     private String title;
     private String contents;
     private String thumbnailSrcDir;
-    private MultipartFile thumbnailFile;
+//    private MultipartFile thumbnailFile;
     private String[] imgSrcDir;
-    private MultipartFile[] imgFiles;
+//    private MultipartFile[] imgFiles;
 
 
 }

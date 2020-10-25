@@ -20,14 +20,14 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean login(Member member) {
         boolean result = false;
-        log.info("login: {}", member.toString());
+        log.debug("login: {}", member.toString());
         return result;
     }
 
     @Override
     public boolean save(Member member) {
         boolean result = false;
-        log.info("save: {}", member.toString());
+        log.debug("save: {}", member.toString());
         return result;
     }
 
@@ -36,8 +36,8 @@ public class MemberServiceImpl implements MemberService {
         boolean result = false;
         MultipartFile file = member.getImgFile();
 
-        log.info("update: {}", member.toString());
-        log.info("{}",System.getProperty("user.dir"));
+        log.debug("update: {}", member.toString());
+        log.debug("{}",System.getProperty("user.dir"));
         try {
             InputStream fin = file.getInputStream();
              OutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"/"+member.getName()+new SimpleDateFormat("yyyyMMdd").format(new Date())+".jpg");
@@ -46,7 +46,7 @@ public class MemberServiceImpl implements MemberService {
             while (true) {
                 int data = fin.read();      //  한 바이트씩 읽는다.
                 if (data == -1) {
-                    log.info("YES");
+                    log.debug("YES");
                     break;
                 }
                 fos.write(data);            // 한 바이트씩 쓴다.
@@ -64,14 +64,14 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean delete(Member member) {
         boolean result = false;
-        log.info("delete: {}", member.toString());
+        log.debug("delete: {}", member.toString());
         return result;
     }
 
     @Override
     public boolean view(Member member) {
         boolean result = false;
-        log.info("view: {}", member.toString());
+        log.debug("view: {}", member.toString());
         return result;
     }
 }
