@@ -151,24 +151,20 @@
 
     function addUploadImage(e) {
         var imgFit = document.querySelector('#user-signup-imageFit');
-        var imgClassName;
         for (var image of e.target.files) {
             var reader = new FileReader();
             reader.onload = function (event) {
                 imgFit.innerHTML = '';
                 var img = document.createElement('img');
                 img.setAttribute('src', event.target.result);
-                img.className = 'v'+new Date().getDay().toString()+new Date().getHours().toString()+new Date().getSeconds().toString();
-                imgClassName = img.className;
-                img.onload = function (){
-                    var firstImg = document.querySelector('.v'+imgClassName);
-                    firstImg = resizeImg(firstImg);
-                    console.log(imgClassName);
+                img.onload = function () {
+                    var firstImg = resizeImg(this);
                     document.querySelector('#imgFile').innerText = firstImg.src;
                     imgFit.innerHTML = '';
                     imgFit.appendChild(firstImg);
 
                 }
+
                 imgFit.appendChild(img);
 
 
@@ -183,6 +179,7 @@
 
     function resizeImg(img) {
 
+        console.dir('imgObj:' + img);
         console.dir('img:' + img.width);
         console.dir('img:' + img.height);
         var canvas = document.createElement("canvas");
