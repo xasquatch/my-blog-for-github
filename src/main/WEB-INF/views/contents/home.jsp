@@ -67,13 +67,7 @@
         </button>
     </div>
 
-    <form>
-
-
-    </form>
-
 </section>
-
 <script>
 
     function oAuth(target) {
@@ -118,9 +112,10 @@
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Profile Image</div>                                                                                          ' +
-            '<input type="file" class="form-control" name="imgFile" onchange="addUploadImage(event, this)">                                                  ' +
-            '<div class="form-control" style="height: auto;">                                                                                            ' +
-            '<img id="user-signup-img" src="${path}/img/login/default-profile.png" alt="Default Image" style="max-width:100%">                           ' +
+            '<input type="file" class="form-control" onchange="addUploadImage(event)">                                                  ' +
+            '<textarea class="hidden" id="imgFile" name="imgFile" ></textarea>                                                  ' +
+            '<div class="form-control" id="user-signup-imageFit" style="height: auto;">                                                                                            ' +
+            '<img id="user-signup-img" src="${path}/img/login/default-profile.png" alt="Default Image">                           ' +
             '</div>                                                                                                                                      ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
@@ -154,34 +149,67 @@
 
     }
 
-    function addUploadImage(event, element) {
-        var reader = new FileReader();
-        reader.onload = function (event) {
-            var img = document.querySelector('#user-signup-img');
-            img.setAttribute('src', event.target.result);
-            element.setAttribute('src', event.target.result);
-        };
-        reader.readAsDataURL(event.target.files[0]);
-        console.log(element);
+    function addUploadImage(e) {
+        var imgFit = document.querySelector('#user-signup-imageFit');
+        var imgClassName;
+        for (var image of e.target.files) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                imgFit.innerHTML = '';
+                var img = document.createElement('img');
+                img.setAttribute('src', event.target.result);
+                img.className = 'v'+new Date().getDay().toString()+new Date().getHours().toString()+new Date().getSeconds().toString();
+                imgClassName = img.className;
+                img.onload = function (){
+                    var firstImg = document.querySelector('.v'+imgClassName);
+                    firstImg = resizeImg(firstImg);
+                    console.log(imgClassName);
+                    document.querySelector('#imgFile').innerText = firstImg.src;
+                    imgFit.innerHTML = '';
+                    imgFit.appendChild(firstImg);
+
+                }
+                imgFit.appendChild(img);
+
+
+            };
+
+
+            reader.readAsDataURL(image);
+        }
+
 
     }
 
+    function resizeImg(img) {
 
-    /*
+        console.dir('img:' + img.width);
+        console.dir('img:' + img.height);
+        var canvas = document.createElement("canvas");
+        var MAX_SIZE = 150;
+        var width = img.width;
+        var height = img.height;
 
-        function serializedForm(targetForm) {
-            var aParams = new Array();
+        if (width > height && width > MAX_SIZE) {
+            height *= MAX_SIZE / width;
+            width = MAX_SIZE;
 
-            for (var i = 0; i < targetForm.elements.length; i++) {
-                var data = encodeURIComponent(targetForm.elements[i].name);
-                data += "=";
-                data += encodeURIComponent(targetForm.elements[i].value);
-                aParams.push(data)
-            }
+        } else if (height > MAX_SIZE) {
+            width *= MAX_SIZE / height;
+            height = MAX_SIZE;
 
-            return aParams.join("&");
         }
-    */
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+
+
+        var resultImg = document.createElement("img");
+        resultImg.setAttribute("src", canvas.toDataURL("image/png"));
+
+        return resultImg;
+
+    }
 
 
 </script>

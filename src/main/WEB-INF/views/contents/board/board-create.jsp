@@ -85,7 +85,7 @@
     </div>
 
     <script>
-    // TODO: 세션스토리지 내에 저장
+        // TODO: 세션스토리지 내에 저장
 
         document.querySelector('#board-keyword-fake').value = sessionStorage.getItem('sessionKeywordData');
         document.querySelector('#board-title-fake').value = sessionStorage.getItem('sessionTitleData');
@@ -122,7 +122,7 @@
         <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
         <input type="text" id="board-title-real" name="title" class="hidden" maxlength="50">
         <textarea id="board-contents-real" name="contents" class="hidden"></textarea>
-<%--        <input type="file" id="board-files-real" name="imgFiles" class="btn btn-default hidden" multiple>--%>
+        <%--        <input type="file" id="board-files-real" name="imgFiles" class="btn btn-default hidden" multiple>--%>
         <div id="board-files-real">
 
         </div>
@@ -146,27 +146,52 @@
         confirmBtn.setAttribute('onclick', 'ConfirmUploadImages();');
     }
 
-    function addUploadImage(event) {
+    function addUploadImage(e) {
         document.querySelector("#board-upload").innerHTML = '';
-        for (var image of event.target.files) {
+        for (var image of e.target.files) {
             var reader = new FileReader();
             reader.onload = function (event) {
                 var img = document.createElement("img");
                 img.setAttribute("src", event.target.result);
+                // img = resizeImg(img);
+
                 document.querySelector("#board-upload").appendChild(img);
             };
             reader.readAsDataURL(image);
         }
     }
 
+    function resizeImg(img) {
+
+        var canvas = document.createElement("canvas");
+        var MAX_SIZE = 720;
+        var width = img.width;
+        var height = img.height;
+
+        if (width > height && width > MAX_SIZE) {
+            height *= MAX_SIZE / width;
+            width = MAX_SIZE;
+
+        } else if (height > MAX_SIZE) {
+            width *= MAX_SIZE / height;
+            height = MAX_SIZE;
+
+        }
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+
+        var resultImg = document.createElement("img");
+        resultImg.setAttribute("src", canvas.toDataURL("image/png"));
+
+        return resultImg;
+
+
+    }
+
+
     function ConfirmUploadImages() {
         document.querySelector('#board-contents-image').innerHTML += document.querySelector('#board-upload').innerHTML;
-        // var cloneFileTag = document.querySelector('#board-upload-files').cloneNode(true);
-        // var realFilesTag = document.querySelector('#board-files-real');
-        // cloneFileTag.setAttribute('name','imgFiles');
-        // cloneFileTag.classList.add('hidden');
-        // realFilesTag.appendChild(cloneFileTag);
-        // document.querySelector('#board-files-real')
         document.querySelector('#modal-close-btn').click();
         SettingInsertImage();
     }
