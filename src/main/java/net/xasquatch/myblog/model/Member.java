@@ -17,6 +17,6 @@ public class Member {
     public String pwd;
     public String name;
     public String img;
-    public MultipartFile imgFile;
+    public String imgFile;
 
 }

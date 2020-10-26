@@ -78,7 +78,6 @@ public class MemberController {
 
         log.debug("Controller {}: {}", "Member", "signUp");
 
-        log.debug("SIze : {}",member.getImgFile().getSize());
         boolean result = false;
         result = memberService.save(member);
 

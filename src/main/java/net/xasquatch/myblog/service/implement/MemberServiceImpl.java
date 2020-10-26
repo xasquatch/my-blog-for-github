@@ -34,27 +34,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean update(Member member){
         boolean result = false;
-        MultipartFile file = member.getImgFile();
-
-        log.debug("update: {}", member.toString());
-        log.debug("{}",System.getProperty("user.dir"));
-        try {
-            InputStream fin = file.getInputStream();
-             OutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"/"+member.getName()+new SimpleDateFormat("yyyyMMdd").format(new Date())+".jpg");
-            // 복사 파일명
-
-            while (true) {
-                int data = fin.read();      //  한 바이트씩 읽는다.
-                if (data == -1) {
-                    log.debug("YES");
-                    break;
-                }
-                fos.write(data);            // 한 바이트씩 쓴다.
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
 
         return result;
