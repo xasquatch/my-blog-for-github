@@ -126,7 +126,6 @@ var textScript = {
                 try {
                     callback();
                 } catch (error) {
-                    console.log('Ended writing Text');
                 }
             }
         }, interval);
