@@ -14,7 +14,7 @@
     <div id="board-bar" class="well">
 
         <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal"
-                onclick="uploadImages();">
+                onclick="window.scroll(0,0); uploadImages();">
             <span class="glyphicon glyphicon-picture"></span>
         </button>
 
@@ -137,7 +137,7 @@
 <script>
     function uploadImages() {
         modal.changeForm('Image Upload',
-            '<section class="thumbnail" id="board-upload">' +
+            '<section id="board-upload">' +
             '' +
             '</section>' +
             '<input type="file" id="board-upload-files" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">'
@@ -147,13 +147,19 @@
     }
 
     function addUploadImage(e) {
-        document.querySelector("#board-upload").innerHTML = '';
         for (var image of e.target.files) {
             var reader = new FileReader();
             reader.onload = function (event) {
                 var img = document.createElement("img");
                 img.setAttribute("src", event.target.result);
-                // img = resizeImg(img);
+                img.onload = function () {
+                    var firstImg = resizeImg(this);
+                    console.log(this.parentElement);
+                    this.remove();
+                    document.querySelector("#board-upload").appendChild(firstImg);
+
+                }
+
 
                 document.querySelector("#board-upload").appendChild(img);
             };
@@ -163,6 +169,8 @@
 
     function resizeImg(img) {
 
+        console.log("height: "+img.height);
+        console.log("width: "+img.width);
         var canvas = document.createElement("canvas");
         var MAX_SIZE = 720;
         var width = img.width;

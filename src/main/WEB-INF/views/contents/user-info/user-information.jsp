@@ -19,8 +19,9 @@
         </div>
         <div class="input-group">
             <div class="input-group-addon">Profile Image</div>
-            <input type="file" class="form-control" name="imgFile" onchange="addUploadImage(event);">
-            <div class="form-control" style="height: auto;">
+            <input type="file" class="form-control" onchange="addUploadImage(event);">
+            <textarea class="hidden" id="imgFile" name="imgFile"></textarea>
+            <div class="form-control" id="user-signup-imageFit" style="height: auto;">
                 <img id="user-signup-img" src="${path}/img/login/default-profile.png" alt="Default Image" style="max-width:100%">
             </div>
         </div>
@@ -33,13 +34,61 @@
 </section>
 
 <script>
-    function addUploadImage(event) {
-        var reader = new FileReader();
-        reader.onload = function (event) {
-            var img = document.querySelector("#user-signup-img");
-            img.setAttribute("src", event.target.result);
-        };
-        reader.readAsDataURL(event.target.files[0]);
+    function addUploadImage(e) {
+        var imgFit = document.querySelector('#user-signup-imageFit');
+        for (var image of e.target.files) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                imgFit.innerHTML = '';
+                var img = document.createElement('img');
+                img.setAttribute('src', event.target.result);
+                img.onload = function () {
+                    var firstImg = resizeImg(this);
+                    document.querySelector('#imgFile').innerText = firstImg.src;
+                    imgFit.innerHTML = '';
+                    imgFit.appendChild(firstImg);
+
+                }
+
+                imgFit.appendChild(img);
+
+
+            };
+
+
+            reader.readAsDataURL(image);
+        }
+
 
     }
+
+    function resizeImg(img) {
+
+        var canvas = document.createElement("canvas");
+        var MAX_SIZE = 150;
+        var width = img.width;
+        var height = img.height;
+
+        if (width > height && width > MAX_SIZE) {
+            height *= MAX_SIZE / width;
+            width = MAX_SIZE;
+
+        } else if (height > MAX_SIZE) {
+            width *= MAX_SIZE / height;
+            height = MAX_SIZE;
+
+        }
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+
+
+        var resultImg = document.createElement("img");
+        resultImg.setAttribute("src", canvas.toDataURL("image/png"));
+
+        return resultImg;
+
+    }
+
+
 </script>

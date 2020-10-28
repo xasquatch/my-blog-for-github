@@ -41,7 +41,7 @@ public class ImgParser {
     private void writeImgFile(String imgString, String savePath, String saveFileName, String fileExtension) {
         String filePath = savePath + File.separator + saveFileName.concat(".").concat(fileExtension);
 
-        try (BufferedOutputStream bytebuffer = new BufferedOutputStream(new FileOutputStream(filePath));){
+        try (BufferedOutputStream bytebuffer = new BufferedOutputStream(new FileOutputStream(filePath));) {
             byte[] decodedData = decodeBase64(imgString);
 
             bytebuffer.write(decodedData);
@@ -71,6 +71,8 @@ public class ImgParser {
         //---------------------------
         int dataImageStringStartIndex = cutString.indexOf("data:image/");
         int dataImageStringEndIndex = cutString.indexOf(";base64,");
+
+        if (dataImageStringStartIndex == -1) return "no Image";
 
         //TODO:확장자
         imgExtension = cutString.substring(dataImageStringStartIndex + 11, dataImageStringEndIndex);

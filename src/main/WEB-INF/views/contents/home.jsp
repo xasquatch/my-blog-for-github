@@ -179,9 +179,6 @@
 
     function resizeImg(img) {
 
-        console.dir('imgObj:' + img);
-        console.dir('img:' + img.width);
-        console.dir('img:' + img.height);
         var canvas = document.createElement("canvas");
         var MAX_SIZE = 150;
         var width = img.width;

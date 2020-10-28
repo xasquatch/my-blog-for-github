@@ -41,7 +41,8 @@
     text-align: center;
     display: flex;
     flex-wrap: wrap;
-    min-height: 200px;
+    min-height: 5em;
+    overflow: auto;
 }
 
 #board-upload > img {
