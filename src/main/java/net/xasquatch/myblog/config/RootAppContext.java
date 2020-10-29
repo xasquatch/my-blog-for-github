@@ -69,11 +69,6 @@ public class RootAppContext {
 //------------------------------------------------------
 
     @Bean
-    public StandardServletMultipartResolver fileUpload() {
-        return new StandardServletMultipartResolver();
-    }
-
-    @Bean
     public ReloadableResourceBundleMessageSource msgSource() {
         ReloadableResourceBundleMessageSource msg = new ReloadableResourceBundleMessageSource();
         msg.setBasenames("/WEB-INF/properties/home/login",
@@ -84,7 +79,6 @@ public class RootAppContext {
 
     @Bean
     public StandardServletMultipartResolver multipartResolver() {
-
         return new StandardServletMultipartResolver();
     }
 

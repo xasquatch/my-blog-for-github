@@ -74,8 +74,9 @@ public class MemberController {
     @GetMapping("/sign-up/email/{email}")
     @ResponseBody
     public String user(@PathVariable String email){
-
-        return "hi"+email;
+        String  i = String.valueOf(memberService.isExistedEmail(email));
+        log.debug("경로 거침");
+        return i;
     }
 
     /*TODO:회원가입*/

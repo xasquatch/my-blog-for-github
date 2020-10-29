@@ -2,20 +2,26 @@ package net.xasquatch.myblog.service.implement;
 
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
+import net.xasquatch.myblog.repository.UserDao;
 import net.xasquatch.myblog.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 @Slf4j
 @Service
 public class MemberServiceImpl implements MemberService {
+
+    @Autowired
+    private UserDao userDao;
+
+    @Override
+    public boolean isExistedEmail(String email) {
+        String userEmail = userDao.selectOneEmail(email);
+
+        return userEmail != null;
+
+    }
 
     @Override
     public boolean login(Member member) {
@@ -32,7 +38,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean update(Member member){
+    public boolean update(Member member) {
         boolean result = false;
 
 

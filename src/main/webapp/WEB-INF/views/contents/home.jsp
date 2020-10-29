@@ -137,7 +137,17 @@
     function CheckUsedEmail() {
         var userEmail = document.querySelector('#user-signup-email');
         ajax.submit('GET','${path}/user/sign-up/email/'+userEmail.value, function (data) {
-            alert(data);
+            if (data === 'true'){
+                alert(userEmail.value + '은(는) 이미 존재하는 이메일계정입니다.');
+                userEmail.value = '';
+                userEmail.placeholder = '이미 존재하는 이메일계정입니다.';
+
+            }else{
+                alert(userEmail.value + '은(는) 사용가능한 이메일계정입니다.');
+
+            }
+
+
         });
 
     }
