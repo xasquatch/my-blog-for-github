@@ -1,13 +1,63 @@
 package net.xasquatch.myblog.config;
 
+import net.xasquatch.myblog.mapper.UserMapper;
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.mapper.MapperFactoryBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 
 @Configuration
+@PropertySource("/WEB-INF/db/db.properties")
 public class RootAppContext {
+
+/*--------TODO:DB접속관리--------------*/
+    @Value("${db.classname}")
+    private String dbClassName;
+    @Value("${db.url}")
+    private String dbUrl;
+    @Value("${db.username}")
+    private String dbUsername;
+    @Value("${db.password}")
+    private String dbPassword;
+
+    @Bean
+    public BasicDataSource dataSource() {
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setDriverClassName(dbClassName);
+        basicDataSource.setUrl(dbUrl);
+        basicDataSource.setUsername(dbUsername);
+        basicDataSource.setPassword(dbPassword);
+
+        return basicDataSource;
+    }
+
+    @Bean
+    public SqlSessionFactory factory(BasicDataSource basicDataSource) throws Exception {
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        sqlSessionFactoryBean.setDataSource(basicDataSource);
+//        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBean.getObject();
+
+        return sqlSessionFactoryBean.getObject();
+
+    }
+
+    @Bean
+    public MapperFactoryBean<UserMapper> getUserMappper(SqlSessionFactory factory){
+        MapperFactoryBean<UserMapper> factoryBean = new MapperFactoryBean<UserMapper>(UserMapper.class);
+        factoryBean.setSqlSessionFactory(factory);
+        return factoryBean;
+
+    }
+
+
+//------------------------------------------------------
 
     @Bean
     public StandardServletMultipartResolver fileUpload() {
@@ -24,7 +74,7 @@ public class RootAppContext {
     }
 
     @Bean
-    public StandardServletMultipartResolver multipartResolver(){
+    public StandardServletMultipartResolver multipartResolver() {
 
         return new StandardServletMultipartResolver();
     }
