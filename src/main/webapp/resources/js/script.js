@@ -134,14 +134,18 @@ var textScript = {
 
 var ajax = {
 
-    json : 'application/json',
-    form : 'multipart/form-data',
+    json : 'application/json;charset=UTF-8',
+    form : 'application/x-www-form-urlencoded;charset=UTF-8',
+    formFile : 'multipart/form-data;charset=UTF-8',
 
     SetContentsType: function (inputContentsType) {
-        var contentsType = 'application/x-www-form-urlencoded';
+        var contentsType = 'text/plain;charset=UTF-8';
 
         if (inputContentsType.toUpperCase() === 'FORM') {
             contentsType = ajax.form;
+
+        } else if (inputContentsType.toUpperCase() === 'FORMFILE') {
+            contentsType = ajax.formFile;
 
         } else if (inputContentsType.toUpperCase() === 'JSON') {
             contentsType = ajax.json;
@@ -151,9 +155,8 @@ var ajax = {
     },
 
 
-    submit: function (method, url, inputContentsType, callback, sendData) {
+    submit: function (method, url, callback, inputContentsType, sendData) {
         var xhr = new XMLHttpRequest();
-        xhr = ajax.addEvent(xhr);
 
         var result = null;
         var contentsType = null;
@@ -181,42 +184,6 @@ var ajax = {
             xhr.setRequestHeader('Content-type', contentsType);
             xhr.send(sendData);
         }
-
-    },
-
-    addEvent: function (XMLHttpRequest) {
-
-        XMLHttpRequest.addEventListener("progress", ajax.updateProgress);
-        XMLHttpRequest.addEventListener("load", ajax.transferComplete);
-        XMLHttpRequest.addEventListener("loadend", ajax.loadEnd);
-        XMLHttpRequest.addEventListener("error", ajax.transferFailed);
-        XMLHttpRequest.addEventListener("abort", ajax.transferCanceled);
-
-        return XMLHttpRequest;
-
-    },
-
-    updateProgress: function () {
-        console.log('updateProgress');
-    },
-
-    transferComplete: function () {
-        console.log('transferComplete');
-
-    },
-
-    transferFailed: function () {
-        console.log('transferFailed');
-
-    },
-
-    transferCanceled: function () {
-        console.log('transferCanceled');
-
-    },
-
-    loadEnd: function () {
-        console.log('loadEnd');
 
     }
 }

@@ -62,7 +62,7 @@
             Facebook
         </button>
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" onclick="singUp();">
-            <img class="xasquatch-btn-logo" src="${path}/favicon.ico" width="32" height="32"><BR>
+            <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/Xasquatch.png" width="32" height="32"><BR>
             Sing Up
         </button>
     </div>
@@ -99,7 +99,7 @@
             '<form class="form-horizontal" id="user-signup" action="${path}/user/sign-up" method="POST"  enctype="multipart/form-data">                  ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Email</div>                                                                                                  ' +
-            '<input class="form-control" type="email" name="email" placeholder="xxxxxxx@gmail.com" required>                                             ' +
+            '<input class="form-control" type="email" id="user-signup-email" name="email" placeholder="xxxxxxx@gmail.com" required onchange="CheckUsedEmail()">                                             ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Password</div>                                                                                               ' +
@@ -134,6 +134,15 @@
         confirmBtn.setAttribute('onclick', 'ConfirmSignUp();');
     }
 
+    function CheckUsedEmail() {
+        var userEmail = document.querySelector('#user-signup-email');
+        ajax.submit('GET','${path}/user/sign-up/email/'+userEmail.value, function (data) {
+            alert(data);
+        });
+
+    }
+    
+    
     function confirmPwd(element) {
         var pwd = document.querySelector('#user-signup-pwd');
         if (pwd.value === element.value) {

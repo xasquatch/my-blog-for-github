@@ -7,9 +7,7 @@ import net.xasquatch.myblog.service.implement.MemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -70,6 +68,14 @@ public class MemberController {
             return "forward:/";
 
         }
+    }
+
+    /*TODO:회원가입 이메일 중복체크*/
+    @GetMapping("/sign-up/email/{email}")
+    @ResponseBody
+    public String user(@PathVariable String email){
+
+        return "hi"+email;
     }
 
     /*TODO:회원가입*/
