@@ -79,10 +79,6 @@
 #mobile-hamburger {
     display: none;
 }
-@media (max-width: 600px) {
-
-
-}
 
 @media (max-width: 1200px) {
     .header-menu-btn{
@@ -230,6 +226,13 @@
 
 #user-signup .input-group-addon {
     width: 150px;
+}
+
+.form-explain{
+    font-weight: bold;
+    font-size: 0.5vw !important;
+    background-color: lightgray !important;
+    padding: 5px !important;
 }
 
 /*END: home.jsp------------------*/

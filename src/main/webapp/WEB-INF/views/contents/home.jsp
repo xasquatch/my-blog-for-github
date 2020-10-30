@@ -99,16 +99,19 @@
             '<form class="form-horizontal" id="user-signup" action="${path}/user/sign-up" method="POST"  enctype="multipart/form-data">                  ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Email</div>                                                                                                  ' +
-            '<input class="form-control" type="email" id="user-signup-email" name="email" placeholder="xxxxxxx@gmail.com" required onchange="CheckUsedEmail()">                                             ' +
+            '<input class="form-control" type="email" id="user-signup-email" name="email" placeholder="xxxxxxx@gmail.com" required onchange="CheckUsedEmail(this)">                                             ' +
+            '<div class="form-control form-explain" id="user-signup-explain-email">승인코드를 보낼 Email을 입력해주세요</div>                                 ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Password</div>                                                                                               ' +
-            '<input class="form-control" type="password" id="user-signup-pwd" name="pwd" required placeholder="your Password">                           ' +
+            '<input class="form-control" type="password" id="user-signup-pwd" name="pwd" required placeholder="your Password" onchange="checkPwd(this)"> ' +
             '<input class="form-control" type="password" name="pwdConfirm" placeholder="Password Confirm" required onchange="confirmPwd(this)">          ' +
+            '<div class="form-control form-explain" id="user-signup-explain-pwd">영문또는 숫자로 8~20자이내 입력해주세요</div>                   ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Name</div>                                                                                                   ' +
-            '<input class="form-control" type="text" name="name" placeholder="ex) Jordan" required>                                                      ' +
+            '<input class="form-control" type="text" name="name" placeholder="ex) Jordan" required onchange="checkName(this)">                           ' +
+            '<div class="form-control form-explain" id="user-signup-explain-name">영문또는 숫자로 3~20자이내 입력해주세요</div>                   ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Profile Image</div>                                                                                          ' +
@@ -122,10 +125,10 @@
             '<div class="input-group-addon">Agreement</div>                                                                                              ' +
             '<div class="form-control" style="height: auto;">                                                                                            ' +
             '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>                                       ' +
-            '<label><input type="checkbox" name="membersAgreement" required>I agree</label>                                                                       ' +
+            '<label><input type="checkbox" id="user-signup-membersAgreement" name="membersAgreement" required>I agree</label>                                                                       ' +
             '<HR style="margin-top: 3px; margin-bottom: 3px;">                                                                                           ' +
             '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>              ' +
-            '<label><input type="checkbox" name="collectionAndUse" required>I agree</label>                                                                       ' +
+            '<label><input type="checkbox" id="user-signup-collectionAndUse" name="collectionAndUse" required>I agree</label>                                                                       ' +
             '</div>                                                                                                                                      ' +
             '</div>                                                                                                                                                                                            ' +
             '<input type="submit" class="hidden" id="user-signup-submit">                                                                       ' +
@@ -134,16 +137,25 @@
         confirmBtn.setAttribute('onclick', 'ConfirmSignUp();');
     }
 
-    function CheckUsedEmail() {
-        var userEmail = document.querySelector('#user-signup-email');
-        ajax.submit('GET','${path}/user/sign-up/email/'+userEmail.value, function (data) {
-            if (data === 'true'){
-                alert(userEmail.value + '은(는) 이미 존재하는 이메일계정입니다.');
-                userEmail.value = '';
-                userEmail.placeholder = '이미 존재하는 이메일계정입니다.';
+    function CheckUsedEmail(element) {
+        var userEmailExplain = document.querySelector('#user-signup-explain-email');
 
-            }else{
-                alert(userEmail.value + '은(는) 사용가능한 이메일계정입니다.');
+        if (!isAvailableEmailRegExp(element.value)) {
+            userEmailExplain.innerHTML = element.value + '은(는) 사용불가능한 이메일 형식입니다.';
+            userEmailExplain.style.color = 'RED';
+            element.value = '';
+            return;
+        }
+
+        ajax.submit('GET', '${path}/user/sign-up/email/' + element.value, function (data) {
+            if (data === 'true') {
+                userEmailExplain.innerHTML = element.value + '은(는) 이미 존재하는 이메일계정입니다.';
+                userEmailExplain.style.color = 'RED';
+                element.value = '';
+
+            } else {
+                userEmailExplain.innerHTML = element.value + '은(는) 사용가능한 이메일계정입니다.';
+                userEmailExplain.style.color = 'GREEN';
 
             }
 
@@ -151,19 +163,87 @@
         });
 
     }
-    
-    
+
+    function isAvailableEmailRegExp(data) {
+        var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+        return regExp.test(data);
+    }
+
+    function checkPwd(element) {
+        var userPwdExplain = document.querySelector('#user-signup-explain-pwd');
+
+        if (!isAvailablePwdRegExp(element.value)) {
+            userPwdExplain.innerHTML = element.value + '은(는) 사용불가능한 비밀번호 형식입니다. 영문또는 숫자로 8~20자이내 입력해주세요';
+            userPwdExplain.style.color = 'RED';
+            element.value = '';
+
+        } else {
+            userPwdExplain.innerHTML = '사용가능한 비밀번호입니다.';
+            userPwdExplain.style.color = 'GREEN';
+
+        }
+
+    }
+
+    function isAvailablePwdRegExp(data) {
+        var regExp = /^[A-Za-z0-9]{8,20}$/;
+        return regExp.test(data);
+    }
+
+
     function confirmPwd(element) {
         var pwd = document.querySelector('#user-signup-pwd');
+        var userPwdExplain = document.querySelector('#user-signup-explain-pwd');
+
         if (pwd.value === element.value) {
+            userPwdExplain.innerHTML = '사용가능한 비밀번호, 일치하는 비밀번호입니다.';
+            userPwdExplain.style.color = 'GREEN';
+
         } else {
+            userPwdExplain.innerHTML = '비밀번호가 일치하지않습니다.';
+            userPwdExplain.style.color = 'RED';
             element.value = '';
         }
 
 
     }
 
+    function checkName(element) {
+        var userNameExplain = document.querySelector('#user-signup-explain-name');
+
+        if (!isAvailablePwdRegExp(element.value)) {
+            userNameExplain.innerHTML = element.value + '은(는) 사용불가능한 비밀번호 형식입니다. 영문또는 숫자로 3~20자이내 입력해주세요';
+            userNameExplain.style.color = 'RED';
+            element.value = '';
+
+        } else {
+            userNameExplain.innerHTML = '사용가능한 이름입니다.';
+            userNameExplain.style.color = 'GREEN';
+
+        }
+    }
+
+
+    function isAvailableNameRegExp(data) {
+        var regExp = /^[a-zA-Z0-9]{3,20}$/;
+        return regExp.test(data);
+
+    }
+
+    function checkAgreement() {
+        var membersAgreement = document.querySelector('#user-signup-membersAgreement')
+        var collectionAndUse = document.querySelector('#user-signup-collectionAndUse')
+
+        if (!membersAgreement.checked || !collectionAndUse.checked) return false;
+
+    }
+
     function ConfirmSignUp() {
+        if (checkAgreement() === false){
+            alert('이용약관에 동의해주시기바랍니다.')
+            return;
+        }
+        
         document.querySelector('#user-signup-submit').click();
 
     }
