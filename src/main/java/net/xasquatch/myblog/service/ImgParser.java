@@ -3,12 +3,7 @@ package net.xasquatch.myblog.service;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 @Getter
@@ -39,31 +34,11 @@ public class ImgParser {
         return ImgParser.imgParser;
     }
 
-    private void writeImgFile(String imgString, String savePath, String saveFileName, String fileExtension) {
-        String filePath = savePath + File.separator + saveFileName.concat(".").concat(fileExtension);
+//---------------------------------------------------------------------//
 
-        try (BufferedOutputStream bytebuffer = new BufferedOutputStream(new FileOutputStream(filePath));) {
-            byte[] decodedData = decodeBase64(imgString);
+    public boolean isCuttableImgSrc() {
 
-            bytebuffer.write(decodedData);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private byte[] decodeBase64(String imgString) {
-        byte[] contentData = imgString.getBytes();
-        return Base64.getDecoder().decode(contentData);
-    }
-
-    public String cutImgSrc() {
-
-        if (!checkImgTag()) return contentsString;
-
-        String imgExtension;
-        String srcString;
+        if (!checkImgTag()) return false;
 
         String contentsString = this.contentsString;
         int prefix = contentsString.indexOf("<img");
@@ -72,8 +47,21 @@ public class ImgParser {
         //---------------------------
         int dataImageStringStartIndex = cutString.indexOf("data:image/");
         int dataImageStringEndIndex = cutString.indexOf(";base64,");
+        int srcStringEndIndex = cutString.indexOf("\">");
 
-        if (dataImageStringStartIndex == -1) return "no Image";
+        return dataImageStringStartIndex != -1 && dataImageStringEndIndex != -1 && srcStringEndIndex != -1;
+    }
+
+    public void addImgList() {
+        String imgExtension;
+        String srcString;
+
+        String contentsString = this.contentsString;
+        int prefix = contentsString.indexOf("<img");
+        String cutString = contentsString.substring(prefix);
+
+        int dataImageStringStartIndex = cutString.indexOf("data:image/");
+        int dataImageStringEndIndex = cutString.indexOf(";base64,");
 
         //TODO:확장자
         imgExtension = cutString.substring(dataImageStringStartIndex + 11, dataImageStringEndIndex);
@@ -88,11 +76,11 @@ public class ImgParser {
         this.imgExtensionList.add(imgExtension);
         this.imgSrcList.add(srcString);
 
+        this.contentsString = contentsString.substring(cutString.length());
 
-        return srcString;
     }
 
-    public boolean checkImgTag() {
+    private boolean checkImgTag() {
 
         boolean result = false;
         if (this.contentsString.contains("<img")) {

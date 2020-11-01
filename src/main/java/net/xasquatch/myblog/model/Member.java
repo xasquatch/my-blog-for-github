@@ -2,7 +2,6 @@ package net.xasquatch.myblog.model;
 
 import lombok.*;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 @Builder
 @Setter

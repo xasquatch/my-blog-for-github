@@ -14,7 +14,6 @@ public class UserDao {
     private UserMapper userMapper;
 
     public String selectOneEmail(String email) {
-        log.debug(email);
         return userMapper.selectOneEmail(email);
     }
 

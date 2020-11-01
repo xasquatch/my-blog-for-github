@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Slf4j
 @Controller
 @RequestMapping("/user")
@@ -67,10 +69,10 @@ public class MemberController {
     }
 
     /*TODO:회원가입 이메일 중복체크*/
-    @GetMapping("/sign-up/email/{email}")
+    @PostMapping("/sign-up/email")
     @ResponseBody
-    public String user(@PathVariable String email){
-        return String.valueOf(memberService.isExistedEmail(email));
+    public String user(Member member){
+        return String.valueOf(memberService.isExistedEmail(member.getEmail()));
     }
 
     /*TODO:회원가입*/

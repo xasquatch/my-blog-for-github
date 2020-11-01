@@ -147,7 +147,7 @@
             return;
         }
 
-        ajax.submit('GET', '${path}/user/sign-up/email/' + element.value, function (data) {
+        ajax.submit('POST', '${path}/user/sign-up/email', function (data) {
             if (data === 'true') {
                 userEmailExplain.innerHTML = element.value + '은(는) 이미 존재하는 이메일계정입니다.';
                 userEmailExplain.style.color = 'RED';
@@ -160,7 +160,7 @@
             }
 
 
-        });
+        }, 'FORM', 'email=' + element.value);
 
     }
 
@@ -211,7 +211,7 @@
     function checkName(element) {
         var userNameExplain = document.querySelector('#user-signup-explain-name');
 
-        if (!isAvailablePwdRegExp(element.value)) {
+        if (!isAvailableNameRegExp(element.value)) {
             userNameExplain.innerHTML = element.value + '은(는) 사용불가능한 비밀번호 형식입니다. 영문또는 숫자로 3~20자이내 입력해주세요';
             userNameExplain.style.color = 'RED';
             element.value = '';
@@ -225,7 +225,7 @@
 
 
     function isAvailableNameRegExp(data) {
-        var regExp = /^[a-zA-Z0-9]{3,20}$/;
+        var regExp = /^[A-Za-z0-9]{3,20}$/;
         return regExp.test(data);
 
     }
@@ -239,11 +239,11 @@
     }
 
     function ConfirmSignUp() {
-        if (checkAgreement() === false){
+        if (checkAgreement() === false) {
             alert('이용약관에 동의해주시기바랍니다.')
             return;
         }
-        
+
         document.querySelector('#user-signup-submit').click();
 
     }
@@ -258,9 +258,9 @@
                 img.setAttribute('src', event.target.result);
                 img.onload = function () {
                     var firstImg = resizeImg(this);
-                    document.querySelector('#imgFile').innerText = firstImg.src;
                     imgFit.innerHTML = '';
                     imgFit.appendChild(firstImg);
+                    document.querySelector('#imgFile').innerText = imgFit.innerHTML;
 
                 }
 
