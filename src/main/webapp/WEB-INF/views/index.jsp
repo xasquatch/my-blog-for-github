@@ -45,6 +45,17 @@
             <jsp:include page="contents/user-info/user-log-out.jsp"/>
         </c:when>
 
+        <c:when test="${mainContents == 'repository-list'}">
+            <jsp:include page="contents/repository/repository-list.jsp"/>
+        </c:when>
+
+        <c:when test="${mainContents == 'repository-create'}">
+            <jsp:include page="contents/repository/repository-create.jsp"/>
+        </c:when>
+
+        <c:when test="${mainContents == 'repository-view'}">
+            <jsp:include page="contents/repository/repository-view.jsp"/>
+        </c:when>
     </c:choose>
 
 </section>

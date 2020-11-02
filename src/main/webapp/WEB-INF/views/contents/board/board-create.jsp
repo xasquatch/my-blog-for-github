@@ -3,7 +3,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <section>
-
+    <h1 class="dot-key">Writing</h1>
     <div class="input-group">
         <div class="input-group-addon"><b>Keyword</b></div>
         <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="ex) Life, health....etc">

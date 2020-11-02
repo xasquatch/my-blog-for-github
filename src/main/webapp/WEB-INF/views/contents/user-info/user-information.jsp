@@ -3,6 +3,8 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <section class="dot-key">
+
+    <h1 class="dot-key">My Information</h1>
     <form class="form-horizontal" id="user-signup" action="${path}/user/update" enctype="multipart/form-data" method="POST">
         <div class="input-group">
             <div class="input-group-addon">Email</div>

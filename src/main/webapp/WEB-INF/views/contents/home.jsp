@@ -231,8 +231,8 @@
     }
 
     function checkAgreement() {
-        var membersAgreement = document.querySelector('#user-signup-membersAgreement')
-        var collectionAndUse = document.querySelector('#user-signup-collectionAndUse')
+        var membersAgreement = document.querySelector('#user-signup-membersAgreement');
+        var collectionAndUse = document.querySelector('#user-signup-collectionAndUse');
 
         if (!membersAgreement.checked || !collectionAndUse.checked) return false;
 

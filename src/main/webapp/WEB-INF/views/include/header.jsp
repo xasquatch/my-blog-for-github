@@ -31,24 +31,24 @@
         <h1 id="main-header-logo"></h1>
     </a>
     <div id="header-right">
-        <button type="button" id="mobile-hamburger" class="btn btn-danger" onclick="popUpAside();">
+        <button type="button" id="mobile-hamburger" class="dot-key btn btn-default" onclick="popUpAside();">
             <script>
                 window.onload = function () {
                     if (!document.querySelector('#main-aside') || document.querySelector('#main-aside').innerText === '')
                         document.querySelector('#mobile-hamburger').style.display = 'none';
                 }
             </script>
-            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+            <B>More</B>
         </button>
 <%--TODO:세션에따라 표시--%>
         <button type="button" class="btn btn-danger" onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/user/log-out'">
             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
         </button>
-        <button type="button" class="btn btn-danger header-menu-btn" onclick="location.href='${path}/board/view/list'">
-            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+        <button type="button" class="dot-key btn btn-default header-menu-btn" onclick="location.href='${path}/board/view/list'">
+            보드
         </button>
-        <button type="button" class="btn btn-danger header-menu-btn" onclick="location.href='${path}/user/information'">
-            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        <button type="button" class="dot-key btn btn-default header-menu-btn" onclick="location.href='${path}/user/information'">
+            정보
         </button>
 
 
