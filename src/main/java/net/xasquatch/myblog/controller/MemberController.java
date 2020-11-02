@@ -2,7 +2,6 @@ package net.xasquatch.myblog.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
-import net.xasquatch.myblog.service.MemberService;
 import net.xasquatch.myblog.service.implement.MemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 
 @Slf4j
 @Controller
@@ -71,21 +69,17 @@ public class MemberController {
     }
 
     /*TODO:회원가입 이메일 중복체크*/
-    @GetMapping("/sign-up/email/{email}")
+    @PostMapping("/sign-up/email")
     @ResponseBody
-    public String user(@PathVariable String email){
-
-        return "hi"+email;
+    public String user(Member member){
+        return String.valueOf(memberService.isExistedEmail(member.getEmail()));
     }
 
     /*TODO:회원가입*/
     @PostMapping("/sign-up")
     public String signUp(Model model, Member member){
 
-        log.debug("Controller {}: {}", "Member", "signUp");
-
-        boolean result = false;
-        result = memberService.save(member);
+        boolean result = memberService.save(member);
 
         if (result) {
             model.addAttribute("systemMsg", "[회원가입 완료] 로그인 후 서비스 이용바랍니다.");

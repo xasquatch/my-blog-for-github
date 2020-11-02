@@ -1,11 +1,14 @@
 package net.xasquatch.myblog.interceptor.parts;
 
+import org.springframework.stereotype.Component;
+
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+@Component
 public class AccessorInfo {
 
     public String getIpAddress(HttpServletRequest request) {

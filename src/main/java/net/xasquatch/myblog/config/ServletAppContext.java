@@ -21,8 +21,6 @@ public class ServletAppContext implements WebMvcConfigurer{
 	@Autowired
 	private HandlerInterceptor controllerInterceptor;
 
-
-
 	// Controller의 메서드가 반환하는 jsp의 이름 앞뒤에 경로와 확장자를 붙혀주도록 설정한다.
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -35,17 +33,15 @@ public class ServletAppContext implements WebMvcConfigurer{
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		WebMvcConfigurer.super.addResourceHandlers(registry);
 		registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
-//		registry.addResourceHandler("/img/**").addResourceLocations("/img/");
-//		registry.addResourceHandler("/css/**").addResourceLocations("/css/");
-//		registry.addResourceHandler("/js/**").addResourceLocations("/js/");
 		registry.addResourceHandler("/**").addResourceLocations("/resources/");
 	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(controllerInterceptor)
-				.addPathPatterns("/**")
-				.excludePathPatterns("/login");
+				.addPathPatterns("/");
+//				.addPathPatterns("/**");
+//				.excludePathPatterns("/login");
 		WebMvcConfigurer.super.addInterceptors(registry);
 	}
 }

@@ -9,6 +9,8 @@ import java.io.IOException;
 @Service
 public interface MemberService {
 
+    public boolean isExistedEmail(String email);
+
     public boolean save(Member member);
 
     public boolean view(Member member);
