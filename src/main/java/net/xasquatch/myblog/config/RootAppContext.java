@@ -15,7 +15,7 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 
 
 @Configuration
-@PropertySource("/WEB-INF/db/db.properties")
+@PropertySource("/WEB-INF/properties/db/db.properties")
 public class RootAppContext {
 
 /*--------TODO:DB접속관리--------------*/
