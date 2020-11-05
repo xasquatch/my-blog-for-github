@@ -6,9 +6,11 @@ import net.xasquatch.myblog.service.implement.MemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Slf4j
 @Controller
@@ -77,8 +79,12 @@ public class MemberController {
 
     /*TODO:회원가입*/
     @PostMapping("/sign-up")
-    public String signUp(Model model, Member member){
-
+    public String signUp(Model model, @Valid Member member, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            model.addAttribute("systemMsg", "[회원가입 실패] 조작하지마세요");
+            model.addAttribute("locationPage", "/");
+            return "forward:/";
+        }
         boolean result = memberService.save(member);
 
         if (result) {
