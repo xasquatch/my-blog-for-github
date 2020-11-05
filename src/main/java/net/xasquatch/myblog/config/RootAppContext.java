@@ -9,13 +9,14 @@ import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
-
+//@Import({SecurityConfig.class})
 @Configuration
-@PropertySource("/WEB-INF/db/db.properties")
+@PropertySource("/WEB-INF/properties/db/db.properties")
 public class RootAppContext {
 
 /*--------TODO:DB접속관리--------------*/
@@ -81,6 +82,8 @@ public class RootAppContext {
     public StandardServletMultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();
     }
+
+//------------------------------------------------------
 
 
 }

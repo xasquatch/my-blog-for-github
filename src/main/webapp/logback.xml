@@ -36,7 +36,7 @@
 
     <!-- Root Logger -->
     <root>
-        <level value="debug"/>
+        <level value="info"/>
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="all"/>
     </root>
