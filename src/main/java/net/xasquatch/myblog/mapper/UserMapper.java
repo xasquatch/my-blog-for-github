@@ -10,5 +10,6 @@ public interface UserMapper {
     String selectOneEmail(String email);
 
     @Insert("INSERT INTO mbr(email, pwd, name, img) VALUES(#{email}, #{pwd}, #{name}, #{img})")
-    void insertOneMbr(Member member);
+//    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
+    long insertOneMbr(Member member);
 }

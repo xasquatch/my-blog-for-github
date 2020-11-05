@@ -3,7 +3,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <section>
-    <h1 class="dot-key">Writing</h1>
+    <h1 class="dot-key"><B>글쓰기</B></h1>
     <div class="input-group">
         <div class="input-group-addon"><b>Keyword</b></div>
         <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="ex) Life, health....etc">
@@ -122,7 +122,6 @@
         <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
         <input type="text" id="board-title-real" name="title" class="hidden" maxlength="50">
         <textarea id="board-contents-real" name="contents" class="hidden"></textarea>
-        <%--        <input type="file" id="board-files-real" name="imgFiles" class="btn btn-default hidden" multiple>--%>
         <div id="board-files-real">
 
         </div>

@@ -19,11 +19,12 @@ public class UserDao {
 
     public boolean insertOneMbr(Member member) {
 
-        log.debug(member.toString());
-
         userMapper.insertOneMbr(member);
-
+//        Long test = userMapper.insertOneMbr(member);
+//        System.out.println("test = " + test);
+//
         return userMapper.selectOneEmail(member.getEmail()) != null;
+//        return userMapper.selectOneEmail(member.getEmail()) != null;
 
     }
 }
