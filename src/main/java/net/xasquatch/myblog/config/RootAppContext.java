@@ -14,7 +14,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
-@Import({SecurityConfig.class})
+//@Import({SecurityConfig.class})
 @Configuration
 @PropertySource("/WEB-INF/properties/db/db.properties")
 public class RootAppContext {

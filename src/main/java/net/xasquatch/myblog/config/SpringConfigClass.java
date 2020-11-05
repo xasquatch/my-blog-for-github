@@ -46,10 +46,10 @@ public class SpringConfigClass implements WebApplicationInitializer {
 
 		// 멀티파일 설정
         servlet.setMultipartConfig(new MultipartConfigElement(filesSavePath, 1024*1024*10, 1024*1024*100,0));
-
-        // 시큐리티 설정
-		FilterRegistration.Dynamic securityFilter = servletContext.addFilter("springSecurityFilterChain", new DelegatingFilterProxy());
-		securityFilter.addMappingForUrlPatterns(null,false,"/*");
+//
+//        // 시큐리티 설정
+//		FilterRegistration.Dynamic securityFilter = servletContext.addFilter("springSecurityFilterChain", new DelegatingFilterProxy());
+//		securityFilter.addMappingForUrlPatterns(null,false,"/user/*");
 
 	}
 }
