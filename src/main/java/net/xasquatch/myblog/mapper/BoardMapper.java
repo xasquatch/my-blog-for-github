@@ -13,4 +13,10 @@ public interface BoardMapper {
 
     @Select("SELECT * FROM board WHERE no = #{no}")
     String selectOneContents(Long no);
+
+    int insertMbrExceptionImg(Board board);
+
+    int updateMbrImg(Board board);
+
+    int deleteOneMbr(Board board);
 }

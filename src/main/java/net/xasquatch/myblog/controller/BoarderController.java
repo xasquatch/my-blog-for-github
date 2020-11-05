@@ -3,6 +3,7 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Board;
+import net.xasquatch.myblog.model.ImgRepository;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,13 @@ public class BoarderController {
 
 //TODO: 작성글 데이터베이스 업로드
     @PostMapping("/upload")
-    public String upload(HttpServletRequest request, Model model, Board board, Member member) {
+    public String upload(HttpServletRequest request, Model model, Board board, Member member, ImgRepository imgRepository) {
 
         //TODO:임시
         member.setNo(1L);
         board.setCreated_ip(accessorInfo.getIpAddress(request));
 
-        boardService.create(board, member);
+        boardService.create(board, member, imgRepository);
 
 
         return "forward:/board/view/list";
