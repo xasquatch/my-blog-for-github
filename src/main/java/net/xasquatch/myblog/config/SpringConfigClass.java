@@ -14,7 +14,7 @@ import javax.servlet.*;
 @PropertySource("/WEB-INF/properties/file/FileManager.properties")
 public class SpringConfigClass implements WebApplicationInitializer {
 
-    @Value("files.save.path")
+    @Value("${files.save.path}")
     private String filesSavePath;
 
 	@Override
