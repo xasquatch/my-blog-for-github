@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Board;
 import net.xasquatch.myblog.model.Member;
+import net.xasquatch.myblog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +23,8 @@ public class BoarderController {
     @Autowired
     private AccessorInfo accessorInfo;
 
-//    @Autowired
-//    private BoardService boardService;
+    @Autowired
+    private BoardService boardService;
 
 
 //TODO: 글작성 화면으로 이동
@@ -38,8 +39,11 @@ public class BoarderController {
     @PostMapping("/upload")
     public String upload(HttpServletRequest request, Model model, Board board, Member member) {
 
-        board.setIp(accessorInfo.getIpAddress(request));
-//        boardService.create()
+        //TODO:임시
+        member.setNo(1L);
+        board.setCreated_ip(accessorInfo.getIpAddress(request));
+
+        boardService.create(board, member);
 
 
         return "forward:/board/view/list";

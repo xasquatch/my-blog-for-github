@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Builder
 @ToString
@@ -13,6 +14,8 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class Board {
 
+    private Long no;
+
     @Size(max = 25)
     private String keyword;
 
@@ -20,8 +23,8 @@ public class Board {
     private String title;
     private String contents;
     private String thumbnailSrcDir;
-    private String[] imgSrcDir;
+//    private List<String> imgSrcDir;
 
-    private String ip;
+    private String created_ip;
 
 }

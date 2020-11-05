@@ -45,7 +45,6 @@ public class MemberServiceImpl implements MemberService {
         boolean result = false;
 
         ImgParser imgParser = ImgParser.getImgParser(member.getImgFile());
-        System.out.println(imgParser.getContentsString());
 
         while (imgParser.isCuttableImgSrc()) {
             imgParser.addImgList();

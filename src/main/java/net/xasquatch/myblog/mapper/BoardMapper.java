@@ -4,12 +4,13 @@ import net.xasquatch.myblog.model.Board;
 import net.xasquatch.myblog.model.Member;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 
 public interface BoardMapper {
-/*
-    @Insert("INSERT INTO board(member_no, keyword, title, contents, created_ip, thumbnail) VALUES(#{member.no}, #{board.keyword}, #{board.title}, #{board.contents}, #{board.created_ip}, #{board.thumbnail})")
-    void insertOneBoard(Board board, Member member);
+    @Insert("INSERT INTO board(keyword, title, contents, created_ip, thumbnail) VALUES(#{keyword}, #{title}, #{contents}, #{created_ip}, #{thumbnailSrcDir})")
+    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
+    void insertOneBoard(Board board);
 
-    @Select("SELECT no FROM board WHERE no = #{no}")
-    String selectOneEmail(Long no);*/
+    @Select("SELECT * FROM board WHERE no = #{no}")
+    String selectOneContents(Long no);
 }

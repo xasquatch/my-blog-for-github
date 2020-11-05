@@ -13,16 +13,12 @@ public class BoardDao {
     BoardMapper boardMapper;
 
     public boolean InsertOneBoard(Board board, Member member){
-        boolean result = false;
 
-//TODO:임시
-        member.setNo(1L);
-
-//        boardMapper.insertOneBoard(board, member);
+        boardMapper.insertOneBoard(board);
+//        boardMapper.insertOneBoard(board, member.getNo().toString());
 
 
-
-        return result;
+        return board.getNo() != null;
     }
 
 }
