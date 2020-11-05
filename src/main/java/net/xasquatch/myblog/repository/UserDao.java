@@ -19,12 +19,10 @@ public class UserDao {
 
     public boolean insertOneMbr(Member member) {
 
+        //TODO: DB저장 후 member.setNo 호출하여 PK 저장
         userMapper.insertOneMbr(member);
-//        Long test = userMapper.insertOneMbr(member);
-//        System.out.println("test = " + test);
-//
-        return userMapper.selectOneEmail(member.getEmail()) != null;
-//        return userMapper.selectOneEmail(member.getEmail()) != null;
+
+        return member.getNo() != null;
 
     }
 }

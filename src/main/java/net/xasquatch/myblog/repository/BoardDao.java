@@ -16,7 +16,7 @@ public class BoardDao {
         boolean result = false;
 
 //TODO:임시
-//        member.setNo(1L);
+        member.setNo(1L);
 
 //        boardMapper.insertOneBoard(board, member);
 

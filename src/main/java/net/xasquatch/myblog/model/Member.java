@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 @Component
 public class Member {
 
-//    private Long no;
+    private Long no;
 
     @NotNull
     @Size(min = 10, max = 40)
