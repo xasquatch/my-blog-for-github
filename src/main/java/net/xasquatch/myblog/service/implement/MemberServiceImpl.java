@@ -51,9 +51,7 @@ public class MemberServiceImpl implements MemberService {
             imgParser.addImgList();
 
         }
-
-        //TODO:임시
-        member.setNo(1L);
+        result = userDao.insertMbrExceptionImg(member);
 
 
         List<String> imgSrcList = imgParser.getImgSrcList();
@@ -67,8 +65,11 @@ public class MemberServiceImpl implements MemberService {
 
         }
 
-
-        result = userDao.insertOneMbr(member);
+        if (!userDao.updateMbrImg(member)){
+            fileService.removeFiles();
+            delete(member);
+            result = false;
+        }
 
         return result;
     }
@@ -86,7 +87,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean delete(Member member) {
         boolean result = false;
-        log.debug("delete: {}", member.toString());
+        result = userDao.deleteOneMbr(member);
+
         return result;
     }
 
