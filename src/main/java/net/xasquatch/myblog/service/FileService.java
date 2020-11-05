@@ -24,9 +24,11 @@ public class FileService {
         return Base64.getDecoder().decode(contentData);
     }
 
-    public String writeImgFile(byte[] imgByteArray, String saveFileName, String fileExtension) {
-        String filePath = this.filesSavePath + File.separator + saveFileName.concat(".").concat(fileExtension);
-        log.debug(saveFileName);
+    public String writeImgFile(byte[] imgByteArray, String path, String saveFileName, String fileExtension) {
+        File filedir = new File(this.filesSavePath + path);
+        String filePath = this.filesSavePath + path + File.separator + saveFileName.concat(".").concat(fileExtension);
+        filedir.mkdirs();
+
         try (BufferedOutputStream bytebuffer = new BufferedOutputStream(new FileOutputStream(filePath));) {
 
             bytebuffer.write(imgByteArray);
@@ -36,7 +38,7 @@ public class FileService {
             return null;
         }
 
-        return filePath;
+        return filePath.toString();
 
     }
 

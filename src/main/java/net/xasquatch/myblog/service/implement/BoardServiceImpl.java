@@ -54,10 +54,10 @@ public class BoardServiceImpl implements BoardService {
         List<String> imgSrcList = imgParser.getImgSrcList();
         List<String> imgExtensionList = imgParser.getImgExtensionList();
         List<String> imgSrcDir = new ArrayList<String>();
-        String path = member.getNo() + File.pathSeparator + board.getTitle() + File.pathSeparator;
+        String path = member.getNo() + File.separator + board.getTitle() + File.separator;
         for (int i = 0; i < imgSrcList.size(); i++) {
             byte[] decodedImgSrc = fileService.decodeBase64(imgSrcList.get(i));
-            String src = fileService.writeImgFile(decodedImgSrc,path + new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()),
+            String src = fileService.writeImgFile(decodedImgSrc, path, new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()),
                     imgExtensionList.get(i));
             imgSrcDir.add(src);
         }
