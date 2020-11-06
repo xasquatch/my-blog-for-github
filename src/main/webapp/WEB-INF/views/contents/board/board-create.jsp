@@ -3,7 +3,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <section>
-    <h1 class="dot-key">Writing</h1>
+    <h1 class="dot-key"><B>Writing</B></h1>
     <div class="input-group">
         <div class="input-group-addon"><b>Keyword</b></div>
         <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="ex) Life, health....etc">
@@ -84,12 +84,36 @@
     <div id="board-contents-fake" class="form-control" contentEditable="true">
     </div>
 
+
+    <div style="display: grid; grid-template-columns: 200px 1fr;">
+        <div>
+            <B>Thumbnail</B>
+            <button class="btn btn-default" style="border-radius: 50%" onclick="removeThumbnailImage();">
+                <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+            <div id="board-contents-thumbnail" class="well" style="">
+            </div>
+        </div>
+
+        <div>
+            <B>Insert To Click</B>
+            <button class="btn btn-default" style="border-radius: 50%" onclick="removeContentsImages();">
+                <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+            <div id="board-contents-image" class="well">
+                <%--image here--%>
+            </div>
+        </div>
+    </div>
+
     <script>
         // TODO: 세션스토리지 내에 저장
 
         document.querySelector('#board-keyword-fake').value = sessionStorage.getItem('sessionKeywordData');
         document.querySelector('#board-title-fake').value = sessionStorage.getItem('sessionTitleData');
         document.querySelector('#board-contents-fake').innerHTML = sessionStorage.getItem('sessionContentsData');
+        document.querySelector('#board-contents-thumbnail').innerHTML = sessionStorage.getItem('sessionThumbnailData');
+        document.querySelector('#board-contents-image').innerHTML = sessionStorage.getItem('sessionContentsImgData');
         document.querySelector('#board-contents-fake').onkeypress = function (e) {
             if (e.keyCode === 13) {
                 e.preventDefault();
@@ -99,30 +123,12 @@
 
     </script>
 
-    <div style="display: grid; grid-template-columns: 200px 1fr;">
-        <div>
-            Thumbnail<BR>
-            (click to remove)
-            <div id="board-contents-thumbnail" class="well" style="">
-            </div>
-        </div>
-
-        <div>
-            Insert To Click<BR>
-            (click to add Images)
-            <div id="board-contents-image" class="well">
-                <%--image here--%>
-            </div>
-        </div>
-    </div>
-
-
     <%--실제 전송폼--%>
     <form action="${path}/board/upload" enctype="multipart/form-data" id="board-form-tag" method="POST" style="text-align: center;">
         <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
         <input type="text" id="board-title-real" name="title" class="hidden" maxlength="50">
         <textarea id="board-contents-real" name="contents" class="hidden"></textarea>
-        <%--        <input type="file" id="board-files-real" name="imgFiles" class="btn btn-default hidden" multiple>--%>
+        <textarea id="board-thumbnail-real" name="thumbnailSrcDir" class="hidden"></textarea>
         <div id="board-files-real">
 
         </div>
@@ -137,13 +143,19 @@
 <script>
     function uploadImages() {
         modal.changeForm('Image Upload',
+            '<h6><B>가로, 세로 720px을 초과하는 이미지는 720px PNG확장자로 저장됩니다</B></h6>' +
+            '<input type="file" id="board-upload-files" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">'+
             '<section id="board-upload">' +
             '' +
             '</section>' +
-            '<input type="file" id="board-upload-files" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">'
+            '<section id="board-upload-origin">' +
+            '' +
+            '</section>'
         );
         var confirmBtn = document.querySelector('#modal-confirm-btn');
         confirmBtn.setAttribute('onclick', 'ConfirmUploadImages();');
+
+
     }
 
     function addUploadImage(e) {
@@ -154,14 +166,13 @@
                 img.setAttribute("src", event.target.result);
                 img.onload = function () {
                     var firstImg = resizeImg(this);
-                    console.log(this.parentElement);
-                    this.remove();
                     document.querySelector("#board-upload").appendChild(firstImg);
+                    document.querySelector("#board-upload-origin").innerHTML = '';
 
                 }
 
 
-                document.querySelector("#board-upload").appendChild(img);
+                document.querySelector("#board-upload-origin").appendChild(img);
             };
             reader.readAsDataURL(image);
         }
@@ -169,8 +180,6 @@
 
     function resizeImg(img) {
 
-        console.log("height: "+img.height);
-        console.log("width: "+img.width);
         var canvas = document.createElement("canvas");
         var MAX_SIZE = 720;
         var width = img.width;
@@ -218,20 +227,26 @@
         }
     }
 
-    function SettingThumbnailImage() {
+    function removeThumbnailImage() {
         var thumbnailImg = document.querySelector('#board-contents-thumbnail');
 
-        thumbnailImg.addEventListener('click', function () {
-                this.innerHTML = '';
+        if (window.confirm('초기화 하시겠습니까?'))
+            thumbnailImg.innerHTML = '';
 
-            }
-        );
+
+    }
+
+    function removeContentsImages() {
+        var contentsImg = document.querySelector('#board-contents-image');
+
+        if (window.confirm('초기화 하시겠습니까?'))
+            contentsImg.innerHTML = '';
+
 
     }
 
 
     function boardInit() {
-        SettingThumbnailImage();
         SettingInsertImage();
     }
 

@@ -6,26 +6,26 @@
 <aside id="main-aside" class="forward-to-top dot-key">
     <c:if test="${mainContents != 'home' && mainContents != 'user-log-out' }">
         <h2 style="font-weight: bold;">
-            Board<BR>Management
+            블로그 관리
         </h2>
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/board/create">Write on a Blog</a>
+                <a href="${path}/board/create">글 쓰기</a>
             </li>
             <li role="presentation">
-                <a href="${path}/board/view/list">My Writing List</a>
+                <a href="${path}/board/view/list">글 목록</a>
             </li>
         </ul>
         <BR>
         <BR>
         <h2 style="font-weight: bold;">
-            My Page
+            내 정보
         </h2>
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/user/information">Information</a>
+                <a href="${path}/user/information">내 정보</a>
             </li>
             <li role="presentation">
                 <a href="${path}/user/dashBoard">DashBoard</a>
@@ -34,7 +34,7 @@
         <BR>
         <BR>
         <h2 style="font-weight: bold;">
-            My Repository
+            데이터 관리
         </h2>
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">

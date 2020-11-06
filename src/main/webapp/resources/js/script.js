@@ -18,6 +18,8 @@ var board = {
     fakeKeyword: document.querySelector('#board-keyword-fake'),
     fakeTitle: document.querySelector('#board-title-fake'),
     fakeContents: document.querySelector('#board-contents-fake'),
+    fakeThumbnail: document.querySelector('#board-contents-thumbnail'),
+    fakeImages: document.querySelector('#board-contents-image'),
 
     upload: function () {
         var boardForm = document.querySelector('#board-form-tag');
@@ -25,22 +27,28 @@ var board = {
         var realKeyword = document.querySelector('#board-keyword-real');
         var realTitle = document.querySelector('#board-title-real');
         var realContents = document.querySelector('#board-contents-real');
+        var realThumbnail = document.querySelector('#board-thumbnail-real');
 
         realKeyword.value = board.fakeKeyword.value;
         realTitle.value = board.fakeTitle.value;
         realContents.innerHTML = board.fakeContents.innerHTML;
-console.log(realContents.innerHTML);
+        realThumbnail.innerHTML = board.fakeContents.innerHTML;
+
         board.save();
 
         boardForm.submit();
 
-        window.alert('completed upload!');
     },
     save: function () {
-        sessionStorage.setItem('sessionKeywordData', board.fakeKeyword.value);
-        sessionStorage.setItem('sessionTitleData', board.fakeTitle.value);
-        sessionStorage.setItem('sessionContentsData', board.fakeContents.innerHTML);
-
+        try{
+            sessionStorage.setItem('sessionKeywordData', board.fakeKeyword.value);
+            sessionStorage.setItem('sessionTitleData', board.fakeTitle.value);
+            sessionStorage.setItem('sessionContentsData', board.fakeContents.innerHTML);
+            sessionStorage.setItem('sessionThumbnailData', board.fakeThumbnail.innerHTML);
+            sessionStorage.setItem('sessionContentsImgData', board.fakeImages.innerHTML);
+        }catch (e){
+            console.log('FAILED SAVE')
+        }
     },
     changeFont: function (element) {
         var fontName = document.querySelector('#board-font');
@@ -50,9 +58,11 @@ console.log(realContents.innerHTML);
     },
     reset: function () {
         if (confirm('작성 중인 내용을 초기화 하시겠습니까?')) {
-            board.fakeKeyword.innerHTML = '';
-            board.fakeTitle.innerHTML = '';
+            board.fakeKeyword.value = '';
+            board.fakeTitle.value = '';
             board.fakeContents.innerHTML = '';
+            board.fakeThumbnail.innerHTML = '';
+            board.fakeImages.innerHTML = '';
         }
 
     }

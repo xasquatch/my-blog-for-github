@@ -18,4 +18,12 @@ public class HomeController {
         return "index";
     }
 
+    @RequestMapping(value = "/main", method = {RequestMethod.GET, RequestMethod.POST})
+    public String main(Model model) {
+        log.debug("Controller {}: {}","Home","start");
+        model.addAttribute("mainContents", "main");
+
+        return "index";
+    }
+
 }

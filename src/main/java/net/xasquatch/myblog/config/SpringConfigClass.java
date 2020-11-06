@@ -6,7 +6,6 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.*;
@@ -14,7 +13,7 @@ import javax.servlet.*;
 @PropertySource("/WEB-INF/properties/file/FileManager.properties")
 public class SpringConfigClass implements WebApplicationInitializer {
 
-    @Value("files.save.path")
+    @Value("${files.save.path}")
     private String filesSavePath;
 
 	@Override

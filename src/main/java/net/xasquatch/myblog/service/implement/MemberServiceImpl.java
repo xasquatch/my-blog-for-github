@@ -9,6 +9,7 @@ import net.xasquatch.myblog.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -45,25 +46,30 @@ public class MemberServiceImpl implements MemberService {
         boolean result = false;
 
         ImgParser imgParser = ImgParser.getImgParser(member.getImgFile());
-        System.out.println(imgParser.getContentsString());
 
         while (imgParser.isCuttableImgSrc()) {
             imgParser.addImgList();
 
         }
+        result = userDao.insertMbrExceptionImg(member);
+
 
         List<String> imgSrcList = imgParser.getImgSrcList();
         List<String> imgExtensionList = imgParser.getImgExtensionList();
+        String path = File.separator + member.getNo();
         for (int i = 0; i < imgSrcList.size(); i++) {
             byte[] decodedImgSrc = fileService.decodeBase64(imgSrcList.get(i));
-            String src = fileService.writeImgFile(decodedImgSrc,
-                    new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()),
+            String src = fileService.writeImgFile(decodedImgSrc, path , new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()),
                     imgExtensionList.get(i));
             member.setImg(src);
+
         }
 
-
-        result = userDao.insertOneMbr(member);
+        if (!userDao.updateMbrImg(member)){
+            fileService.removeFiles();
+            delete(member);
+            result = false;
+        }
 
         return result;
     }
@@ -81,7 +87,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean delete(Member member) {
         boolean result = false;
-        log.debug("delete: {}", member.toString());
+        result = userDao.deleteOneMbr(member);
+
         return result;
     }
 

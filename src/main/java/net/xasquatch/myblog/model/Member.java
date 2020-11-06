@@ -17,6 +17,8 @@ import javax.validation.constraints.Size;
 @Component
 public class Member {
 
+    private Long no;
+
     @NotNull
     @Size(min = 10, max = 40)
     @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}")
