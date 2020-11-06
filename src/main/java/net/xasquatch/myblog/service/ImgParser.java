@@ -11,7 +11,7 @@ import java.util.List;
 public class ImgParser {
 
     private static ImgParser imgParser = null;
-    private String contentsString;
+    private String contentsString = null;
     private List<String> imgSrcList = new ArrayList<String>();
     private List<String> imgExtensionList = new ArrayList<String>();
 
@@ -76,8 +76,7 @@ public class ImgParser {
         this.imgExtensionList.add(imgExtension);
         this.imgSrcList.add(srcString);
 
-        this.contentsString = contentsString.substring(cutString.length());
-
+        this.contentsString = this.contentsString.substring(0, prefix) + "<xs-img>" + contentsString.substring(prefix + srcStringEndIndex + 2);
     }
 
     public static boolean checkImgTag(String contentsString) {
@@ -89,6 +88,5 @@ public class ImgParser {
 
         return result;
     }
-
 
 }

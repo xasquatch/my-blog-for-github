@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -43,13 +41,15 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public boolean create(Board board, Member member) {
         boolean result = false;
+        boolean[] step = new boolean[2];
 
         board.setMbr_no(member.getNo());
         result = boardDao.insertOneBoard(board);
 
         //TODO: 썸네일 파일 생성 후 빈에 등록
-
         if (ImgParser.checkImgTag(board.getThumbnailSrcDir())) {
+            step[0] = true;
+
             ImgParser imgThumbnailParser = ImgParser.getImgParser(board.getThumbnailSrcDir());
 
             while (imgThumbnailParser.isCuttableImgSrc()) {
@@ -77,12 +77,14 @@ public class BoardServiceImpl implements BoardService {
 
         //TODO: 다량의 이미지 파일 생성 후 리스트에 등록
         if (ImgParser.checkImgTag(board.getContents())) {
-            ImgParser imgParser = ImgParser.getImgParser(board.getThumbnailSrcDir());
+            step[1] = true;
+            ImgParser imgParser = ImgParser.getImgParser(board.getContents());
 
             while (imgParser.isCuttableImgSrc()) {
                 imgParser.addImgList();
 
             }
+            board.setContents(imgParser.getContentsString());
 
             List<String> imgSrcList = imgParser.getImgSrcList();
             List<String> imgExtensionList = imgParser.getImgExtensionList();
@@ -104,7 +106,21 @@ public class BoardServiceImpl implements BoardService {
 
             }
 
+            result = boardDao.updateContents(board);
             result = boardDao.insertImgRepository(imgBeanList);
+
+        }else{
+            result = boardDao.updateContents(board);
+
+        }
+
+
+        if (!result){
+            boardDao.deleteOneBoard(board);
+            if (step[0])
+                fileService.removeFiles();
+            if (step[1])
+                boardDao.deleteImgRepository(board);
 
         }
 

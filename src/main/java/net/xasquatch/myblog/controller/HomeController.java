@@ -21,7 +21,7 @@ public class HomeController {
     @RequestMapping(value = "/main", method = {RequestMethod.GET, RequestMethod.POST})
     public String main(Model model) {
         log.debug("Controller {}: {}","Home","start");
-        model.addAttribute("mainContents", "home");
+        model.addAttribute("mainContents", "main");
 
         return "index";
     }

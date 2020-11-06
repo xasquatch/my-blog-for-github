@@ -40,12 +40,15 @@ var board = {
 
     },
     save: function () {
-        sessionStorage.setItem('sessionKeywordData', board.fakeKeyword.value);
-        sessionStorage.setItem('sessionTitleData', board.fakeTitle.value);
-        sessionStorage.setItem('sessionContentsData', board.fakeContents.innerHTML);
-        sessionStorage.setItem('sessionThumbnailData', board.fakeThumbnail.innerHTML);
-        sessionStorage.setItem('sessionContentsImgData', board.fakeImages.innerHTML);
-
+        try{
+            sessionStorage.setItem('sessionKeywordData', board.fakeKeyword.value);
+            sessionStorage.setItem('sessionTitleData', board.fakeTitle.value);
+            sessionStorage.setItem('sessionContentsData', board.fakeContents.innerHTML);
+            sessionStorage.setItem('sessionThumbnailData', board.fakeThumbnail.innerHTML);
+            sessionStorage.setItem('sessionContentsImgData', board.fakeImages.innerHTML);
+        }catch (e){
+            console.log('FAILED SAVE')
+        }
     },
     changeFont: function (element) {
         var fontName = document.querySelector('#board-font');

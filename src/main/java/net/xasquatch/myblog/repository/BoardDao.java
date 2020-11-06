@@ -37,8 +37,16 @@ public class BoardDao {
 
     }
 
+    public boolean updateContents(Board board) {
+        boolean result = false;
 
-    public boolean deleteOneMbr(Board board) {
+        if (boardMapper.updateContents(board) == 1) result = true;
+
+        return result;
+
+    }
+
+    public boolean deleteOneBoard(Board board) {
         boolean result = false;
 
         if (boardMapper.deleteOneBoard(board) == 1) result = true;
@@ -51,7 +59,7 @@ public class BoardDao {
         boolean result = false;
         int count = 0;
 
-        for (ImgRepository imgRepository: imgRepositoryList) {
+        for (ImgRepository imgRepository : imgRepositoryList) {
             count += imgRepositoryMapper.insertImgRepository(imgRepository);
         }
 
