@@ -144,13 +144,19 @@
 <script>
     function uploadImages() {
         modal.changeForm('Image Upload',
+            '<h6><B>가로, 세로 720px을 초과하는 이미지는 720px PNG확장자로 저장됩니다</B></h6>' +
+            '<input type="file" id="board-upload-files" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">'+
             '<section id="board-upload">' +
             '' +
             '</section>' +
-            '<input type="file" id="board-upload-files" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">'
+            '<section id="board-upload-origin">' +
+            '' +
+            '</section>'
         );
         var confirmBtn = document.querySelector('#modal-confirm-btn');
         confirmBtn.setAttribute('onclick', 'ConfirmUploadImages();');
+
+
     }
 
     function addUploadImage(e) {
@@ -161,14 +167,13 @@
                 img.setAttribute("src", event.target.result);
                 img.onload = function () {
                     var firstImg = resizeImg(this);
-                    console.log(this.parentElement);
-                    this.remove();
                     document.querySelector("#board-upload").appendChild(firstImg);
+                    document.querySelector("#board-upload-origin").innerHTML = '';
 
                 }
 
 
-                document.querySelector("#board-upload").appendChild(img);
+                document.querySelector("#board-upload-origin").appendChild(img);
             };
             reader.readAsDataURL(image);
         }
@@ -176,8 +181,6 @@
 
     function resizeImg(img) {
 
-        console.log("height: "+img.height);
-        console.log("width: "+img.width);
         var canvas = document.createElement("canvas");
         var MAX_SIZE = 720;
         var width = img.width;
@@ -232,8 +235,8 @@
             thumbnailImg.innerHTML = '';
 
 
-
     }
+
     function removeContentsImages() {
         var contentsImg = document.querySelector('#board-contents-image');
 
