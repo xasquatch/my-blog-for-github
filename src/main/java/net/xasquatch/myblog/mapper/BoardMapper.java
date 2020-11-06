@@ -1,22 +1,20 @@
 package net.xasquatch.myblog.mapper;
 
 import net.xasquatch.myblog.model.Board;
-import net.xasquatch.myblog.model.Member;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.*;
 
 public interface BoardMapper {
-    @Insert("INSERT INTO board(keyword, title, contents, created_ip, thumbnail) VALUES(#{keyword}, #{title}, #{contents}, #{created_ip}, #{thumbnailSrcDir})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
-    void insertOneBoard(Board board);
 
     @Select("SELECT * FROM board WHERE no = #{no}")
     String selectOneContents(Long no);
 
-    int insertMbrExceptionImg(Board board);
+    @Insert("INSERT INTO board(member_no, keyword, title, contents, created_ip) VALUES(#{mbr_no}, #{keyword}, #{title}, #{contents}, #{created_ip})")
+    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
+    int insertBoardExceptionImg(Board board);
 
-    int updateMbrImg(Board board);
+    @Update("UPDATE board SET thumbnail = #{thumbnailSrcDir} WHERE no = #{no}")
+    int updateThumbnailImg(Board board);
 
-    int deleteOneMbr(Board board);
+    @Delete("DELETE FROM board WHERE no = #{no}")
+    int deleteOneBoard(Board board);
 }

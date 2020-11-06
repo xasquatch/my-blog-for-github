@@ -1,6 +1,7 @@
 package net.xasquatch.myblog.config;
 
 import net.xasquatch.myblog.mapper.BoardMapper;
+import net.xasquatch.myblog.mapper.ImgRepositoryMapper;
 import net.xasquatch.myblog.mapper.UserMapper;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -66,6 +67,13 @@ public class RootAppContext {
 
     }
 
+    @Bean
+    public MapperFactoryBean<ImgRepositoryMapper> getImgRepositoryMapper(SqlSessionFactory factory){
+        MapperFactoryBean<ImgRepositoryMapper> factoryBean = new MapperFactoryBean<ImgRepositoryMapper>(ImgRepositoryMapper.class);
+        factoryBean.setSqlSessionFactory(factory);
+        return factoryBean;
+
+    }
 
 //------------------------------------------------------
 

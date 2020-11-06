@@ -38,7 +38,7 @@ public class ImgParser {
 
     public boolean isCuttableImgSrc() {
 
-        if (!checkImgTag()) return false;
+        if (!checkImgTag(this.contentsString)) return false;
 
         String contentsString = this.contentsString;
         int prefix = contentsString.indexOf("<img");
@@ -80,10 +80,10 @@ public class ImgParser {
 
     }
 
-    private boolean checkImgTag() {
+    public static boolean checkImgTag(String contentsString) {
 
         boolean result = false;
-        if (this.contentsString.contains("<img")) {
+        if (contentsString.contains("<img")) {
             result = true;
         }
 

@@ -129,7 +129,6 @@
         <input type="text" id="board-title-real" name="title" class="hidden" maxlength="50">
         <textarea id="board-contents-real" name="contents" class="hidden"></textarea>
         <textarea id="board-thumbnail-real" name="thumbnailSrcDir" class="hidden"></textarea>
-        <textarea id="board-images-real" name="thumbnailSrcDir" class="hidden"></textarea>
         <div id="board-files-real">
 
         </div>

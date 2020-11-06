@@ -10,11 +10,11 @@ public interface BoardService {
 
     public boolean viewDetail(Board board);
 
-    public boolean update(Board board, Member member, ImgRepository imgRepository);
+    public boolean update(Board board, Member member);
 
     public boolean delete(Board board, Member member);
 
-    public boolean create(Board board, Member member, ImgRepository imgRepository);
+    public boolean create(Board board, Member member);
 
 
 }

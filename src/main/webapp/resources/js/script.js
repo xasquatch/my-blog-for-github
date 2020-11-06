@@ -28,13 +28,11 @@ var board = {
         var realTitle = document.querySelector('#board-title-real');
         var realContents = document.querySelector('#board-contents-real');
         var realThumbnail = document.querySelector('#board-thumbnail-real');
-        var realImages = document.querySelector('#board-images-real');
 
         realKeyword.value = board.fakeKeyword.value;
         realTitle.value = board.fakeTitle.value;
         realContents.innerHTML = board.fakeContents.innerHTML;
         realThumbnail.innerHTML = board.fakeContents.innerHTML;
-        realImages.innerHTML = board.fakeImages.innerHTML;
 
         board.save();
 

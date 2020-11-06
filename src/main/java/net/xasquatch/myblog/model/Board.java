@@ -15,6 +15,7 @@ import java.util.List;
 public class Board {
 
     private Long no;
+    private Long mbr_no;
 
     @Size(max = 25)
     private String keyword;
@@ -23,7 +24,6 @@ public class Board {
     private String title;
     private String contents;
     private String thumbnailSrcDir;
-//    private List<String> imgSrcDir;
 
     private String created_ip;
 

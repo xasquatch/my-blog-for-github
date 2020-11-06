@@ -11,6 +11,7 @@ import lombok.*;
 public class ImgRepository {
 
     private Long no;
+    private Long board_no;
     private String name;
     private String directory;
 

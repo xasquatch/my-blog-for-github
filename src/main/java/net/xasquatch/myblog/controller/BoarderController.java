@@ -3,7 +3,6 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Board;
-import net.xasquatch.myblog.model.ImgRepository;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,16 +37,24 @@ public class BoarderController {
 
 //TODO: 작성글 데이터베이스 업로드
     @PostMapping("/upload")
-    public String upload(HttpServletRequest request, Model model, Board board, Member member, ImgRepository imgRepository) {
+    public String upload(HttpServletRequest request, Model model, Board board, Member member) {
 
         //TODO:임시
         member.setNo(1L);
         board.setCreated_ip(accessorInfo.getIpAddress(request));
 
-        boardService.create(board, member, imgRepository);
+        boolean result = false;
+        result = boardService.create(board, member);
 
+        if (result) {
+            model.addAttribute("systemMsg", "[업로드 완료]작성글 업로드가 완료되었습니다.");
+            model.addAttribute("locationPage", "/board/view/list");
+        } else {
+            model.addAttribute("systemMsg", "[업로드 실패]알 수 없는 원인으로 인해 업로드에 실패하였습니다. 잠시후 다시시도해주세요");
+            model.addAttribute("locationPage", "/board/create");
+        }
 
-        return "forward:/board/view/list";
+        return "forward:/";
     }
 
     @RequestMapping(value = "/view/list", method = {RequestMethod.GET, RequestMethod.POST})
