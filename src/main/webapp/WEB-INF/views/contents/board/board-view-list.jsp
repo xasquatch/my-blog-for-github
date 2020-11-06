@@ -15,10 +15,10 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="boardListViewCount">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:ChangeBoardListCount(10);">10</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:ChangeBoardListCount(20);">20</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:ChangeBoardListCount(50);">50</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:ChangeBoardListCount(100);">100</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:changeBoardListCount(10);">10</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:changeBoardListCount(20);">20</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:changeBoardListCount(50);">50</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:changeBoardListCount(100);">100</a></li>
                 </ul>
             </div>
             <button type="button" class="btn btn-success" onclick="location.href='${path}/board/create'">
@@ -37,12 +37,13 @@
             </tr>
             </thead>
             <tbody>
+<c:forEach var="list" items="${boardList}">
             <tr>
-                <td style="cursor:pointer;" onclick="location.href='${path}/board/view/detail/1'">
-                    마 이게 타이틀이다! 알겠나! 잘 보고 배우자 열심히하자 화이팅
+                <td style="cursor:pointer;" onclick="location.href='${path}/board/view/detail/${list.no}'">
+                    ${list.title}
                 </td>
                 <td>
-                    <%= new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>
+                    ${list.created_date}
                 </td>
                 <td align="center">
                     <span class="glyphicon glyphicon-cog"
@@ -50,9 +51,10 @@
                 </td>
                 <td align="center">
                     <span class="glyphicon glyphicon-trash"
-                          style="cursor:pointer;" onclick="location.href='#'"></span>
+                          style="cursor:pointer;" onclick="deleteBoard(${list.no});"></span>
                 </td>
             </tr>
+</c:forEach>
             </tbody>
         </table>
     </article>
@@ -99,11 +101,16 @@
 
 
 <script>
-    function ChangeBoardListCount(count) {
+    function changeBoardListCount(count) {
         var boardListCount = document.querySelector('#board-list-count');
         boardListCount.innerHTML = count;
 
         //-----------그 다음 페이지 재호출하여 갯수 재지정
     }
 
+    function deleteBoard(key) {
+        if (window.confirm("정말 삭제하시겠습니까?"))
+        location.href='${path}/board/delete/'+ key;
+
+    }
 </script>

@@ -10,8 +10,10 @@ import net.xasquatch.myblog.service.ImgParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -24,18 +26,20 @@ public class BoardServiceImpl implements BoardService {
     private FileService fileService;
 
     @Override
-    public boolean viewDetail(Board board) {
+    public HashMap<String, Object> viewDetail(Object boardKey) {
+
+        return boardDao.selectOneBoard(boardKey);
+    }
+
+    @Override
+    public boolean update(Object boardKey) {
         return false;
     }
 
     @Override
-    public boolean update(Board board, Member member) {
-        return false;
-    }
+    public boolean delete(Object boardKey) {
 
-    @Override
-    public boolean delete(Board board, Member member) {
-        return false;
+        return boardDao.deleteOneBoard(boardKey);
     }
 
     @Override
@@ -106,7 +110,7 @@ public class BoardServiceImpl implements BoardService {
 
             }
 
-            result = boardDao.updateContents(board);
+            boardDao.updateContents(board);
             result = boardDao.insertImgRepository(imgBeanList);
 
         }else{
@@ -125,5 +129,11 @@ public class BoardServiceImpl implements BoardService {
         }
 
         return result;
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getBoardList(Member member) {
+
+        return boardDao.SelectBoardList(member);
     }
 }

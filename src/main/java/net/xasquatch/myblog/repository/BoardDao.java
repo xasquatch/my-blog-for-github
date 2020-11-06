@@ -48,10 +48,10 @@ public class BoardDao {
 
     }
 
-    public boolean deleteOneBoard(Board board) {
+    public boolean deleteOneBoard(Object boardKey) {
         boolean result = false;
 
-        if (boardMapper.deleteOneBoard(board) == 1) result = true;
+        if (boardMapper.deleteOneBoard(boardKey) == 1) result = true;
 
         return result;
 
@@ -81,9 +81,30 @@ public class BoardDao {
 
     }
 
-    public List<HashMap<String, Object>> SelectBoardList(Member member){
+    public List<HashMap<String, Object>> SelectBoardList(Member member) {
 
-        return null;
+        Long memberKey = member.getNo();
+
+        return boardMapper.selectBoardList(memberKey);
+    }
+
+    public HashMap<String, Object> selectOneBoard(Object boardKey) {
+
+        HashMap<String, Object> oneBoard = boardMapper.selectOneBoard(boardKey);
+        List<HashMap<String, Object>> imgSrc = imgRepositoryMapper.selectImgSrc(boardKey);
+
+        String contents = (String) oneBoard.get("contents");
+
+        for (HashMap<String, Object> src : imgSrc) {
+            String dir = (String) src.get("directory");
+            dir = dir.replace("\\","/");
+            contents = contents.replaceFirst("<xs-img/>", "<img src=\"" + dir + "\">");
+
+        }
+
+        oneBoard.put("contents", contents);
+
+        return oneBoard;
     }
 
 }

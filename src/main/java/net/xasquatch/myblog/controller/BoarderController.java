@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -27,7 +29,7 @@ public class BoarderController {
     private BoardService boardService;
 
 
-//TODO: 글작성 화면으로 이동
+    //TODO: 글작성 화면으로 이동
     @RequestMapping(value = "/create", method = {RequestMethod.GET, RequestMethod.POST})
     public String board(Model model) {
         model.addAttribute("mainContents", "board-create");
@@ -35,7 +37,7 @@ public class BoarderController {
         return "index";
     }
 
-//TODO: 작성글 데이터베이스 업로드
+    //TODO: 작성글 데이터베이스 업로드
     @PostMapping("/upload")
     public String upload(HttpServletRequest request, Model model, Board board, Member member) {
 
@@ -58,22 +60,36 @@ public class BoarderController {
     }
 
     @RequestMapping(value = "/view/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewList(Model model) {
+    public String viewList(Model model, Member member, HttpServletRequest request) {
 
-        log.debug("Controller {}: {}", "board", "view list");
+        //TODO:임시
+        member.setNo(1L);
+        List<HashMap<String, Object>> boardList = boardService.getBoardList(member);
+
+        model.addAttribute("boardList", boardList);
         model.addAttribute("mainContents", "board-view-list");
 
         return "index";
     }
 
-    // 임시
     @RequestMapping(value = "/view/detail/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewDetail(Model model, @PathVariable String boardNo) {
 
-        log.debug("Controller {}: {} -> {}", "board", "view detail", boardNo);
-        if (boardNo.equals("1"))
-            model.addAttribute("mainContents", "board-view-detail");
+        HashMap<String, Object> boardInfo = boardService.viewDetail(boardNo);
+
+        model.addAttribute("boardInfo", boardInfo);
+        model.addAttribute("mainContents", "board-view-detail");
 
         return "index";
     }
+
+    @RequestMapping(value = "/delete/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
+    public String deleteBoard(@PathVariable String boardNo) {
+
+        boardService.delete(boardNo);
+
+        return "redirect:/board/view/list";
+    }
+
+
 }

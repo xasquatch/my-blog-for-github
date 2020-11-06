@@ -10,6 +10,7 @@
 #board-contents-fake {
     height: 400px !important;
     font-family: auto;
+    overflow: auto;
 }
 
 #board-contents-fake img{

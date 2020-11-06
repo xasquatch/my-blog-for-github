@@ -21,9 +21,14 @@ public interface BoardMapper {
     @Update("UPDATE board SET contents = #{contents} WHERE no = #{no}")
     int updateContents(Board board);
 
-    @Delete("DELETE FROM board WHERE no = #{no}")
-    int deleteOneBoard(Board board);
+    @Delete("DELETE FROM board WHERE no = #{arg0}")
+    int deleteOneBoard(Object boardKey);
 
-    @Select("SELECT keyword, title, contents, created_ip, thumbnail, created_date, created_ip FROM board WHERE member_no = #{member_no} ORDER BY #{asc}")
-    List<HashMap<String, Object>> SelectBoardList(String member_no, String asc);
+    @Select("SELECT no, keyword, title, thumbnail, created_date, created_ip FROM board WHERE member_no = #{arg0} ORDER BY no DESC")
+    List<HashMap<String, Object>> selectBoardList(Object member_no);
+
+    @Select("SELECT no, member_no, keyword, title, convert(contents USING UTF8) as contents, created_date, created_ip, thumbnail FROM board WHERE no = #{arg0}")
+    HashMap<String, Object> selectOneBoard(Object board_no);
+
+
 }
