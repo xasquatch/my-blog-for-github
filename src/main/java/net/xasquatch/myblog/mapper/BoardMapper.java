@@ -3,6 +3,9 @@ package net.xasquatch.myblog.mapper;
 import net.xasquatch.myblog.model.Board;
 import org.apache.ibatis.annotations.*;
 
+import java.util.HashMap;
+import java.util.List;
+
 public interface BoardMapper {
 
     @Select("SELECT * FROM board WHERE no = #{no}")
@@ -20,4 +23,7 @@ public interface BoardMapper {
 
     @Delete("DELETE FROM board WHERE no = #{no}")
     int deleteOneBoard(Board board);
+
+    @Select("SELECT keyword, title, contents, created_ip, thumbnail, created_date, created_ip FROM board WHERE member_no = #{member_no} ORDER BY #{asc}")
+    List<HashMap<String, Object>> SelectBoardList(String member_no, String asc);
 }

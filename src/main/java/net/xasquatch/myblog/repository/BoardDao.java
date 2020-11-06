@@ -4,9 +4,11 @@ import net.xasquatch.myblog.mapper.BoardMapper;
 import net.xasquatch.myblog.mapper.ImgRepositoryMapper;
 import net.xasquatch.myblog.model.Board;
 import net.xasquatch.myblog.model.ImgRepository;
+import net.xasquatch.myblog.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -79,5 +81,9 @@ public class BoardDao {
 
     }
 
+    public List<HashMap<String, Object>> SelectBoardList(Member member){
+
+        return null;
+    }
 
 }
