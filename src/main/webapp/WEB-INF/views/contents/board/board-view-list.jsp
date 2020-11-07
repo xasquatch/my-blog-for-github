@@ -6,7 +6,7 @@
 <section>
     <article class="board-list-title">
         <div>
-            <h1 class="dot-key">그럴싸한 제목</h1>
+            <h1 class="dot-key">글 목록</h1>
         </div>
         <div style="display: flex; align-items: flex-end;">
             <div class="dropdown">
