@@ -115,7 +115,7 @@
 
     </script>
 
-    <form action="${path}/board/${memberNo}/upload" method="POST" enctype="multipart/form-data" id="board-form-tag" style="text-align: center;">
+    <form action="${path}/board/${memberNo}/upload/${requestScope.boardNo}" method="POST" enctype="multipart/form-data" id="board-form-tag" style="text-align: center;">
         <input type="text" id="board-no" name="no" class="hidden" value="${requestScope.boardNo}">
         <input type="text" id="board-no-mbr" name="mbr_no" class="hidden">
         <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
@@ -222,6 +222,7 @@
         realThumbnail.innerHTML = board.fakeThumbnail.innerHTML;
 
         if (uri.isContainWordCurrentPath('/create')) {
+/*
             var formData = new FormData(boardFormTag);
             for (var x of formData.entries()) {
                 console.log(x[0] +' : '+x[1] );
@@ -236,6 +237,9 @@
                 }
 
             }, 'FORMFILE', formData);
+*/
+            boardFormTag.submit();
+
 
         } else if (uri.isContainWordCurrentPath('/update')) {
             console.log('${path}/board/${memberNo}/update/' + board.boardNo.value);

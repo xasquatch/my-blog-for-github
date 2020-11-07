@@ -44,7 +44,7 @@ public class BoarderController {
 
         board.setCreated_ip(accessorInfo.getIpAddress(request));
 
-        log.debug("----------------------{}-------------",board.getContents());
+        log.debug("----------------------{}-------------", board.getContents());
 
         return String.valueOf(boardService.create(board));
     }
@@ -85,11 +85,11 @@ public class BoarderController {
     }
 
     @RequestMapping(value = "/{memberNo}/delete/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteBoard(@PathVariable String boardNo) {
+    public String deleteBoard(@PathVariable String memberNo, @PathVariable String boardNo) {
 
         boardService.delete(boardNo);
 
-        return "redirect:/board/view/list";
+        return "redirect:/board/" + memberNo + "view/list";
     }
 
 }
