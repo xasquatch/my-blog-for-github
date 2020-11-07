@@ -10,7 +10,6 @@ import net.xasquatch.myblog.service.ImgParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,7 +102,6 @@ public class BoardServiceImpl implements BoardService {
                 byte[] decodedImgSrc = fileService.decodeBase64(imgSrcList.get(i));
                 String src = fileService.writeImgFile(decodedImgSrc, imgPath, imgRepository.getName(),
                         imgExtensionList.get(i));
-
                 imgRepository.setDirectory(src);
 
                 imgBeanList.add(imgRepository);

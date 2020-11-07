@@ -50,6 +50,7 @@ public class SpringConfigClass implements WebApplicationInitializer {
 //		FilterRegistration.Dynamic securityFilter = servletContext.addFilter("springSecurityFilterChain", new DelegatingFilterProxy());
 //		securityFilter.addMappingForUrlPatterns(null,false,"/user/*");
 
+
 	}
 }
 

@@ -22,6 +22,9 @@ public class FileService {
 
     @Value("${files.save.path}")
     private String filesSavePath;
+    @Value("${files.context.path}")
+    private String filesContextPath;
+
     private String addSavePath;
 
     public byte[] decodeBase64(String imgString) {
@@ -38,11 +41,13 @@ public class FileService {
         try (BufferedOutputStream bytebuffer = new BufferedOutputStream(new FileOutputStream(filePath));) {
 
             bytebuffer.write(imgByteArray);
+            filePath = this.filesContextPath + this.addSavePath + File.separator + saveFileName.concat(".").concat(fileExtension);
 
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+
 
         return filePath.toString();
 
