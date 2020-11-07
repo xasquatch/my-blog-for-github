@@ -1,6 +1,7 @@
 package net.xasquatch.myblog.mapper;
 
 import net.xasquatch.myblog.model.Board;
+import net.xasquatch.myblog.model.Member;
 import org.apache.ibatis.annotations.*;
 
 import java.util.HashMap;
@@ -8,9 +9,9 @@ import java.util.List;
 
 public interface BoardMapper {
 
-    @Insert("INSERT INTO board(member_no, keyword, title, contents, created_ip) VALUES(#{mbr_no}, #{keyword}, #{title}, '', #{created_ip})")
+    @Insert("INSERT INTO board(member_no) VALUES(#{mbr_no})")
     @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
-    int insertBoardExceptionImg(Board board);
+    int insertDefaultBoard(Member member);
 
     @Update("UPDATE board SET keyword = #{keyword}, title = #{title}, contents = #{contents}, thumbnail = #{thumbnail} WHERE no = #{no}")
     int updateBoard(Board board);

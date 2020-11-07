@@ -25,6 +25,14 @@ public class BoardServiceImpl implements BoardService {
     private FileService fileService;
 
     @Override
+    public Board createDefaultBoard(Member member) {
+
+        boardDao.insertDefaultBoard(member);
+
+        return null;
+    }
+
+    @Override
     public HashMap<String, Object> viewDetail(Object boardKey) {
 
         return boardDao.selectOneBoard(boardKey);
@@ -48,7 +56,6 @@ public class BoardServiceImpl implements BoardService {
         boolean[] step = new boolean[2];
 
         board.setMbr_no(member.getNo());
-        result = boardDao.insertOneBoard(board);
 
         //TODO: 썸네일 파일 생성 후 빈에 등록
         if (ImgParser.checkImgTag(board.getThumbnailSrcDir())) {

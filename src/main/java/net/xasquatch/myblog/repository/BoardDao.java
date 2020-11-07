@@ -20,11 +20,11 @@ public class BoardDao {
     @Autowired
     ImgRepositoryMapper imgRepositoryMapper;
 
-    public boolean insertOneBoard(Board board) {
+    public boolean insertDefaultBoard(Member member) {
         boolean result = false;
 
         //TODO: DB저장 후 board.setNo 호출하여 PK 저장
-        if (boardMapper.insertBoardExceptionImg(board) == 1) result = true;
+        if (boardMapper.insertDefaultBoard(member) == 1) result = true;
 
         return result;
 

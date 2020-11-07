@@ -9,9 +9,20 @@ var modal = {
 
     },
 
-
 }
 
+var url = {
+    parsing: function () {
+        return window.location.href.slice(window.location.origin.length);
+
+    },
+    isContainWord: function (url, word) {
+        return url.indexOf(word) > 0;
+    },
+    isContainWordCurrentPath: function (word) {
+        return window.location.href.slice(window.location.origin.length).indexOf(word) > 0;
+    }
+}
 
 var board = {
 
