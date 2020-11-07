@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -25,11 +26,17 @@ public class BoardServiceImpl implements BoardService {
     private FileService fileService;
 
     @Override
-    public Board createDefaultBoard(Member member) {
+    public Object createDefaultBoard(String memberNo) {
 
-        boardDao.insertDefaultBoard(member);
+        Map<String, Object> memberMap = new HashMap<String, Object>();
+        memberMap.put("member_no", memberNo);
+        if (boardDao.insertDefaultBoard(memberMap)){
+            return memberMap.get("no");
 
-        return null;
+        }else{
+            return false;
+        }
+
     }
 
     @Override
@@ -78,12 +85,12 @@ public class BoardServiceImpl implements BoardService {
                         imgThumbnailExtensionList.get(i));
                 board.setThumbnailSrcDir(src);
             }
-            result = boardDao.updateThumbnailImg(board);
+//            result = boardDao.updateThumbnailImg(board);
 
         }
 
 
-/*TODO:--------------------------------------------------------*/
+        /*TODO:--------------------------------------------------------*/
 
 
         //TODO: 다량의 이미지 파일 생성 후 리스트에 등록
@@ -116,16 +123,16 @@ public class BoardServiceImpl implements BoardService {
 
             }
 
-            boardDao.updateContents(board);
+//            boardDao.updateContents(board);
             result = boardDao.insertImgRepository(imgBeanList);
 
-        }else{
-            result = boardDao.updateContents(board);
+        } else {
+//            result = boardDao.updateContents(board);
 
         }
 
 
-        if (!result){
+        if (!result) {
             boardDao.deleteOneBoard(board);
             if (step[0])
                 fileService.removeFiles();

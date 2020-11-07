@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <c:set var="mainContents" value="${requestScope.mainContents}"/>
+<c:set var="memberNo" value="${member.no}"/>
 
 <aside id="main-aside" class="forward-to-top dot-key">
     <c:if test="${mainContents != 'home' && mainContents != 'user-log-out' }">
@@ -11,10 +12,10 @@
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/board/create">글 쓰기</a>
+                <a href="${path}/board/${memberNo}/create">글 쓰기</a>
             </li>
             <li role="presentation">
-                <a href="${path}/board/view/list">글 목록</a>
+                <a href="${path}/board/${memberNo}/view/list">글 목록</a>
             </li>
         </ul>
         <BR>
@@ -25,10 +26,10 @@
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/user/information">내 정보</a>
+                <a href="${path}/user/${memberNo}/information">내 정보</a>
             </li>
             <li role="presentation">
-                <a href="${path}/user/dashBoard">DashBoard</a>
+                <a href="${path}/user/${memberNo}/dashBoard">DashBoard</a>
             </li>
         </ul>
         <BR>
@@ -39,7 +40,7 @@
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/repository/list">Repository</a>
+                <a href="${path}/repository/${memberNo}/list">Repository</a>
             </li>
         </ul>
     </c:if>

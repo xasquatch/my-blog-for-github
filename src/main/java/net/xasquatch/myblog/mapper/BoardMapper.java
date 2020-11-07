@@ -6,24 +6,22 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface BoardMapper {
 
-    @Insert("INSERT INTO board(member_no) VALUES(#{mbr_no})")
+    @Insert("INSERT INTO board(member_no) VALUES(#{member_no})")
     @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
-    int insertDefaultBoard(Member member);
+    int insertDefaultBoard(Map<String, Object> memberMap);
 
     @Update("UPDATE board SET keyword = #{keyword}, title = #{title}, contents = #{contents}, thumbnail = #{thumbnail} WHERE no = #{no}")
     int updateBoard(Board board);
 
-    @Update("UPDATE board SET thumbnail = #{thumbnailSrcDir} WHERE no = #{no}")
-    int updateThumbnailImg(Board board);
-
-    @Update("UPDATE board SET contents = #{contents} WHERE no = #{no}")
-    int updateContents(Board board);
-
     @Delete("DELETE FROM board WHERE no = #{arg0}")
     int deleteOneBoard(Object boardKey);
+
+    @Delete("DELETE FROM board WHERE completed = 'false' AND member_no = #{member_no}")
+    void deleteUnfinishedBoard(Map<String, Object> memberMap);
 
     @Select("SELECT no, keyword, title, thumbnail, created_date, created_ip FROM board WHERE member_no = #{arg0} ORDER BY no DESC")
     List<HashMap<String, Object>> selectBoardList(Object member_no);

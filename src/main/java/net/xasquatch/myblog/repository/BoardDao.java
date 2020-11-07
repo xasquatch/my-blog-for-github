@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class BoardDao {
@@ -20,11 +21,16 @@ public class BoardDao {
     @Autowired
     ImgRepositoryMapper imgRepositoryMapper;
 
-    public boolean insertDefaultBoard(Member member) {
+    public void deleteUnfinishedBoard(Map<String, Object> memberMap) {
+        boardMapper.deleteUnfinishedBoard(memberMap);
+
+    }
+
+    public boolean insertDefaultBoard(Map<String, Object> memberMap) {
         boolean result = false;
 
         //TODO: DB저장 후 board.setNo 호출하여 PK 저장
-        if (boardMapper.insertDefaultBoard(member) == 1) result = true;
+        if (boardMapper.insertDefaultBoard(memberMap) == 1) result = true;
 
         return result;
 
@@ -38,21 +44,6 @@ public class BoardDao {
 
     }
 
-    public boolean updateThumbnailImg(Board board) {
-        boolean result = false;
-        if (boardMapper.updateThumbnailImg(board) == 1) result = true;
-
-        return result;
-
-    }
-
-    public boolean updateContents(Board board) {
-        boolean result = false;
-        if (boardMapper.updateContents(board) == 1) result = true;
-
-        return result;
-
-    }
 
     public boolean deleteOneBoard(Object boardKey) {
         boolean result = false;

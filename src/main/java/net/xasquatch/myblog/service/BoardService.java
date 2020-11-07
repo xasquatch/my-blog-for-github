@@ -14,7 +14,7 @@ public interface BoardService {
 
     public HashMap<String, Object> viewDetail(Object boardKey);
 
-    public Board createDefaultBoard(Member member);
+    public Object createDefaultBoard(String memberNo);
 
     public boolean modifyBoard(Board board);
 

@@ -11,7 +11,7 @@ var modal = {
 
 }
 
-var url = {
+var uri = {
     parsing: function () {
         return window.location.href.slice(window.location.origin.length);
 
@@ -26,32 +26,20 @@ var url = {
 
 var board = {
 
+
+    boardNo : document.querySelector('#board-no'),
+    boardMbrNo : document.querySelector('#board-no-mbr'),
     fakeKeyword: document.querySelector('#board-keyword-fake'),
     fakeTitle: document.querySelector('#board-title-fake'),
     fakeContents: document.querySelector('#board-contents-fake'),
     fakeThumbnail: document.querySelector('#board-contents-thumbnail'),
     fakeImages: document.querySelector('#board-contents-image'),
 
-    upload: function () {
-        var boardForm = document.querySelector('#board-form-tag');
-        var realKeyword = document.querySelector('#board-keyword-real');
-        var realTitle = document.querySelector('#board-title-real');
-        var realContents = document.querySelector('#board-contents-real');
-        var realThumbnail = document.querySelector('#board-thumbnail-real');
-
-        realKeyword.value = board.fakeKeyword.value;
-        realTitle.value = board.fakeTitle.value;
-        realContents.innerHTML = board.fakeContents.innerHTML;
-        realThumbnail.innerHTML = board.fakeContents.innerHTML;
-
-        board.save();
-
-        boardForm.submit();
-        
-
-    },
     save: function () {
         try{
+
+            sessionStorage.setItem('sessionBoardNoData', board.boardNo.value);
+            sessionStorage.setItem('sessionBoardMbrNoData', board.boardMbrNo.value);
             sessionStorage.setItem('sessionKeywordData', board.fakeKeyword.value);
             sessionStorage.setItem('sessionTitleData', board.fakeTitle.value);
             sessionStorage.setItem('sessionContentsData', board.fakeContents.innerHTML);
@@ -63,6 +51,8 @@ var board = {
     },
     call: function(){
         if (window.confirm('임시저장된 정보를 불러오시겠습니까?')){
+            board.boardNo.value = sessionStorage.getItem('sessionBoardNoData');
+            board.boardMbrNo.value = sessionStorage.getItem('sessionBoardMbrNoData');
             document.querySelector('#board-keyword-fake').value = sessionStorage.getItem('sessionKeywordData');
             document.querySelector('#board-title-fake').value = sessionStorage.getItem('sessionTitleData');
             document.querySelector('#board-contents-fake').innerHTML = sessionStorage.getItem('sessionContentsData');

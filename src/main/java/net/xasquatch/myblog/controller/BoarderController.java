@@ -25,25 +25,18 @@ public class BoarderController {
     @Autowired
     private BoardService boardService;
 
-
     //TODO: 글작성 화면으로 이동
-    @RequestMapping(value = "/create", method = {RequestMethod.GET, RequestMethod.POST})
-    public String create(Model model, Member member) {
+    @RequestMapping(value = "/{memberNo}/create", method = {RequestMethod.GET, RequestMethod.POST})
+    public String forwardCreate(Model model) {
 
-//        Board board = boardService.createDefaultBoard(member);
-//
-//        model.addAttribute("board", board);
         model.addAttribute("mainContents", "board-create");
         return "index";
     }
 
-    @PostMapping(value="/create/default")
-    @ResponseBody
-    public String createDefault(HttpServletRequest request){
+    @PostMapping("/{memberNo}/create/default")
+    public String createDefault(Model model, @PathVariable String memberNo) {
 
-
-
-        return null;
+        return (String) boardService.createDefaultBoard(memberNo);
     }
 
     //TODO: 작성글 데이터베이스 업로드
@@ -70,7 +63,7 @@ public class BoarderController {
 
     //TODO: 작성글 수정페이지로 이동
     @RequestMapping(value = "/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String modify(Model model, @PathVariable String boardNo){
+    public String modify(Model model, @PathVariable String boardNo) {
 
         HashMap<String, Object> board = boardService.viewDetail(boardNo);
         model.addAttribute("board", board);
@@ -78,7 +71,7 @@ public class BoarderController {
 
         return "index";
     }
-    
+
     @RequestMapping(value = "/view/list", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewList(Model model, Member member, HttpServletRequest request) {
 
