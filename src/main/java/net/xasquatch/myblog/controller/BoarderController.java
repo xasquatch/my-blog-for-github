@@ -40,7 +40,7 @@ public class BoarderController {
     }
 
     //TODO: 작성글 데이터베이스 업로드
-    @PostMapping("/upload")
+    @PostMapping("/{memberNo}/upload")
     public String upload(HttpServletRequest request, Model model, Board board, Member member) {
 
         //TODO:임시
@@ -62,7 +62,7 @@ public class BoarderController {
     }
 
     //TODO: 작성글 수정페이지로 이동
-    @RequestMapping(value = "/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/{memberNo}/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String modify(Model model, @PathVariable String boardNo) {
 
         HashMap<String, Object> board = boardService.viewDetail(boardNo);
@@ -72,7 +72,7 @@ public class BoarderController {
         return "index";
     }
 
-    @RequestMapping(value = "/view/list", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/{memberNo}/view/list", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewList(Model model, Member member, HttpServletRequest request) {
 
         //TODO:임시
@@ -85,7 +85,7 @@ public class BoarderController {
         return "index";
     }
 
-    @RequestMapping(value = "/view/detail/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/{memberNo}/view/detail/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewDetail(Model model, @PathVariable String boardNo) {
 
         HashMap<String, Object> boardInfo = boardService.viewDetail(boardNo);
@@ -96,7 +96,7 @@ public class BoarderController {
         return "index";
     }
 
-    @RequestMapping(value = "/delete/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/{memberNo}/delete/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String deleteBoard(@PathVariable String boardNo) {
 
         boardService.delete(boardNo);

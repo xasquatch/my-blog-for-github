@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <c:set var="mainContents" value="${requestScope.mainContents}"/>
-<c:set var="memberNo" value="${member.no}"/>
+<c:set var="memberNo" value="${1}"/>
 
 <aside id="main-aside" class="forward-to-top dot-key">
     <c:if test="${mainContents != 'home' && mainContents != 'user-log-out' }">

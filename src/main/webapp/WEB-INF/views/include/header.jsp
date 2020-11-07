@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<c:set var="memberNo" value="${1}"/>
 <html>
 <head>
     <%--meta data--%>
@@ -41,13 +42,13 @@
             <B>More</B>
         </button>
 <%--TODO:세션에따라 표시--%>
-        <button type="button" class="btn btn-danger" onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/user/log-out'">
+        <button type="button" class="btn btn-danger" onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/user/${memberNo}/log-out'">
             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
         </button>
-        <button type="button" class="dot-key btn btn-default header-menu-btn" onclick="location.href='${path}/board/view/list'">
+        <button type="button" class="dot-key btn btn-default header-menu-btn" onclick="location.href='${path}/board/${memberNo}/view/list'">
             보드
         </button>
-        <button type="button" class="dot-key btn btn-default header-menu-btn" onclick="location.href='${path}/user/information'">
+        <button type="button" class="dot-key btn btn-default header-menu-btn" onclick="location.href='${path}/user/${memberNo}/information'">
             정보
         </button>
 

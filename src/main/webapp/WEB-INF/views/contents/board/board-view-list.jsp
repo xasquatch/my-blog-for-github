@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<c:set var="memberNo" value="${member.no}"/>
+<c:set var="memberNo" value="${1}"/>
 <section id="main-section">
     <article class="board-list-title">
         <div>
