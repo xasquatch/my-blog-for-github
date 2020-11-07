@@ -76,7 +76,7 @@ public class ImgParser {
         this.imgExtensionList.add(imgExtension);
         this.imgSrcList.add(srcString);
 
-        this.contentsString = this.contentsString.substring(0, prefix) + "<xs-img>" + contentsString.substring(prefix + srcStringEndIndex + 2);
+        this.contentsString = this.contentsString.substring(0, prefix) + "<xs-img/>" + contentsString.substring(prefix + srcStringEndIndex + 2);
     }
 
     public static boolean checkImgTag(String contentsString) {

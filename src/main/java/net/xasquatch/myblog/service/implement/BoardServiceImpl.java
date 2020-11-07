@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -24,18 +25,21 @@ public class BoardServiceImpl implements BoardService {
     private FileService fileService;
 
     @Override
-    public boolean viewDetail(Board board) {
-        return false;
+    public HashMap<String, Object> viewDetail(Object boardKey) {
+
+        return boardDao.selectOneBoard(boardKey);
     }
 
     @Override
-    public boolean update(Board board, Member member) {
-        return false;
+    public boolean modifyBoard(Board board) {
+
+        return boardDao.updateBoard(board);
     }
 
     @Override
-    public boolean delete(Board board, Member member) {
-        return false;
+    public boolean delete(Object boardKey) {
+
+        return boardDao.deleteOneBoard(boardKey);
     }
 
     @Override
@@ -99,14 +103,13 @@ public class BoardServiceImpl implements BoardService {
                 byte[] decodedImgSrc = fileService.decodeBase64(imgSrcList.get(i));
                 String src = fileService.writeImgFile(decodedImgSrc, imgPath, imgRepository.getName(),
                         imgExtensionList.get(i));
-
                 imgRepository.setDirectory(src);
 
                 imgBeanList.add(imgRepository);
 
             }
 
-            result = boardDao.updateContents(board);
+            boardDao.updateContents(board);
             result = boardDao.insertImgRepository(imgBeanList);
 
         }else{
@@ -125,5 +128,11 @@ public class BoardServiceImpl implements BoardService {
         }
 
         return result;
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getBoardList(Member member) {
+
+        return boardDao.SelectBoardList(member);
     }
 }

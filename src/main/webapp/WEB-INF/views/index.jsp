@@ -21,8 +21,8 @@
     <jsp:include page="include/aside.jsp"/>
 
     <c:choose>
-        <c:when test="${mainContents == 'board-create'}">
-            <jsp:include page="contents/board/board-create.jsp"/>
+        <c:when test="${mainContents == 'board-create' || mainContents == 'board-modify'}">
+            <jsp:include page="contents/board/board-frame.jsp"/>
         </c:when>
 
         <c:when test="${mainContents == 'board-view-list'}">

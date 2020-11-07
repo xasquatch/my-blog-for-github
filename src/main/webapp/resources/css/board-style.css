@@ -10,6 +10,7 @@
 #board-contents-fake {
     height: 400px !important;
     font-family: auto;
+    overflow: auto;
 }
 
 #board-contents-fake img{
@@ -17,7 +18,8 @@
 }
 
 #board-contents-thumbnail, #board-contents-image {
-    height: 200px;
+    height: 150px;
+    padding: 3px !important;
     box-sizing: border-box;
     text-align: center;
 }
@@ -26,13 +28,20 @@
     max-width: 100%;
     overflow: auto;
 }
-
+#board-contents-thumbnail{
+    display: flex;
+    justify-content: center;
+}
+#board-contents-thumbnail > img{
+    margin: auto 0;
+}
 #board-contents-thumbnail > img, #board-contents-image > img {
     cursor: pointer;
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 140px;
+    max-height: 140px;
     margin: 5px;
     transition: 1s all;
+    object-fit: contain;
 }
 
 #board-upload {
