@@ -154,12 +154,12 @@ var textScript = {
 
 var ajax = {
 
-    json : 'application/json;charset=UTF-8',
-    form : 'application/x-www-form-urlencoded;charset=UTF-8',
-    formFile : 'multipart/form-data;charset=UTF-8',
+    json : 'application/json',
+    form : 'application/x-www-form-urlencoded',
+    formFile : 'multipart/form-data',
 
-    SetContentsType: function (inputContentsType) {
-        var contentsType = 'text/plain;charset=UTF-8';
+    setContentsType: function (inputContentsType) {
+        var contentsType = 'text/plain';
 
         if (inputContentsType.toUpperCase() === 'FORM') {
             contentsType = ajax.form;
@@ -199,7 +199,7 @@ var ajax = {
             xhr.send();
         } else if (method.toUpperCase() === 'POST') {
             method = 'POST';
-            contentsType = ajax.SetContentsType(inputContentsType);
+            // contentsType = ajax.setContentsType(inputContentsType);
             xhr.open(method, url);
             xhr.setRequestHeader('Content-type', contentsType);
             xhr.send(sendData);

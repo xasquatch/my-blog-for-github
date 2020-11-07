@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 //@Import({SecurityConfig.class})
@@ -87,7 +88,7 @@ public class RootAppContext {
     }
 
     @Bean
-    public StandardServletMultipartResolver multipartResolver() {
+    public MultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();
     }
 

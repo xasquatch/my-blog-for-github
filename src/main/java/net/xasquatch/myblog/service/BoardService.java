@@ -16,11 +16,11 @@ public interface BoardService {
 
     public Object createDefaultBoard(String memberNo);
 
-    public boolean modifyBoard(Board board);
+    public boolean modify(Board board);
 
     public boolean delete(Object boardKey);
 
-    public boolean create(Board board, Member member);
+    public boolean create(Board board);
 
     public List<HashMap<String, Object>> getBoardList(Member member);
 }

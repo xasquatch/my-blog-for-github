@@ -1,17 +1,13 @@
 package net.xasquatch.myblog.service.implement;
 
 import net.xasquatch.myblog.model.Board;
-import net.xasquatch.myblog.model.ImgRepository;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.repository.BoardDao;
 import net.xasquatch.myblog.service.BoardService;
 import net.xasquatch.myblog.service.FileService;
-import net.xasquatch.myblog.service.ImgParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,11 +26,13 @@ public class BoardServiceImpl implements BoardService {
 
         Map<String, Object> memberMap = new HashMap<String, Object>();
         memberMap.put("member_no", memberNo);
+        boardDao.deleteUnfinishedBoard(memberMap);
         if (boardDao.insertDefaultBoard(memberMap)){
-            return memberMap.get("no");
 
+            return memberMap.get("no");
         }else{
             return false;
+
         }
 
     }
@@ -46,7 +44,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public boolean modifyBoard(Board board) {
+    public boolean modify(Board board) {
 
         return boardDao.updateBoard(board);
     }
@@ -56,6 +54,13 @@ public class BoardServiceImpl implements BoardService {
 
         return boardDao.deleteOneBoard(boardKey);
     }
+
+    @Override
+    public boolean create(Board board) {
+        return boardDao.updateBoard(board);
+    }
+
+    /*
 
     @Override
     public boolean create(Board board, Member member) {
@@ -90,7 +95,9 @@ public class BoardServiceImpl implements BoardService {
         }
 
 
-        /*TODO:--------------------------------------------------------*/
+        */
+/*TODO:--------------------------------------------------------*//*
+
 
 
         //TODO: 다량의 이미지 파일 생성 후 리스트에 등록
@@ -143,6 +150,7 @@ public class BoardServiceImpl implements BoardService {
 
         return result;
     }
+*/
 
     @Override
     public List<HashMap<String, Object>> getBoardList(Member member) {

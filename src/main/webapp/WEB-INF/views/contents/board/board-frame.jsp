@@ -115,13 +115,13 @@
 
     </script>
 
-    <form action="${path}/board/${memberNo}/upload" enctype="multipart/form-data" id="board-form-tag" method="POST" style="text-align: center;">
-        <input type="text" id="board-no" name="no" class="hidden">
+    <form action="${path}/board/${memberNo}/upload" method="POST" enctype="multipart/form-data" id="board-form-tag" style="text-align: center;">
+        <input type="text" id="board-no" name="no" class="hidden" value="${requestScope.boardNo}">
         <input type="text" id="board-no-mbr" name="mbr_no" class="hidden">
         <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
         <input type="text" id="board-title-real" name="title" class="hidden" maxlength="50">
         <textarea id="board-contents-real" name="contents" class="hidden"></textarea>
-        <textarea id="board-thumbnail-real" name="thumbnailSrcDir" class="hidden"></textarea>
+        <textarea id="board-thumbnail-real" name="thumbnail" class="hidden"></textarea>
         <div id="board-files-real">
 
         </div>
@@ -138,14 +138,10 @@
 
     function uploadImages() {
         modal.changeForm('Image Upload',
-            '<h6><B>가로, 세로 720px을 초과하는 이미지는 720px PNG확장자로 저장됩니다</B></h6>' +
             '<form id="board-upload-image-form" action="${path}/board/${memberNo}/upload/image" method="POST" enctype="multipart/form-data">' +
             '<input type="file" id="board-upload-image-items" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">' +
             '</form>' +
             '<section id="board-upload">' +
-            '' +
-            '</section>' +
-            '<section id="board-upload-origin">' +
             '' +
             '</section>'
         );
@@ -162,20 +158,12 @@
                 var img = document.createElement("img");
                 img.setAttribute("src", event.target.result);
                 img.onload = function () {
-                    var firstImg = resizeImg(this);
-                    document.querySelector("#board-upload").appendChild(firstImg);
-                    document.querySelector("#board-upload-origin").innerHTML = '';
-
+                    document.querySelector("#board-upload").appendChild(this);
                 }
-
-
-                document.querySelector("#board-upload-origin").appendChild(img);
             };
             reader.readAsDataURL(image);
         }
     }
-
-
 
 
     function ConfirmUploadImages() {
@@ -220,6 +208,7 @@
 
 
     }
+
     function uploadBoard() {
         var boardFormTag = document.querySelector('#board-form-tag');
         var realKeyword = document.querySelector('#board-keyword-real');
@@ -230,20 +219,30 @@
         realKeyword.value = board.fakeKeyword.value;
         realTitle.value = board.fakeTitle.value;
         realContents.innerHTML = board.fakeContents.innerHTML;
-        realThumbnail.innerHTML = board.fakeContents.innerHTML;
+        realThumbnail.innerHTML = board.fakeThumbnail.innerHTML;
 
-        if (uri.isContainWordCurrentPath('/create')){
+        if (uri.isContainWordCurrentPath('/create')) {
+            var formData = new FormData(boardFormTag);
+            for (var x of formData.entries()) {
+                console.log(x[0] +' : '+x[1] );
+            }
 
-            console.log('${path}/board/${memberNo}/create/'+board.boardNo.value);
+            ajax.submit('POST', '${path}/board/${memberNo}/upload/' + board.boardNo.value, function (data) {
+                if (data === 'false') {
+                    window.alert('업로드에 실패하였습니다. 잠시 후 다시 시도해주세요.');
+                    board.save();
+                }else{
 
+                }
 
-        }else if (uri.isContainWordCurrentPath('/update')){
-            console.log('${path}/board/${memberNo}/update/'+board.boardNo.value);
-        }else{
+            }, 'FORMFILE', formData);
+
+        } else if (uri.isContainWordCurrentPath('/update')) {
+            console.log('${path}/board/${memberNo}/update/' + board.boardNo.value);
+        } else {
             console.log(window.location.origin);
         }
 
-        board.save();
 
     }
 
