@@ -31,8 +31,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public boolean update(Object boardKey) {
-        return false;
+    public boolean modifyBoard(Board board) {
+
+        return boardDao.updateBoard(board);
     }
 
     @Override

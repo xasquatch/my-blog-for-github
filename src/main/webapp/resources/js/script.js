@@ -23,7 +23,6 @@ var board = {
 
     upload: function () {
         var boardForm = document.querySelector('#board-form-tag');
-
         var realKeyword = document.querySelector('#board-keyword-real');
         var realTitle = document.querySelector('#board-title-real');
         var realContents = document.querySelector('#board-contents-real');
@@ -37,6 +36,7 @@ var board = {
         board.save();
 
         boardForm.submit();
+        
 
     },
     save: function () {
@@ -48,6 +48,15 @@ var board = {
             sessionStorage.setItem('sessionContentsImgData', board.fakeImages.innerHTML);
         }catch (e){
             console.log('FAILED SAVE')
+        }
+    },
+    call: function(){
+        if (window.confirm('임시저장된 정보를 불러오시겠습니까?')){
+            document.querySelector('#board-keyword-fake').value = sessionStorage.getItem('sessionKeywordData');
+            document.querySelector('#board-title-fake').value = sessionStorage.getItem('sessionTitleData');
+            document.querySelector('#board-contents-fake').innerHTML = sessionStorage.getItem('sessionContentsData');
+            document.querySelector('#board-contents-thumbnail').innerHTML = sessionStorage.getItem('sessionThumbnailData');
+            document.querySelector('#board-contents-image').innerHTML = sessionStorage.getItem('sessionContentsImgData');
         }
     },
     changeFont: function (element) {

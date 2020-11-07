@@ -1,36 +1,31 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <%--meta data--%>
     <meta charset="UTF-8">
     <meta name="keyword" content="github, blog">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
 
-    <%--custom css --%>
-    <link rel="stylesheet" href="${path}/css/style.css">
-    <link rel="stylesheet" href="${path}/css/reset.css">
-    <link rel="stylesheet" href="${path}/css/board-style.css">
-    <%--END: custom css --%>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/board-style.css">
 
-    <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script src="${path}/webjars/jquery/1.11.1/jquery.min.js"></script>
-    <script src="${path}/webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     <title>my blog for github</title>
 </head>
 <body>
+
 <section>
     <div class="input-group">
         <div class="input-group-addon"><b>Keyword</b></div>
-        <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="ex) Life, health....etc">
+        <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="ex) Life, health....etc" value="">
     </div>
 
-    <input type="text" id="board-title-fake" class="form-control" placeholder="Title" maxlength="50">
+    <input type="text" id="board-title-fake" class="form-control" placeholder="Title" maxlength="50" value="">
 
     <div id="board-bar" class="well">
 
@@ -122,19 +117,11 @@
                 <span class="glyphicon glyphicon-refresh"></span>
             </button>
             <div id="board-contents-image" class="well">
-                <%--image here--%>
             </div>
         </div>
     </div>
 
     <script>
-        // TODO: 세션스토리지 내에 저장
-
-        document.querySelector('#board-keyword-fake').value = sessionStorage.getItem('sessionKeywordData');
-        document.querySelector('#board-title-fake').value = sessionStorage.getItem('sessionTitleData');
-        document.querySelector('#board-contents-fake').innerHTML = sessionStorage.getItem('sessionContentsData');
-        document.querySelector('#board-contents-thumbnail').innerHTML = sessionStorage.getItem('sessionThumbnailData');
-        document.querySelector('#board-contents-image').innerHTML = sessionStorage.getItem('sessionContentsImgData');
         document.querySelector('#board-contents-fake').onkeypress = function (e) {
             if (e.keyCode === 13) {
                 e.preventDefault();
@@ -144,8 +131,7 @@
 
     </script>
 
-    <%--실제 전송폼--%>
-    <form action="${path}/board/upload" enctype="multipart/form-data" id="board-form-tag" method="POST" style="text-align: center;">
+    <form action="/board/upload" enctype="multipart/form-data" id="board-form-tag" method="POST" style="text-align: center;">
         <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
         <input type="text" id="board-title-real" name="title" class="hidden" maxlength="50">
         <textarea id="board-contents-real" name="contents" class="hidden"></textarea>
@@ -153,19 +139,21 @@
         <div id="board-files-real">
 
         </div>
-        <input id="board-upload-btn" class="btn btn-danger" type="button" value="upload" onclick="board.upload()">
-        <input id="board-reset-btn" class="btn btn-default" type="reset" value="reset" onclick="board.reset()">
-        <input id="board-cancel-btn" class="btn btn-default" type="button" value="cancel"
+        <input id="board-storage-btn" class="btn btn-danger dot-key" type="button" value="불러오기" onclick="board.call()">
+        <input id="board-upload-btn" class="btn btn-danger dot-key" type="button" value="업로드" onclick="board.upload()">
+        <input id="board-reset-btn" class="btn btn-default dot-key" type="reset" value="리셋" onclick="board.reset()">
+        <input id="board-cancel-btn" class="btn btn-default dot-key" type="button" value="돌아가기"
                onclick="if (confirm('현재창을 임시저장하고 나가시겠습니까?'))board.save();history.back();">
     </form>
 
 </section>
 
 <script>
+
     function uploadImages() {
         modal.changeForm('Image Upload',
             '<h6><B>가로, 세로 720px을 초과하는 이미지는 720px PNG확장자로 저장됩니다</B></h6>' +
-            '<input type="file" id="board-upload-files" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">'+
+            '<input type="file" id="board-upload-files" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">' +
             '<section id="board-upload">' +
             '' +
             '</section>' +
@@ -244,7 +232,7 @@
                 document.execCommand('insertImage', false, this.src);
                 var thumbnailImg = document.createElement("img");
                 thumbnailImg.src = this.src;
-                thumbnailImg.addEventListener('click', function (){
+                thumbnailImg.addEventListener('click', function () {
                     if (window.confirm('썸네일 이미지에서 제외하시겠습니까?')) this.remove();
                 });
                 document.querySelector('#board-contents-thumbnail').innerHTML = '';
@@ -300,8 +288,6 @@
         </div>
     </div>
 </div>
-<%--custom script--%>
-<script src="${path}/js/script.js"></script>
-<%--END: custom script--%>
+<script src="/js/script.js"></script>
 </body>
 </html>

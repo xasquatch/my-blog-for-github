@@ -47,7 +47,7 @@
                 </td>
                 <td align="center">
                     <span class="glyphicon glyphicon-cog"
-                          style="cursor:pointer;" onclick="location.href='#'"></span>
+                          style="cursor:pointer;" onclick="location.href='${path}/board/modify/${list.no}'"></span>
                 </td>
                 <td align="center">
                     <span class="glyphicon glyphicon-trash"

@@ -14,7 +14,7 @@ public interface BoardService {
 
     public HashMap<String, Object> viewDetail(Object boardKey);
 
-    public boolean update(Object boardKey);
+    public boolean modifyBoard(Board board);
 
     public boolean delete(Object boardKey);
 

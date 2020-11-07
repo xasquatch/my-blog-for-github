@@ -33,7 +33,6 @@ public class BoarderController {
     @RequestMapping(value = "/create", method = {RequestMethod.GET, RequestMethod.POST})
     public String board(Model model) {
         model.addAttribute("mainContents", "board-create");
-        log.debug("Controller {}: {}", "board", "create");
         return "index";
     }
 
@@ -59,6 +58,17 @@ public class BoarderController {
         return "forward:/";
     }
 
+    //TODO: 작성글 수정페이지로 이동
+    @RequestMapping(value = "/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
+    public String modify(Model model, @PathVariable String boardNo){
+
+        HashMap<String, Object> board = boardService.viewDetail(boardNo);
+        model.addAttribute("board", board);
+        model.addAttribute("mainContents", "board-modify");
+
+        return "index";
+    }
+    
     @RequestMapping(value = "/view/list", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewList(Model model, Member member, HttpServletRequest request) {
 
@@ -90,6 +100,5 @@ public class BoarderController {
 
         return "redirect:/board/view/list";
     }
-
 
 }

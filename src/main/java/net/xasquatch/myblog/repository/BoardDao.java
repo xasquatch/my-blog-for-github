@@ -30,9 +30,16 @@ public class BoardDao {
 
     }
 
+    public boolean updateBoard(Board board) {
+        boolean result = false;
+        if (boardMapper.updateBoard(board) == 1) result = true;
+
+        return result;
+
+    }
+
     public boolean updateThumbnailImg(Board board) {
         boolean result = false;
-
         if (boardMapper.updateThumbnailImg(board) == 1) result = true;
 
         return result;
@@ -41,7 +48,6 @@ public class BoardDao {
 
     public boolean updateContents(Board board) {
         boolean result = false;
-
         if (boardMapper.updateContents(board) == 1) result = true;
 
         return result;
@@ -50,7 +56,6 @@ public class BoardDao {
 
     public boolean deleteOneBoard(Object boardKey) {
         boolean result = false;
-
         if (boardMapper.deleteOneBoard(boardKey) == 1) result = true;
 
         return result;
@@ -97,7 +102,7 @@ public class BoardDao {
 
         for (HashMap<String, Object> src : imgSrc) {
             String dir = (String) src.get("directory");
-            dir = dir.replace("\\","/");
+            dir = dir.replace("\\", "/");
             contents = contents.replaceFirst("<xs-img/>", "<img src=\"" + dir + "\">");
 
         }
