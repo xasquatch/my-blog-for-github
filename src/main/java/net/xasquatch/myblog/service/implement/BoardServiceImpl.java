@@ -177,10 +177,10 @@ public class BoardServiceImpl implements BoardService {
 
                     imgRepository.setBoard_no(Long.valueOf(boardNo));
 
-                    String targetName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), StandardCharsets.UTF_8);
+                    String targetName = multipartFile.getOriginalFilename();
                     imgRepository.setName(targetName);
 
-                    String filePath = File.separator + memberNo + File.separator + boardNo;
+                    String filePath = File.separator + memberNo + File.separator + "blog" + File.separator + boardNo;
                     String contextPath = fileService.writeImgFile(multipartFile.getBytes(), filePath, targetName);
                     imgRepository.setDirectory(contextPath);
 
