@@ -155,6 +155,7 @@
     function addUploadImage(element) {
         var boardUploadImageForm = document.querySelector('#board-upload-image-form');
         var imgFormData = new FormData(boardUploadImageForm);
+
         ajax.submit('POST','${path}/img/${memberNo}/board/${requestScope.boardNo}/upload',function (data) {
 
             alert(data);

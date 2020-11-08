@@ -1,32 +1,29 @@
 package net.xasquatch.myblog.controller;
 
+import net.xasquatch.myblog.service.BoardService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import java.util.Iterator;
-import java.util.List;
 
 @RestController
 @RequestMapping("/img")
 public class ImgController {
 
+    @Autowired
+    private BoardService boardService;
+
     @PostMapping("/{memberNo}/board/{boardNo}/upload")
-    public String boardImgUpload(MultipartHttpServletRequest multipartHttpServletRequest) {
+    public String boardImgUpload(MultipartHttpServletRequest request, @PathVariable String memberNo, @PathVariable String boardNo) {
 
-        List<MultipartFile> multipartFiles = multipartHttpServletRequest.getFiles("imgPackage");
-        for (MultipartFile multipartFile : multipartFiles) {
-            if (multipartFile != null) {
-                System.out.println("multipartFile.getSize() = " + multipartFile.getSize());
-                System.out.println("multipartFile.getOriginalFilename() = " + multipartFile.getOriginalFilename());
-            } else {
-                System.out.println("null이다");
-            }
-        }
+        boardService.uploadImage(request, memberNo, boardNo);
 
-        return "hi";
+
+
+
+        return "업로드 완료";
     }
 
 

@@ -37,7 +37,7 @@ public class BoarderController {
         return "index";
     }
 
-    //TODO: 작성글 데이터베이스 업로드
+    //TODO: defaultBoard메서드로 생성하였던 빈 게시판에 업로드 마무리
     @PostMapping("/{memberNo}/upload/{boardNo}")
     @ResponseBody
     public String upload(MultipartHttpServletRequest request, Board board) {
@@ -46,7 +46,7 @@ public class BoarderController {
 
         log.debug("----------------------{}-------------", board.getContents());
 
-        return String.valueOf(boardService.create(board));
+        return String.valueOf(boardService.createFinish(board));
     }
 
     //TODO: 작성글 수정페이지로 이동

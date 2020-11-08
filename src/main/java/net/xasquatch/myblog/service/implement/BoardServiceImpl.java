@@ -1,13 +1,19 @@
 package net.xasquatch.myblog.service.implement;
 
 import net.xasquatch.myblog.model.Board;
+import net.xasquatch.myblog.model.ImgRepository;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.repository.BoardDao;
 import net.xasquatch.myblog.service.BoardService;
 import net.xasquatch.myblog.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,18 +29,22 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Object createDefaultBoard(String memberNo) {
-
         Map<String, Object> memberMap = new HashMap<String, Object>();
         memberMap.put("member_no", memberNo);
         boardDao.deleteUnfinishedBoard(memberMap);
-        if (boardDao.insertDefaultBoard(memberMap)){
+        if (boardDao.insertDefaultBoard(memberMap)) {
 
             return memberMap.get("no");
-        }else{
+        } else {
             return false;
 
         }
 
+    }
+
+    @Override
+    public boolean createFinish(Board board) {
+        return boardDao.updateBoard(board);
     }
 
     @Override
@@ -55,10 +65,6 @@ public class BoardServiceImpl implements BoardService {
         return boardDao.deleteOneBoard(boardKey);
     }
 
-    @Override
-    public boolean create(Board board) {
-        return boardDao.updateBoard(board);
-    }
 
     /*
 
@@ -96,7 +102,7 @@ public class BoardServiceImpl implements BoardService {
 
 
         */
-/*TODO:--------------------------------------------------------*//*
+    /*TODO:--------------------------------------------------------*//*
 
 
 
@@ -156,5 +162,37 @@ public class BoardServiceImpl implements BoardService {
     public List<HashMap<String, Object>> getBoardList(Member member) {
 
         return boardDao.SelectBoardList(member);
+    }
+
+    @Override
+    public boolean uploadImage(MultipartHttpServletRequest request, String memberNo, String boardNo) {
+        boolean result = false;
+        List<MultipartFile> multipartFiles = request.getFiles("imgPackage");
+
+        for (MultipartFile multipartFile : multipartFiles) {
+            if (multipartFile != null) {
+
+                try {
+                    ImgRepository imgRepository = ImgRepository.getInstance();
+
+                    imgRepository.setBoard_no(Long.valueOf(boardNo));
+
+                    String targetName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), StandardCharsets.UTF_8);
+                    imgRepository.setName(targetName);
+
+                    String filePath = File.separator + memberNo + File.separator + boardNo;
+                    String contextPath = fileService.writeImgFile(multipartFile.getBytes(), filePath, targetName);
+                    imgRepository.setDirectory(contextPath);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }
+
+
+        return false;
     }
 }
