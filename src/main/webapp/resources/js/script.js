@@ -199,8 +199,9 @@ var ajax = {
             xhr.send();
         } else if (method.toUpperCase() === 'POST') {
             method = 'POST';
-            // contentsType = ajax.setContentsType(inputContentsType);
-            xhr.open(method, url);
+            contentsType = ajax.setContentsType(inputContentsType);
+            xhr.open(method, url, true);
+            if (contentsType !== ajax.formFile)
             xhr.setRequestHeader('Content-type', contentsType);
             xhr.send(sendData);
         }

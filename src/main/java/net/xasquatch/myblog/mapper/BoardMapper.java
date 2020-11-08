@@ -13,7 +13,7 @@ public interface BoardMapper {
     @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
     int insertDefaultBoard(Map<String, Object> memberMap);
 
-    @Update("UPDATE board SET keyword = #{keyword}, title = #{title}, contents = #{contents}, thumbnail = #{thumbnail}, completed = 'true' WHERE no = #{no}")
+    @Update("UPDATE board SET keyword = #{keyword}, title = #{title}, contents = #{contents}, thumbnail = #{thumbnail}, created_ip = #{created_ip}, completed = 'true' WHERE no = #{no}")
     int updateBoard(Board board);
 
     @Delete("DELETE FROM board WHERE no = #{arg0}")

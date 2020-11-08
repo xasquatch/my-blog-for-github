@@ -6,10 +6,10 @@
 <section>
     <div class="input-group">
         <div class="input-group-addon"><b>Keyword</b></div>
-        <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="ex) Life, health....etc" value="">
+        <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="ex) Life, health....etc" value="${board.keyword}">
     </div>
 
-    <input type="text" id="board-title-fake" class="form-control" placeholder="Title" maxlength="50" value="">
+    <input type="text" id="board-title-fake" class="form-control" placeholder="Title" maxlength="50" value="${board.title}">
 
     <div id="board-bar" class="well">
 
@@ -82,6 +82,7 @@
     </div>
 
     <div id="board-contents-fake" class="form-control" contentEditable="true">
+        ${board.contents}
     </div>
 
 
@@ -92,6 +93,7 @@
                 <span class="glyphicon glyphicon-refresh"></span>
             </button>
             <div id="board-contents-thumbnail" class="well" style="">
+                ${board.thumbnail}
             </div>
         </div>
 
@@ -127,9 +129,8 @@
         </div>
         <input id="board-upload-btn" class="btn btn-danger dot-key" type="button" value="업로드" onclick="uploadBoard()">
         <input id="board-storage-btn" class="btn btn-danger dot-key" type="button" value="불러오기" onclick="board.call()">
-        <input id="board-reset-btn" class="btn btn-default dot-key" type="reset" value="리셋" onclick="board.reset()">
         <input id="board-cancel-btn" class="btn btn-default dot-key" type="button" value="돌아가기"
-               onclick="if (confirm('현재창을 임시저장하고 나가시겠습니까?'))board.save();history.back();">
+               onclick="board.save();history.back();">
     </form>
 
 </section>
@@ -182,6 +183,8 @@
                 document.execCommand('insertImage', false, this.src);
                 var thumbnailImg = document.createElement("img");
                 thumbnailImg.src = this.src;
+                thumbnailImg.style.maxWidth = '140px';
+                thumbnailImg.style.maxHeight = '140px';
                 thumbnailImg.addEventListener('click', function () {
                     if (window.confirm('썸네일 이미지에서 제외하시겠습니까?')) this.remove();
                 });
@@ -222,23 +225,20 @@
         realThumbnail.innerHTML = board.fakeThumbnail.innerHTML;
 
         if (uri.isContainWordCurrentPath('/create')) {
-/*
+
             var formData = new FormData(boardFormTag);
-            for (var x of formData.entries()) {
-                console.log(x[0] +' : '+x[1] );
-            }
 
             ajax.submit('POST', '${path}/board/${memberNo}/upload/' + board.boardNo.value, function (data) {
                 if (data === 'false') {
                     window.alert('업로드에 실패하였습니다. 잠시 후 다시 시도해주세요.');
                     board.save();
                 }else{
-
+                    board.reset();
+                    window.location.href = '${path}/board/${memberNo}/view/list';
                 }
 
             }, 'FORMFILE', formData);
-*/
-            boardFormTag.submit();
+
 
 
         } else if (uri.isContainWordCurrentPath('/update')) {
