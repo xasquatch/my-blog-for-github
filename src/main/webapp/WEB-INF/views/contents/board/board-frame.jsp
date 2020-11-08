@@ -139,8 +139,8 @@
 
     function uploadImages() {
         modal.changeForm('Image Upload',
-            '<form id="board-upload-image-form" action="${path}/board/${memberNo}/upload/image" method="POST" enctype="multipart/form-data">' +
-            '<input type="file" id="board-upload-image-items" class="btn btn-default" placeholder="upload" multiple onchange="addUploadImage(event); ">' +
+            '<form id="board-upload-image-form">' +
+            '<input type="file" id="board-upload-image-items" class="btn btn-default" placeholder="upload" name="imgPackage" multiple onchange="addUploadImage(this); ">' +
             '</form>' +
             '<section id="board-upload">' +
             '' +
@@ -152,18 +152,16 @@
 
     }
 
-    function addUploadImage(e) {
-        for (var image of e.target.files) {
-            var reader = new FileReader();
-            reader.onload = function (event) {
-                var img = document.createElement("img");
-                img.setAttribute("src", event.target.result);
-                img.onload = function () {
-                    document.querySelector("#board-upload").appendChild(this);
-                }
-            };
-            reader.readAsDataURL(image);
-        }
+    function addUploadImage(element) {
+        var boardUploadImageForm = document.querySelector('#board-upload-image-form');
+        var imgFormData = new FormData(boardUploadImageForm);
+        ajax.submit('POST','${path}/img/${memberNo}/board/${requestScope.boardNo}/upload',function (data) {
+
+            alert(data);
+
+        },'FORMFILE',imgFormData);
+
+        element.value = '';
     }
 
 
@@ -183,6 +181,7 @@
                 document.execCommand('insertImage', false, this.src);
                 var thumbnailImg = document.createElement("img");
                 thumbnailImg.src = this.src;
+                thumbnailImg.classList.add('xasquatch-board-img')
                 thumbnailImg.style.maxWidth = '140px';
                 thumbnailImg.style.maxHeight = '140px';
                 thumbnailImg.addEventListener('click', function () {

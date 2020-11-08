@@ -89,7 +89,7 @@ public class BoarderController {
 
         boardService.delete(boardNo);
 
-        return "redirect:/board/" + memberNo + "view/list";
+        return "redirect:/board/" + memberNo + "/view/list";
     }
 
 }
