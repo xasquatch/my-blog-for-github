@@ -52,23 +52,13 @@ public class MemberController {
 
     /*TODO:로그인*/
     @PostMapping("/login")
-    public String login(Model model, Member member) {
-        log.debug("Controller {}: {}", "login", "signUp");
-
-        boolean result = false;
-        result = memberService.login(member);
-
-        if (result) {
-            model.addAttribute("mainContents", "main");
-            model.addAttribute("locationPage", "/user/"+member.getNo()+"/dashBoard");
-            return "index";
-
-        } else {
-            model.addAttribute("systemMsg", "[로그인 실패] 알 수 없는 이유로 로그인에 실패하였습니다. 다시 시도해주시기바랍니다.");
-            model.addAttribute("locationPage", "/");
-            return "forward:/";
+    public String login(Model model, @Valid Member member, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            member = memberService.login(member);
 
         }
+        return null;
+
     }
 
     /*TODO:회원가입 이메일 중복체크*/

@@ -30,11 +30,11 @@ public class MemberService {
 
     }
 
-    
-    public boolean login(Member member) {
-        boolean result = false;
-        log.debug("login: {}", member.toString());
-        return result;
+    public Member login(Member member) {
+
+
+
+        return null;
     }
 
     //TODO:img파일 저장 및 경로 설정 + result false시 해당 폴더 제거 구현 필요

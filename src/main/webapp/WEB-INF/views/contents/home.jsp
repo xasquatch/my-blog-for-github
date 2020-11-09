@@ -41,31 +41,35 @@
 <section class="wrap-min dot-key">
 
 
-    <form class="form-horizontal" id="home-login" action="${path}/user/login" method="POST">
+    <form class="form-horizontal" id="home-login">
         <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+            <label for="home-login-email" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="Email" required>
+                <input type="email" class="form-control" id="home-login-email" placeholder="Email">
+                <script>
+                    <%--로그인 이메일 정보 로컬스토리지에서 로드--%>
+                    document.querySelector('#home-login-email').value = localStorage.getItem('homeLoginEmail');
+                </script>
             </div>
         </div>
         <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+            <label for="home-login-pwd" class="col-sm-2 control-label">Password</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword3" placeholder="Password" required>
+                <input type="password" class="form-control" id="home-login-pwd" placeholder="Password">
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox"> Remember me
+                        <input type="checkbox" id="home-login-checkbox"> Remember me
                     </label>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Sign in</button>
+                <a class="btn btn-default" onclick="loginInput()">Sign in</a>
             </div>
         </div>
     </form>
@@ -91,6 +95,21 @@
 
 </section>
 <script>
+
+    function loginInput() {
+        var loginEmail = document.querySelector('#home-login-email');
+        if (isAvailableEmailRegExp(loginEmail.value)) {
+            var checkbox = document.querySelector('#home-login-checkbox');
+            if (checkbox.checked === true) localStorage.setItem('homeLoginEmail', loginEmail.value);
+        <%--action="${path}/user/login" method="POST"--%>
+
+
+        } else {
+            window.alert('이메일을 다시 확인해주세요');
+        }
+
+    }
+
 
     function oAuth(target) {
 //회원인지 확인먼저 필요(미구현)
