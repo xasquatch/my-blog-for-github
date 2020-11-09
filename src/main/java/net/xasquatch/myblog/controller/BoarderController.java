@@ -68,10 +68,9 @@ public class BoarderController {
     }
 
     @RequestMapping(value = "/{memberNo}/view/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewList(Model model, Member member, HttpServletRequest request) {
+    public String viewList(Model model, Member member, @PathVariable long memberNo) {
 
-        //TODO:임시
-        member.setNo(1L);
+        member.setNo(memberNo);
         List<HashMap<String, Object>> boardList = boardService.getBoardList(member);
 
         model.addAttribute("boardList", boardList);

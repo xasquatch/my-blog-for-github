@@ -13,7 +13,7 @@
         </div>
         <div class="input-group">
             <div class="input-group-addon">Email</div>
-            <input class="form-control" id="user-info-email" type="email" name="email" value="${member.email}" readonly>
+            <input class="form-control" id="user-info-email" type="email" name="email" value="${sessionMember.email}" readonly>
             <div class="input-group-addon" onclick="alert('hi');"><B>변경</B></div>
         </div>
         <div class="input-group">
@@ -23,14 +23,14 @@
         </div>
         <div class="input-group">
             <div class="input-group-addon">Name</div>
-            <input class="form-control" type="text" name="name" value="${member.name}" required>
+            <input class="form-control" type="text" name="name" value="${sessionMember.name}" required>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Profile Image</div>
             <input type="file" class="form-control" onchange="addUploadImage(event);">
             <textarea class="hidden" id="imgFile" name="imgFile"></textarea>
             <div class="form-control" id="user-info-imageFit" style="height: auto;">
-                <img src="${path}${member.img}">
+                <img src="${path}${sessionMember.img}">
             </div>
             <div class="form-control form-explain">업로드된 파일은 PNG확장자로 사이즈 자동리사이징 되어 저장됩니다.</div>
         </div>
