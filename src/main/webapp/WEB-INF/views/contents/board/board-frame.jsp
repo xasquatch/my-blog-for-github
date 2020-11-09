@@ -2,29 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <c:set var="memberNo" value="${1}"/>
-<html>
-<head>
-    <%--meta data--%>
-    <meta charset="UTF-8">
-    <meta name="keyword" content="github, blog">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="UTF-8">
-
-    <%--custom css --%>
-    <link rel="stylesheet" href="${path}/css/style.css">
-    <link rel="stylesheet" href="${path}/css/reset.css">
-    <link rel="stylesheet" href="${path}/css/board-style.css">
-    <%--END: custom css --%>
-
-    <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script src="${path}/webjars/jquery/1.11.1/jquery.min.js"></script>
-    <script src="${path}/webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-    <title>my blog for github</title>
-</head>
-<body>
 
 <section>
     <div class="input-group">
@@ -298,31 +275,3 @@
     boardInit();
 
 </script>
-
-
-
-<!-- Modal -->
-<div class="modal fade dot-key" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel"></h4>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="modal-close-btn" class="btn btn-default" data-dismiss="modal" onclick="modal.changeForm('','');">Close</button>
-                <button type="button" id="modal-confirm-btn" class="btn btn-danger">Confirm</button>
-            </div>
-        </div>
-    </div>
-</div>
-<footer id="main-footer" class="dot-key">
-    Develop by Xasquatch, https://xasquatch.net
-</footer>
-<script src="${path}/js/script.js"></script>
-</body>
-</html>
