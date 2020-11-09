@@ -2,7 +2,7 @@ package net.xasquatch.myblog.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
-import net.xasquatch.myblog.service.implement.MemberServiceImpl;
+import net.xasquatch.myblog.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import javax.validation.Valid;
 public class MemberController {
 
     @Autowired
-    private MemberServiceImpl memberService;
+    private MemberService memberService;
 
     /*TODO: infomation페이지 이동*/
     @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
