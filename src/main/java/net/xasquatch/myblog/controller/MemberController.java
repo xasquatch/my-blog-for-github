@@ -44,8 +44,7 @@ public class MemberController {
     /*TODO: logOut페이지 이동*/
     @RequestMapping(value = "/{memberNo}/log-out", method = {RequestMethod.GET, RequestMethod.POST})
     public String logOut(Model model) {
-        log.debug("Controller {}: {}", "Member", "log-out");
-        model.addAttribute("mainContents", "user-log-out");
+        model.addAttribute("mainContents", "/");
 
         return "index";
     }
@@ -61,7 +60,7 @@ public class MemberController {
 
         if (result) {
             model.addAttribute("mainContents", "main");
-            model.addAttribute("locationPage", "/");
+            model.addAttribute("locationPage", "/user/"+member.getNo()+"/dashBoard");
             return "index";
 
         } else {
@@ -93,23 +92,12 @@ public class MemberController {
 
     /*TODO:회원 정보수정*/
     @PostMapping("/{memberNo}/update")
+    @ResponseBody
     public String update(Model model, Member member) {
-
-        log.debug("Controller {}: {}", "member update", member.toString());
-
         boolean result = false;
         result = memberService.update(member);
 
-
-        if (result) {
-            model.addAttribute("systemMsg", "[회원정보 수정완료] 수정된 내 정보 페이지로 이동합니다.");
-        } else {
-            model.addAttribute("systemMsg", "[회원정보 실패] 내 정보 페이지로 이동합니다.");
-        }
-        model.addAttribute("locationPage", "/user/information");
-
-
-        return "forward:/user/information";
+        return String.valueOf(result);
 
     }
 }

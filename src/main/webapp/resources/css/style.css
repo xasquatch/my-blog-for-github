@@ -247,12 +247,19 @@
 
 }
 
-#user-signup > .input-group {
+#user-signup > .input-group, #user-info > .input-group {
     width: 100%;
 }
 
-#user-signup .input-group-addon {
+#user-signup .input-group-addon, #user-info .input-group-addon {
     width: 150px;
+}
+
+#user-info-email+div:HOVER{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 1);
+    color: white;
+    transition: all 0.5s;
 }
 
 .form-explain {

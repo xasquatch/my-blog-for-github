@@ -96,23 +96,23 @@
 //회원인지 확인먼저 필요(미구현)
 
         modal.changeForm('Sign Up',
-            '<form class="form-horizontal" id="user-signup" action="${path}/user/sign-up" method="POST">                                                 ' +
-            '<div align="center">                                                                                                                   ' +
+            '<form class="form-horizontal" id="user-signup">                                                                                             ' +
+            '<div align="center">                                                                                                                        ' +
             target.innerHTML +
-            '</div>                                                                                                                   ' +
+            '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Agreement</div>                                                                                              ' +
             '<div class="form-control" style="height: auto;">                                                                                            ' +
-            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>                                       ' +
+            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>' +
             '<label><input type="checkbox" name="membersAgreement">I agree</label>                                                                       ' +
             '<HR style="margin-top: 3px; margin-bottom: 3px;">                                                                                           ' +
-            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>              ' +
+            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>' +
             '<label><input type="checkbox" name="collectionAndUse">I agree</label>                                                                       ' +
             '</div>                                                                                                                                      ' +
             '</div>                                                                                                                                      ' +
             '</form>');
         var confirmBtn = document.querySelector('#modal-confirm-btn');
-        confirmBtn.setAttribute('onclick', 'autoConfirmSignUp();');
+        confirmBtn.setAttribute('onclick', 'oAuthConfirmSignUp();');
 
     }
 
@@ -269,17 +269,22 @@
         var signupForm = document.querySelector('#user-signup');
         var signupFormData = new FormData(signupForm);
 
-        ajax.submit('POST','${path}/user/sign-up',function (data) {
-            if (data === 'false'){
+        ajax.submit('POST', '${path}/user/sign-up', function (data) {
+            if (data === 'false') {
                 window.alert('회원가입에 실패하였습니다. 잠시 후 다시 시도해주세요.');
 
-            }else{
+            } else {
                 window.alert('회원가입에 성공하였습니다.');
                 document.querySelector('#modal-close-btn').click();
             }
-        },'FORMFILE',signupFormData);
+        }, 'FORMFILE', signupFormData);
 
     }
+
+    function oAuthConfirmSignUp() {
+
+    }
+
 
     function addUploadImage(e) {
         var imgFit = document.querySelector('#user-signup-imageFit');
