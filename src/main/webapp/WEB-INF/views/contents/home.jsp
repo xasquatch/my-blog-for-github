@@ -8,11 +8,24 @@
 
     <script>
         var banner = document.querySelector('#home-banner');
-        banner.style.backgroundImage = 'url("${path}/img/가자.gif")';
         banner.style.backgroundPositionX = 'center';
         banner.style.backgroundRepeat = 'no-repeat';
         banner.style.backgroundSize = 'auto 30vh';
         banner.style.height = '30vh';
+        banner.style.backgroundImage = 'url("${path}/img/banner/1.gif")';
+        var bannerCount = 1;
+        setInterval(function () {
+
+            try{
+                banner.style.backgroundImage = 'url("${path}/img/banner/' + bannerCount + '.gif")';
+                bannerCount++;
+            }catch (e){
+                banner.style.backgroundImage = 'url("${path}/img/banner/1.gif")';
+                bannerCount = 1;
+            }
+
+        }, 3000)
+
     </script>
 
 </section>
