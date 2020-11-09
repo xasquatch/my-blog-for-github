@@ -7,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 @Slf4j
@@ -21,6 +19,10 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
+
+    @Resource(name = "sessionMember")
+    private Member sessionMember;
+
 
     /*TODO: infomation페이지 이동*/
     @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
@@ -52,12 +54,21 @@ public class MemberController {
 
     /*TODO:로그인*/
     @PostMapping("/login")
-    public String login(Model model, @Valid Member member, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-            member = memberService.login(member);
+    @ResponseBody
+    public String login(Member member, BindingResult bindingResult) {
+        String result = "false";
+        member = Member.builder()
+                .email(member.getEmail())
+                .pwd(member.getPwd())
+                .name("empty")
+                .membersAgreement(false)
+                .collectionAndUse(false)
+                .build();
 
-        }
-        return null;
+        if (!bindingResult.hasErrors())
+            result = String.valueOf(memberService.login(member));
+
+        return result;
 
     }
 
