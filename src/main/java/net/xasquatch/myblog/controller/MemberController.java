@@ -24,31 +24,37 @@ public class MemberController {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
+    @Autowired
+    private HomeController checkSessionController;
 
     /*TODO: infomation페이지 이동*/
     @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
-    public String info(Model model) {
-        log.debug("Controller {}: {}", "Member", "information");
-        model.addAttribute("mainContents", "user-info");
+    public String info(Model model, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSessionNo(memberNo)) {
+            model.addAttribute("mainContents", "user-info");
+            return "index";
+        }
 
-        return "index";
+        return "redirect:/";
     }
 
     /*TODO: dashBoard페이지 이동*/
     @RequestMapping(value = "/{memberNo}/dashBoard", method = {RequestMethod.GET, RequestMethod.POST})
-    public String dashBoard(Model model) {
-        log.debug("Controller {}: {}", "Member", "dashBoard");
-        model.addAttribute("mainContents", "user-dashboard");
+    public String dashBoard(Model model, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSessionNo(memberNo)) {
+            model.addAttribute("mainContents", "user-dashboard");
+            return "index";
+        }
 
-        return "index";
+        return "redirect:/";
     }
 
 
-    /*TODO: logOut페이지 이동*/
+    /*TODO: 로그아웃 처리 필요*/
     @RequestMapping(value = "/{memberNo}/log-out", method = {RequestMethod.GET, RequestMethod.POST})
     public String logOut(Model model) {
-        model.addAttribute("mainContents", "/");
 
+        model.addAttribute("mainContents", "home");
         return "index";
     }
 
@@ -85,7 +91,7 @@ public class MemberController {
     /*TODO:회원가입*/
     @PostMapping("/sign-up")
     @ResponseBody
-    public String signUp(Model model, @Valid Member member, BindingResult bindingResult) {
+    public String signUp(@Valid Member member, BindingResult bindingResult) {
         boolean result = false;
         if (!bindingResult.hasErrors()) {
             result = memberService.save(member);
@@ -97,11 +103,14 @@ public class MemberController {
     /*TODO:회원 정보수정*/
     @PostMapping("/{memberNo}/update")
     @ResponseBody
-    public String update(Model model, Member member) {
-        boolean result = false;
-        result = memberService.update(member);
+    public String update(Member member, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSessionNo(memberNo)) {
+            boolean result = false;
+            result = memberService.update(member);
 
-        return String.valueOf(result);
+            return String.valueOf(result);
+        }
 
+        return "false";
     }
 }
