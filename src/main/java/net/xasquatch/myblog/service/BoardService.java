@@ -1,15 +1,12 @@
 package net.xasquatch.myblog.service;
 
 import net.xasquatch.myblog.model.Board;
-import net.xasquatch.myblog.model.ImgRepository;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.repository.BoardDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -183,35 +180,4 @@ public class BoardService {
         return boardDao.SelectBoardList(member);
     }
 
-
-    public boolean uploadImage(MultipartHttpServletRequest request, String memberNo, String boardNo) {
-        boolean result = false;
-        List<MultipartFile> multipartFiles = request.getFiles("imgPackage");
-
-        for (MultipartFile multipartFile : multipartFiles) {
-            if (multipartFile != null) {
-
-                try {
-                    ImgRepository imgRepository = ImgRepository.getInstance();
-
-                    imgRepository.setBoard_no(Long.valueOf(boardNo));
-
-                    String targetName = multipartFile.getOriginalFilename();
-                    imgRepository.setName(targetName);
-
-                    String filePath = File.separator + memberNo + SaveDir + File.separator + boardNo;
-                    String contextPath = fileService.writeFile(multipartFile.getBytes(), filePath, targetName);
-                    imgRepository.setDirectory(contextPath);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        }
-
-
-        return false;
-    }
 }

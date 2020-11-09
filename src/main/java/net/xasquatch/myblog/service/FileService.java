@@ -48,8 +48,9 @@ public class FileService {
             return null;
         }
 
+        filePath = filePath.replace(File.separator,"/");
 
-        return filePath.toString();
+        return filePath;
 
     }
 
