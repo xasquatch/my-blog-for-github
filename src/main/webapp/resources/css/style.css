@@ -68,7 +68,7 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 1);
     color: white;
-    transition: all 1s;
+    transition: all 0.5s;
 }
 
 #main-footer > img {
@@ -257,7 +257,7 @@
 
 .form-explain {
     font-weight: bold;
-    font-size: 0.5vw !important;
+    font-size: 0.5em !important;
     background-color: lightgray !important;
     padding: 5px !important;
 }
