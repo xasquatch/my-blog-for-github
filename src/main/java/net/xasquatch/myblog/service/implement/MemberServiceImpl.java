@@ -64,7 +64,7 @@ public class MemberServiceImpl implements MemberService {
         }
 
         if (!userDao.updateMbrImg(member)){
-            fileService.removeFiles();
+            fileService.removeFiles(path);
             delete(member);
             result = false;
         }

@@ -18,12 +18,13 @@ public class ImgController {
     @PostMapping("/{memberNo}/board/{boardNo}/upload")
     public String boardImgUpload(MultipartHttpServletRequest request, @PathVariable String memberNo, @PathVariable String boardNo) {
 
+        boolean result = false;
         boardService.uploadImage(request, memberNo, boardNo);
 
 
 
 
-        return "업로드 완료";
+        return String.valueOf(result);
     }
 
 

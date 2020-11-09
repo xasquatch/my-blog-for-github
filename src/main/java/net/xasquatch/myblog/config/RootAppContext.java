@@ -1,7 +1,6 @@
 package net.xasquatch.myblog.config;
 
 import net.xasquatch.myblog.mapper.BoardMapper;
-import net.xasquatch.myblog.mapper.ImgRepositoryMapper;
 import net.xasquatch.myblog.mapper.UserMapper;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -10,7 +9,6 @@ import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.multipart.MultipartResolver;
@@ -63,14 +61,6 @@ public class RootAppContext {
     @Bean
     public MapperFactoryBean<BoardMapper> getBoardMapper(SqlSessionFactory factory){
         MapperFactoryBean<BoardMapper> factoryBean = new MapperFactoryBean<BoardMapper>(BoardMapper.class);
-        factoryBean.setSqlSessionFactory(factory);
-        return factoryBean;
-
-    }
-
-    @Bean
-    public MapperFactoryBean<ImgRepositoryMapper> getImgRepositoryMapper(SqlSessionFactory factory){
-        MapperFactoryBean<ImgRepositoryMapper> factoryBean = new MapperFactoryBean<ImgRepositoryMapper>(ImgRepositoryMapper.class);
         factoryBean.setSqlSessionFactory(factory);
         return factoryBean;
 

@@ -53,8 +53,8 @@ public class FileService {
 
     }
 
-    public void removeFiles() {
-        File f = new File(this.filesSavePath + this.addSavePath);
+    public void removeFiles(String directory) {
+        File f = new File(this.filesSavePath + directory);
 
         if (f.exists() && f.isDirectory()) {
             File[] files = f.listFiles();
