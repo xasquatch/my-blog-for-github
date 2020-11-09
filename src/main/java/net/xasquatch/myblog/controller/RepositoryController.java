@@ -10,28 +10,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/repository")
 public class RepositoryController {
 
-    @GetMapping("/list")
+    @GetMapping("/{memberNo}/list")
     public String viewList(Model model, Member member){
 
         model.addAttribute("mainContents", "repository-list");
         return "index";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/{memberNo}/create")
     public String createList(Model model, Member member){
 
         model.addAttribute("mainContents", "repository-create");
         return "index";
     }
 
-    @GetMapping("/view")
+    @GetMapping("/{memberNo}/view")
     public String viewRepository(Model model, Member member){
 
         model.addAttribute("mainContents", "repository-view");
         return "index";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/{memberNo}/search")
     public String searchRepository(Model model, Member member){
 
 

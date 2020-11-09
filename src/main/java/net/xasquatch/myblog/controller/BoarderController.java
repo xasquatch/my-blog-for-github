@@ -8,10 +8,8 @@ import net.xasquatch.myblog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -28,39 +26,39 @@ public class BoarderController {
     @Autowired
     private BoardService boardService;
 
-
     //TODO: 글작성 화면으로 이동
-    @RequestMapping(value = "/create", method = {RequestMethod.GET, RequestMethod.POST})
-    public String board(Model model) {
+    @RequestMapping(value = "/{memberNo}/create", method = {RequestMethod.GET, RequestMethod.POST})
+    public String forwardCreate(Model model, @PathVariable String memberNo) {
+
+        long boardNo = (long) boardService.createDefaultBoard(memberNo);
+
+        model.addAttribute("boardNo", boardNo);
         model.addAttribute("mainContents", "board-create");
         return "index";
     }
 
-    //TODO: 작성글 데이터베이스 업로드
-    @PostMapping("/upload")
-    public String upload(HttpServletRequest request, Model model, Board board, Member member) {
-
-        //TODO:임시
-        member.setNo(1L);
-        board.setCreated_ip(accessorInfo.getIpAddress(request));
+    //TODO: defaultBoard메서드로 생성하였던 빈 게시판에 업로드 마무리
+    @PostMapping("/{memberNo}/upload/{boardNo}/{method}")
+    @ResponseBody
+    public String upload(MultipartHttpServletRequest request, Board board, @PathVariable String method) {
 
         boolean result = false;
-        result = boardService.create(board, member);
+        board.setCreated_ip(accessorInfo.getIpAddress(request));
 
-        if (result) {
-            model.addAttribute("systemMsg", "[업로드 완료]작성글 업로드가 완료되었습니다.");
-            model.addAttribute("locationPage", "/board/view/list");
-        } else {
-            model.addAttribute("systemMsg", "[업로드 실패]알 수 없는 원인으로 인해 업로드에 실패하였습니다. 잠시후 다시시도해주세요");
-            model.addAttribute("locationPage", "/board/create");
+        if (method.equals("create")) {
+            result = boardService.createFinish(board);
+
+        } else if (method.equals("modify")) {
+            result = boardService.modify(board);
+
         }
 
-        return "forward:/";
+        return String.valueOf(result);
     }
 
     //TODO: 작성글 수정페이지로 이동
-    @RequestMapping(value = "/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String modify(Model model, @PathVariable String boardNo){
+    @RequestMapping(value = "/{memberNo}/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
+    public String modify(Model model, @PathVariable String boardNo) {
 
         HashMap<String, Object> board = boardService.viewDetail(boardNo);
         model.addAttribute("board", board);
@@ -68,8 +66,8 @@ public class BoarderController {
 
         return "index";
     }
-    
-    @RequestMapping(value = "/view/list", method = {RequestMethod.GET, RequestMethod.POST})
+
+    @RequestMapping(value = "/{memberNo}/view/list", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewList(Model model, Member member, HttpServletRequest request) {
 
         //TODO:임시
@@ -82,7 +80,7 @@ public class BoarderController {
         return "index";
     }
 
-    @RequestMapping(value = "/view/detail/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/{memberNo}/view/detail/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewDetail(Model model, @PathVariable String boardNo) {
 
         HashMap<String, Object> boardInfo = boardService.viewDetail(boardNo);
@@ -93,12 +91,12 @@ public class BoarderController {
         return "index";
     }
 
-    @RequestMapping(value = "/delete/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteBoard(@PathVariable String boardNo) {
+    @RequestMapping(value = "/{memberNo}/delete/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
+    public String deleteBoard(@PathVariable String memberNo, @PathVariable String boardNo) {
 
         boardService.delete(boardNo);
 
-        return "redirect:/board/view/list";
+        return "redirect:/board/" + memberNo + "/view/list";
     }
 
 }

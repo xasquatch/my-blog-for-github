@@ -7,6 +7,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.*;
 
@@ -57,9 +58,9 @@ public class SpringConfigClass implements WebApplicationInitializer {
 /*
 
 @PropertySource("/WEB-INF/properties/file/FileManager.properties")
-public class SpringConfigClass extends AbstractAnnotationConfigDispatcherServletInitializer{
+public class SpringConfigClass extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-    @Value("files.save.path")
+	@Value("${files.save.path}")
     private String filesSavePath;
 
     // DispatcherServlet에 매핑할 요청 주소를 셋팅한다.

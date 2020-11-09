@@ -23,7 +23,7 @@ public class Board {
     @Size(max = 50)
     private String title;
     private String contents;
-    private String thumbnailSrcDir;
+    private String thumbnail;
 
     private String created_ip;
 

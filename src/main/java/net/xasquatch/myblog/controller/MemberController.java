@@ -2,14 +2,16 @@ package net.xasquatch.myblog.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
-import net.xasquatch.myblog.service.implement.MemberServiceImpl;
+import net.xasquatch.myblog.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Slf4j
@@ -18,10 +20,10 @@ import javax.validation.Valid;
 public class MemberController {
 
     @Autowired
-    private MemberServiceImpl memberService;
+    private MemberService memberService;
 
     /*TODO: infomation페이지 이동*/
-    @RequestMapping(value = "/information", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
     public String info(Model model) {
         log.debug("Controller {}: {}", "Member", "information");
         model.addAttribute("mainContents", "user-info");
@@ -30,7 +32,7 @@ public class MemberController {
     }
 
     /*TODO: dashBoard페이지 이동*/
-    @RequestMapping(value = "/dashBoard", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/{memberNo}/dashBoard", method = {RequestMethod.GET, RequestMethod.POST})
     public String dashBoard(Model model) {
         log.debug("Controller {}: {}", "Member", "dashBoard");
         model.addAttribute("mainContents", "user-dashboard");
@@ -40,7 +42,7 @@ public class MemberController {
 
 
     /*TODO: logOut페이지 이동*/
-    @RequestMapping(value = "/log-out", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/{memberNo}/log-out", method = {RequestMethod.GET, RequestMethod.POST})
     public String logOut(Model model) {
         log.debug("Controller {}: {}", "Member", "log-out");
         model.addAttribute("mainContents", "user-log-out");
@@ -98,7 +100,7 @@ public class MemberController {
     }
 
     /*TODO:회원 정보수정*/
-    @PostMapping("/update")
+    @PostMapping("/{memberNo}/update")
     public String update(Model model, Member member) {
 
         log.debug("Controller {}: {}", "member update", member.toString());

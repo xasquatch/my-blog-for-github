@@ -1,9 +1,8 @@
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<section>
+<c:set var="memberNo" value="${1}"/>
+<section id="main-section">
     <article class="board-list-title">
         <div>
             <h1 class="dot-key">글 목록</h1>
@@ -21,7 +20,7 @@
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:changeBoardListCount(100);">100</a></li>
                 </ul>
             </div>
-            <button type="button" class="btn btn-success" onclick="location.href='${path}/board/create'">
+            <button type="button" class="btn btn-success" onclick="location.href='${path}/board/${memberNo}/create'">
                 New
             </button>
         </div>
@@ -39,7 +38,7 @@
             <tbody>
 <c:forEach var="list" items="${boardList}">
             <tr>
-                <td style="cursor:pointer;" onclick="location.href='${path}/board/view/detail/${list.no}'">
+                <td style="cursor:pointer;" onclick="location.href='${path}/board/${memberNo}/view/detail/${list.no}'">
                     ${list.title}
                 </td>
                 <td>
@@ -47,7 +46,7 @@
                 </td>
                 <td align="center">
                     <span class="glyphicon glyphicon-cog"
-                          style="cursor:pointer;" onclick="location.href='${path}/board/modify/${list.no}'"></span>
+                          style="cursor:pointer;" onclick="location.href='${path}/board/${memberNo}/modify/${list.no}'"></span>
                 </td>
                 <td align="center">
                     <span class="glyphicon glyphicon-trash"
@@ -110,7 +109,7 @@
 
     function deleteBoard(key) {
         if (window.confirm("정말 삭제하시겠습니까?"))
-        location.href='${path}/board/delete/'+ key;
+        location.href = '${path}/board/${memberNo}/delete/'+ key;
 
     }
 </script>
