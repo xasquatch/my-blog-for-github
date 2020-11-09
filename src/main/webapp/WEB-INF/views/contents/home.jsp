@@ -15,14 +15,23 @@
         banner.style.backgroundImage = 'url("${path}/img/banner/1.gif")';
         var bannerCount = 1;
         setInterval(function () {
+            var xhrBanner = new XMLHttpRequest();
+            xhrBanner.onreadystatechange = function () {
+                if (xhrBanner.readyState === xhrBanner.DONE) {
+                    if (xhrBanner.status === 200 || xhrBanner.status === 201) {
 
-            try{
-                banner.style.backgroundImage = 'url("${path}/img/banner/' + bannerCount + '.gif")';
-                bannerCount++;
-            }catch (e){
-                banner.style.backgroundImage = 'url("${path}/img/banner/1.gif")';
-                bannerCount = 1;
-            }
+                        banner.style.backgroundImage = 'url("${path}/img/banner/' + bannerCount + '.gif")';
+                        bannerCount++;
+                    } else {
+
+                        banner.style.backgroundImage = 'url("${path}/img/banner/1.gif")';
+                        bannerCount = 1;
+
+                    }
+                }
+            };
+            xhrBanner.open('GET', '${path}/img/banner/' + bannerCount + '.gif');
+            xhrBanner.send();
 
         }, 3000)
 
