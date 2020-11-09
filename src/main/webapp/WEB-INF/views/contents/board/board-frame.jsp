@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<c:set var="memberNo" value="${1}"/>
+
 
 <section>
     <div class="input-group">
@@ -117,9 +117,9 @@
 
     </script>
 
-    <form action="${path}/board/${memberNo}/upload/${requestScope.boardNo}" method="POST" enctype="multipart/form-data" id="board-form-tag" style="text-align: center;">
+    <form action="${path}/board/${sessionMember.no}/upload/${requestScope.boardNo}" method="POST" enctype="multipart/form-data" id="board-form-tag" style="text-align: center;">
         <input type="text" id="board-no" name="no" class="hidden" value="${requestScope.boardNo}">
-        <input type="text" id="board-no-mbr" name="mbr_no" class="hidden" value="${memberNo}">
+        <input type="text" id="board-no-mbr" name="mbr_no" class="hidden" value="${sessionMember.no}">
         <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
         <input type="text" id="board-title-real" name="title" class="hidden" maxlength="50">
         <textarea id="board-contents-real" name="contents" class="hidden"></textarea>
@@ -157,7 +157,7 @@
         var boardUploadTag = document.querySelector('#board-upload');
         var imgFormData = new FormData(boardUploadImageForm);
 
-        ajax.submit('POST','${path}/img/${memberNo}/board/${requestScope.boardNo}/upload',function (data) {
+        ajax.submit('POST','${path}/img/${sessionMember.no}/board/${requestScope.boardNo}/upload',function (data) {
 
             var requestData = data.slice(1,data.length-1);
             var imgArray = requestData.split(',');
@@ -235,13 +235,13 @@
 
         if (uri.isContainWordCurrentPath('/create')) {
 
-            ajax.submit('POST', '${path}/board/${memberNo}/upload/' + board.boardNo.value + '/create', function (data) {
+            ajax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/create', function (data) {
                 if (data === 'false') {
                     window.alert('업로드에 실패하였습니다. 잠시 후 다시 시도해주세요.');
                     board.save();
 
                 }else if (data === 'true'){
-                    window.location.href = '${path}/board/${memberNo}/view/list';
+                    window.location.href = '${path}/board/${sessionMember.no}/view/list';
 
                 }
 
@@ -251,13 +251,13 @@
 
         } else if (uri.isContainWordCurrentPath('/modify')) {
 
-            ajax.submit('POST', '${path}/board/${memberNo}/upload/' + board.boardNo.value + '/modify', function (data) {
+            ajax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/modify', function (data) {
                 if (data === 'false') {
                     window.alert('수정에 실패하였습니다. 잠시 후 다시 시도해주세요.');
 
                 }else if (data === 'true'){
                     window.alert('수정에 성공하였습니다.');
-                    window.location.href = '${path}/board/${memberNo}/view/list';
+                    window.location.href = '${path}/board/${sessionMember.no}/view/list';
 
                 }
 

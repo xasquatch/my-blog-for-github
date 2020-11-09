@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Slf4j
@@ -55,7 +56,7 @@ public class MemberController {
     /*TODO:로그인*/
     @PostMapping("/login")
     @ResponseBody
-    public String login(Member member, BindingResult bindingResult) {
+    public String login(HttpSession session, Member member, BindingResult bindingResult) {
         String result = "false";
         member = Member.builder()
                 .email(member.getEmail())
@@ -65,8 +66,10 @@ public class MemberController {
                 .collectionAndUse(false)
                 .build();
 
-        if (!bindingResult.hasErrors())
+        if (!bindingResult.hasErrors()) {
             result = String.valueOf(memberService.login(member));
+            session.setAttribute("sessionMember", sessionMember);
+        }
 
         return result;
 

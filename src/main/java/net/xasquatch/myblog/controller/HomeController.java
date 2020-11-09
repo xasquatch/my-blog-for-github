@@ -12,7 +12,6 @@ public class HomeController {
 
     @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
     public String home(Model model) {
-        log.debug("Controller {}: {}","Home","start");
         model.addAttribute("mainContents", "home");
 
         return "index";
@@ -20,7 +19,7 @@ public class HomeController {
 
     @RequestMapping(value = "/main", method = {RequestMethod.GET, RequestMethod.POST})
     public String main(Model model) {
-        log.debug("Controller {}: {}","Home","start");
+
         model.addAttribute("mainContents", "main");
 
         return "index";

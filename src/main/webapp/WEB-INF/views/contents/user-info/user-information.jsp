@@ -2,14 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<c:set var="memberNo" value="${1}"/>
+
 <section class="dot-key">
 
     <h1 class="dot-key">My Information</h1>
     <form class="form-horizontal" id="user-info">
         <div class="input-group">
             <div class="input-group-addon">ID</div>
-            <input class="form-control" type="text" name="no" value="${memberNo}" readonly>
+            <input class="form-control" type="text" name="no" value="${sessionMember.no}" readonly>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Email</div>
@@ -48,7 +48,7 @@
     function modifyProfile() {
         var userForm = document.querySelector('#user-info');
         var userFormData = new FormData(userForm);
-        ajax.submit('POST', '${path}/user/${memberNo}/update', function (data) {
+        ajax.submit('POST', '${path}/user/${sessionMember.no}/update', function (data) {
             if (data === 'false') {
                 window.alert('회원정보 수정에 실패하였습니다.')
 
