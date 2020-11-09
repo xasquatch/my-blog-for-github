@@ -43,7 +43,8 @@ public class BoardServiceImpl implements BoardService {
         memberMap.put("member_no", memberNo);
         boardDao.deleteUnfinishedBoard(memberMap);
         if (boardDao.insertDefaultBoard(memberMap)) {
-            String path = File.separator + memberNo + File.separator + memberMap.get("no");
+            String path = File.separator + memberNo + SaveDir + File.separator + memberMap.get("no");
+            System.out.println("path = " + path);
             fileService.removeFiles(path);
             return memberMap.get("no");
 
