@@ -11,7 +11,7 @@ import java.util.List;
 public class ImgParser {
 
     private static ImgParser imgParser = null;
-    private String contentsString;
+    private String contentsString = null;
     private List<String> imgSrcList = new ArrayList<String>();
     private List<String> imgExtensionList = new ArrayList<String>();
 
@@ -38,7 +38,7 @@ public class ImgParser {
 
     public boolean isCuttableImgSrc() {
 
-        if (!checkImgTag()) return false;
+        if (!checkImgTag(this.contentsString)) return false;
 
         String contentsString = this.contentsString;
         int prefix = contentsString.indexOf("<img");
@@ -76,19 +76,17 @@ public class ImgParser {
         this.imgExtensionList.add(imgExtension);
         this.imgSrcList.add(srcString);
 
-        this.contentsString = contentsString.substring(cutString.length());
-
+        this.contentsString = this.contentsString.substring(0, prefix) + "<xs-img/>" + contentsString.substring(prefix + srcStringEndIndex + 2);
     }
 
-    private boolean checkImgTag() {
+    public static boolean checkImgTag(String contentsString) {
 
         boolean result = false;
-        if (this.contentsString.contains("<img")) {
+        if (contentsString.contains("<img")) {
             result = true;
         }
 
         return result;
     }
-
 
 }

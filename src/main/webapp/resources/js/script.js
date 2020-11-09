@@ -9,38 +9,56 @@ var modal = {
 
     },
 
-
 }
 
+var uri = {
+    parsing: function () {
+        return window.location.href.slice(window.location.origin.length);
+
+    },
+    isContainWord: function (url, word) {
+        return url.indexOf(word) > 0;
+    },
+    isContainWordCurrentPath: function (word) {
+        return window.location.href.slice(window.location.origin.length).indexOf(word) > 0;
+    }
+}
 
 var board = {
 
+
+    boardNo : document.querySelector('#board-no'),
+    boardMbrNo : document.querySelector('#board-no-mbr'),
     fakeKeyword: document.querySelector('#board-keyword-fake'),
     fakeTitle: document.querySelector('#board-title-fake'),
     fakeContents: document.querySelector('#board-contents-fake'),
+    fakeThumbnail: document.querySelector('#board-contents-thumbnail'),
+    fakeImages: document.querySelector('#board-contents-image'),
 
-    upload: function () {
-        var boardForm = document.querySelector('#board-form-tag');
-
-        var realKeyword = document.querySelector('#board-keyword-real');
-        var realTitle = document.querySelector('#board-title-real');
-        var realContents = document.querySelector('#board-contents-real');
-
-        realKeyword.value = board.fakeKeyword.value;
-        realTitle.value = board.fakeTitle.value;
-        realContents.innerHTML = board.fakeContents.innerHTML;
-console.log(realContents.innerHTML);
-        board.save();
-
-        boardForm.submit();
-
-        window.alert('completed upload!');
-    },
     save: function () {
-        sessionStorage.setItem('sessionKeywordData', board.fakeKeyword.value);
-        sessionStorage.setItem('sessionTitleData', board.fakeTitle.value);
-        sessionStorage.setItem('sessionContentsData', board.fakeContents.innerHTML);
+        try{
 
+            sessionStorage.setItem('sessionBoardNoData', board.boardNo.value);
+            sessionStorage.setItem('sessionBoardMbrNoData', board.boardMbrNo.value);
+            sessionStorage.setItem('sessionKeywordData', board.fakeKeyword.value);
+            sessionStorage.setItem('sessionTitleData', board.fakeTitle.value);
+            sessionStorage.setItem('sessionContentsData', board.fakeContents.innerHTML);
+            sessionStorage.setItem('sessionThumbnailData', board.fakeThumbnail.innerHTML);
+            sessionStorage.setItem('sessionContentsImgData', board.fakeImages.innerHTML);
+        }catch (e){
+            console.log('FAILED SAVE')
+        }
+    },
+    call: function(){
+        if (window.confirm('임시저장된 정보를 불러오시겠습니까?')){
+            board.boardNo.value = sessionStorage.getItem('sessionBoardNoData');
+            board.boardMbrNo.value = sessionStorage.getItem('sessionBoardMbrNoData');
+            document.querySelector('#board-keyword-fake').value = sessionStorage.getItem('sessionKeywordData');
+            document.querySelector('#board-title-fake').value = sessionStorage.getItem('sessionTitleData');
+            document.querySelector('#board-contents-fake').innerHTML = sessionStorage.getItem('sessionContentsData');
+            document.querySelector('#board-contents-thumbnail').innerHTML = sessionStorage.getItem('sessionThumbnailData');
+            document.querySelector('#board-contents-image').innerHTML = sessionStorage.getItem('sessionContentsImgData');
+        }
     },
     changeFont: function (element) {
         var fontName = document.querySelector('#board-font');
@@ -50,9 +68,11 @@ console.log(realContents.innerHTML);
     },
     reset: function () {
         if (confirm('작성 중인 내용을 초기화 하시겠습니까?')) {
-            board.fakeKeyword.innerHTML = '';
-            board.fakeTitle.innerHTML = '';
+            board.fakeKeyword.value = '';
+            board.fakeTitle.value = '';
             board.fakeContents.innerHTML = '';
+            board.fakeThumbnail.innerHTML = '';
+            board.fakeImages.innerHTML = '';
         }
 
     }
@@ -134,12 +154,12 @@ var textScript = {
 
 var ajax = {
 
-    json : 'application/json;charset=UTF-8',
-    form : 'application/x-www-form-urlencoded;charset=UTF-8',
-    formFile : 'multipart/form-data;charset=UTF-8',
+    json : 'application/json',
+    form : 'application/x-www-form-urlencoded',
+    formFile : 'multipart/form-data',
 
-    SetContentsType: function (inputContentsType) {
-        var contentsType = 'text/plain;charset=UTF-8';
+    setContentsType: function (inputContentsType) {
+        var contentsType = 'text/plain';
 
         if (inputContentsType.toUpperCase() === 'FORM') {
             contentsType = ajax.form;
@@ -179,8 +199,9 @@ var ajax = {
             xhr.send();
         } else if (method.toUpperCase() === 'POST') {
             method = 'POST';
-            contentsType = ajax.SetContentsType(inputContentsType);
-            xhr.open(method, url);
+            contentsType = ajax.setContentsType(inputContentsType);
+            xhr.open(method, url, true);
+            if (contentsType !== ajax.formFile)
             xhr.setRequestHeader('Content-type', contentsType);
             xhr.send(sendData);
         }

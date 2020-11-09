@@ -14,6 +14,7 @@
 */
 .dot-key{
     font-family: Dotkey, monospace;
+    font-weight: bold;
 }
 
 /*-------------header, footer, aside----------------*/

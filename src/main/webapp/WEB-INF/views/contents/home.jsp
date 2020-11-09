@@ -125,10 +125,10 @@
             '<div class="input-group-addon">Agreement</div>                                                                                              ' +
             '<div class="form-control" style="height: auto;">                                                                                            ' +
             '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>                                       ' +
-            '<label><input type="checkbox" id="user-signup-membersAgreement" name="membersAgreement" required>I agree</label>                                                                       ' +
+            '<label><input type="checkbox" id="user-signup-membersAgreement" name="membersAgreement" value="true" required>I agree</label>                                                                       ' +
             '<HR style="margin-top: 3px; margin-bottom: 3px;">                                                                                           ' +
             '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>              ' +
-            '<label><input type="checkbox" id="user-signup-collectionAndUse" name="collectionAndUse" required>I agree</label>                                                                       ' +
+            '<label><input type="checkbox" id="user-signup-collectionAndUse" name="collectionAndUse" value="true" required>I agree</label>                                                                       ' +
             '</div>                                                                                                                                      ' +
             '</div>                                                                                                                                                                                            ' +
             '<input type="submit" class="hidden" id="user-signup-submit">                                                                       ' +
@@ -225,14 +225,14 @@
 
 
     function isAvailableNameRegExp(data) {
-        var regExp = /^[A-Za-z0-9]{3,20}$/;
+        var regExp = /^[A-Za-z0-9가-힣]{3,20}$/;
         return regExp.test(data);
 
     }
 
     function checkAgreement() {
-        var membersAgreement = document.querySelector('#user-signup-membersAgreement')
-        var collectionAndUse = document.querySelector('#user-signup-collectionAndUse')
+        var membersAgreement = document.querySelector('#user-signup-membersAgreement');
+        var collectionAndUse = document.querySelector('#user-signup-collectionAndUse');
 
         if (!membersAgreement.checked || !collectionAndUse.checked) return false;
 

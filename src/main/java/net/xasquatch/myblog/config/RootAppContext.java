@@ -11,11 +11,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
-
+//@Import({SecurityConfig.class})
 @Configuration
-@PropertySource("/WEB-INF/db/db.properties")
+@PropertySource("/WEB-INF/properties/db/db.properties")
 public class RootAppContext {
 
 /*--------TODO:DB접속관리--------------*/
@@ -65,7 +66,6 @@ public class RootAppContext {
 
     }
 
-
 //------------------------------------------------------
 
     @Bean
@@ -78,9 +78,11 @@ public class RootAppContext {
     }
 
     @Bean
-    public StandardServletMultipartResolver multipartResolver() {
+    public MultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();
     }
+
+//------------------------------------------------------
 
 
 }

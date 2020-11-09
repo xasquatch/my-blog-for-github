@@ -8,18 +8,18 @@
 }
 
 #board-contents-fake {
-    min-height: 50vh;
-    height: auto !important;
+    height: 400px !important;
     font-family: auto;
+    overflow: auto;
 }
 
 #board-contents-fake img{
-    cursor: grab;
     max-width: 100%;
 }
 
 #board-contents-thumbnail, #board-contents-image {
-    height: 200px;
+    height: 150px;
+    padding: 3px !important;
     box-sizing: border-box;
     text-align: center;
 }
@@ -28,25 +28,42 @@
     max-width: 100%;
     overflow: auto;
 }
-
+#board-contents-thumbnail{
+    display: flex;
+    justify-content: center;
+}
+#board-contents-thumbnail > img{
+    margin: auto 0;
+}
 #board-contents-thumbnail > img, #board-contents-image > img {
     cursor: pointer;
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 140px;
+    max-height: 140px;
     margin: 5px;
     transition: 1s all;
+    object-fit: contain;
 }
 
 #board-upload {
     text-align: center;
     display: flex;
-    flex-wrap: wrap;
-    min-height: 5em;
+    flex-wrap: nowrap;
+    height: 200px;
     overflow: auto;
 }
 
 #board-upload > img {
-    margin: 5px;
+    margin: auto 5px;
+    width: auto;
+    max-height: 100px;
+    object-fit: contain;
+}
+#board-upload > img:HOVER{
+    cursor: pointer;
+    max-height: 100%;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .board-list-title{
