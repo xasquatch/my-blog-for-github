@@ -39,7 +39,7 @@ public class MemberController {
     }
 
     /*TODO: dashBoard페이지 이동*/
-    @RequestMapping(value = "/{memberNo}/dashBoard", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/{memberNo}/clipboard", method = {RequestMethod.GET, RequestMethod.POST})
     public String dashBoard(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionNo(memberNo)) {
             model.addAttribute("mainContents", "user-dashboard");

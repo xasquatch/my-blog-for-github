@@ -16,7 +16,7 @@ public class HomeController {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
-    protected boolean isCheckSessionNo(String inputSessionNumber){
+    protected boolean isCheckSessionNo(String inputSessionNumber) {
         return sessionMember.getNo() == Long.parseLong(inputSessionNumber);
 
     }
@@ -24,15 +24,18 @@ public class HomeController {
 
     @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
     public String home(Model model) {
+        if (sessionMember.getNo() == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("mainContents", "home");
 
         return "index";
     }
 
-    @RequestMapping(value = "/main", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public String main(Model model) {
 
-        model.addAttribute("mainContents", "main");
+        model.addAttribute("mainContents", "login");
 
         return "index";
     }
