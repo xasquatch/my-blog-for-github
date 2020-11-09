@@ -7,18 +7,21 @@ import net.xasquatch.myblog.repository.BoardDao;
 import net.xasquatch.myblog.service.BoardService;
 import net.xasquatch.myblog.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@PropertySource("/WEB-INF/properties/file/FileManager.properties")
 public class BoardServiceImpl implements BoardService {
 
     @Autowired
@@ -26,6 +29,13 @@ public class BoardServiceImpl implements BoardService {
 
     @Autowired
     private FileService fileService;
+
+    @Value("${files.save.directory.blog}")
+    String SaveDir;
+
+    @Value("${files.save.contents.name.blog}")
+    String ContentsName;
+
 
     @Override
     public Object createDefaultBoard(String memberNo) {
@@ -44,6 +54,21 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public boolean createFinish(Board board) {
+
+        byte[] bytes = (board.getTitle() + System.lineSeparator() + board.getCreated_ip() + System.lineSeparator() + board.getContents()).getBytes();
+
+        fileService.writeFile(bytes, File.separator + board.getMbr_no() + SaveDir + File.separator + board.getNo(), ContentsName + "-origin");
+        return boardDao.updateBoard(board);
+    }
+
+    @Override
+    public boolean modify(Board board) {
+
+        SimpleDateFormat format = new SimpleDateFormat("-yyyyMMddhhmmss");
+
+        byte[] bytes = (board.getTitle() + System.lineSeparator() + board.getCreated_ip() + System.lineSeparator() + board.getContents()).getBytes();
+
+        fileService.writeFile(bytes, File.separator + board.getMbr_no() + SaveDir + File.separator + board.getNo(), ContentsName + format.format(new Date()));
         return boardDao.updateBoard(board);
     }
 
@@ -51,12 +76,6 @@ public class BoardServiceImpl implements BoardService {
     public HashMap<String, Object> viewDetail(Object boardKey) {
 
         return boardDao.selectOneBoard(boardKey);
-    }
-
-    @Override
-    public boolean modify(Board board) {
-
-        return boardDao.updateBoard(board);
     }
 
     @Override
@@ -180,8 +199,8 @@ public class BoardServiceImpl implements BoardService {
                     String targetName = multipartFile.getOriginalFilename();
                     imgRepository.setName(targetName);
 
-                    String filePath = File.separator + memberNo + File.separator + "blog" + File.separator + boardNo;
-                    String contextPath = fileService.writeImgFile(multipartFile.getBytes(), filePath, targetName);
+                    String filePath = File.separator + memberNo + SaveDir + File.separator + boardNo;
+                    String contextPath = fileService.writeFile(multipartFile.getBytes(), filePath, targetName);
                     imgRepository.setDirectory(contextPath);
 
                 } catch (Exception e) {

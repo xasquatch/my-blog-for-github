@@ -58,7 +58,7 @@ public class MemberServiceImpl implements MemberService {
         String path = File.separator + member.getNo();
         for (int i = 0; i < imgSrcList.size(); i++) {
             byte[] decodedImgSrc = fileService.decodeBase64(imgSrcList.get(i));
-            String src = fileService.writeImgFile(decodedImgSrc, path , new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + ".png");
+            String src = fileService.writeFile(decodedImgSrc, path , new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + ".png");
             member.setImg(src);
 
         }

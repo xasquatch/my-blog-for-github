@@ -38,15 +38,22 @@ public class BoarderController {
     }
 
     //TODO: defaultBoard메서드로 생성하였던 빈 게시판에 업로드 마무리
-    @PostMapping("/{memberNo}/upload/{boardNo}")
+    @PostMapping("/{memberNo}/upload/{boardNo}/{method}")
     @ResponseBody
-    public String upload(MultipartHttpServletRequest request, Board board) {
+    public String upload(MultipartHttpServletRequest request, Board board, @PathVariable String method) {
 
+        boolean result = false;
         board.setCreated_ip(accessorInfo.getIpAddress(request));
 
-        log.debug("----------------------{}-------------", board.getContents());
+        if (method.equals("create")) {
+            result = boardService.createFinish(board);
 
-        return String.valueOf(boardService.createFinish(board));
+        } else if (method.equals("modify")) {
+            result = boardService.modify(board);
+
+        }
+
+        return String.valueOf(result);
     }
 
     //TODO: 작성글 수정페이지로 이동

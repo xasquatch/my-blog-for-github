@@ -119,7 +119,7 @@
 
     <form action="${path}/board/${memberNo}/upload/${requestScope.boardNo}" method="POST" enctype="multipart/form-data" id="board-form-tag" style="text-align: center;">
         <input type="text" id="board-no" name="no" class="hidden" value="${requestScope.boardNo}">
-        <input type="text" id="board-no-mbr" name="mbr_no" class="hidden">
+        <input type="text" id="board-no-mbr" name="mbr_no" class="hidden" value="${memberNo}">
         <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
         <input type="text" id="board-title-real" name="title" class="hidden" maxlength="50">
         <textarea id="board-contents-real" name="contents" class="hidden"></textarea>
@@ -224,27 +224,38 @@
         realContents.innerHTML = board.fakeContents.innerHTML;
         realThumbnail.innerHTML = board.fakeThumbnail.innerHTML;
 
+        var formData = new FormData(boardFormTag);
+
         if (uri.isContainWordCurrentPath('/create')) {
 
-            var formData = new FormData(boardFormTag);
-
-            ajax.submit('POST', '${path}/board/${memberNo}/upload/' + board.boardNo.value, function (data) {
+            ajax.submit('POST', '${path}/board/${memberNo}/upload/' + board.boardNo.value + '/create', function (data) {
                 if (data === 'false') {
                     window.alert('업로드에 실패하였습니다. 잠시 후 다시 시도해주세요.');
                     board.save();
-                }else{
-                    board.reset();
+
+                }else if (data === 'true'){
                     window.location.href = '${path}/board/${memberNo}/view/list';
+
                 }
 
             }, 'FORMFILE', formData);
 
 
 
-        } else if (uri.isContainWordCurrentPath('/update')) {
-            console.log('${path}/board/${memberNo}/update/' + board.boardNo.value);
-        } else {
-            console.log(window.location.origin);
+        } else if (uri.isContainWordCurrentPath('/modify')) {
+
+            ajax.submit('POST', '${path}/board/${memberNo}/upload/' + board.boardNo.value + '/modify', function (data) {
+                if (data === 'false') {
+                    window.alert('수정에 실패하였습니다. 잠시 후 다시 시도해주세요.');
+
+                }else if (data === 'true'){
+                    window.alert('수정에 성공하였습니다.');
+                    window.location.href = '${path}/board/${memberNo}/view/list';
+
+                }
+
+            }, 'FORMFILE', formData);
+
         }
 
 

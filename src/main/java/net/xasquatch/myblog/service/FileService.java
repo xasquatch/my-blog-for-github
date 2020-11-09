@@ -32,7 +32,7 @@ public class FileService {
         return Base64.getDecoder().decode(contentData);
     }
 
-    public synchronized String writeImgFile(byte[] imgByteArray, String path, String saveFileName) {
+    public synchronized String writeFile(byte[] byteArray, String path, String saveFileName) {
         this.addSavePath = path;
         File filedir = new File(this.filesSavePath + this.addSavePath);
         String filePath = this.filesSavePath + this.addSavePath + File.separator + saveFileName;
@@ -40,7 +40,7 @@ public class FileService {
 
         try (BufferedOutputStream bytebuffer = new BufferedOutputStream(new FileOutputStream(filePath));) {
 
-            bytebuffer.write(imgByteArray);
+            bytebuffer.write(byteArray);
             filePath = this.filesContextPath + this.addSavePath + File.separator + saveFileName;
 
         } catch (IOException e) {
