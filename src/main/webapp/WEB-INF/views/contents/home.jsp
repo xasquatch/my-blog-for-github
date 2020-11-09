@@ -112,51 +112,52 @@
             '</div>                                                                                                                                      ' +
             '</form>');
         var confirmBtn = document.querySelector('#modal-confirm-btn');
-        confirmBtn.setAttribute('onclick', 'ConfirmSignUp();');
+        confirmBtn.setAttribute('onclick', 'autoConfirmSignUp();');
 
     }
 
     function singUp() {
         modal.changeForm('Sign Up',
-            '<form class="form-horizontal" id="user-signup" action="${path}/user/sign-up" method="POST"  enctype="multipart/form-data">                  ' +
+            '<form class="form-horizontal" id="user-signup">                                                                                             ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Email</div>                                                                                                  ' +
-            '<input class="form-control" type="email" id="user-signup-email" name="email" placeholder="xxxxxxx@gmail.com" required onchange="CheckUsedEmail(this)">                                             ' +
+            '<input class="form-control" type="email" id="user-signup-email" name="email" placeholder="xxxxxxx@gmail.com" required onchange="CheckUsedEmail(this)">' +
             '<div class="form-control form-explain" id="user-signup-explain-email">승인코드를 보낼 Email을 입력해주세요</div>                                 ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Password</div>                                                                                               ' +
             '<input class="form-control" type="password" id="user-signup-pwd" name="pwd" required placeholder="your Password" onchange="checkPwd(this)"> ' +
             '<input class="form-control" type="password" name="pwdConfirm" placeholder="Password Confirm" required onchange="confirmPwd(this)">          ' +
-            '<div class="form-control form-explain" id="user-signup-explain-pwd">영문또는 숫자로 8~20자이내 입력해주세요</div>                   ' +
+            '<div class="form-control form-explain" id="user-signup-explain-pwd">영문또는 숫자로 8~20자이내 입력해주세요</div>                                 ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Name</div>                                                                                                   ' +
             '<input class="form-control" type="text" name="name" placeholder="ex) Jordan" required onchange="checkName(this)">                           ' +
-            '<div class="form-control form-explain" id="user-signup-explain-name">영문또는 숫자로 3~20자이내 입력해주세요</div>                   ' +
+            '<div class="form-control form-explain" id="user-signup-explain-name">영문또는 숫자로 3~20자이내 입력해주세요</div>                                ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Profile Image</div>                                                                                          ' +
-            '<input type="file" class="form-control" onchange="addUploadImage(event)">                                                  ' +
-            '<textarea class="hidden" id="imgFile" name="imgFile" ></textarea>                                                  ' +
-            '<div class="form-control" id="user-signup-imageFit" style="height: auto;">                                                                                            ' +
-            '<img id="user-signup-img" src="${path}/img/login/default-profile.png" alt="Default Image">                           ' +
+            '<input type="file" class="form-control" onchange="addUploadImage(event)">                                                                   ' +
+            '<textarea class="hidden" id="imgFile" name="imgFile" ></textarea>                                                                           ' +
+            '<div class="form-control" id="user-signup-imageFit" style="height: auto;">                                                                  ' +
+            '<img id="user-signup-img" src="${path}/img/login/default-profile.png" alt="Default Image">                                                  ' +
             '</div>                                                                                                                                      ' +
+            '<div class="form-control form-explain">업로드된 파일은 PNG확장자로 사이즈 자동리사이징 되어 저장됩니다.</div>                                         ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Agreement</div>                                                                                              ' +
             '<div class="form-control" style="height: auto;">                                                                                            ' +
-            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>                                       ' +
-            '<label><input type="checkbox" id="user-signup-membersAgreement" name="membersAgreement" value="true" required>I agree</label>                                                                       ' +
+            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>' +
+            '<label><input type="checkbox" id="user-signup-membersAgreement" name="membersAgreement" value="true" required>I agree</label>               ' +
             '<HR style="margin-top: 3px; margin-bottom: 3px;">                                                                                           ' +
-            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>              ' +
-            '<label><input type="checkbox" id="user-signup-collectionAndUse" name="collectionAndUse" value="true" required>I agree</label>                                                                       ' +
+            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>' +
+            '<label><input type="checkbox" id="user-signup-collectionAndUse" name="collectionAndUse" value="true" required>I agree</label>               ' +
             '</div>                                                                                                                                      ' +
-            '</div>                                                                                                                                                                                            ' +
-            '<input type="submit" class="hidden" id="user-signup-submit">                                                                       ' +
+            '</div>                                                                                                                                      ' +
+            '<input type="submit" class="hidden" id="user-signup-submit">                                                                                ' +
             '</form>');
         var confirmBtn = document.querySelector('#modal-confirm-btn');
-        confirmBtn.setAttribute('onclick', 'ConfirmSignUp();');
+        confirmBtn.setAttribute('onclick', 'confirmSignUp();');
     }
 
     function CheckUsedEmail(element) {
@@ -260,13 +261,23 @@
 
     }
 
-    function ConfirmSignUp() {
+    function confirmSignUp() {
         if (checkAgreement() === false) {
             alert('이용약관에 동의해주시기바랍니다.')
             return;
         }
+        var signupForm = document.querySelector('#user-signup');
+        var signupFormData = new FormData(signupForm);
 
-        document.querySelector('#user-signup-submit').click();
+        ajax.submit('POST','${path}/user/sign-up',function (data) {
+            if (data === 'false'){
+                window.alert('회원가입에 실패하였습니다. 잠시 후 다시 시도해주세요.');
+
+            }else{
+                window.alert('회원가입에 성공하였습니다.');
+                document.querySelector('#modal-close-btn').click();
+            }
+        },'FORMFILE',signupFormData);
 
     }
 

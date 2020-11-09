@@ -75,28 +75,20 @@ public class MemberController {
     /*TODO:회원가입 이메일 중복체크*/
     @PostMapping("/sign-up/email")
     @ResponseBody
-    public String user(Member member){
+    public String user(Member member) {
         return String.valueOf(memberService.isExistedEmail(member.getEmail()));
     }
 
     /*TODO:회원가입*/
     @PostMapping("/sign-up")
-    public String signUp(Model model, @Valid Member member, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            model.addAttribute("systemMsg", "[회원가입 실패] 조작하지마세요");
-            model.addAttribute("locationPage", "/");
-            return "forward:/";
-        }
-        boolean result = memberService.save(member);
+    @ResponseBody
+    public String signUp(Model model, @Valid Member member, BindingResult bindingResult) {
+        boolean result = false;
+        if (!bindingResult.hasErrors()) {
+            result = memberService.save(member);
 
-        if (result) {
-            model.addAttribute("systemMsg", "[회원가입 완료] 로그인 후 서비스 이용바랍니다.");
-            model.addAttribute("locationPage", "/");
-        } else {
-            model.addAttribute("systemMsg", "[회원가입 실패] 알 수 없는 이유로 회원가입에 실패하였습니다. 다시 시도해주시기바랍니다.");
-            model.addAttribute("locationPage", "/");
         }
-        return "forward:/";
+        return String.valueOf(result);
     }
 
     /*TODO:회원 정보수정*/
