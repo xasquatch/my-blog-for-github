@@ -183,14 +183,16 @@ var ajax = {
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === xhr.DONE) {
+                ajax.loadingToggle();
                 if (xhr.status === 200 || xhr.status === 201) {
                     result = xhr.response;
                     callback(result);
-
                 } else {
                     result = xhr.response;
                     alert('잘못 된 접근 입니다 다시 시도해주세요');
                 }
+            }else{
+                ajax.addLoadingState();
             }
         };
 
@@ -206,5 +208,22 @@ var ajax = {
             xhr.send(sendData);
         }
 
+    },
+    loadingToggle: function () {
+        var loadingFooter = document.querySelector('#main-footer');
+        var loadingImg = document.querySelector('#main-footer>img');
+
+        loadingFooter.classList.toggle('padding-100vh-align-center');
+        loadingFooter.classList.toggle('opacity-half');
+        loadingImg.classList.toggle('visible');
+    },
+    addLoadingState: function () {
+        var loadingFooter = document.querySelector('#main-footer');
+        var loadingImg = document.querySelector('#main-footer>img');
+
+        loadingFooter.classList.add('padding-100vh-align-center');
+        loadingFooter.classList.add('opacity-half');
+        loadingImg.classList.add('visible');
     }
+
 }
