@@ -50,12 +50,13 @@ public class MemberController {
     }
 
 
-    /*TODO: 로그아웃 처리 필요*/
+    /*TODO: 로그아웃 처리*/
     @RequestMapping(value = "/{memberNo}/log-out", method = {RequestMethod.GET, RequestMethod.POST})
-    public String logOut(Model model) {
+    public String logOut(HttpSession session) {
 
-        model.addAttribute("mainContents", "home");
-        return "index";
+        session.removeAttribute("sessionMember");
+        memberService.reset(sessionMember);
+        return "redirect:/";
     }
 
 
@@ -84,7 +85,7 @@ public class MemberController {
     /*TODO:회원가입 이메일 중복체크*/
     @PostMapping("/sign-up/email")
     @ResponseBody
-    public String user(Member member) {
+    public String checkEmail(Member member) {
         return String.valueOf(memberService.isExistedEmail(member.getEmail()));
     }
 

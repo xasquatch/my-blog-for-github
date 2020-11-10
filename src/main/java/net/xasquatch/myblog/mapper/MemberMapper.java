@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public interface UserMapper {
+public interface MemberMapper {
 
     @Select("SELECT email FROM mbr WHERE email = #{email}")
     String selectOneEmail(String email);

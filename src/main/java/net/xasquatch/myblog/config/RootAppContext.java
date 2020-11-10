@@ -1,7 +1,7 @@
 package net.xasquatch.myblog.config;
 
 import net.xasquatch.myblog.mapper.BoardMapper;
-import net.xasquatch.myblog.mapper.UserMapper;
+import net.xasquatch.myblog.mapper.MemberMapper;
 import net.xasquatch.myblog.model.Member;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -53,8 +53,8 @@ public class RootAppContext {
     }
 
     @Bean
-    public MapperFactoryBean<UserMapper> getUserMapper(SqlSessionFactory factory){
-        MapperFactoryBean<UserMapper> factoryBean = new MapperFactoryBean<UserMapper>(UserMapper.class);
+    public MapperFactoryBean<MemberMapper> getUserMapper(SqlSessionFactory factory){
+        MapperFactoryBean<MemberMapper> factoryBean = new MapperFactoryBean<MemberMapper>(MemberMapper.class);
         factoryBean.setSqlSessionFactory(factory);
         return factoryBean;
 

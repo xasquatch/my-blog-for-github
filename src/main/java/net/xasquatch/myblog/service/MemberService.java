@@ -2,7 +2,7 @@ package net.xasquatch.myblog.service;
 
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
-import net.xasquatch.myblog.repository.UserDao;
+import net.xasquatch.myblog.repository.MemberDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ import java.util.Map;
 public class MemberService {
 
     @Autowired
-    private UserDao userDao;
+    private MemberDao memberDao;
 
     @Autowired
     private FileService fileService;
@@ -29,15 +29,15 @@ public class MemberService {
     private Member sessionMember;
 
     public boolean isExistedEmail(String email) {
-        String userEmail = userDao.selectOneEmail(email);
+        String memberEmail = memberDao.selectOneEmail(email);
 
-        return userEmail != null;
+        return memberEmail != null;
 
     }
 
     public long login(Member member) {
 
-        Map<String, Object> resultMap = userDao.selectOnMbr(member);
+        Map<String, Object> resultMap = memberDao.selectOnMbr(member);
 
         long sessionMemberNo = ((BigInteger) resultMap.get("no")).longValue();
 
@@ -48,6 +48,14 @@ public class MemberService {
         sessionMember.setImg((String) resultMap.get("img"));
 
         return sessionMember.getNo();
+    }
+
+    public void reset(Member sessionMember){
+        sessionMember.setNo(null);
+        sessionMember.setEmail(null);
+        sessionMember.setPwd(null);
+        sessionMember.setName(null);
+        sessionMember.setImg(null);
     }
 
     //TODO:img파일 저장 및 경로 설정 + result false시 해당 폴더 제거 구현 필요
@@ -61,7 +69,7 @@ public class MemberService {
             imgParser.addImgList();
 
         }
-        result = userDao.insertMbrExceptionImg(member);
+        result = memberDao.insertMbrExceptionImg(member);
 
 
         List<String> imgSrcList = imgParser.getImgSrcList();
@@ -73,7 +81,7 @@ public class MemberService {
 
         }
 
-        if (!userDao.updateMbrImg(member)) {
+        if (!memberDao.updateMbrImg(member)) {
             fileService.removeFiles(path);
             delete(member);
             result = false;
@@ -93,7 +101,7 @@ public class MemberService {
 
     public boolean delete(Member member) {
         boolean result = false;
-        result = userDao.deleteOneMbr(member);
+        result = memberDao.deleteOneMbr(member);
 
         return result;
     }
