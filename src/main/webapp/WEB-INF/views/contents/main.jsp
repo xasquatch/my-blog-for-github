@@ -6,6 +6,6 @@
 <section>
 
 메인페이지
-    <iframe src="http://localhost:8080/myblog_war_exploded/board/create"></iframe>
+
 
 </section>

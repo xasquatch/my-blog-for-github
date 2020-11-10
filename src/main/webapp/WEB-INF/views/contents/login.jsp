@@ -13,14 +13,16 @@
         banner.style.backgroundSize = 'auto 30vh';
         banner.style.height = '30vh';
         banner.style.backgroundImage = 'url("${path}/img/banner/1.gif")';
-        var bannerCount = 1;
-        setInterval(function () {
-            var xhrBanner = new XMLHttpRequest();
-            xhrBanner.onreadystatechange = function () {
-                if (xhrBanner.readyState === xhrBanner.DONE) {
-                    if (xhrBanner.status === 200 || xhrBanner.status === 201) {
+        banner.style.backgroundImage = 'url("${path}/img/banner/11.gif")';
+        /*
+                var bannerCount = 1;
+                setInterval(function () {
+                    var xhrBanner = new XMLHttpRequest();
+                    xhrBanner.onreadystatechange = function () {
+                        if (xhrBanner.readyState === xhrBanner.DONE) {
+                            if (xhrBanner.status === 200 || xhrBanner.status === 201) {
 
-                        banner.style.backgroundImage = 'url("${path}/img/banner/' + bannerCount + '.gif")';
+                                banner.style.backgroundImage = 'url("${path}/img/banner/' + bannerCount + '.gif")';
                         bannerCount++;
                     } else {
 
@@ -34,6 +36,7 @@
             xhrBanner.send();
 
         }, 3000)
+*/
 
     </script>
 
@@ -110,7 +113,7 @@
                     window.alert('로그인에 실패하였습니다. email, password를 확인해주세요');
 
                 } else {
-                    window.location.href = '${path}/user/' + data + '/dashBoard';
+                    window.location.href = '${path}';
                 }
 
 

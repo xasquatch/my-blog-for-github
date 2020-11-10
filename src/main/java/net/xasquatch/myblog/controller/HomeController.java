@@ -27,7 +27,7 @@ public class HomeController {
         if (sessionMember.getNo() == null) {
             return "redirect:/login";
         }
-        model.addAttribute("mainContents", "home");
+        model.addAttribute("mainContents", "main");
 
         return "index";
     }

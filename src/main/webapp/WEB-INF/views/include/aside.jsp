@@ -5,7 +5,7 @@
 
 
 <aside id="main-aside" class="forward-to-top dot-key">
-    <c:if test="${mainContents != 'login' && mainContents != 'home' }">
+    <c:if test="${mainContents != 'login' && mainContents != 'main' }">
         <h2 style="font-weight: bold;">
             블로그 관리
         </h2>
@@ -29,7 +29,7 @@
                 <a href="${path}/user/${sessionMember.no}/information">내 정보</a>
             </li>
             <li role="presentation">
-                <a href="${path}/user/${sessionMember.no}/clipboard">ClipBoard</a>
+                <a href="${path}/user/${sessionMember.no}/api">My API</a>
             </li>
         </ul>
         <BR>

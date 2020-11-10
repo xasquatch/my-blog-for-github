@@ -30,9 +30,9 @@
             <thead>
             <tr>
                 <th>Title</th>
-                <th width="200">Date Created</th>
-                <th width="60">Update</th>
-                <th width="60">Delete</th>
+                <th style="width: 200px;">Date Created</th>
+                <th style="width: 60px;">Update</th>
+                <th style="width: 60px;">Delete</th>
             </tr>
             </thead>
             <tbody>
