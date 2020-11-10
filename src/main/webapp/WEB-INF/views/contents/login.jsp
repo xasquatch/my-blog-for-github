@@ -67,7 +67,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <a class="btn btn-default" onclick="loginInput()">Sign in</a>
+                <button class="btn btn-default" onclick="loginInput()">Sign in</button>
             </div>
         </div>
     </form>
