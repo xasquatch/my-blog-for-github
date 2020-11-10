@@ -21,26 +21,18 @@
         <BR>
         <BR>
         <h2 style="font-weight: bold;">
-            내 정보
+            마이 페이지
         </h2>
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
+            <li role="presentation">
+                <a href="${path}/user/${sessionMember.no}/api">My API</a>
+            </li>
             <li role="presentation">
                 <a href="${path}/user/${sessionMember.no}/information">내 정보</a>
             </li>
             <li role="presentation">
-                <a href="${path}/user/${sessionMember.no}/api">My API</a>
-            </li>
-        </ul>
-        <BR>
-        <BR>
-        <h2 style="font-weight: bold;">
-            데이터 관리
-        </h2>
-        <hr>
-        <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
-            <li role="presentation">
-                <a href="${path}/repository/${sessionMember.no}/list">Repository</a>
+                <a href="${path}/repository/${sessionMember.no}/list">내 저장소</a>
             </li>
         </ul>
     </c:if>
