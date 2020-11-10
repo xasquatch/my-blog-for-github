@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,52 +25,64 @@ public class BoarderController {
     @Autowired
     private BoardService boardService;
 
+    @Autowired
+    private HomeController checkSessionController;
+
     //TODO: 글작성 화면으로 이동
     @RequestMapping(value = "/{memberNo}/create", method = {RequestMethod.GET, RequestMethod.POST})
     public String forwardCreate(Model model, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSessionNo(memberNo)) {
+            long boardNo = (long) boardService.createDefaultBoard(memberNo);
+            model.addAttribute("boardNo", boardNo);
+            model.addAttribute("mainContents", "board-create");
+            return "index";
+        }
 
-        long boardNo = (long) boardService.createDefaultBoard(memberNo);
+        return "redirect:/";
 
-        model.addAttribute("boardNo", boardNo);
-        model.addAttribute("mainContents", "board-create");
-        return "index";
     }
 
     //TODO: defaultBoard메서드로 생성하였던 빈 게시판에 업로드 마무리
     @PostMapping("/{memberNo}/upload/{boardNo}/{method}")
     @ResponseBody
-    public String upload(MultipartHttpServletRequest request, Board board, @PathVariable String method) {
+    public String upload(MultipartHttpServletRequest request, Board board, @PathVariable String method, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSessionNo(memberNo)) {
+            boolean result = false;
+            board.setCreated_ip(accessorInfo.getIpAddress(request));
 
-        boolean result = false;
-        board.setCreated_ip(accessorInfo.getIpAddress(request));
+            if (method.equals("create")) {
+                result = boardService.createFinish(board);
 
-        if (method.equals("create")) {
-            result = boardService.createFinish(board);
+            } else if (method.equals("modify")) {
+                result = boardService.modify(board);
 
-        } else if (method.equals("modify")) {
-            result = boardService.modify(board);
+            }
 
+            return String.valueOf(result);
         }
 
-        return String.valueOf(result);
+        return "false";
     }
 
     //TODO: 작성글 수정페이지로 이동
     @RequestMapping(value = "/{memberNo}/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String modify(Model model, @PathVariable String boardNo) {
+    public String modify(Model model, @PathVariable String boardNo, @PathVariable String memberNo) {
 
-        HashMap<String, Object> board = boardService.viewDetail(boardNo);
-        model.addAttribute("board", board);
-        model.addAttribute("mainContents", "board-modify");
+        if (checkSessionController.isCheckSessionNo(memberNo)) {
+            HashMap<String, Object> board = boardService.viewDetail(boardNo);
+            model.addAttribute("board", board);
+            model.addAttribute("mainContents", "board-modify");
 
-        return "index";
+            return "index";
+        }
+
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/{memberNo}/view/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewList(Model model, Member member, HttpServletRequest request) {
+    public String viewList(Model model, Member member, @PathVariable long memberNo) {
 
-        //TODO:임시
-        member.setNo(1L);
+        member.setNo(memberNo);
         List<HashMap<String, Object>> boardList = boardService.getBoardList(member);
 
         model.addAttribute("boardList", boardList);
@@ -94,9 +105,12 @@ public class BoarderController {
     @RequestMapping(value = "/{memberNo}/delete/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String deleteBoard(@PathVariable String memberNo, @PathVariable String boardNo) {
 
-        boardService.delete(boardNo);
+        if (checkSessionController.isCheckSessionNo(memberNo)){
+            boardService.delete(boardNo);
 
-        return "redirect:/board/" + memberNo + "/view/list";
+            return "redirect:/board/" + memberNo + "/view/list";
+        }
+            return "redirect:/";
     }
 
 }

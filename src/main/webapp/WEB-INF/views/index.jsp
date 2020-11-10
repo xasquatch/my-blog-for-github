@@ -6,8 +6,8 @@
 <jsp:include page="include/header.jsp"/>
 
 <c:choose>
-    <c:when test="${mainContents == 'home'}">
-        <jsp:include page="contents/home.jsp"/>
+    <c:when test="${mainContents == 'login'}">
+        <jsp:include page="contents/login.jsp"/>
 
     </c:when>
     <c:when test="${mainContents == 'main'}">
@@ -37,8 +37,8 @@
             <jsp:include page="contents/user-info/user-information.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents == 'user-dashBoard'}">
-            <jsp:include page="contents/user-info/user-dashBoard.jsp"/>
+        <c:when test="${mainContents == 'user-api'}">
+            <jsp:include page="contents/user-info/user-api.jsp"/>
         </c:when>
 
         <c:when test="${mainContents == 'user-log-out'}">

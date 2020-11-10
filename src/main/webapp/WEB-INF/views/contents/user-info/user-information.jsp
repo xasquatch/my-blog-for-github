@@ -2,18 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<c:set var="memberNo" value="${1}"/>
+
 <section class="dot-key">
 
     <h1 class="dot-key">My Information</h1>
-    <form class="form-horizontal" id="user-signup" action="${path}/user/${memberNo}/update" enctype="multipart/form-data" method="POST">
+    <form class="form-horizontal" id="user-info">
         <div class="input-group">
             <div class="input-group-addon">ID</div>
-            <input class="form-control" type="text" name="no" value="${memberNo}" readonly>
+            <input class="form-control" type="text" name="no" value="${sessionMember.no}" readonly>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Email</div>
-            <input class="form-control" type="email" name="email" value="" readonly>
+            <input class="form-control" id="user-info-email" type="email" name="email" value="${sessionMember.email}" readonly>
+            <div class="input-group-addon" onclick="alert('hi');"><B>변경</B></div>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Password</div>
@@ -22,27 +23,46 @@
         </div>
         <div class="input-group">
             <div class="input-group-addon">Name</div>
-            <input class="form-control" type="text" name="name" placeholder="ex) Jordan" required>
+            <input class="form-control" type="text" name="name" value="${sessionMember.name}" required>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Profile Image</div>
             <input type="file" class="form-control" onchange="addUploadImage(event);">
             <textarea class="hidden" id="imgFile" name="imgFile"></textarea>
-            <div class="form-control" id="user-signup-imageFit" style="height: auto;">
-                <img id="user-signup-img" src="${path}/img/login/default-profile.png" alt="Default Image" style="max-width:100%">
+            <div class="form-control" id="user-info-imageFit" style="height: auto;">
+                <img src="${path}${sessionMember.img}">
             </div>
+            <div class="form-control form-explain">업로드된 파일은 PNG확장자로 사이즈 자동리사이징 되어 저장됩니다.</div>
         </div>
-        <div>
-            <%--        <button class="btn btn-default" onclick="location.href='${path}/user/view'">Reset</button>--%>
+        <div class="input-group" style="text-align: center;">
+            <BR>
             <button class="btn btn-default" type="reset">Reset</button>
-            <button class="btn btn-danger" type="submit">Submit</button>
+            &nbsp;
+            <button class="btn btn-danger" onclick="modifyProfile()">Submit</button>
         </div>
     </form>
 </section>
 
 <script>
+
+    function modifyProfile() {
+        var userForm = document.querySelector('#user-info');
+        var userFormData = new FormData(userForm);
+        ajax.submit('POST', '${path}/user/${sessionMember.no}/update', function (data) {
+            if (data === 'false') {
+                window.alert('회원정보 수정에 실패하였습니다.')
+
+            } else {
+                window.alert('회원정보 수정이 완료되었습니다.')
+
+            }
+
+        }, 'FORMFILE', userFormData);
+
+    }
+
     function addUploadImage(e) {
-        var imgFit = document.querySelector('#user-signup-imageFit');
+        var imgFit = document.querySelector('#user-info-imageFit');
         for (var image of e.target.files) {
             var reader = new FileReader();
             reader.onload = function (event) {
@@ -66,7 +86,6 @@
             reader.readAsDataURL(image);
         }
 
-
     }
 
     function resizeImg(img) {
@@ -89,13 +108,11 @@
         canvas.height = height;
         canvas.getContext("2d").drawImage(img, 0, 0, width, height);
 
-
         var resultImg = document.createElement("img");
         resultImg.setAttribute("src", canvas.toDataURL("image/png"));
 
         return resultImg;
 
     }
-
 
 </script>

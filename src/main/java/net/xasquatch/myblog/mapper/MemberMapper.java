@@ -3,7 +3,10 @@ package net.xasquatch.myblog.mapper;
 import net.xasquatch.myblog.model.Member;
 import org.apache.ibatis.annotations.*;
 
-public interface UserMapper {
+import java.util.HashMap;
+import java.util.Map;
+
+public interface MemberMapper {
 
     @Select("SELECT email FROM mbr WHERE email = #{email}")
     String selectOneEmail(String email);
@@ -21,4 +24,7 @@ public interface UserMapper {
 
     @Delete("DELETE FROM mbr WHERE no = #{no}")
     int deleteOneMbr(Member member);
+
+    @Select("SELECT * FROM mbr WHERE email = #{email} AND pwd = #{pwd}")
+    HashMap<String ,Object> selectOnMbr(Member member);
 }

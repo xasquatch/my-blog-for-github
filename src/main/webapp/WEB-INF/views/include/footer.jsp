@@ -34,10 +34,12 @@
 
 
 <div id="main-footer-proto">
-    <BR><BR>
+    &nbsp;
 </div>
 <footer id="main-footer" class="dot-key">
+    <img src="${path}/img/loading.gif">
     Develop by Xasquatch, https://xasquatch.net
+    <div></div>
 </footer>
 
 <%--custom script--%>

@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Slf4j
@@ -22,102 +21,97 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
+    @Resource(name = "sessionMember")
+    private Member sessionMember;
+
+    @Autowired
+    private HomeController checkSessionController;
+
     /*TODO: infomation페이지 이동*/
     @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
-    public String info(Model model) {
-        log.debug("Controller {}: {}", "Member", "information");
-        model.addAttribute("mainContents", "user-info");
+    public String info(Model model, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSessionNo(memberNo)) {
+            model.addAttribute("mainContents", "user-info");
+            return "index";
+        }
 
-        return "index";
+        return "redirect:/";
     }
 
-    /*TODO: dashBoard페이지 이동*/
-    @RequestMapping(value = "/{memberNo}/dashBoard", method = {RequestMethod.GET, RequestMethod.POST})
-    public String dashBoard(Model model) {
-        log.debug("Controller {}: {}", "Member", "dashBoard");
-        model.addAttribute("mainContents", "user-dashboard");
+    /*TODO: api페이지 이동*/
+    @RequestMapping(value = "/{memberNo}/api", method = {RequestMethod.GET, RequestMethod.POST})
+    public String callApi(Model model, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSessionNo(memberNo)) {
+            model.addAttribute("mainContents", "user-api");
+            return "index";
+        }
 
-        return "index";
+        return "redirect:/";
     }
 
 
-    /*TODO: logOut페이지 이동*/
+    /*TODO: 로그아웃 처리*/
     @RequestMapping(value = "/{memberNo}/log-out", method = {RequestMethod.GET, RequestMethod.POST})
-    public String logOut(Model model) {
-        log.debug("Controller {}: {}", "Member", "log-out");
-        model.addAttribute("mainContents", "user-log-out");
+    public String logOut(HttpSession session) {
 
-        return "index";
+        session.removeAttribute("sessionMember");
+        memberService.reset(sessionMember);
+        return "redirect:/";
     }
 
 
     /*TODO:로그인*/
     @PostMapping("/login")
-    public String login(Model model, Member member) {
-        log.debug("Controller {}: {}", "login", "signUp");
+    @ResponseBody
+    public String login(HttpSession session, Member member, BindingResult bindingResult) {
+        String result = "false";
+        member = Member.builder()
+                .email(member.getEmail())
+                .pwd(member.getPwd())
+                .name("empty")
+                .membersAgreement(false)
+                .collectionAndUse(false)
+                .build();
 
-        boolean result = false;
-        result = memberService.login(member);
-
-        if (result) {
-            model.addAttribute("mainContents", "main");
-            model.addAttribute("locationPage", "/");
-            return "index";
-
-        } else {
-            model.addAttribute("systemMsg", "[로그인 실패] 알 수 없는 이유로 로그인에 실패하였습니다. 다시 시도해주시기바랍니다.");
-            model.addAttribute("locationPage", "/");
-            return "forward:/";
-
+        if (!bindingResult.hasErrors()) {
+            result = String.valueOf(memberService.login(member));
+            session.setAttribute("sessionMember", sessionMember);
         }
+
+        return result;
+
     }
 
     /*TODO:회원가입 이메일 중복체크*/
     @PostMapping("/sign-up/email")
     @ResponseBody
-    public String user(Member member){
+    public String checkEmail(Member member) {
         return String.valueOf(memberService.isExistedEmail(member.getEmail()));
     }
 
     /*TODO:회원가입*/
     @PostMapping("/sign-up")
-    public String signUp(Model model, @Valid Member member, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            model.addAttribute("systemMsg", "[회원가입 실패] 조작하지마세요");
-            model.addAttribute("locationPage", "/");
-            return "forward:/";
-        }
-        boolean result = memberService.save(member);
+    @ResponseBody
+    public String signUp(@Valid Member member, BindingResult bindingResult) {
+        boolean result = false;
+        if (!bindingResult.hasErrors()) {
+            result = memberService.save(member);
 
-        if (result) {
-            model.addAttribute("systemMsg", "[회원가입 완료] 로그인 후 서비스 이용바랍니다.");
-            model.addAttribute("locationPage", "/");
-        } else {
-            model.addAttribute("systemMsg", "[회원가입 실패] 알 수 없는 이유로 회원가입에 실패하였습니다. 다시 시도해주시기바랍니다.");
-            model.addAttribute("locationPage", "/");
         }
-        return "forward:/";
+        return String.valueOf(result);
     }
 
     /*TODO:회원 정보수정*/
     @PostMapping("/{memberNo}/update")
-    public String update(Model model, Member member) {
+    @ResponseBody
+    public String update(Member member, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSessionNo(memberNo)) {
+            boolean result = false;
+            result = memberService.update(member);
 
-        log.debug("Controller {}: {}", "member update", member.toString());
-
-        boolean result = false;
-        result = memberService.update(member);
-
-
-        if (result) {
-            model.addAttribute("systemMsg", "[회원정보 수정완료] 수정된 내 정보 페이지로 이동합니다.");
-        } else {
-            model.addAttribute("systemMsg", "[회원정보 실패] 내 정보 페이지로 이동합니다.");
+            return String.valueOf(result);
         }
-        model.addAttribute("locationPage", "/user/information");
 
-
-        return "forward:/user/information";
-
+        return "false";
     }
 }

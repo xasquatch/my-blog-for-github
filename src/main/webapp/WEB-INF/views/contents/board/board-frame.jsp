@@ -1,30 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<c:set var="memberNo" value="${1}"/>
-<html>
-<head>
-    <%--meta data--%>
-    <meta charset="UTF-8">
-    <meta name="keyword" content="github, blog">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="UTF-8">
 
-    <%--custom css --%>
-    <link rel="stylesheet" href="${path}/css/style.css">
-    <link rel="stylesheet" href="${path}/css/reset.css">
-    <link rel="stylesheet" href="${path}/css/board-style.css">
-    <%--END: custom css --%>
-
-    <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script src="${path}/webjars/jquery/1.11.1/jquery.min.js"></script>
-    <script src="${path}/webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-    <title>my blog for github</title>
-</head>
-<body>
 
 <section>
     <div class="input-group">
@@ -140,9 +117,9 @@
 
     </script>
 
-    <form action="${path}/board/${memberNo}/upload/${requestScope.boardNo}" method="POST" enctype="multipart/form-data" id="board-form-tag" style="text-align: center;">
+    <form action="${path}/board/${sessionMember.no}/upload/${requestScope.boardNo}" method="POST" enctype="multipart/form-data" id="board-form-tag" style="text-align: center;">
         <input type="text" id="board-no" name="no" class="hidden" value="${requestScope.boardNo}">
-        <input type="text" id="board-no-mbr" name="mbr_no" class="hidden" value="${memberNo}">
+        <input type="text" id="board-no-mbr" name="mbr_no" class="hidden" value="${sessionMember.no}">
         <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
         <input type="text" id="board-title-real" name="title" class="hidden" maxlength="50">
         <textarea id="board-contents-real" name="contents" class="hidden"></textarea>
@@ -180,7 +157,7 @@
         var boardUploadTag = document.querySelector('#board-upload');
         var imgFormData = new FormData(boardUploadImageForm);
 
-        ajax.submit('POST','${path}/img/${memberNo}/board/${requestScope.boardNo}/upload',function (data) {
+        ajax.submit('POST','${path}/img/${sessionMember.no}/board/${requestScope.boardNo}/upload',function (data) {
 
             var requestData = data.slice(1,data.length-1);
             var imgArray = requestData.split(',');
@@ -258,13 +235,13 @@
 
         if (uri.isContainWordCurrentPath('/create')) {
 
-            ajax.submit('POST', '${path}/board/${memberNo}/upload/' + board.boardNo.value + '/create', function (data) {
+            ajax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/create', function (data) {
                 if (data === 'false') {
                     window.alert('업로드에 실패하였습니다. 잠시 후 다시 시도해주세요.');
                     board.save();
 
                 }else if (data === 'true'){
-                    window.location.href = '${path}/board/${memberNo}/view/list';
+                    window.location.href = '${path}/board/${sessionMember.no}/view/list';
 
                 }
 
@@ -274,13 +251,13 @@
 
         } else if (uri.isContainWordCurrentPath('/modify')) {
 
-            ajax.submit('POST', '${path}/board/${memberNo}/upload/' + board.boardNo.value + '/modify', function (data) {
+            ajax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/modify', function (data) {
                 if (data === 'false') {
                     window.alert('수정에 실패하였습니다. 잠시 후 다시 시도해주세요.');
 
                 }else if (data === 'true'){
                     window.alert('수정에 성공하였습니다.');
-                    window.location.href = '${path}/board/${memberNo}/view/list';
+                    window.location.href = '${path}/board/${sessionMember.no}/view/list';
 
                 }
 
@@ -298,31 +275,3 @@
     boardInit();
 
 </script>
-
-
-
-<!-- Modal -->
-<div class="modal fade dot-key" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel"></h4>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="modal-close-btn" class="btn btn-default" data-dismiss="modal" onclick="modal.changeForm('','');">Close</button>
-                <button type="button" id="modal-confirm-btn" class="btn btn-danger">Confirm</button>
-            </div>
-        </div>
-    </div>
-</div>
-<footer id="main-footer" class="dot-key">
-    Develop by Xasquatch, https://xasquatch.net
-</footer>
-<script src="${path}/js/script.js"></script>
-</body>
-</html>
