@@ -4,15 +4,10 @@
 <%@ taglib prefix="sForm" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<section id="home-banner" class="dot-key">
+<section class="banner login-banner dot-key">
 
     <script>
-        var banner = document.querySelector('#home-banner');
-        banner.style.backgroundPositionX = 'center';
-        banner.style.backgroundRepeat = 'no-repeat';
-        banner.style.backgroundSize = 'auto 30vh';
-        banner.style.height = '30vh';
-        banner.style.backgroundImage = 'url("${path}/img/banner/1.gif")';
+        var banner = document.querySelector('.banner');
         banner.style.backgroundImage = 'url("${path}/img/banner/11.gif")';
         /*
                 var bannerCount = 1;
@@ -113,7 +108,7 @@
                     window.alert('로그인에 실패하였습니다. email, password를 확인해주세요');
 
                 } else {
-                    window.location.href = '${path}';
+                    window.location.href = '${path}/';
                 }
 
 
