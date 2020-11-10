@@ -6,6 +6,8 @@ import net.xasquatch.myblog.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Slf4j
 @Repository
 public class UserDao {
@@ -51,4 +53,8 @@ public class UserDao {
         return result;
     }
 
+    public Map<String, Object> selectOnMbr(Member member) {
+
+        return userMapper.selectOnMbr(member);
+    }
 }

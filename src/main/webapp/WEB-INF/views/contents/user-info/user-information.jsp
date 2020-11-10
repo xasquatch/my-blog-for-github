@@ -2,18 +2,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<c:set var="memberNo" value="${1}"/>
+
 <section class="dot-key">
 
     <h1 class="dot-key">My Information</h1>
     <form class="form-horizontal" id="user-info">
         <div class="input-group">
             <div class="input-group-addon">ID</div>
-            <input class="form-control" type="text" name="no" value="${memberNo}" readonly>
+            <input class="form-control" type="text" name="no" value="${sessionMember.no}" readonly>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Email</div>
-            <input class="form-control" id="user-info-email" type="email" name="email" value="${member.email}" readonly>
+            <input class="form-control" id="user-info-email" type="email" name="email" value="${sessionMember.email}" readonly>
             <div class="input-group-addon" onclick="alert('hi');"><B>변경</B></div>
         </div>
         <div class="input-group">
@@ -23,14 +23,14 @@
         </div>
         <div class="input-group">
             <div class="input-group-addon">Name</div>
-            <input class="form-control" type="text" name="name" value="${member.name}" required>
+            <input class="form-control" type="text" name="name" value="${sessionMember.name}" required>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Profile Image</div>
             <input type="file" class="form-control" onchange="addUploadImage(event);">
             <textarea class="hidden" id="imgFile" name="imgFile"></textarea>
             <div class="form-control" id="user-info-imageFit" style="height: auto;">
-                <img src="${path}${member.img}">
+                <img src="${path}${sessionMember.img}">
             </div>
             <div class="form-control form-explain">업로드된 파일은 PNG확장자로 사이즈 자동리사이징 되어 저장됩니다.</div>
         </div>
@@ -48,7 +48,7 @@
     function modifyProfile() {
         var userForm = document.querySelector('#user-info');
         var userFormData = new FormData(userForm);
-        ajax.submit('POST', '${path}/user/${memberNo}/update', function (data) {
+        ajax.submit('POST', '${path}/user/${sessionMember.no}/update', function (data) {
             if (data === 'false') {
                 window.alert('회원정보 수정에 실패하였습니다.')
 

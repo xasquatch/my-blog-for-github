@@ -6,10 +6,13 @@ import net.xasquatch.myblog.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.File;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -22,7 +25,9 @@ public class MemberService {
     @Autowired
     private FileService fileService;
 
-    
+    @Resource(name = "sessionMember")
+    private Member sessionMember;
+
     public boolean isExistedEmail(String email) {
         String userEmail = userDao.selectOneEmail(email);
 
@@ -30,15 +35,23 @@ public class MemberService {
 
     }
 
-    public Member login(Member member) {
+    public long login(Member member) {
 
+        Map<String, Object> resultMap = userDao.selectOnMbr(member);
 
+        long sessionMemberNo = ((BigInteger) resultMap.get("no")).longValue();
 
-        return null;
+        sessionMember.setNo(sessionMemberNo);
+        sessionMember.setEmail((String) resultMap.get("email"));
+        sessionMember.setPwd((String) resultMap.get("pwd"));
+        sessionMember.setName((String) resultMap.get("name"));
+        sessionMember.setImg((String) resultMap.get("img"));
+
+        return sessionMember.getNo();
     }
 
     //TODO:img파일 저장 및 경로 설정 + result false시 해당 폴더 제거 구현 필요
-    
+
     public boolean save(Member member) {
         boolean result = false;
 
@@ -55,12 +68,12 @@ public class MemberService {
         String path = File.separator + member.getNo();
         for (int i = 0; i < imgSrcList.size(); i++) {
             byte[] decodedImgSrc = fileService.decodeBase64(imgSrcList.get(i));
-            String src = fileService.writeFile(decodedImgSrc, path , new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + ".png");
+            String src = fileService.writeFile(decodedImgSrc, path, new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + ".png");
             member.setImg(src);
 
         }
 
-        if (!userDao.updateMbrImg(member)){
+        if (!userDao.updateMbrImg(member)) {
             fileService.removeFiles(path);
             delete(member);
             result = false;
@@ -70,7 +83,6 @@ public class MemberService {
     }
 
 
-    
     public boolean update(Member member) {
         boolean result = false;
 
@@ -79,7 +91,6 @@ public class MemberService {
     }
 
 
-    
     public boolean delete(Member member) {
         boolean result = false;
         result = userDao.deleteOneMbr(member);
@@ -87,7 +98,7 @@ public class MemberService {
         return result;
     }
 
-    
+
     public boolean view(Member member) {
         boolean result = false;
         log.debug("view: {}", member.toString());

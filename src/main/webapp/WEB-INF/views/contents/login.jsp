@@ -45,7 +45,7 @@
         <div class="form-group">
             <label for="home-login-email" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="home-login-email" placeholder="Email">
+                <input type="email" class="form-control" id="home-login-email" name="email" placeholder="Email">
                 <script>
                     <%--로그인 이메일 정보 로컬스토리지에서 로드--%>
                     document.querySelector('#home-login-email').value = localStorage.getItem('homeLoginEmail');
@@ -55,7 +55,7 @@
         <div class="form-group">
             <label for="home-login-pwd" class="col-sm-2 control-label">Password</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" id="home-login-pwd" placeholder="Password">
+                <input type="password" class="form-control" id="home-login-pwd" name="pwd" placeholder="Password">
             </div>
         </div>
         <div class="form-group">
@@ -101,8 +101,20 @@
         if (isAvailableEmailRegExp(loginEmail.value)) {
             var checkbox = document.querySelector('#home-login-checkbox');
             if (checkbox.checked === true) localStorage.setItem('homeLoginEmail', loginEmail.value);
-        <%--action="${path}/user/login" method="POST"--%>
 
+            var loginForm = document.querySelector('#home-login');
+            var formData = new FormData(loginForm);
+            ajax.submit('POST', '${path}/user/login', function (data) {
+
+                if (data === 'false') {
+                    window.alert('로그인에 실패하였습니다. email, password를 확인해주세요');
+
+                } else {
+                    window.location.href = '${path}/user/' + data + '/dashBoard';
+                }
+
+
+            }, 'FORMFILE', formData);
 
         } else {
             window.alert('이메일을 다시 확인해주세요');
