@@ -37,8 +37,8 @@
             <jsp:include page="contents/user-info/user-information.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents == 'user-dashBoard'}">
-            <jsp:include page="contents/user-info/user-dashBoard.jsp"/>
+        <c:when test="${mainContents == 'user-api'}">
+            <jsp:include page="contents/user-info/user-api.jsp"/>
         </c:when>
 
         <c:when test="${mainContents == 'user-log-out'}">

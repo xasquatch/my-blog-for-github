@@ -38,11 +38,11 @@ public class MemberController {
         return "redirect:/";
     }
 
-    /*TODO: dashBoard페이지 이동*/
-    @RequestMapping(value = "/{memberNo}/clipboard", method = {RequestMethod.GET, RequestMethod.POST})
-    public String dashBoard(Model model, @PathVariable String memberNo) {
+    /*TODO: api페이지 이동*/
+    @RequestMapping(value = "/{memberNo}/api", method = {RequestMethod.GET, RequestMethod.POST})
+    public String callApi(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionNo(memberNo)) {
-            model.addAttribute("mainContents", "user-dashboard");
+            model.addAttribute("mainContents", "user-api");
             return "index";
         }
 

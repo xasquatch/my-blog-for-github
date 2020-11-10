@@ -39,10 +39,10 @@ public class ServletAppContext implements WebMvcConfigurer{
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(controllerInterceptor)
-//				.addPathPatterns("/");
+		registry.addInterceptor(controllerInterceptor)
+				.addPathPatterns("/");
 //				.addPathPatterns("/**");
 //				.excludePathPatterns("/login");
-//		WebMvcConfigurer.super.addInterceptors(registry);
+		WebMvcConfigurer.super.addInterceptors(registry);
 	}
 }
