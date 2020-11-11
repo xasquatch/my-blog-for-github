@@ -41,19 +41,12 @@ public class BoardDao {
     }
 
 
-    public boolean deleteOneBoard(Object boardKey) {
-        boolean result = false;
-        if (boardMapper.deleteOneBoard(boardKey) == 1){
-            result = true;
-
-        }
-
-        return result;
+    public void deleteOneBoard(Object boardKey) {
+        boardMapper.deleteOneBoard(boardKey);
 
     }
 
     public List<HashMap<String, Object>> SelectBoardList(Member member, Pagination pagination) {
-
         Long memberKey = member.getNo();
 
         return boardMapper.selectBoardList(memberKey, null,null);

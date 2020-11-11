@@ -50,7 +50,6 @@ public class BoardService {
 
 
     public boolean createFinish(Board board) {
-
         byte[] bytes = (board.getTitle() + System.lineSeparator() + board.getCreated_ip() + System.lineSeparator() + board.getContents()).getBytes();
 
         fileService.writeFile(bytes, File.separator + board.getMbr_no() + SaveDir + File.separator + board.getNo(), ContentsName + "-origin");
@@ -59,7 +58,6 @@ public class BoardService {
 
 
     public boolean modify(Board board) {
-
         SimpleDateFormat format = new SimpleDateFormat("-yyyyMMddhhmmss");
 
         byte[] bytes = (board.getTitle() + System.lineSeparator() + board.getCreated_ip() + System.lineSeparator() + board.getContents()).getBytes();
@@ -70,16 +68,13 @@ public class BoardService {
 
 
     public HashMap<String, Object> viewDetail(Object boardKey) {
-
         return boardDao.selectOneBoard(boardKey);
     }
 
 
     public void delete(Object boardKey) {
-
         boardDao.deleteOneBoard(boardKey);
     }
-
 
     /*
 

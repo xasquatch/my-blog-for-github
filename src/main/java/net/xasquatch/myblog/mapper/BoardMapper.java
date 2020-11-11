@@ -17,7 +17,7 @@ public interface BoardMapper {
     int updateBoard(Board board);
 
     @Delete("DELETE FROM board WHERE no = #{arg0}")
-    int deleteOneBoard(Object boardKey);
+    void deleteOneBoard(Object boardKey);
 
     @Delete("DELETE FROM board WHERE completed = 'false' AND member_no = #{member_no}")
     void deleteUnfinishedBoard(Map<String, Object> memberMap);
