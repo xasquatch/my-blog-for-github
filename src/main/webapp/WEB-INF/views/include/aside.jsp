@@ -12,10 +12,16 @@
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/board/${sessionMember.no}/create">글 쓰기</a>
+                <a href="${path}/board/${sessionMember.no}/create">
+                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/writeBoard.png">
+                    글 쓰기
+                </a>
             </li>
             <li role="presentation">
-                <a href="${path}/board/${sessionMember.no}/view/list">글 목록</a>
+                <a href="${path}/board/${sessionMember.no}/view/list">
+                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/boardList.png">
+                    글 목록
+                </a>
             </li>
         </ul>
         <BR>
@@ -26,13 +32,22 @@
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/user/${sessionMember.no}/api">My API</a>
+                <a href="${path}/user/${sessionMember.no}/api">
+                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/api.png">
+                    My API
+                </a>
             </li>
             <li role="presentation">
-                <a href="${path}/user/${sessionMember.no}/information">내 정보</a>
+                <a href="${path}/user/${sessionMember.no}/information">
+                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/user.png">
+                    내 정보
+                </a>
             </li>
             <li role="presentation">
-                <a href="${path}/repository/${sessionMember.no}/list">내 저장소</a>
+                <a href="${path}/repository/${sessionMember.no}/list">
+                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/repository.png">
+                    내 저장소
+                </a>
             </li>
         </ul>
     </c:if>

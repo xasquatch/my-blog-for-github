@@ -102,9 +102,9 @@ public class MemberController {
     }
 
     /*TODO:회원 정보수정*/
-    @PostMapping("/{memberNo}/update")
+    @PostMapping("/{memberNo}/modify")
     @ResponseBody
-    public String update(Member member, @PathVariable String memberNo) {
+    public String modify(Member member, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionNo(memberNo)) {
             boolean result = false;
             result = memberService.update(member);

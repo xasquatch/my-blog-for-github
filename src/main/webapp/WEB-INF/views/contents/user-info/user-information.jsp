@@ -48,7 +48,7 @@
     function modifyProfile() {
         var userForm = document.querySelector('#user-info');
         var userFormData = new FormData(userForm);
-        ajax.submit('POST', '${path}/user/${sessionMember.no}/update', function (data) {
+        ajax.submit('POST', '${path}/user/${sessionMember.no}/modify', function (data) {
             if (data === 'false') {
                 window.alert('회원정보 수정에 실패하였습니다.')
 
