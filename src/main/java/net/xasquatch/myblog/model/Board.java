@@ -17,10 +17,10 @@ public class Board {
     private Long no;
     private Long mbr_no;
 
-    @Size(max = 25)
+    @Size(max = 500)
     private String keyword;
 
-    @Size(max = 50)
+    @Size(max = 500)
     private String title;
     private String contents;
     private String thumbnail;
