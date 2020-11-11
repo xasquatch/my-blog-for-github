@@ -74,7 +74,7 @@ public class MemberController {
                 .build();
 
         if (!bindingResult.hasErrors()) {
-            result = String.valueOf(memberService.login(member));
+            result = memberService.login(member);
             session.setAttribute("sessionMember", sessionMember);
         }
 
