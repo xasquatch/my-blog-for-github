@@ -38,7 +38,6 @@ public class BoardService {
         boardDao.deleteUnfinishedBoard(memberMap);
         if (boardDao.insertDefaultBoard(memberMap)) {
             String path = File.separator + memberNo + SaveDir + File.separator + memberMap.get("no");
-            System.out.println("path = " + path);
             fileService.removeFiles(path);
             return memberMap.get("no");
 
@@ -175,9 +174,9 @@ public class BoardService {
 */
 
 
-    public List<HashMap<String, Object>> getBoardList(Member member) {
+    public List<HashMap<String, Object>> getBoardList(Member member, Pagination pagination) {
 
-        return boardDao.SelectBoardList(member);
+        return boardDao.SelectBoardList(member, pagination);
     }
 
 }

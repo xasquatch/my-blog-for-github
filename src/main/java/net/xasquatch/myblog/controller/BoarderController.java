@@ -5,6 +5,7 @@ import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Board;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.BoardService;
+import net.xasquatch.myblog.service.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,10 @@ public class BoarderController {
 
     @Autowired
     private HomeController checkSessionController;
+
+    @Autowired
+    private Pagination pagination;
+
 
     //TODO: 글작성 화면으로 이동
     @RequestMapping(value = "/{memberNo}/create", method = {RequestMethod.GET, RequestMethod.POST})
@@ -83,7 +88,9 @@ public class BoarderController {
     public String viewList(Model model, Member member, @PathVariable long memberNo) {
 
         member.setNo(memberNo);
-        List<HashMap<String, Object>> boardList = boardService.getBoardList(member);
+        model.getAttribute("currentPage");
+//        pagination blarblar
+        List<HashMap<String, Object>> boardList = boardService.getBoardList(member, pagination);
 
         model.addAttribute("boardList", boardList);
         model.addAttribute("mainContents", "board-view-list");

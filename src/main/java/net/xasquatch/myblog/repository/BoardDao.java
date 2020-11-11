@@ -3,6 +3,7 @@ package net.xasquatch.myblog.repository;
 import net.xasquatch.myblog.mapper.BoardMapper;
 import net.xasquatch.myblog.model.Board;
 import net.xasquatch.myblog.model.Member;
+import net.xasquatch.myblog.service.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -51,11 +52,11 @@ public class BoardDao {
 
     }
 
-    public List<HashMap<String, Object>> SelectBoardList(Member member) {
+    public List<HashMap<String, Object>> SelectBoardList(Member member, Pagination pagination) {
 
         Long memberKey = member.getNo();
 
-        return boardMapper.selectBoardList(memberKey);
+        return boardMapper.selectBoardList(memberKey, null,null);
     }
 
     public HashMap<String, Object> selectOneBoard(Object boardKey) {
