@@ -8,11 +8,6 @@
     url(../font/DungGeunMo.eot);
 }
 
-/*
-*:not(#board-contents-fake):not(.glyphicon):not(font):not(b):not(i):not(blockquote):not(span):not(div) {
-    font-family: Dotkey, monospace;
-}
-*/
 .dot-key {
     font-family: Dotkey, monospace;
     font-weight: bold;

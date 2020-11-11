@@ -13,10 +13,6 @@
     overflow: auto;
 }
 
-#board-contents-fake img{
-    max-width: 100%;
-}
-
 #board-contents-thumbnail, #board-contents-image {
     height: 150px;
     padding: 3px !important;
