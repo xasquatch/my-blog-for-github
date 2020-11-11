@@ -48,9 +48,9 @@ public class BoardDao {
 
     public List<HashMap<String, Object>> SelectBoardList(String memberKey, int pageLimit) {
         Long memberNo = Long.parseLong(memberKey);
-        int limitStartIndex = pageLimit - 10;
+//TODO:보완 필요....
 
-        return boardMapper.selectBoardList(memberNo, limitStartIndex, pageLimit);
+        return boardMapper.selectBoardList(memberNo, 0, pageLimit);
     }
 
     public HashMap<String, Object> selectOneBoard(Object boardKey) {

@@ -29,31 +29,37 @@
         <table class="table table-hover table-condensed">
             <thead>
             <tr>
+                <th style="width: 40px;">No</th>
                 <th>Title</th>
-                <th style="width: 200px;">Date Created</th>
-                <th style="width: 60px;">Update</th>
+                <th style="width: 200px;">Date</th>
+                <th style="width: 60px;">Modify</th>
                 <th style="width: 60px;">Delete</th>
             </tr>
             </thead>
-            <tbody>
-<c:forEach var="list" items="${boardList}">
-            <tr>
-                <td style="cursor:pointer;" onclick="location.href='${path}/board/${sessionMember.no}/view/detail/${list.no}'">
-                    ${list.title}
-                </td>
-                <td>
-                    ${list.created_date}
-                </td>
-                <td align="center">
+            <tbody id="myblog-api-board-list">
+            <c:forEach var="list" items="${boardList}">
+                <tr>
+                    <td>
+                            ${list.no}
+                    </td>
+                    <td>
+                        <a href="${path}/board/${sessionMember.no}/view/detail/${list.no}">
+                                ${list.thumbnail} ${list.title}
+                        </a>
+                    </td>
+                    <td>
+                            ${list.created_date}
+                    </td>
+                    <td>
                     <span class="glyphicon glyphicon-cog"
                           style="cursor:pointer;" onclick="location.href='${path}/board/${sessionMember.no}/modify/${list.no}'"></span>
-                </td>
-                <td align="center">
+                    </td>
+                    <td>
                     <span class="glyphicon glyphicon-trash"
                           style="cursor:pointer;" onclick="deleteBoard(${list.no});"></span>
-                </td>
-            </tr>
-</c:forEach>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </article>
@@ -102,16 +108,57 @@
 <script>
     function changeBoardListCount(count) {
         document.querySelector('#board-list-count').innerHTML = count;
+        var boardList = document.querySelector('#myblog-api-board-list');
+        ajax.submit('GET', '${path}/api/${sessionMember.no}/board/list/read?pageLimit=' + count, function (data) {
 
-        ajax.submit('GET','${path}/api/${sessionMember.no}/board/list/read?pageLimit=' + count,function (data) {
+            boardList.innerHTML = '';
+            var jsonData = JSON.parse(data);
+            for (var map of jsonData) {
+                console.log(map);
+                var trTag = document.createElement('tr');
+                var titleInput = document.createElement('td');
+                titleInput.innerHTML = '<a href="${path}/board/${sessionMember.no}/view/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
+                var noInput = document.createElement('td');
+                noInput.innerText = map.no;
+                var dateInput = document.createElement('td');
+                dateInput.innerText = getFormatDate(map.created_date);
+                var modifyInput = document.createElement('td');
+                modifyInput.innerHTML = '<span class="glyphicon glyphicon-cog" style="cursor:pointer;" onclick="location.href=\'${path}/board/${sessionMember.no}/modify/' + map.no + '\'"></span>';
+                var deleteInput = document.createElement('td');
+                deleteInput.innerHTML = '<span class="glyphicon glyphicon-trash" style="cursor:pointer;" onclick="deleteBoard(' + map.no + ');"></span>';
 
+                trTag.appendChild(noInput)
+                trTag.appendChild(titleInput)
+                trTag.appendChild(dateInput);
+                trTag.appendChild(modifyInput);
+                trTag.appendChild(deleteInput);
+                boardList.appendChild(trTag);
+
+            }
         });
 
     }
 
+    function getFormatDate(targetDate) {
+        var date = new Date(targetDate);
+        var year = date.getFullYear();
+        var month = (1 + date.getMonth());
+        month = month >= 10 ? month : '0' + month;
+        var day = date.getDate();
+        day = day >= 10 ? day : '0' + day;
+        var hour = date.getHours();
+        hour = hour >= 10 ? hour : '0' + hour;
+        var minute = date.getMinutes();
+        minute = minute >= 10 ? minute : '0' + minute;
+
+        return year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
+    }
+
     function deleteBoard(key) {
         if (window.confirm("정말 삭제하시겠습니까?"))
-        location.href = '${path}/board/${sessionMember.no}/delete/'+ key;
+            location.href = '${path}/board/${sessionMember.no}/delete/' + key;
 
     }
+
+    changeBoardListCount(10);
 </script>
