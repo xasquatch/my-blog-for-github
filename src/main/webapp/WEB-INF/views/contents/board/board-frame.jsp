@@ -13,13 +13,13 @@
 
     <div id="board-bar" class="well">
 
-        <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal"
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"
                 onclick="window.scroll(0,0); uploadImages();">
             <span class="glyphicon glyphicon-picture"></span>
         </button>
 
         <div class="dropdown">
-            <button type="button" class="btn btn-default btn btn-lg dropdown-toggle" id="board-font" data-toggle="dropdown" aria-expanded="true">
+            <button type="button" class="btn btn-default dropdown-toggle" id="board-font" data-toggle="dropdown" aria-expanded="true">
                 <span class="glyphicon glyphicon-font" id="board-font-name"></span>
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="board-font">
@@ -45,42 +45,46 @@
         </div>
 
         <div class="flex-row">
-            <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('bold');">
+            <button type="button" class="btn btn-default btn" onclick="document.execCommand('bold');">
                 <span class="glyphicon glyphicon-bold"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('Italic');">
+            <button type="button" class="btn btn-default btn" onclick="document.execCommand('Italic');">
                 <span class="glyphicon glyphicon-italic"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('indent');">
+            <button type="button" class="btn btn-default btn" onclick="document.execCommand('indent');">
                 <span class="glyphicon glyphicon-indent-left"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('outdent');">
+            <button type="button" class="btn btn-default btn" onclick="document.execCommand('outdent');">
                 <span class="glyphicon glyphicon-indent-right"></span>
             </button>
         </div>
 
         <div class="flex-row">
-            <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('justifyLeft');">
+            <button type="button" class="btn btn-default btn" onclick="document.execCommand('justifyLeft');">
                 <span class="glyphicon glyphicon-align-left"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('justifyCenter')">
+            <button type="button" class="btn btn-default btn" onclick="document.execCommand('justifyCenter')">
                 <span class="glyphicon glyphicon-align-center"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('justifyRight')">
+            <button type="button" class="btn btn-default btn" onclick="document.execCommand('justifyRight')">
                 <span class="glyphicon glyphicon-align-right"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn btn-lg" onclick="document.execCommand('justifyFull')">
+            <button type="button" class="btn btn-default btn" onclick="document.execCommand('justifyFull')">
                 <span class="glyphicon glyphicon-align-justify"></span>
             </button>
         </div>
     </div>
 
+    <div id="board-img-resize" class="flex-row">
+
+
+    </div>
     <div id="board-contents-fake" class="form-control" contentEditable="true">
         ${board.contents}
     </div>
@@ -157,17 +161,17 @@
         var boardUploadTag = document.querySelector('#board-upload');
         var imgFormData = new FormData(boardUploadImageForm);
 
-        ajax.submit('POST','${path}/img/${sessionMember.no}/board/${requestScope.boardNo}/upload',function (data) {
+        ajax.submit('POST', '${path}/img/${sessionMember.no}/board/${requestScope.boardNo}/upload', function (data) {
 
-            var requestData = data.slice(1,data.length-1);
+            var requestData = data.slice(1, data.length - 1);
             var imgArray = requestData.split(',');
-            for(var i of imgArray){
+            for (var i of imgArray) {
                 var img = document.createElement('img');
                 img.src = i.trim();
                 boardUploadTag.appendChild(img);
             }
 
-        },'FORMFILE',imgFormData);
+        }, 'FORMFILE', imgFormData);
 
         element.value = '';
     }
@@ -186,7 +190,7 @@
 
         for (let i = 0; i < contentsImgs.length; i++) {
             contentsImgs[i].addEventListener('click', function (e) {
-                document.execCommand('insertImage', false, this.src);
+// 썸네일처리
                 var thumbnailImg = document.createElement("img");
                 thumbnailImg.src = this.src;
                 thumbnailImg.classList.add('xasquatch-board-img')
@@ -197,8 +201,12 @@
                 });
                 document.querySelector('#board-contents-thumbnail').innerHTML = '';
                 document.querySelector('#board-contents-thumbnail').appendChild(thumbnailImg);
+//END: 썸네일처리
+                document.execCommand('insertImage', false, this.src);
+
             });
         }
+
     }
 
     function removeThumbnailImage() {
@@ -240,13 +248,12 @@
                     window.alert('업로드에 실패하였습니다. 잠시 후 다시 시도해주세요.');
                     board.save();
 
-                }else if (data === 'true'){
+                } else if (data === 'true') {
                     window.location.href = '${path}/board/${sessionMember.no}/view/list';
 
                 }
 
             }, 'FORMFILE', formData);
-
 
 
         } else if (uri.isContainWordCurrentPath('/modify')) {
@@ -255,7 +262,7 @@
                 if (data === 'false') {
                     window.alert('수정에 실패하였습니다. 잠시 후 다시 시도해주세요.');
 
-                }else if (data === 'true'){
+                } else if (data === 'true') {
                     window.alert('수정에 성공하였습니다.');
                     window.location.href = '${path}/board/${sessionMember.no}/view/list';
 
@@ -268,8 +275,29 @@
 
     }
 
+    function contentsCssResizeInit() {
+        document.querySelector('#board-contents-fake').addEventListener('click', function (e) {
+            var target = e.target
+            if (target.localName === 'img' || target.localName === 'video') {
+                var originTargetWidth = target.width;
+                var inputWidthData = window.prompt('가로길이를 몇으로 설정하시겠습니까?(현재 길이: ' + originTargetWidth + 'px, 숫자만 입력해주세요)', 'auto');
+
+                if (new RegExp('[^0-9]').test(inputWidthData)) {
+                    window.alert('숫자만 입력해주세요');
+                    return;
+                }
+                if (inputWidthData !== 'auto' && inputWidthData !== null) {
+                    target.width = inputWidthData;
+
+                }
+            }
+        });
+    }
+
+
     function boardInit() {
         SettingInsertImage();
+        contentsCssResizeInit();
     }
 
     boardInit();
