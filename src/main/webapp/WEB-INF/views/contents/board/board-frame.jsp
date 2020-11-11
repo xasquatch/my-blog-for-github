@@ -13,13 +13,13 @@
 
     <div id="board-bar" class="well">
 
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" tabindex="-1"
                 onclick="window.scroll(0,0); uploadImages();">
             <span class="glyphicon glyphicon-picture"></span>
         </button>
 
         <div class="dropdown">
-            <button type="button" class="btn btn-default dropdown-toggle" id="board-font" data-toggle="dropdown" aria-expanded="true">
+            <button type="button" class="btn btn-default dropdown-toggle" id="board-font" data-toggle="dropdown" aria-expanded="true" tabindex="-1">
                 <span class="glyphicon glyphicon-font" id="board-font-name"></span>
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="board-font">
@@ -45,46 +45,42 @@
         </div>
 
         <div class="flex-row">
-            <button type="button" class="btn btn-default btn" onclick="document.execCommand('bold');">
+            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('bold');">
                 <span class="glyphicon glyphicon-bold"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn" onclick="document.execCommand('Italic');">
+            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('Italic');">
                 <span class="glyphicon glyphicon-italic"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn" onclick="document.execCommand('indent');">
+            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('indent');">
                 <span class="glyphicon glyphicon-indent-left"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn" onclick="document.execCommand('outdent');">
+            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('outdent');">
                 <span class="glyphicon glyphicon-indent-right"></span>
             </button>
         </div>
 
         <div class="flex-row">
-            <button type="button" class="btn btn-default btn" onclick="document.execCommand('justifyLeft');">
+            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('justifyLeft');">
                 <span class="glyphicon glyphicon-align-left"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn" onclick="document.execCommand('justifyCenter')">
+            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('justifyCenter')">
                 <span class="glyphicon glyphicon-align-center"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn" onclick="document.execCommand('justifyRight')">
+            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('justifyRight')">
                 <span class="glyphicon glyphicon-align-right"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn" onclick="document.execCommand('justifyFull')">
+            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('justifyFull')">
                 <span class="glyphicon glyphicon-align-justify"></span>
             </button>
         </div>
     </div>
 
-    <div id="board-img-resize" class="flex-row">
-
-
-    </div>
     <div id="board-contents-fake" class="form-control" contentEditable="true">
         ${board.contents}
     </div>
@@ -93,7 +89,7 @@
     <div style="display: grid; grid-template-columns: 150px 1fr;">
         <div>
             <B>Thumbnail</B>
-            <button class="btn btn-default" style="border-radius: 50%" onclick="removeThumbnailImage();">
+            <button class="btn btn-default" style="border-radius: 50%" tabindex="-1" onclick="removeThumbnailImage();">
                 <span class="glyphicon glyphicon-refresh"></span>
             </button>
             <div id="board-contents-thumbnail" class="well" style="">
@@ -103,7 +99,7 @@
 
         <div>
             <B>Insert To Click</B>
-            <button class="btn btn-default" style="border-radius: 50%" onclick="removeContentsImages();">
+            <button class="btn btn-default" style="border-radius: 50%" tabindex="-1" onclick="removeContentsImages();">
                 <span class="glyphicon glyphicon-refresh"></span>
             </button>
             <div id="board-contents-image" class="well">
