@@ -1,6 +1,5 @@
 package net.xasquatch.myblog.service;
 
-import net.xasquatch.myblog.model.ImgRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
