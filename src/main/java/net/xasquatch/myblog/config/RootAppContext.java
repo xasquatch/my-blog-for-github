@@ -3,6 +3,7 @@ package net.xasquatch.myblog.config;
 import net.xasquatch.myblog.mapper.BoardMapper;
 import net.xasquatch.myblog.mapper.MemberMapper;
 import net.xasquatch.myblog.model.Member;
+import net.xasquatch.myblog.service.Pagination;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -85,10 +86,17 @@ public class RootAppContext {
     }
 
 //------------------------------------------------------
-
     @Bean("sessionMember")
     @SessionScope
     public Member loginMember(){
         return new Member();
     }
+
+//------------------------------------------------------
+
+    @Bean
+    public Pagination pagination(){
+        return new Pagination();
+    }
+
 }
