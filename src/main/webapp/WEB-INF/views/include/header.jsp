@@ -42,7 +42,8 @@
             <B>More</B>
         </button>
         <c:if test="${sessionMember.no != null}">
-            <button type="button" class="btn btn-link" onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/user/${sessionMember.no}/log-out'">
+            <button type="button" class="btn btn-link" style="font-size: 30px; color: black;"
+                    onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/user/${sessionMember.no}/log-out'">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </button>
         </c:if>
