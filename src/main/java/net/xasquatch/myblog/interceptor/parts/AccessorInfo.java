@@ -30,7 +30,6 @@ public class AccessorInfo {
                     InetAddress ia = inetAddresses.nextElement();
                     if (ia.getHostAddress() != null && ia.getHostAddress().contains(".")) {
                         ip = ia.getHostAddress();
-                        System.out.println(ip);
                         isLoopBack = false;
                         break;
                     }

@@ -1,7 +1,6 @@
 package net.xasquatch.myblog.model;
 
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -13,7 +12,6 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Component
 public class Member {
 
     private Long no;
