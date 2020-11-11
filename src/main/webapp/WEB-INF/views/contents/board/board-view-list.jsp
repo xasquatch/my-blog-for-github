@@ -101,10 +101,12 @@
 
 <script>
     function changeBoardListCount(count) {
-        var boardListCount = document.querySelector('#board-list-count');
-        boardListCount.innerHTML = count;
+        document.querySelector('#board-list-count').innerHTML = count;
 
-        //-----------그 다음 페이지 재호출하여 갯수 재지정
+        ajax.submit('GET','${path}/api/${sessionMember.no}/board/list/read?pageLimit=' + count,function (data) {
+
+        });
+
     }
 
     function deleteBoard(key) {

@@ -72,7 +72,6 @@ public class BoarderController {
     //TODO: 작성글 수정페이지로 이동
     @RequestMapping(value = "/{memberNo}/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String modify(Model model, @PathVariable String boardNo, @PathVariable String memberNo) {
-
         if (checkSessionController.isCheckSessionNo(memberNo)) {
             HashMap<String, Object> board = boardService.viewDetail(boardNo);
             model.addAttribute("board", board);
@@ -85,12 +84,16 @@ public class BoarderController {
     }
 
     @RequestMapping(value = "/{memberNo}/view/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewList(Model model, Member member, @PathVariable long memberNo) {
+    public String viewList(Model model, @PathVariable String memberNo) {
+        int pageLimit = 10;
+        try{
+            pageLimit = (int) model.getAttribute("pageLimit");
 
-        member.setNo(memberNo);
-        model.getAttribute("currentPage");
-//        pagination blarblar
-        List<HashMap<String, Object>> boardList = boardService.getBoardList(member, pagination);
+        }catch (NullPointerException e){
+            log.info("pageLimit: default(10)");
+        }
+
+        List<HashMap<String, Object>> boardList = boardService.getBoardList(memberNo, pageLimit);
 
         model.addAttribute("boardList", boardList);
         model.addAttribute("mainContents", "board-view-list");

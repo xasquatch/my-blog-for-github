@@ -46,10 +46,11 @@ public class BoardDao {
 
     }
 
-    public List<HashMap<String, Object>> SelectBoardList(Member member, Pagination pagination) {
-        Long memberKey = member.getNo();
+    public List<HashMap<String, Object>> SelectBoardList(String memberKey, int pageLimit) {
+        Long memberNo = Long.parseLong(memberKey);
+        int limitStartIndex = pageLimit - 10;
 
-        return boardMapper.selectBoardList(memberKey, null,null);
+        return boardMapper.selectBoardList(memberNo, limitStartIndex, pageLimit);
     }
 
     public HashMap<String, Object> selectOneBoard(Object boardKey) {
