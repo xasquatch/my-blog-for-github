@@ -104,13 +104,9 @@
             var formData = new FormData(loginForm);
             ajax.submit('POST', '${path}/user/login', function (data) {
 
-                if (data === 'false') {
-                    window.alert('로그인에 실패하였습니다. email, password를 확인해주세요');
+                if (data === 'false') window.alert('로그인에 실패하였습니다. email, password를 확인해주세요');
 
-                } else {
-                    window.location.href = '${path}/';
-                }
-
+                window.location.replace('${path}/');
 
             }, 'FORMFILE', formData);
 
