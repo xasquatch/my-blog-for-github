@@ -4,8 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.Resource;
 
@@ -22,17 +21,17 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
+    @GetMapping(value = "/")
     public String home(Model model) {
         if (sessionMember.getNo() == null) {
-            return "redirect:/login";
+            return "forward:/login";
         }
         model.addAttribute("mainContents", "main");
 
         return "index";
     }
 
-    @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
+    @GetMapping(value = "/login")
     public String main(Model model) {
 
         model.addAttribute("mainContents", "login");
