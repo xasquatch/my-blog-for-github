@@ -21,7 +21,7 @@ public class ControllerInterceptor implements HandlerInterceptor {
         boolean permit = false;
 
         String ip = accessorInfo.getIpAddress(request);
-        log.info(ip);
+        System.out.println("--------" + ip + "--------");
         if (!ip.isBlank())
             permit = true;
 
