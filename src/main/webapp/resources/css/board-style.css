@@ -83,3 +83,8 @@
     height: 30px !important;
 
 }
+
+#board-view-contents{
+    padding: 10px 20px;
+    margin-bottom: 50px;
+}
