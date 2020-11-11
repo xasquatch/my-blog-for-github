@@ -1,4 +1,4 @@
-package net.xasquatch.myblog.model;
+package net.xasquatch.myblog.service;
 
 import lombok.*;
 
