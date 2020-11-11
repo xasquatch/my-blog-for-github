@@ -41,22 +41,16 @@
             </script>
             <B>More</B>
         </button>
-<%--TODO:세션에따라 표시--%>
-        <button type="button" class="btn btn-danger" onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/user/${sessionMember.no}/log-out'">
-            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-        </button>
-        <button type="button" class="dot-key btn btn-default header-menu-btn" onclick="location.href='${path}/board/${sessionMember.no}/view/list'">
-            보드
-        </button>
-        <button type="button" class="dot-key btn btn-default header-menu-btn" onclick="location.href='${path}/user/${sessionMember.no}/information'">
-            정보
-        </button>
-
+        <c:if test="${sessionMember.no != null}">
+            <button type="button" class="btn btn-link" onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/user/${sessionMember.no}/log-out'">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </button>
+        </c:if>
 
     </div>
 </header>
 <script>
-    window.addEventListener('DOMContentLoaded', function(){
+    window.addEventListener('DOMContentLoaded', function () {
 
         textScript.insertText('#main-header-logo', 'My Blog', 20);
     });
@@ -66,17 +60,16 @@
     // TOP padding값을 주는 것으로 sticky 구현
     window.addEventListener('scroll', function () {
         if (mainHeader.style.marginTop < window.pageYOffset) {
-            mainHeader.style.position='fixed';
-            mainHeader.style.top=0;
-            mainHeader.style.zIndex=2000;
+            mainHeader.style.position = 'fixed';
+            mainHeader.style.top = 0;
+            mainHeader.style.zIndex = 2000;
 
-        }else{
-            mainHeader.style.position='static';
-            mainHeader.style.top='';
+        } else {
+            mainHeader.style.position = 'static';
+            mainHeader.style.top = '';
 
         }
     });
-
 
 
 </script>
