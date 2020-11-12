@@ -1,9 +1,8 @@
 package net.xasquatch.myblog.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.mapper.BoardMapper;
 import net.xasquatch.myblog.model.Board;
-import net.xasquatch.myblog.model.Member;
-import net.xasquatch.myblog.service.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Repository
 public class BoardDao {
 
@@ -46,11 +46,17 @@ public class BoardDao {
 
     }
 
-    public List<HashMap<String, Object>> SelectBoardList(String memberKey, int pageLimit) {
+    public List<HashMap<String, Object>> SelectBoardList(String memberKey, int pageLimit, int currentBlock) {
         Long memberNo = Long.parseLong(memberKey);
-//TODO:보완 필요....
+        int currentPageBlock = 0;
+        try {
+            currentPageBlock = (currentBlock - 1) * pageLimit;
 
-        return boardMapper.selectBoardList(memberNo, 0, pageLimit);
+        } catch (ArithmeticException e) {
+            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
+        }
+
+        return boardMapper.selectBoardList(memberNo, currentPageBlock, pageLimit);
     }
 
     public HashMap<String, Object> selectOneBoard(Object boardKey) {

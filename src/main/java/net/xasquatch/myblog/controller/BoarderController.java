@@ -86,14 +86,17 @@ public class BoarderController {
     @RequestMapping(value = "/{memberNo}/view/list", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewList(Model model, @PathVariable String memberNo) {
         int pageLimit = 10;
+        int currentBlock = 1;
         try{
             pageLimit = (int) model.getAttribute("pageLimit");
+            currentBlock = (int) model.getAttribute("currentBlock");
 
         }catch (NullPointerException e){
-            log.info("pageLimit: default(10)");
+            log.warn("pageLimit: default(10)");
+            log.warn("currentBlock: default(1)");
         }
 
-        List<HashMap<String, Object>> boardList = boardService.getBoardList(memberNo, pageLimit);
+        List<HashMap<String, Object>> boardList = boardService.getBoardList(memberNo, pageLimit, currentBlock);
 
         model.addAttribute("boardList", boardList);
         model.addAttribute("mainContents", "board-view-list");

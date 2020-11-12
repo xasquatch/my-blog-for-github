@@ -109,12 +109,12 @@
     function changeBoardListCount(count) {
         document.querySelector('#board-list-count').innerHTML = count;
         var boardList = document.querySelector('#myblog-api-board-list');
-        ajax.submit('GET', '${path}/api/${sessionMember.no}/board/list/read?pageLimit=' + count, function (data) {
+
+        ajax.submit('GET', '${path}/api/members/${sessionMember.no}/board/list?pageLimit=' + count + '&currentBlock=' + 2, function (data) {
 
             boardList.innerHTML = '';
             var jsonData = JSON.parse(data);
             for (var map of jsonData) {
-                console.log(map);
                 var trTag = document.createElement('tr');
                 var titleInput = document.createElement('td');
                 titleInput.innerHTML = '<a href="${path}/board/${sessionMember.no}/view/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';

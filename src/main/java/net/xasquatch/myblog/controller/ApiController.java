@@ -20,11 +20,11 @@ public class ApiController {
     @Autowired
     private BoardService boardService;
 
-    @GetMapping(value = "/{memberNo}/board/list/read",params = {"pageLimit"})
-    public @ResponseBody List<HashMap<String, Object>> viewBoardList(int pageLimit, @PathVariable String memberNo) {
-        System.out.println("pageLimit = " + pageLimit);
+    @GetMapping(value = "/members/{memberNo}/board/list",params = {"pageLimit","currentBlock"})
+    public @ResponseBody List<HashMap<String, Object>> viewBoardList(int pageLimit, int currentBlock, @PathVariable String memberNo) {
 
-        return boardService.getBoardList(memberNo, pageLimit);
+        return boardService.getBoardList(memberNo, pageLimit, currentBlock);
     }
+
 
 }
