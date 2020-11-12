@@ -21,14 +21,18 @@ var uri = {
     },
     isContainWordCurrentPath: function (word) {
         return window.location.href.slice(window.location.origin.length).indexOf(word) > 0;
+    },
+    getUniform(startUrl, endUrl) {
+        var i = uri.parsing();
+        return i.slice(i.indexOf(startUrl) + startUrl.length, i.indexOf(endUrl));
     }
 }
 
 var board = {
 
 
-    boardNo : document.querySelector('#board-no'),
-    boardMbrNo : document.querySelector('#board-no-mbr'),
+    boardNo: document.querySelector('#board-no'),
+    boardMbrNo: document.querySelector('#board-no-mbr'),
     fakeKeyword: document.querySelector('#board-keyword-fake'),
     fakeTitle: document.querySelector('#board-title-fake'),
     fakeContents: document.querySelector('#board-contents-fake'),
@@ -36,7 +40,7 @@ var board = {
     fakeImages: document.querySelector('#board-contents-image'),
 
     save: function () {
-        try{
+        try {
 
             sessionStorage.setItem('sessionBoardNoData', board.boardNo.value);
             sessionStorage.setItem('sessionBoardMbrNoData', board.boardMbrNo.value);
@@ -45,12 +49,12 @@ var board = {
             sessionStorage.setItem('sessionContentsData', board.fakeContents.innerHTML);
             sessionStorage.setItem('sessionThumbnailData', board.fakeThumbnail.innerHTML);
             sessionStorage.setItem('sessionContentsImgData', board.fakeImages.innerHTML);
-        }catch (e){
+        } catch (e) {
             console.log('FAILED SAVE')
         }
     },
-    call: function(){
-        if (window.confirm('임시저장된 정보를 불러오시겠습니까?')){
+    call: function () {
+        if (window.confirm('임시저장된 정보를 불러오시겠습니까?')) {
             board.boardNo.value = sessionStorage.getItem('sessionBoardNoData');
             board.boardMbrNo.value = sessionStorage.getItem('sessionBoardMbrNoData');
             document.querySelector('#board-keyword-fake').value = sessionStorage.getItem('sessionKeywordData');
@@ -154,9 +158,9 @@ var textScript = {
 
 var ajax = {
 
-    json : 'application/json',
-    form : 'application/x-www-form-urlencoded',
-    formFile : 'multipart/form-data',
+    json: 'application/json',
+    form: 'application/x-www-form-urlencoded',
+    formFile: 'multipart/form-data',
 
     setContentsType: function (inputContentsType) {
         var contentsType = 'text/plain';
@@ -191,7 +195,7 @@ var ajax = {
                     result = xhr.response;
                     alert('잘못 된 접근 입니다 다시 시도해주세요');
                 }
-            }else{
+            } else {
                 footerEffect.addLoadingState();
             }
         };
@@ -204,7 +208,7 @@ var ajax = {
             contentsType = ajax.setContentsType(inputContentsType);
             xhr.open(method, url, true);
             if (contentsType !== ajax.formFile)
-            xhr.setRequestHeader('Content-type', contentsType);
+                xhr.setRequestHeader('Content-type', contentsType);
             xhr.send(sendData);
         }
 
@@ -230,5 +234,91 @@ var footerEffect = {
         loadingFooter.classList.add('opacity-half');
         loadingImg.classList.add('visible');
     }
+
+
+}
+var boardListScript = {
+
+    moveToThisPage: function (url) {
+        var boardList = document.querySelector('#myblog-api-board-list');
+        var uniform = uri.getUniform('/board/', '/view/list');
+
+        ajax.submit('GET', url, function (data) {
+
+            boardList.innerHTML = '';
+            var jsonData = JSON.parse(data);
+            for (var map of jsonData) {
+                var trTag = document.createElement('tr');
+                var titleInput = document.createElement('td');
+                titleInput.innerHTML = '<a href="/board/${sessionMember.no}/view/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
+                var rowNoInput = document.createElement('td');
+                rowNoInput.innerText = map.rowno;
+                var dateInput = document.createElement('td');
+                dateInput.innerText = boardListScript.getFormatDate(map.created_date);
+                var modifyInput = document.createElement('td');
+                modifyInput.innerHTML = '<span class="glyphicon glyphicon-cog" style="cursor:pointer;" onclick="location.href=\'/board/' + uniform + '/modify/' + map.no + '\'"></span>';
+                var deleteInput = document.createElement('td');
+                deleteInput.innerHTML = '<span class="glyphicon glyphicon-trash" style="cursor:pointer;" onclick="boardListScript.deleteBoard(' + map.no + ');"></span>';
+
+                trTag.appendChild(rowNoInput)
+                trTag.appendChild(titleInput)
+                trTag.appendChild(dateInput);
+                trTag.appendChild(modifyInput);
+                trTag.appendChild(deleteInput);
+                boardList.appendChild(trTag);
+
+            }
+        });
+
+    },
+
+    changeBoardListCount: function (count) {
+        document.querySelector('#board-list-count').innerHTML = count;
+        var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
+        var uniform = uri.getUniform('/board/', '/view/list');
+
+        boardListScript.moveToThisPage('/api/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock);
+
+    },
+
+    changeActivateToolbar: function (element) {
+        var boardLisToolbar = document.querySelector('#board-list-toolbar');
+        var currentPageBlock = element.innerText;
+        var limitCount = document.querySelector('#board-list-count').innerHTML;
+        var uniform = uri.getUniform('/board/', '/view/list');
+
+        if (!element.classList.contains('active')) {
+            for (var btn of boardLisToolbar.querySelectorAll('button')) {
+                btn.classList.remove('active');
+            }
+            element.classList.add('active');
+            boardListScript.moveToThisPage('/api/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock);
+
+        }
+
+    },
+
+    getFormatDate: function (targetDate) {
+        var date = new Date(targetDate);
+        var year = date.getFullYear();
+        var month = (1 + date.getMonth());
+        month = month >= 10 ? month : '0' + month;
+        var day = date.getDate();
+        day = day >= 10 ? day : '0' + day;
+        var hour = date.getHours();
+        hour = hour >= 10 ? hour : '0' + hour;
+        var minute = date.getMinutes();
+        minute = minute >= 10 ? minute : '0' + minute;
+
+        return year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
+    },
+
+    deleteBoard: function (key) {
+        var uniform = uri.getUniform('/board/', '/view/list');
+        if (window.confirm("정말 삭제하시겠습니까?"))
+            location.href = '/board/' + uniform + '/delete/' + key;
+
+    }
+
 
 }
