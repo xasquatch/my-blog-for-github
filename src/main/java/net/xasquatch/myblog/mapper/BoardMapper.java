@@ -22,7 +22,13 @@ public interface BoardMapper {
     @Delete("DELETE FROM board WHERE completed = 'false' AND member_no = #{member_no}")
     void deleteUnfinishedBoard(Map<String, Object> memberMap);
 
-    @Select("SELECT no, keyword, title, thumbnail, created_date, created_ip FROM board WHERE member_no = #{arg0} AND completed = 'true' ORDER BY no DESC Limit #{arg1}, #{arg2}")
+    @Select("SELECT * FROM " +
+                "(SELECT @ROWNUM := @ROWNUM + 1 AS rowno, board.* " +
+                "FROM board board, (SELECT @ROWNUM := 0 ) TMP " +
+                "WHERE member_no = #{arg0} AND completed = 'true' " +
+                "ORDER BY board.no ASC)SUB " +
+            "ORDER BY SUB.rowno DESC " +
+            "Limit #{arg1}, #{arg2};")
     List<HashMap<String, Object>> selectBoardList(Object member_no, Object currentPage, Object lastPage);
 
     @Select("SELECT no, member_no, keyword, title, convert(contents USING UTF8) as contents, created_date, created_ip, thumbnail FROM board WHERE no = #{arg0}")

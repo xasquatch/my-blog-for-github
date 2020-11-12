@@ -40,7 +40,7 @@
             <c:forEach var="list" items="${boardList}">
                 <tr>
                     <td>
-                            ${list.no}
+                            ${list.rowno}
                     </td>
                     <td>
                         <a href="${path}/board/${sessionMember.no}/view/detail/${list.no}">
@@ -63,42 +63,32 @@
             </tbody>
         </table>
     </article>
-    <div class="btn-toolbar board-list-count" role="toolbar" style="margin: 0 auto">
-        <div class="btn-group" role="group" aria-label="most left group">
-            <button type="button" class="btn btn-default" onclick="location.href='#'">
-                <span class="glyphicon glyphicon-backward"></span>
-            </button>
-        </div>
+    <div id="board-list-toolbar" class="btn-toolbar" role="toolbar" style="margin: 0 auto">
         <div class="btn-group" role="group" aria-label="left group">
-            <button type="button" class="btn btn-default" onclick="location.href='#'">
+            <button type="button" class="btn btn-link" onclick="location.href='#'">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </button>
         </div>
-        <div class="btn-group" role="group" aria-label="list group">
-            <button type="button" class="btn btn-default" onclick="location.href='#'">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-link" onclick="location.href='#'">
                 1
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-link">
                 2
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-link">
                 3
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-link">
                 4
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-link">
                 5
             </button>
         </div>
         <div class="btn-group" role="group" aria-label="right group">
-            <button type="button" class="btn btn-default" onclick="location.href='#'">
+            <button type="button" class="btn btn-link" onclick="location.href='#'">
                 <span class="glyphicon glyphicon-chevron-right"></span>
-            </button>
-        </div>
-        <div class="btn-group" role="group" aria-label="most right group">
-            <button type="button" class="btn btn-default" onclick="location.href='#'">
-                <span class="glyphicon glyphicon-forward"></span>
             </button>
         </div>
     </div>
@@ -110,7 +100,7 @@
         document.querySelector('#board-list-count').innerHTML = count;
         var boardList = document.querySelector('#myblog-api-board-list');
 
-        ajax.submit('GET', '${path}/api/members/${sessionMember.no}/board/list?pageLimit=' + count + '&currentBlock=' + 2, function (data) {
+        ajax.submit('GET', '${path}/api/members/${sessionMember.no}/board/list?pageLimit=' + count + '&currentBlock=' + 1, function (data) {
 
             boardList.innerHTML = '';
             var jsonData = JSON.parse(data);
@@ -118,8 +108,8 @@
                 var trTag = document.createElement('tr');
                 var titleInput = document.createElement('td');
                 titleInput.innerHTML = '<a href="${path}/board/${sessionMember.no}/view/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
-                var noInput = document.createElement('td');
-                noInput.innerText = map.no;
+                var rowNoInput = document.createElement('td');
+                rowNoInput.innerText = map.rowno;
                 var dateInput = document.createElement('td');
                 dateInput.innerText = getFormatDate(map.created_date);
                 var modifyInput = document.createElement('td');
@@ -127,7 +117,7 @@
                 var deleteInput = document.createElement('td');
                 deleteInput.innerHTML = '<span class="glyphicon glyphicon-trash" style="cursor:pointer;" onclick="deleteBoard(' + map.no + ');"></span>';
 
-                trTag.appendChild(noInput)
+                trTag.appendChild(rowNoInput)
                 trTag.appendChild(titleInput)
                 trTag.appendChild(dateInput);
                 trTag.appendChild(modifyInput);
