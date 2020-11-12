@@ -76,8 +76,8 @@ public class BoardService {
 
     }
 
-    public List<HashMap<String, Object>> getBoardList(String memberKey, int pageLimit, int currentBlock) {
-        return boardDao.SelectBoardList(memberKey, pageLimit, currentBlock);
+    public List<HashMap<String, Object>> getBoardList(String memberKey, int pageLimit, int currentPageBlock) {
+        return boardDao.SelectBoardList(memberKey, pageLimit, currentPageBlock);
 
     }
 

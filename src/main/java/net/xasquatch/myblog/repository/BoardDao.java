@@ -46,17 +46,17 @@ public class BoardDao {
 
     }
 
-    public List<HashMap<String, Object>> SelectBoardList(String memberKey, int pageLimit, int currentBlock) {
+    public List<HashMap<String, Object>> SelectBoardList(String memberKey, int pageLimit, int currentPageBlock) {
         Long memberNo = Long.parseLong(memberKey);
-        int currentPageBlock = 0;
+        int block = 0;
         try {
-            currentPageBlock = (currentBlock - 1) * pageLimit;
+            block = (currentPageBlock - 1) * pageLimit;
 
         } catch (ArithmeticException e) {
             log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
         }
 
-        return boardMapper.selectBoardList(memberNo, currentPageBlock, pageLimit);
+        return boardMapper.selectBoardList(memberNo, block, pageLimit);
     }
 
     public HashMap<String, Object> selectOneBoard(Object boardKey) {

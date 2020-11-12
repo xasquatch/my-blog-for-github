@@ -16,10 +16,10 @@ public class ApiController {
     @Autowired
     private BoardService boardService;
 
-    @GetMapping(value = "/members/{memberNo}/board/list",params = {"pageLimit","currentBlock"})
-    public @ResponseBody List<HashMap<String, Object>> viewBoardList(int pageLimit, int currentBlock, @PathVariable String memberNo) {
+    @GetMapping(value = "/members/{memberNo}/board/list",params = {"pageLimit","currentPageBlock"})
+    public @ResponseBody List<HashMap<String, Object>> viewBoardList(int pageLimit, int currentPageBlock, @PathVariable String memberNo) {
 
-        return boardService.getBoardList(memberNo, pageLimit, currentBlock);
+        return boardService.getBoardList(memberNo, pageLimit, currentPageBlock);
     }
 
 
