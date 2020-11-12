@@ -93,10 +93,4 @@ public class RootAppContext {
     }
 
 //------------------------------------------------------
-
-    @Bean
-    public Pagination pagination(){
-        return new Pagination();
-    }
-
 }
