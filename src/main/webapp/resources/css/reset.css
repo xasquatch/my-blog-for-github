@@ -11,3 +11,15 @@ blockquote {
     font-size: inherit !important;
 
 }
+.btn-link{
+    color: black !important;
+    transition: 0.5s all !important;
+    text-decoration: none !important;
+}
+.btn-link:HOVER{
+    background-color: darkred !important;
+}
+.btn.active, .btn:active {
+    color: darkred !important;
+
+}
