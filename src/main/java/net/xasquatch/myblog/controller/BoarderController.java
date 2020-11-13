@@ -29,9 +29,6 @@ public class BoarderController {
     @Autowired
     private HomeController checkSessionController;
 
-    @Autowired
-    private Pagination pagination;
-
 
     //TODO: 글작성 화면으로 이동
     @RequestMapping(value = "/{memberNo}/create", method = {RequestMethod.GET, RequestMethod.POST})
@@ -83,22 +80,10 @@ public class BoarderController {
         return "redirect:/";
     }
 
+    //TODO: 게시판 리스트 조회 페이지
     @RequestMapping(value = "/{memberNo}/view/list", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewList(Model model, @PathVariable String memberNo) {
-        int pageLimit = 10;
-        int currentPageBlock = 1;
-        try{
-            pageLimit = (int) model.getAttribute("pageLimit");
-            currentPageBlock = (int) model.getAttribute("currentPageBlock");
 
-        }catch (NullPointerException e){
-            log.warn("pageLimit: default(10)");
-            log.warn("currentPageBlock: default(1)");
-        }
-
-        List<HashMap<String, Object>> boardList = boardService.getBoardList(memberNo, pageLimit, currentPageBlock);
-
-        model.addAttribute("boardList", boardList);
         model.addAttribute("mainContents", "board-view-list");
 
         return "index";
