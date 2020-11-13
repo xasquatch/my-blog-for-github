@@ -39,4 +39,6 @@ public class Member {
 
     @NotNull
     private boolean collectionAndUse;
+
+    private boolean checkSession;
 }
