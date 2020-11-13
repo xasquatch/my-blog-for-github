@@ -31,6 +31,9 @@ public interface BoardMapper {
             "Limit #{arg1}, #{arg2};")
     List<HashMap<String, Object>> selectBoardList(Object member_no, Object currentPage, Object lastPage);
 
+    @Select("SELECT COUNT(*) as list_count FROM board")
+    int selectBoardListCount(Object member_no);
+
     @Select("SELECT no, member_no, keyword, title, convert(contents USING UTF8) as contents, created_date, created_ip, thumbnail FROM board WHERE no = #{arg0}")
     HashMap<String, Object> selectOneBoard(Object board_no);
 
