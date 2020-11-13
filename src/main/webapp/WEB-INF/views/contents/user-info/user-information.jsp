@@ -14,13 +14,14 @@
         <div class="input-group">
             <div class="input-group-addon">Email</div>
             <input class="form-control" id="user-info-email" type="email" name="email" value="${sessionMember.email}" readonly>
-            <div class="input-group-addon" onclick="alert('hi');"><B>변경</B></div>
+            <div class="input-group-addon black-hover-btn" onclick="alert('hi');"><B>변경</B></div>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Password</div>
-            <input class="form-control" id="user-info-pwd" type="password" name="pwd" placeholder="your Password" required onchange="checkPwd(this)">
-            <input class="form-control" type="password" name="pwdConfirm" placeholder="Password Confirm" required onchange="confirmPwd(this)">
-            <div class="form-control form-explain" id="user-info-explain-pwd">영문또는 숫자로 8~20자이내 입력해주세요</div>
+            <input class="form-control pwd-group" id="user-info-pwd" type="password" name="pwd" placeholder="your Password" required onchange="checkPwd(this)">
+            <input class="form-control pwd-group" type="password" name="pwdConfirm" placeholder="Password Confirm" required onchange="confirmPwd(this)">
+            <div class="form-explain" id="user-info-explain-pwd">영문또는 숫자로 8~20자이내 입력해주세요</div>
+            <div class="input-group-addon black-hover-btn" onclick="changeVisiblePwd();"><B>비밀번호<BR>표시</B></div>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Name</div>
@@ -28,7 +29,7 @@
             <div class="form-control form-explain" id="user-info-explain-name">영문또는 숫자로 3~20자이내 입력해주세요</div>
         </div>
         <div class="input-group">
-            <div class="input-group-addon">Profile Image</div>
+            <div class="input-group-addon">Profile<BR>Image</div>
             <input type="file" class="form-control" onchange="addUploadImage(event);">
             <textarea class="hidden" id="imgFile" name="imgFile"></textarea>
             <div class="form-control" id="user-info-imageFit" style="height: auto;">
@@ -52,19 +53,14 @@
 
         var userForm = document.querySelector('#user-info');
         var userFormData = new FormData(userForm);
-        ajax.submit('PUT', '${path}/api/members/${sessionMember.no}', function (data) {
-
-            console.log(data);
+        ajax.submit('PATCH', '${path}/api/members/${sessionMember.no}', function (data) {
 
             if (data === 'false') {
                 window.alert('정보 수정에 실패하였습니다. 수정조건을 확인 후 다시 시도해주세요.');
 
-            }else if(data === 'wrong pwd'){
-                window.alert('비밀번호가 틀렸습니다. 다시 시도해주세요.');
-
-            }else{
-                window.alert('정보 수정이 완료되었습니다.');
-                window.location.reload();
+            } else {
+                window.alert('정보 수정이 완료되었습니다. 다시 로그인 해주세요');
+                window.location.href = "${path}/user/${sessionMember.no}/log-out"
 
             }
 
@@ -72,6 +68,21 @@
         }, 'FORMFILE', userFormData);
 
     }
+
+    function changeVisiblePwd() {
+        var pwdTags = document.querySelectorAll('.pwd-group');
+        for (var pwdTag of pwdTags) {
+            if (pwdTag.getAttribute('type') === 'password') {
+                pwdTag.setAttribute('type', 'text');
+
+            } else if (pwdTag.getAttribute('type') === 'text') {
+                pwdTag.setAttribute('type', 'password');
+
+            }
+        }
+
+    }
+
 
     function checkPwd(element) {
         var userPwdExplain = document.querySelector('#user-info-explain-pwd');
