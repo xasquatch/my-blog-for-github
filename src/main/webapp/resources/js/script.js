@@ -203,7 +203,7 @@ var ajax = {
         if (method.toUpperCase() === 'GET') {
             xhr.open(method, url);
             xhr.send();
-        } else if (method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT' || method.toUpperCase() === 'DELETE') {
+        } else if (method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT' || method.toUpperCase() === 'DELETE' || method.toUpperCase() === 'PATCH') {
             method = method.toUpperCase();
             contentsType = ajax.setContentsType(inputContentsType);
             xhr.open(method, url, true);
