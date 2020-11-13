@@ -203,8 +203,8 @@ var ajax = {
         if (method.toUpperCase() === 'GET') {
             xhr.open(method, url);
             xhr.send();
-        } else if (method.toUpperCase() === 'POST') {
-            method = 'POST';
+        } else if (method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT' || method.toUpperCase() === 'DELETE') {
+            method = method.toUpperCase();
             contentsType = ajax.setContentsType(inputContentsType);
             xhr.open(method, url, true);
             if (contentsType !== ajax.formFile)
@@ -258,7 +258,7 @@ var boardListScript = {
             for (var map of jsonData.boardList) {
                 var trTag = document.createElement('tr');
                 var titleInput = document.createElement('td');
-                titleInput.innerHTML = '<a href="/board/'+ uniform +'/view/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
+                titleInput.innerHTML = '<a href="/board/' + uniform + '/view/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
                 var rowNoInput = document.createElement('td');
                 rowNoInput.innerText = map.rowno;
                 var dateInput = document.createElement('td');
@@ -276,8 +276,6 @@ var boardListScript = {
                 boardList.appendChild(trTag);
 
             }
-
-
 
 
             window.scrollTo(0, 0);
