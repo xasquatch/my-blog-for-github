@@ -14,10 +14,10 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="boardListViewCount">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardListCount(10);">10</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardListCount(20);">20</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardListCount(50);">50</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardListCount(100);">100</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(10);">10</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(20);">20</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(50);">50</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(100);">100</a></li>
                 </ul>
             </div>
             <button type="button" class="btn btn-success" onclick="location.href='${path}/board/${sessionMember.no}/create'">
@@ -41,42 +41,38 @@
             </tbody>
         </table>
     </article>
-    <div class="btn-toolbar" role="toolbar" style="margin: 0 auto">
-        <div class="btn-group" role="group" aria-label="left group">
-            <button type="button" class="btn btn-link" onclick="location.href='#'">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </button>
-        </div>
-        <div id="board-list-toolbar" class="btn-group" role="group">
-            <button type="button" class="btn btn-link active" onclick="boardListScript.changeActivateToolbar(this)">
-                1
-            </button>
-            <button type="button" class="btn btn-link" onclick="boardListScript.changeActivateToolbar(this)">
-                2
-            </button>
-            <button type="button" class="btn btn-link" onclick="boardListScript.changeActivateToolbar(this)">
-                3
-            </button>
-            <button type="button" class="btn btn-link" onclick="boardListScript.changeActivateToolbar(this)">
-                4
-            </button>
-            <button type="button" class="btn btn-link" onclick="boardListScript.changeActivateToolbar(this)">
-                5
-            </button>
-        </div>
-        <div class="btn-group" role="group" aria-label="right group">
-            <button type="button" class="btn btn-link" onclick="location.href='#'">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </button>
-        </div>
+
+    <div id="board-list-toolbar" class="btn-group" role="group">
+        <button type="button" id="prev-btn" class="btn btn-link" onclick="boardListScript.ChangeMoveToThisPage(0)">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+        <button type="button" class="btn btn-link active" onclick="boardListScript.MoveToThisPage(this)">
+            1
+        </button>
+        <button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">
+            2
+        </button>
+        <button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">
+            3
+        </button>
+        <button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">
+            4
+        </button>
+        <button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">
+            5
+        </button>
+        <button type="button" id="next-btn" class="btn btn-link" onclick="boardListScript.ChangeMoveToThisPage(6)">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </button>
     </div>
+
 </section>
 
 
 <script>
 
-    window.onload =function(){
-        boardListScript.changeBoardListCount(10);
+    window.onload = function () {
+        boardListScript.ChangeMoveToThisPage(1);
 
     }
 </script>
