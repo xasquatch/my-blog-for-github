@@ -64,4 +64,7 @@ public class BoardDao {
         return boardMapper.selectOneBoard(boardKey);
     }
 
+    public int selectBoardListCount(Object memberKey){
+        return boardMapper.selectBoardListCount(memberKey);
+    }
 }

@@ -1,8 +1,11 @@
 package net.xasquatch.myblog.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Board;
-import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.repository.BoardDao;
+import net.xasquatch.myblog.service.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -15,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 @PropertySource("/WEB-INF/properties/file/FileManager.properties")
 public class BoardService {
@@ -30,7 +34,6 @@ public class BoardService {
 
     @Value("${files.save.contents.name.blog}")
     String ContentsName;
-
 
     public Object createDefaultBoard(String memberNo) {
         Map<String, Object> memberMap = new HashMap<String, Object>();
@@ -76,9 +79,31 @@ public class BoardService {
 
     }
 
-    public List<HashMap<String, Object>> getBoardList(String memberKey, int pageLimit, int currentPageBlock) {
-        return boardDao.SelectBoardList(memberKey, pageLimit, currentPageBlock);
+    public String getBoardList(String memberKey, int pageLimit, int currentPageBlock) {
+        List<HashMap<String, Object>> boardList = boardDao.SelectBoardList(memberKey, pageLimit, currentPageBlock);
+        int totalCount = boardDao.selectBoardListCount(memberKey);
 
+
+        Pagination pagination = Pagination.builder()
+                .pageLimit(pageLimit)
+                .currentPageBlock(currentPageBlock)
+                .totalCount(totalCount)
+                .build();
+        pagination.setPageBlogList();
+
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("boardList", boardList);
+        resultMap.put("pageBlockList", pagination);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String resultDataString = null;
+        try {
+            resultDataString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(resultMap);
+        } catch (JsonProcessingException e) {
+            log.warn("JsonProcessingException");
+        }
+
+
+        return resultDataString;
     }
-
 }

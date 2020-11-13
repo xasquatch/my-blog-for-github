@@ -1,24 +1,49 @@
 package net.xasquatch.myblog.service;
 
 import lombok.*;
-import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Builder
 @ToString
-@Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Component
 public class Pagination {
 
     private int currentPageBlock;
-    private int PageLimit;
+    private int pageLimit;
+    private int totalCount;
+    private int totalPageBlock;
+    private int startPageBlock = 1;
+    private int endPageBlock = 5;
+    private int prevPageBlock;
+    private int nextPageBlock;
 
-    public Object lastPageBlock(){
+    public void setPageBlogList() {
+        this.totalPageBlock = (this.totalCount / this.pageLimit);
+        if (this.totalCount % this.pageLimit > 0)
+            this.totalPageBlock++;
 
-        return null;
+        if (this.currentPageBlock % 5 == 1) {
+            this.startPageBlock = this.currentPageBlock;
+
+        } else if (this.currentPageBlock % 5 == 0) {
+            this.startPageBlock = this.currentPageBlock - 4;
+
+        } else {
+            this.startPageBlock = (this.currentPageBlock / 5) + 1;
+
+        }
+
+        this.endPageBlock = this.startPageBlock + 4; // 4 = 5-1
+        if (this.endPageBlock > this.totalPageBlock)
+            this.endPageBlock = this.totalPageBlock;
+
+        this.prevPageBlock = this.startPageBlock - 1;
+
+        this.nextPageBlock = this.endPageBlock + 1;
+        if (this.nextPageBlock > this.totalPageBlock)
+            this.nextPageBlock = this.totalPageBlock;
+
     }
-
 
 }
