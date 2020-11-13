@@ -37,7 +37,7 @@ public class MemberService {
 
     public String login(Member member) {
 
-        Map<String, Object> resultMap = memberDao.selectOnMbr(member);
+        Map<String, Object> resultMap = memberDao.selectOneMbr(member);
 
         try {
             long sessionMemberNo = ((BigInteger) resultMap.get("no")).longValue();
@@ -61,6 +61,7 @@ public class MemberService {
         sessionMember.setPwd(null);
         sessionMember.setName(null);
         sessionMember.setImg(null);
+        sessionMember.setCheckSession(false);
     }
 
     //TODO:img파일 저장 및 경로 설정 + result false시 해당 폴더 제거 구현 필요
@@ -95,14 +96,42 @@ public class MemberService {
         return result;
     }
 
-
-    public boolean update(Member member) {
+    public String updateMember(Member member){
         boolean result = false;
 
+        ImgParser imgParser = ImgParser.getImgParser(member.getImgFile());
+
+        while (imgParser.isCuttableImgSrc()) {
+            imgParser.addImgList();
+
+        }
+        result = memberDao.updateMbrDefault(member);
+
+
+        List<String> imgSrcList = imgParser.getImgSrcList();
+        String path = File.separator + member.getNo();
+        for (int i = 0; i < imgSrcList.size(); i++) {
+            byte[] decodedImgSrc = fileService.decodeBase64(imgSrcList.get(i));
+            String src = fileService.writeFile(decodedImgSrc, path, new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + ".png");
+            member.setImg(src);
+
+        }
+
+        if (!memberDao.updateMbrImg(member)) {
+            fileService.removeFiles(path);
+            delete(member);
+        }
+
+        return String.valueOf(result);
+    }
+
+    public boolean checkMember(String pwdKey) {
+        boolean result = false;
+        int i = memberDao.selectMbr(pwdKey);
+        if (i > 0) result = true;
 
         return result;
     }
-
 
     public boolean delete(Member member) {
         boolean result = false;

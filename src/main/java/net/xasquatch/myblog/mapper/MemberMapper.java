@@ -22,9 +22,15 @@ public interface MemberMapper {
     @Update("UPDATE mbr SET img = #{img} WHERE no = #{no}")
     int updateMbrImg(Member member);
 
+    @Select("SELECT no FROM mbr WHERE pwd = #{arg0}")
+    int selectMbr(String pwdKey);
+
+    @Update("UPDATE mbr SET name = #{name}, pwd = #{pwd} WHERE no = #{no} AND email = #{email}")
+    int updateMbrDefault(Member member);
+
     @Delete("DELETE FROM mbr WHERE no = #{no}")
     int deleteOneMbr(Member member);
 
     @Select("SELECT * FROM mbr WHERE email = #{email} AND pwd = #{pwd}")
-    HashMap<String ,Object> selectOnMbr(Member member);
+    HashMap<String ,Object> selectOneMbr(Member member);
 }
