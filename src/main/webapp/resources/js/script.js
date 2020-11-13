@@ -239,18 +239,26 @@ var footerEffect = {
 }
 var boardListScript = {
 
-    moveToThisPage: function (url) {
-        var boardList = document.querySelector('#myblog-api-board-list');
+    forwardUrl: function (url, callback) {
+        ajax.submit('GET', url, callback);
+
+    },
+
+    changeBoardList: function (count) {
+        var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
         var uniform = uri.getUniform('/board/', '/view/list');
 
-        ajax.submit('GET', url, function (data) {
+        boardListScript.forwardUrl('/api/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
+            document.querySelector('#board-list-count').innerHTML = count;
+            var boardList = document.querySelector('#myblog-api-board-list');
+            var jsonData = JSON.parse(data);
 
             boardList.innerHTML = '';
-            var jsonData = JSON.parse(data);
-            for (var map of jsonData) {
+
+            for (var map of jsonData.boardList) {
                 var trTag = document.createElement('tr');
                 var titleInput = document.createElement('td');
-                titleInput.innerHTML = '<a href="/board/${sessionMember.no}/view/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
+                titleInput.innerHTML = '<a href="/board/'+ uniform +'/view/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
                 var rowNoInput = document.createElement('td');
                 rowNoInput.innerText = map.rowno;
                 var dateInput = document.createElement('td');
@@ -268,33 +276,73 @@ var boardListScript = {
                 boardList.appendChild(trTag);
 
             }
+
+
+
+
+            window.scrollTo(0, 0);
         });
 
     },
 
-    changeBoardListCount: function (count) {
-        document.querySelector('#board-list-count').innerHTML = count;
-        var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
-        var uniform = uri.getUniform('/board/', '/view/list');
-
-        boardListScript.moveToThisPage('/api/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock);
-
-    },
-
-    changeActivateToolbar: function (element) {
-        var boardLisToolbar = document.querySelector('#board-list-toolbar');
+    MoveToThisPage: function (element) {
+        var boardListToolbar = document.querySelector('#board-list-toolbar');
         var currentPageBlock = element.innerText;
         var limitCount = document.querySelector('#board-list-count').innerHTML;
         var uniform = uri.getUniform('/board/', '/view/list');
 
         if (!element.classList.contains('active')) {
-            for (var btn of boardLisToolbar.querySelectorAll('button')) {
+            for (var btn of boardListToolbar.querySelectorAll('button')) {
                 btn.classList.remove('active');
             }
             element.classList.add('active');
-            boardListScript.moveToThisPage('/api/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock);
+            boardListScript.forwardUrl('/api/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock, function () {
+                boardListScript.changeBoardList(limitCount);
+            });
 
         }
+
+    },
+    ChangeMoveToThisPage: function (currentPageBlock) {
+        var limitCount = document.querySelector('#board-list-count').innerText;
+        var uniform = uri.getUniform('/board/', '/view/list');
+
+        boardListScript.forwardUrl('/api/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock, function (data) {
+            var jsonData = JSON.parse(data);
+
+            var defaultDiv = document.createElement('div');
+            defaultDiv.innerHTML = currentPageBlock;
+
+            boardListScript.MoveToThisPage(defaultDiv);
+
+            var boardListToolbar = document.querySelector('#board-list-toolbar');
+            boardListToolbar.innerHTML = '';
+            if (jsonData.pageBlockList.prevPageBlock !== 0) {
+                boardListToolbar.innerHTML += '<button type="button" class="btn btn-link" onclick="boardListScript.ChangeMoveToThisPage(' + jsonData.pageBlockList.prevPageBlock + ');">' +
+                    '            <span class="glyphicon glyphicon-chevron-left"></span>' +
+                    '        </button>'
+            }
+
+            var forCount = (jsonData.pageBlockList.endPageBlock % 5 > 0) ? jsonData.pageBlockList.endPageBlock % 5 : 5;
+
+            for (var i = (jsonData.pageBlockList.startPageBlock % 5) - 1; i < forCount; i++) {
+                if (jsonData.pageBlockList.startPageBlock + i === jsonData.pageBlockList.currentPageBlock) {
+                    boardListToolbar.innerHTML +=
+                        '<button type="button" class="btn btn-link active" onclick="boardListScript.MoveToThisPage(this)">' + jsonData.pageBlockList.currentPageBlock + '</button>';
+
+                } else {
+                    boardListToolbar.innerHTML +=
+                        '<button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">' + (jsonData.pageBlockList.startPageBlock + i) + '</button>';
+
+                }
+            }
+
+            if (jsonData.pageBlockList.nextPageBlock !== jsonData.pageBlockList.totalPageBlock) {
+                boardListToolbar.innerHTML += '<button type="button" class="btn btn-link" onclick="boardListScript.ChangeMoveToThisPage(' + jsonData.pageBlockList.nextPageBlock + ');">' +
+                    '            <span class="glyphicon glyphicon-chevron-right"></span>' +
+                    '        </button>'
+            }
+        });
 
     },
 
