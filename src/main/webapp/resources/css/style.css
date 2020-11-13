@@ -241,14 +241,21 @@
     height : 50vh;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+    overflow: auto;
+}
+.main-banner>section{
+    display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
     overflow: auto;
 }
-.main-banner>div{
+.main-banner div{
     margin: auto 10px;
 }
-.main-banner>div:HOVER{
+.main-banner div:HOVER{
     cursor: pointer;
 }
 .main-banner-img-focus{
