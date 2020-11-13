@@ -52,6 +52,8 @@ public class BoardService {
     }
 
     public boolean createFinish(Board board) {
+        if (board.getTitle().equals("") || board.getTitle() == null) board.setTitle("[No Title]");
+
         byte[] bytes = (board.getTitle() + System.lineSeparator() + board.getCreated_ip() + System.lineSeparator() + board.getContents()).getBytes();
 
         fileService.writeFile(bytes, File.separator + board.getMbr_no() + SaveDir + File.separator + board.getNo(), ContentsName + "-origin");
