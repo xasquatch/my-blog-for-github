@@ -41,14 +41,16 @@
             <BR>
             <button class="btn btn-default" type="reset">Reset</button>
             &nbsp;
-            <button class="btn btn-danger" onclick="modifyProfile()">Submit</button>
+            <button type="button" class="btn btn-danger" onclick="modifyProfile()">Submit</button>
         </div>
     </form>
 </section>
 
 <script>
 
-    function modifyProfile() {
+    function modifyProfile(e) {
+        // e.preventDefault();
+
         document.querySelector('#imgFile').innerHTML = document.querySelector('#user-info-imageFit').innerHTML;
 
         var userForm = document.querySelector('#user-info');
