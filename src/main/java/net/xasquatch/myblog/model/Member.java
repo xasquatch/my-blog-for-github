@@ -43,4 +43,6 @@ public class Member {
     private boolean collectionAndUse;
 
     private boolean checkSession;
+
+    private String authKey;
 }
