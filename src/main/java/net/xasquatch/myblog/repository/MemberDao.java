@@ -27,6 +27,7 @@ public class MemberDao {
         return member.getNo() != null;
 
     }
+
     public boolean insertMbrExceptionImg(Member member) {
 
         //TODO: DB저장 후 member.setNo 호출하여 PK 저장
@@ -45,7 +46,17 @@ public class MemberDao {
         return result;
     }
 
-    public boolean deleteOneMbr(Member member){
+    public int selectMbr(String pwdKey) {
+        int result = 0;
+        try {
+            result = memberMapper.selectMbr(pwdKey);
+        } catch (Exception e) {
+            log.warn("selectMbr Exception: {}", pwdKey);
+        }
+        return result;
+    }
+
+    public boolean deleteOneMbr(Member member) {
         boolean result = false;
 
         if (memberMapper.deleteOneMbr(member) == 1) result = true;
@@ -53,8 +64,16 @@ public class MemberDao {
         return result;
     }
 
-    public Map<String, Object> selectOnMbr(Member member) {
+    public boolean updateMbrDefault(Member member) {
+        boolean result = false;
 
-        return memberMapper.selectOnMbr(member);
+        if (memberMapper.updateMbrDefault(member) == 1) result = true;
+
+        return result;
+    }
+
+    public Map<String, Object> selectOneMbr(Member member) {
+
+        return memberMapper.selectOneMbr(member);
     }
 }

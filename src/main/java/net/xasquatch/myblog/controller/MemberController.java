@@ -3,6 +3,7 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.MemberService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,9 +30,27 @@ public class MemberController {
 
     /*TODO: infomation페이지 이동*/
     @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
-    public String info(Model model, @PathVariable String memberNo) {
+    public String info(Model model, @PathVariable String memberNo, String checkPassword) {
         if (checkSessionController.isCheckSessionNo(memberNo)) {
-            model.addAttribute("mainContents", "user-info");
+            if (sessionMember.isCheckSession() && memberService.checkMember(checkPassword)) {
+                model.addAttribute("mainContents", "user-info");
+                return "index";
+
+            } else {
+                return "redirect:/user/" + sessionMember.getNo() + "/check-password";
+
+            }
+        }
+
+        return "redirect:/";
+    }
+
+    /*TODO:회원 비밀번호 인증으로 이동*/
+    @RequestMapping(value = "/{memberNo}/check-password", method = {RequestMethod.GET, RequestMethod.POST})
+    public String checkPassword(Model model, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSessionNo(memberNo)) {
+            model.addAttribute("mainContents", "check-password");
+            sessionMember.setCheckSession(true);
             return "index";
         }
 
@@ -101,17 +120,4 @@ public class MemberController {
         return String.valueOf(result);
     }
 
-    /*TODO:회원 정보수정*/
-    @PostMapping("/{memberNo}/modify")
-    @ResponseBody
-    public String modify(Member member, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionNo(memberNo)) {
-            boolean result = false;
-            result = memberService.update(member);
-
-            return String.valueOf(result);
-        }
-
-        return "false";
-    }
 }

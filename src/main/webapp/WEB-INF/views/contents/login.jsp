@@ -260,7 +260,7 @@
         var userNameExplain = document.querySelector('#user-signup-explain-name');
 
         if (!isAvailableNameRegExp(element.value)) {
-            userNameExplain.innerHTML = element.value + '은(는) 사용불가능한 비밀번호 형식입니다. 영문또는 숫자로 3~20자이내 입력해주세요';
+            userNameExplain.innerHTML = element.value + '은(는) 사용불가능한 이름 형식입니다. 영문또는 숫자로 3~20자이내 입력해주세요';
             userNameExplain.style.color = 'RED';
             element.value = '';
 

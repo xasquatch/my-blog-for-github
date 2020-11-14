@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.HashMap;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -82,7 +81,7 @@ public class BoarderController {
 
     //TODO: 게시판 리스트 조회 페이지
     @RequestMapping(value = "/{memberNo}/view/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewList(Model model, @PathVariable String memberNo) {
+    public String viewList(Model model) {
 
         model.addAttribute("mainContents", "board-view-list");
 
