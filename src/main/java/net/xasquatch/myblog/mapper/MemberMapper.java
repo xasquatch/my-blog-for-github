@@ -1,9 +1,11 @@
 package net.xasquatch.myblog.mapper;
 
+import net.xasquatch.myblog.model.Authorization;
 import net.xasquatch.myblog.model.Member;
 import org.apache.ibatis.annotations.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public interface MemberMapper {
@@ -31,6 +33,13 @@ public interface MemberMapper {
     @Delete("DELETE FROM mbr WHERE no = #{no}")
     int deleteOneMbr(Member member);
 
-    @Select("SELECT * FROM mbr WHERE email = #{email} AND pwd = #{pwd}")
-    HashMap<String ,Object> selectOneMbr(Member member);
+    @Select("SELECT m.no as no, a.rank as rank, m.email as email, m.pwd as pwd, m.name as name, m.img as img " +
+            "FROM mbr m LEFT OUTER JOIN authorization a " +
+            "ON m.authorization_no = a.no " +
+            "WHERE m.email = #{arg0} AND m.pwd = #{arg1}")
+    HashMap<String, Object> selectOneMbr(String email, String pwd);
+
+    @Select("SELECT * FROM authorization")
+    List<Authorization> selectAuthorization();
+
 }
