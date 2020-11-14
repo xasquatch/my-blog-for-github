@@ -13,16 +13,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
+import java.util.Properties;
+
 //@Import({SecurityConfig.class})
 @Configuration
-@PropertySource("/WEB-INF/properties/db/db.properties")
+@PropertySource({"/WEB-INF/properties/db/db.properties", "/WEB-INF/properties/db/email.properties"})
 public class RootAppContext {
 
-/*--------TODO:DB접속관리--------------*/
+    /*--------TODO:DB 접속관리--------------*/
     @Value("${db.classname}")
     private String dbClassName;
     @Value("${db.url}")
@@ -31,6 +34,18 @@ public class RootAppContext {
     private String dbUsername;
     @Value("${db.password}")
     private String dbPassword;
+
+    /*--------TODO:Mail 접속관리--------------*/
+    @Value("${email.host}")
+    private String emailHost;
+    @Value("${email.port}")
+    private int emailPort;
+    @Value("${email.username}")
+    private String emailUserName;
+    @Value("${email.password}")
+    private String emailPwd;
+
+
 
     @Bean
     public BasicDataSource dataSource() {
@@ -54,7 +69,7 @@ public class RootAppContext {
     }
 
     @Bean
-    public MapperFactoryBean<MemberMapper> getUserMapper(SqlSessionFactory factory){
+    public MapperFactoryBean<MemberMapper> getUserMapper(SqlSessionFactory factory) {
         MapperFactoryBean<MemberMapper> factoryBean = new MapperFactoryBean<MemberMapper>(MemberMapper.class);
         factoryBean.setSqlSessionFactory(factory);
         return factoryBean;
@@ -62,7 +77,7 @@ public class RootAppContext {
     }
 
     @Bean
-    public MapperFactoryBean<BoardMapper> getBoardMapper(SqlSessionFactory factory){
+    public MapperFactoryBean<BoardMapper> getBoardMapper(SqlSessionFactory factory) {
         MapperFactoryBean<BoardMapper> factoryBean = new MapperFactoryBean<BoardMapper>(BoardMapper.class);
         factoryBean.setSqlSessionFactory(factory);
         return factoryBean;
@@ -85,12 +100,33 @@ public class RootAppContext {
         return new StandardServletMultipartResolver();
     }
 
-//------------------------------------------------------
+    //------------------------------------------------------
     @Bean("sessionMember")
     @SessionScope
-    public Member loginMember(){
+    public Member loginMember() {
         return new Member();
     }
 
-//------------------------------------------------------
+    //------------------------------------------------------
+    @Bean
+    public JavaMailSenderImpl mailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        Properties mailProperties = new Properties();
+        mailProperties.put("mail.transport.protocol","smtp");
+        mailProperties.put("mail.smtp.auth",true);
+        mailProperties.put("mail.smtp.starttls.enable",true);
+        mailProperties.put("mail.smtp.starttls.required", true);
+        mailProperties.put("mail.debug",true);
+
+        mailSender.setJavaMailProperties(mailProperties);
+        mailSender.setDefaultEncoding("UTF-8");
+        mailSender.setHost(emailHost);
+        mailSender.setPort(emailPort);
+        mailSender.setUsername(emailUserName);
+        mailSender.setPassword(emailPwd);
+
+        return mailSender;
+    }
+
+
 }
