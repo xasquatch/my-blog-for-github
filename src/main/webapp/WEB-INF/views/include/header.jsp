@@ -32,15 +32,11 @@
         <h1 id="main-header-logo"></h1>
     </a>
     <div id="header-right">
-        <button type="button" id="mobile-hamburger" class="dot-key btn btn-default" onclick="popUpAside();">
-            <script>
-                window.onload = function () {
-                    if (!document.querySelector('#main-aside') || document.querySelector('#main-aside').innerText === '')
-                        document.querySelector('#mobile-hamburger').style.display = 'none';
-                }
-            </script>
-            <B>More</B>
-        </button>
+        <c:if test="${mainContents != 'login' && mainContents != 'main' && mainContents != 'check-password' && mainContents != 'check-email'&& mainContents != 'change-email'}">
+            <button type="button" id="mobile-hamburger" class="dot-key btn btn-link" onclick="popUpAside();">
+                <B>More</B>
+            </button>
+        </c:if>
         <c:if test="${sessionMember.no != null}">
             <button type="button" class="btn btn-link" style="font-size: 30px; color: black;"
                     onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/user/${sessionMember.no}/log-out'">
