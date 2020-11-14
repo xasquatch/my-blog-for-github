@@ -22,7 +22,7 @@
     <script src="${path}/webjars/jquery/1.11.1/jquery.min.js"></script>
     <script src="${path}/webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-    <title>my blog for github</title>
+    <title>My Blog By Xasquatch</title>
 </head>
 <body>
 
