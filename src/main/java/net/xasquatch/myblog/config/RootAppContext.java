@@ -3,7 +3,6 @@ package net.xasquatch.myblog.config;
 import net.xasquatch.myblog.mapper.BoardMapper;
 import net.xasquatch.myblog.mapper.MemberMapper;
 import net.xasquatch.myblog.model.Member;
-import net.xasquatch.myblog.service.Pagination;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -14,10 +13,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.context.annotation.ApplicationScope;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.Properties;
 
 //@Import({SecurityConfig.class})
@@ -44,7 +46,6 @@ public class RootAppContext {
     private String emailUserName;
     @Value("${email.password}")
     private String emailPwd;
-
 
 
     @Bean
@@ -100,6 +101,14 @@ public class RootAppContext {
         return new StandardServletMultipartResolver();
     }
 
+
+    //------------------------------------------------------
+    @Bean("applicationAuthorization")
+    @ApplicationScope
+    public Map<String, Long> AuthorizationMap() {
+        return new Hashtable<String, Long>();
+    }
+
     //------------------------------------------------------
     @Bean("sessionMember")
     @SessionScope
@@ -112,11 +121,11 @@ public class RootAppContext {
     public JavaMailSenderImpl mailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         Properties mailProperties = new Properties();
-        mailProperties.put("mail.transport.protocol","smtp");
-        mailProperties.put("mail.smtp.auth",true);
-        mailProperties.put("mail.smtp.starttls.enable",true);
+        mailProperties.put("mail.transport.protocol", "smtp");
+        mailProperties.put("mail.smtp.auth", true);
+        mailProperties.put("mail.smtp.starttls.enable", true);
         mailProperties.put("mail.smtp.starttls.required", true);
-        mailProperties.put("mail.debug",true);
+        mailProperties.put("mail.debug", true);
 
         mailSender.setJavaMailProperties(mailProperties);
         mailSender.setDefaultEncoding("UTF-8");
