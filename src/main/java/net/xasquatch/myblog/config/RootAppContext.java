@@ -103,11 +103,11 @@ public class RootAppContext {
 
 
     //------------------------------------------------------
-    @Bean("applicationAuthorization")
-    @ApplicationScope
-    public Map<String, Long> AuthorizationMap() {
-        return new Hashtable<String, Long>();
-    }
+//    @Bean("applicationAuthorization")
+//    @ApplicationScope
+//    public Map<String, Long> AuthorizationMap() {
+//        return new Hashtable<String, Long>();
+//    }
 
     //------------------------------------------------------
     @Bean("sessionMember")

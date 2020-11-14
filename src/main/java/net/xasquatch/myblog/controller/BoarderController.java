@@ -3,9 +3,7 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Board;
-import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.BoardService;
-import net.xasquatch.myblog.service.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +30,7 @@ public class BoarderController {
     //TODO: 글작성 화면으로 이동
     @RequestMapping(value = "/{memberNo}/create", method = {RequestMethod.GET, RequestMethod.POST})
     public String forwardCreate(Model model, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionNo(memberNo)) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             long boardNo = (long) boardService.createDefaultBoard(memberNo);
             model.addAttribute("boardNo", boardNo);
             model.addAttribute("mainContents", "board-create");
@@ -47,7 +45,7 @@ public class BoarderController {
     @PostMapping("/{memberNo}/upload/{boardNo}/{method}")
     @ResponseBody
     public String upload(MultipartHttpServletRequest request, Board board, @PathVariable String method, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionNo(memberNo)) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             boolean result = false;
             board.setCreated_ip(accessorInfo.getIpAddress(request));
 
@@ -68,7 +66,7 @@ public class BoarderController {
     //TODO: 작성글 수정페이지로 이동
     @RequestMapping(value = "/{memberNo}/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String modify(Model model, @PathVariable String boardNo, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionNo(memberNo)) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             HashMap<String, Object> board = boardService.viewDetail(boardNo);
             model.addAttribute("board", board);
             model.addAttribute("mainContents", "board-modify");
@@ -102,7 +100,7 @@ public class BoarderController {
     @RequestMapping(value = "/{memberNo}/delete/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String deleteBoard(@PathVariable String memberNo, @PathVariable String boardNo) {
 
-        if (checkSessionController.isCheckSessionNo(memberNo)){
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)){
             boardService.delete(boardNo);
 
             return "redirect:/board/" + memberNo + "/view/list";
