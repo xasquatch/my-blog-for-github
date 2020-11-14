@@ -67,7 +67,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-default" onclick="loginInput()">Sign in</button>
+                <button class="btn btn-default" type="button" onclick="loginInput()">Sign in</button>
             </div>
         </div>
     </form>
@@ -104,9 +104,16 @@
             var formData = new FormData(loginForm);
             ajax.submit('POST', '${path}/user/login', function (data) {
 
-                if (data === 'false') window.alert('로그인에 실패하였습니다. email, password를 확인해주세요');
+                if (data === 'false') {
+                    window.alert('로그인에 실패하였습니다. email, password를 확인해주세요');
 
-                window.location.replace('${path}/');
+                } else if (uri.isContainWord(data, '/check-email')) {
+                    window.location.href = '${path}' + data;
+
+                }else{
+                    window.location.replace('${path}/');
+
+                }
 
             }, 'FORMFILE', formData);
 
@@ -161,7 +168,7 @@
             '<div class="form-control form-explain" id="user-signup-explain-name">영문또는 숫자로 3~20자이내 입력해주세요</div>                                ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
-            '<div class="input-group-addon">Profile Image</div>                                                                                          ' +
+            '<div class="input-group-addon">Profile<BR>Image</div>                                                                                       ' +
             '<input type="file" class="form-control" onchange="addUploadImage(event)">                                                                   ' +
             '<textarea class="hidden" id="imgFile" name="imgFile" ></textarea>                                                                           ' +
             '<div class="form-control" id="user-signup-imageFit" style="height: auto;">                                                                  ' +
