@@ -94,6 +94,10 @@
 </section>
 <script>
 
+    document.querySelector('#home-login-pwd').addEventListener('keypress',function (e) {
+        if (e.keyCode === 13) loginInput();
+    })
+
     function loginInput() {
         var loginEmail = document.querySelector('#home-login-email');
         if (isAvailableEmailRegExp(loginEmail.value)) {
