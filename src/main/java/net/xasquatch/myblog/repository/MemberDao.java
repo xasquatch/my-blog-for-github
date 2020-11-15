@@ -23,10 +23,16 @@ public class MemberDao {
         Map<String, Long> authorizationMap = new Hashtable<String, Long>();
 
         for (Authorization auth : memberMapper.selectAuthorization()) {
-            authorizationMap.put(auth.getRank(),auth.getNo());
+            authorizationMap.put(auth.getRank(), auth.getNo());
         }
 
         return authorizationMap;
+    }
+
+    public boolean updateRank(Long no, String email) {
+        boolean result = false;
+        if (memberMapper.updateRank(no, email) == 1) result = true;
+        return result;
     }
 
     public String selectOneEmail(String email) {
@@ -51,12 +57,12 @@ public class MemberDao {
         return result;
     }
 
-    public int selectMbr(String pwdKey) {
+    public int selectMbr(Object no, String pwdKey) {
         int result = 0;
         try {
-            result = memberMapper.selectMbr(pwdKey);
+            result = memberMapper.selectMbr(no, pwdKey);
         } catch (Exception e) {
-            log.warn("selectMbr Exception: {}", pwdKey);
+            log.warn("selectMbr Exception: no:{} key:{}", no, pwdKey);
         }
         return result;
     }
@@ -79,8 +85,8 @@ public class MemberDao {
 
     public Map<String, Object> selectOneMbr(Member member) {
 
-        String email =member.getEmail();
-        String pwd =member.getPwd();
+        String email = member.getEmail();
+        String pwd = member.getPwd();
 
 
         return memberMapper.selectOneMbr(email, pwd);

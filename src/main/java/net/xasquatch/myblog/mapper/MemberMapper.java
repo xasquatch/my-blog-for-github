@@ -24,8 +24,8 @@ public interface MemberMapper {
     @Update("UPDATE mbr SET img = #{img} WHERE no = #{no}")
     int updateMbrImg(Member member);
 
-    @Select("SELECT no FROM mbr WHERE pwd = #{arg0}")
-    int selectMbr(String pwdKey);
+    @Select("SELECT no FROM mbr WHERE no = #{arg0} AND pwd = #{arg1}")
+    int selectMbr(Object no, String pwdKey);
 
     @Update("UPDATE mbr SET name = #{name}, pwd = #{pwd} WHERE no = #{no} AND email = #{email}")
     int updateMbrDefault(Member member);
@@ -42,4 +42,6 @@ public interface MemberMapper {
     @Select("SELECT * FROM authorization")
     List<Authorization> selectAuthorization();
 
+    @Update("UPDATE mbr SET authorization_no = 2, email = #{arg1} WHERE no = #{arg0}")
+    int updateRank(Long no, String email);
 }

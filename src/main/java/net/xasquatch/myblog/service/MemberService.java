@@ -28,6 +28,14 @@ public class MemberService {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
+    public Map<String, Long> getAuthorization(){
+        return memberDao.selectAuthorization();
+    }
+
+    public boolean updateRank(String email){
+        return memberDao.updateRank(sessionMember.getNo(), email);
+    }
+
     public boolean isExistedEmail(String email) {
         String memberEmail = memberDao.selectOneEmail(email);
 
@@ -42,22 +50,25 @@ public class MemberService {
         try {
             long sessionMemberNo = ((BigInteger) resultMap.get("no")).longValue();
             sessionMember.setNo(sessionMemberNo);
+
         } catch (Exception e) {
             log.warn("CLASS CAST EXCEPTION: member no->{}", "null");
             return "false";
         }
+        sessionMember.setRank((String) resultMap.get("rank"));
         sessionMember.setEmail((String) resultMap.get("email"));
         sessionMember.setPwd((String) resultMap.get("pwd"));
         sessionMember.setName((String) resultMap.get("name"));
         sessionMember.setImg((String) resultMap.get("img"));
 
-
+        System.out.println(sessionMember.toString());
         return String.valueOf(sessionMember.getNo());
     }
 
     public void reset(Member sessionMember) {
         sessionMember.setNo(null);
         sessionMember.setEmail(null);
+        sessionMember.setRank(null);
         sessionMember.setPwd(null);
         sessionMember.setName(null);
         sessionMember.setImg(null);
@@ -96,7 +107,7 @@ public class MemberService {
         return result;
     }
 
-    public String updateMember(Member member){
+    public String updateMember(Member member) {
         boolean result = false;
 
         ImgParser imgParser = ImgParser.getImgParser(member.getImgFile());
@@ -127,7 +138,7 @@ public class MemberService {
 
     public boolean checkMember(String pwdKey) {
         boolean result = false;
-        int i = memberDao.selectMbr(pwdKey);
+        int i = memberDao.selectMbr(sessionMember.getNo(), pwdKey);
         if (i > 0) result = true;
 
         return result;

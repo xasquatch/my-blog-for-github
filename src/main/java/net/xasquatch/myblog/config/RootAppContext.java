@@ -24,7 +24,8 @@ import java.util.Properties;
 
 //@Import({SecurityConfig.class})
 @Configuration
-@PropertySource({"/WEB-INF/properties/db/db.properties", "/WEB-INF/properties/db/email.properties"})
+@PropertySource("/WEB-INF/properties/db/db.properties")
+@PropertySource("/WEB-INF/properties/db/email.properties")
 public class RootAppContext {
 
     /*--------TODO:DB 접속관리--------------*/
