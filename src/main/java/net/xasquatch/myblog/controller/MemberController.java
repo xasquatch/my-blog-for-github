@@ -2,8 +2,8 @@ package net.xasquatch.myblog.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
+import net.xasquatch.myblog.service.MailService;
 import net.xasquatch.myblog.service.MemberService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +22,9 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private MailService mailService;
+
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
@@ -31,7 +34,7 @@ public class MemberController {
     /*TODO: infomation페이지 이동*/
     @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
     public String info(Model model, @PathVariable String memberNo, String checkPassword) {
-        if (checkSessionController.isCheckSessionNo(memberNo)) {
+        if (checkSessionController.isCheckSession(memberNo)) {
             if (sessionMember.isCheckSession() && memberService.checkMember(checkPassword)) {
                 model.addAttribute("mainContents", "user-info");
                 return "index";
@@ -48,7 +51,7 @@ public class MemberController {
     /*TODO:회원 비밀번호 인증으로 이동*/
     @RequestMapping(value = "/{memberNo}/check-password", method = {RequestMethod.GET, RequestMethod.POST})
     public String checkPassword(Model model, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionNo(memberNo)) {
+        if (checkSessionController.isCheckSession(memberNo)) {
             model.addAttribute("mainContents", "check-password");
             sessionMember.setCheckSession(true);
             return "index";
@@ -57,10 +60,65 @@ public class MemberController {
         return "redirect:/";
     }
 
+    /*TODO: 회원 이메일 변경페이지로 이동*/
+    @RequestMapping(value = "/{memberNo}/change-email", method = {RequestMethod.GET, RequestMethod.POST})
+    public String changeEmail(Model model, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSession(memberNo)) {
+            model.addAttribute("mainContents", "change-email");
+            return "index";
+
+        }
+
+        return "redirect:/";
+    }
+
+    /*TODO: 회원 이메일 인증페이지로 이동*/
+    @RequestMapping(value = "/{memberNo}/check-email", method = {RequestMethod.GET, RequestMethod.POST})
+    public String checkEmail(Model model, @PathVariable String memberNo, @RequestParam(value = "checkEmail", required = false, defaultValue = "empty") String checkEmail) {
+        if (checkSessionController.isCheckSession(memberNo)) {
+            if (!checkEmail.equals("empty")) {
+                if (!memberService.isExistedEmail(checkEmail)) {
+                    mailService.sendAuthMail(checkEmail);
+                    sessionMember.setEmail(checkEmail);
+                    model.addAttribute("email", checkEmail);
+                    model.addAttribute("mainContents", "check-email");
+
+                } else {
+                    model.addAttribute("msg", "\"" + checkEmail + "\"은(는) 이미 존재하는 이메일 계정입니다.");
+                    model.addAttribute("mainContents", "change-email");
+
+                }
+
+            } else {
+                mailService.sendAuthMail(sessionMember.getEmail());
+                model.addAttribute("email", sessionMember.getEmail());
+                model.addAttribute("mainContents", "check-email");
+
+            }
+
+            return "index";
+
+        }
+        return "redirect:/";
+    }
+
+    /*TODO: 회원 이메일 인증*/
+    @PatchMapping(value = "/{memberNo}/auth-email", params = {"authorizationToken"})
+    @ResponseBody
+    public String authorizationEmail(@PathVariable String memberNo, String authorizationToken) {
+        String result = "false";
+        if (checkSessionController.isCheckSession(memberNo) && authorizationToken.equals(sessionMember.getAuthKey())) {
+            result = String.valueOf(memberService.updateRank(sessionMember.getEmail()));
+
+        }
+
+        return result;
+    }
+
     /*TODO: api페이지 이동*/
     @RequestMapping(value = "/{memberNo}/api", method = {RequestMethod.GET, RequestMethod.POST})
     public String callApi(Model model, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionNo(memberNo)) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             model.addAttribute("mainContents", "user-api");
             return "index";
         }
@@ -69,7 +127,7 @@ public class MemberController {
     }
 
 
-    /*TODO: 로그아웃 처리*/
+    /*TODO: 로그아웃 처리 후 루트페이지로 리다이렉트*/
     @RequestMapping(value = "/{memberNo}/log-out", method = {RequestMethod.GET, RequestMethod.POST})
     public String logOut(HttpSession session) {
 
@@ -94,6 +152,10 @@ public class MemberController {
 
         if (!bindingResult.hasErrors()) {
             result = memberService.login(member);
+            if (sessionMember.getRank().equals("temporary")) {
+                result = "/user/" + sessionMember.getNo() + "/check-email";
+            }
+
             session.setAttribute("sessionMember", sessionMember);
         }
 

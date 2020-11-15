@@ -14,7 +14,7 @@
         <div class="input-group">
             <div class="input-group-addon">Email</div>
             <input class="form-control" id="user-info-email" type="email" name="email" value="${sessionMember.email}" readonly>
-            <div class="input-group-addon black-hover-btn" onclick="alert('hi');"><B>변경</B></div>
+            <a class="input-group-addon black-hover-btn" href="javascript:window.location.replace('${path}/user/${sessionMember.no}/change-email');">변경</a>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Password</div>

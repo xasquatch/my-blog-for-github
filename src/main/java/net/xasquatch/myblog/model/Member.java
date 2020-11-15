@@ -16,6 +16,8 @@ public class Member {
 
     private Long no;
 
+    private String rank;
+
     @NotNull
     @Size(min = 10, max = 40)
     @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}")
@@ -41,4 +43,6 @@ public class Member {
     private boolean collectionAndUse;
 
     private boolean checkSession;
+
+    private String authKey;
 }

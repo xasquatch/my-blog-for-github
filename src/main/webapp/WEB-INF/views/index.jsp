@@ -33,6 +33,14 @@
             <jsp:include page="contents/board/board-view-detail.jsp"/>
         </c:when>
 
+        <c:when test="${mainContents == 'change-email'}">
+            <jsp:include page="contents/user-info/user-change-email.jsp"/>
+        </c:when>
+
+        <c:when test="${mainContents == 'check-email'}">
+            <jsp:include page="contents/user-info/user-check-email.jsp"/>
+        </c:when>
+
         <c:when test="${mainContents == 'check-password'}">
             <jsp:include page="contents/user-info/user-check-password.jsp"/>
         </c:when>

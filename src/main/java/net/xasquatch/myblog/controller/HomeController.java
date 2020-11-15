@@ -15,11 +15,14 @@ public class HomeController {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
-    protected boolean isCheckSessionNo(String inputSessionNumber) {
+    protected boolean isCheckSessionAndAuth(String inputSessionNumber) {
+        return (sessionMember.getNo() == Long.parseLong(inputSessionNumber) && !sessionMember.getRank().equals("temporary"));
+
+    }
+    protected boolean isCheckSession(String inputSessionNumber) {
         return sessionMember.getNo() == Long.parseLong(inputSessionNumber);
 
     }
-
 
     @GetMapping(value = "/")
     public String home(Model model) {
