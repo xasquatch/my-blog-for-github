@@ -67,18 +67,20 @@
     transition: all 0.1s;
 
 }
-#main-footer>div{
+
+#main-footer > div {
     display: flex;
     justify-content: space-around;
     flex-wrap: nowrap;
     overflow: auto;
     padding-top: 20px;
 }
-#main-footer>div>*{
+
+#main-footer > div > * {
     margin: auto 10px;
 }
 
-.footer-height-30vh{
+.footer-height-30vh {
     height: 30vh !important;
     transition: all 1s !important;
 }
@@ -227,45 +229,54 @@
     color: white;
     text-align: center;
 }
-.banner  * {
+
+.banner * {
     transition: 0.5s all;
 }
-.login-banner{
+
+.login-banner {
     background-size: auto 30vh;
-    height : 30vh;
+    height: 30vh;
     background-image: url('/img/banner/11.gif');
 
 }
-.main-banner{
+
+.main-banner {
     background-size: auto 50vh;
-    height : 50vh;
+    height: 50vh;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: space-around;
     overflow: auto;
 }
-.main-banner>section{
+
+.main-banner > section {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
     overflow: auto;
 }
-.main-banner div{
+
+.main-banner div {
     margin: auto 10px;
 }
-.main-banner div:HOVER{
+
+.main-banner div:HOVER {
     cursor: pointer;
 }
-.main-banner-img-focus{
+
+.main-banner-img-focus {
     width: 200px !important;
 }
-.main-banner-font-focus{
+
+.main-banner-font-focus {
     font-size: 200%;
     font-weight: bold;
 }
-.main-banner img{
+
+.main-banner img {
     max-width: 200px;
     max-height: 200px;
     width: 100px;
@@ -278,7 +289,7 @@
     margin-left: 0;
 }
 
-#user-sign-contents > div{
+#user-sign-contents > div {
     display: flex;
     justify-content: space-around;
     text-align: center;
@@ -303,7 +314,7 @@
     width: 100px;
 }
 
-.black-hover-btn:HOVER{
+.black-hover-btn:HOVER {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 1);
     color: white;
@@ -329,3 +340,33 @@
 
 
 /*END: contents-aside-------*/
+/*----------error page-------*/
+
+.error-body {
+    background-color: black;
+    height: 100vh;
+    position: fixed;
+    width: 100vw;
+    color: white;
+    overflow: hidden;
+}
+#error-section {
+    padding: 20px;
+    font-size: 2rem;
+    height: 80vh;
+}
+#error-section > div{
+    text-align: center;
+    background: url('/img/banner/3.gif');
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: cover;
+    color: rgba(255,255,255,0);
+
+}
+#error-section > div:first-child {
+    font-size: 20vw;
+    margin-top: 10vh;
+}
+
+/*END: error page-----------*/
