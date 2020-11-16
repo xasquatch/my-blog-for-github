@@ -5,7 +5,7 @@
 
 
 <aside id="main-aside" class="forward-to-top dot-key">
-    <c:if test="${mainContents != 'login' && mainContents != 'main' && mainContents != 'check-password' && mainContents != 'check-email'&& mainContents != 'change-email'}">
+    <c:if test="${mainContents != 'login' && mainContents != 'main' && (sessionMember != null)}">
         <h2 style="font-weight: bold;">
             블로그 관리
         </h2>

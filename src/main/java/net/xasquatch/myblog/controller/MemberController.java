@@ -31,12 +31,12 @@ public class MemberController {
     @Autowired
     private HomeController checkSessionController;
 
-    /*TODO: infomation페이지 이동*/
+    /*TODO: information페이지 이동*/
     @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
     public String info(Model model, @PathVariable String memberNo, String checkPassword) {
         if (checkSessionController.isCheckSession(memberNo)) {
             if (sessionMember.isCheckSession() && memberService.checkMember(checkPassword)) {
-                model.addAttribute("mainContents", "user-info");
+                model.addAttribute("mainContents", "user-information");
                 return "index";
 
             } else {
@@ -52,7 +52,7 @@ public class MemberController {
     @RequestMapping(value = "/{memberNo}/check-password", method = {RequestMethod.GET, RequestMethod.POST})
     public String checkPassword(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSession(memberNo)) {
-            model.addAttribute("mainContents", "check-password");
+            model.addAttribute("mainContents", "user-check-password");
             sessionMember.setCheckSession(true);
             return "index";
         }
@@ -64,7 +64,7 @@ public class MemberController {
     @RequestMapping(value = "/{memberNo}/change-email", method = {RequestMethod.GET, RequestMethod.POST})
     public String changeEmail(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSession(memberNo)) {
-            model.addAttribute("mainContents", "change-email");
+            model.addAttribute("mainContents", "user-change-email");
             return "index";
 
         }
@@ -81,18 +81,18 @@ public class MemberController {
                     mailService.sendAuthMail(checkEmail);
                     sessionMember.setEmail(checkEmail);
                     model.addAttribute("email", checkEmail);
-                    model.addAttribute("mainContents", "check-email");
+                    model.addAttribute("mainContents", "user-check-email");
 
                 } else {
                     model.addAttribute("msg", "\"" + checkEmail + "\"은(는) 이미 존재하는 이메일 계정입니다.");
-                    model.addAttribute("mainContents", "change-email");
+                    model.addAttribute("mainContents", "user-change-email");
 
                 }
 
             } else {
                 mailService.sendAuthMail(sessionMember.getEmail());
                 model.addAttribute("email", sessionMember.getEmail());
-                model.addAttribute("mainContents", "check-email");
+                model.addAttribute("mainContents", "user-check-email");
 
             }
 
@@ -152,11 +152,12 @@ public class MemberController {
 
         if (!bindingResult.hasErrors()) {
             result = memberService.login(member);
-            if (sessionMember.getRank().equals("temporary")) {
-                result = "/user/" + sessionMember.getNo() + "/check-email";
+            if (!result.equals("false")){
+                if (sessionMember.getRank().equals("temporary")) {
+                    result = "/user/" + sessionMember.getNo() + "/check-email";
+                }
+                session.setAttribute("sessionMember", sessionMember);
             }
-
-            session.setAttribute("sessionMember", sessionMember);
         }
 
         return result;
