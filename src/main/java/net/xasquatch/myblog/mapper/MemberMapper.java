@@ -48,8 +48,10 @@ public interface MemberMapper {
     @Update("UPDATE mbr SET authorization_no = 2, email = #{arg1} WHERE no = #{arg0}")
     int updateRank(Long no, String email);
 
-    @Select("SELECT email FROM mbr WHERE name = #{name}")
+    @Select("SELECT email FROM mbr WHERE name = #{arg0}")
     String selectEmail(String name);
 
+    @Select("SELECT no FROM mbr WHERE email = #{arg0} AND name = #{arg1}")
+    String selectNo(String email, String name);
 
 }

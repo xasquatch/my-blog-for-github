@@ -21,23 +21,21 @@ public class MailService {
     @Autowired
     private JavaMailSenderImpl mailSender;
 
-    public String createSessionToken(int size) {
+    private String mainContents;
+    private String token;
+
+    public String createToken(int size) {
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < size; i++) {
             long j = Math.round(Math.random() * 10);
             if (!(j >= 10)) result.append(j);
         }
+        this.token = result.toString();
         return result.toString();
     }
-    
-    public void sendAuthMail(String email) {
 
-        String token = createSessionToken(6);
-
-        MimeMessage mail = mailSender.createMimeMessage();
-
-        sessionMember.setAuthKey(token);
-        String mainContents = "<table style=\"width: 500px; margin: 0 auto;\">" +
+    public void createMainContents(String tbody1tr, String tbody2tr, String tfoot1tr) {
+        this.mainContents = "<table style=\"width: 500px; margin: 0 auto;\">" +
                 "    <thead>" +
                 "    <tr>" +
                 "        <th colspan=\"2\">" +
@@ -50,33 +48,45 @@ public class MailService {
                 "    </thead>" +
                 "    <tbody>" +
                 "    <tr>" +
-                "        <td style=\"width: 300px;\">" + sessionMember.getName() + "님 My Blog By Xasquatch에 오신것을 환영합니다.</td>" +
+                "        <td style=\"width: 300px;\">" + tbody1tr + "</td>"+
                 "        <td rowspan=\"2\">" +
                 "            <img src=\"http://myblog.xasquatch.net/img/banner/16.gif\" style=\"width: 100%;\">" +
                 "        </td>" +
                 "    </tr>" +
                 "    <tr>" +
-                "        <td>" +
-                "            Token Number: " + token +
+                "        <td>" + tbody2tr +
                 "        </td>" +
                 "    </tr>" +
                 "    </tbody>" +
                 "    <tfoot>" +
                 "        <tr>" +
-                "            <td colspan=\"2\" style=\"text-align: center;\">" +
-                "                <a href=\"http://myblog.xasquatch.net/user/" + sessionMember.getNo() + "/check-email\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">이메일 인증하러가기</a>" +
+                "            <td colspan=\"2\" style=\"text-align: center;\">" + tfoot1tr +
                 "            </td>" +
                 "        </tr>" +
                 "    </tfoot>" +
                 "</table>";
+    }
 
+    public void sendAuthMail(String email, String title) {
+
+        createToken(6);
+
+        MimeMessage mail = mailSender.createMimeMessage();
+
+        sessionMember.setAuthKey(token);
+        if (this.mainContents == null) {
+            createMainContents(sessionMember.getName() + "님 My Blog By Xasquatch에 오신것을 환영합니다.",
+                    "            Token Number: " + this.token,
+                    "<a href=\"http://myblog.xasquatch.net/user/\"" + sessionMember.getNo() + "/check-email\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">이메일 인증하러가기</a>");
+        }
+        String mainContents = this.mainContents;
         MimeMessageHelper messageHelper = null;
         try {
             messageHelper = new MimeMessageHelper(mail, true, "UTF-8");
             messageHelper.setTo(new InternetAddress(email));
             messageHelper.setText(mainContents, true);
             messageHelper.setFrom(new InternetAddress("xasquatch.myblog@gmail.com", "My BLog"));
-            messageHelper.setSubject("[My Blog By Xasquatch]이메일 인증 요청");
+            messageHelper.setSubject(title);
         } catch (MessagingException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -85,5 +95,6 @@ public class MailService {
         mailSender.send(mail);
 
     }
+
 
 }

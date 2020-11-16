@@ -7,9 +7,7 @@ import net.xasquatch.myblog.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -19,9 +17,13 @@ public class MemberDao {
     @Autowired
     private MemberMapper memberMapper;
 
-    public String selectEmail(String name){
+    public String selectEmail(String name) {
         return memberMapper.selectEmail(name);
 
+    }
+
+    public String selectNo(String email, String name) {
+        return memberMapper.selectNo(email, name);
     }
 
     public Map<String, Long> selectAuthorization() {
@@ -43,6 +45,7 @@ public class MemberDao {
     public String selectOneEmail(String email) {
         return memberMapper.selectOneEmail(email);
     }
+
     public String selectOneName(String name) {
         return memberMapper.selectOneName(name);
     }
