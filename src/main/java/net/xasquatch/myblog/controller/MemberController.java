@@ -31,12 +31,26 @@ public class MemberController {
     @Autowired
     private HomeController checkSessionController;
 
-    /*TODO: infomation페이지 이동*/
+    /*TODO: 회원 이메일 찾기 페이지로 이동*/
+    @GetMapping("/find/email")
+    public String findEmail(Model model) {
+        model.addAttribute("mainContents", "user-find-email");
+        return "index";
+    }
+
+    /*TODO: 회원 비밀번호 찾기 페이지로 이동*/
+    @GetMapping("/find/password")
+    public String findPwd(Model model) {
+        model.addAttribute("mainContents", "user-find-password");
+        return "index";
+    }
+
+    /*TODO: information페이지 이동*/
     @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
     public String info(Model model, @PathVariable String memberNo, String checkPassword) {
         if (checkSessionController.isCheckSession(memberNo)) {
             if (sessionMember.isCheckSession() && memberService.checkMember(checkPassword)) {
-                model.addAttribute("mainContents", "user-info");
+                model.addAttribute("mainContents", "user-information");
                 return "index";
 
             } else {
@@ -52,7 +66,7 @@ public class MemberController {
     @RequestMapping(value = "/{memberNo}/check-password", method = {RequestMethod.GET, RequestMethod.POST})
     public String checkPassword(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSession(memberNo)) {
-            model.addAttribute("mainContents", "check-password");
+            model.addAttribute("mainContents", "user-check-password");
             sessionMember.setCheckSession(true);
             return "index";
         }
@@ -64,7 +78,7 @@ public class MemberController {
     @RequestMapping(value = "/{memberNo}/change-email", method = {RequestMethod.GET, RequestMethod.POST})
     public String changeEmail(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSession(memberNo)) {
-            model.addAttribute("mainContents", "change-email");
+            model.addAttribute("mainContents", "user-change-email");
             return "index";
 
         }
@@ -78,21 +92,21 @@ public class MemberController {
         if (checkSessionController.isCheckSession(memberNo)) {
             if (!checkEmail.equals("empty")) {
                 if (!memberService.isExistedEmail(checkEmail)) {
-                    mailService.sendAuthMail(checkEmail);
+                    mailService.sendAuthMail(checkEmail,"[My Blog By Xasquatch]이메일 인증 요청");
                     sessionMember.setEmail(checkEmail);
                     model.addAttribute("email", checkEmail);
-                    model.addAttribute("mainContents", "check-email");
+                    model.addAttribute("mainContents", "user-check-email");
 
                 } else {
                     model.addAttribute("msg", "\"" + checkEmail + "\"은(는) 이미 존재하는 이메일 계정입니다.");
-                    model.addAttribute("mainContents", "change-email");
+                    model.addAttribute("mainContents", "user-change-email");
 
                 }
 
             } else {
-                mailService.sendAuthMail(sessionMember.getEmail());
+                mailService.sendAuthMail(sessionMember.getEmail(),"[My Blog By Xasquatch]이메일 인증 요청");
                 model.addAttribute("email", sessionMember.getEmail());
-                model.addAttribute("mainContents", "check-email");
+                model.addAttribute("mainContents", "user-check-email");
 
             }
 
@@ -100,6 +114,20 @@ public class MemberController {
 
         }
         return "redirect:/";
+    }
+
+    /*TODO: 회원 이메일 찾기*/
+    @RequestMapping(value = "/search/email", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String searchEmail(Member member) {
+        return memberService.searchEmail(member.getName());
+    }
+
+    /*TODO: 회원 임시 비밀번호 찾기*/
+    @RequestMapping(value = "/search/password", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String searchPwd(Member member) {
+        return String.valueOf(memberService.searchPwd(member));
     }
 
     /*TODO: 회원 이메일 인증*/
@@ -152,11 +180,12 @@ public class MemberController {
 
         if (!bindingResult.hasErrors()) {
             result = memberService.login(member);
-            if (sessionMember.getRank().equals("temporary")) {
-                result = "/user/" + sessionMember.getNo() + "/check-email";
+            if (!result.equals("false")) {
+                if (sessionMember.getRank().equals("temporary")) {
+                    result = "/user/" + sessionMember.getNo() + "/check-email";
+                }
+                session.setAttribute("sessionMember", sessionMember);
             }
-
-            session.setAttribute("sessionMember", sessionMember);
         }
 
         return result;
@@ -168,6 +197,13 @@ public class MemberController {
     @ResponseBody
     public String checkEmail(Member member) {
         return String.valueOf(memberService.isExistedEmail(member.getEmail()));
+    }
+
+    /*TODO:회원가입 이메일 중복체크*/
+    @PostMapping("/sign-up/name")
+    @ResponseBody
+    public String checkName(Member member) {
+        return String.valueOf(memberService.isExistedName(member.getName()));
     }
 
     /*TODO:회원가입*/

@@ -26,6 +26,7 @@ public class SpringConfigClass implements WebApplicationInitializer {
 
         // 요청 발생 시 요청을 처리하는 서블릿을 DispatcherServlet으로 설정해준다.
         DispatcherServlet dispatcherServlet = new DispatcherServlet(servletAppContext);
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
         ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", dispatcherServlet);
 
         // 부가 설정
@@ -54,6 +55,8 @@ public class SpringConfigClass implements WebApplicationInitializer {
 //세션 리스너 설정
         servletContext.setSessionTimeout(60*60);
         servletContext.setSessionTrackingModes(Collections.singleton(SessionTrackingMode.COOKIE));
+
+
 
     }
 }

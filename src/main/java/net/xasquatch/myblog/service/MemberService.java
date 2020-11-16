@@ -25,6 +25,9 @@ public class MemberService {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private MailService mailService;
+
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
@@ -40,6 +43,13 @@ public class MemberService {
         String memberEmail = memberDao.selectOneEmail(email);
 
         return memberEmail != null;
+
+    }
+
+    public boolean isExistedName(String name) {
+        String memberName = memberDao.selectOneName(name);
+
+        return memberName != null;
 
     }
 
@@ -61,7 +71,6 @@ public class MemberService {
         sessionMember.setName((String) resultMap.get("name"));
         sessionMember.setImg((String) resultMap.get("img"));
 
-        System.out.println(sessionMember.toString());
         return String.valueOf(sessionMember.getNo());
     }
 
@@ -155,6 +164,28 @@ public class MemberService {
     public boolean view(Member member) {
         boolean result = false;
         log.debug("view: {}", member.toString());
+        return result;
+    }
+
+    public String searchEmail(String name){
+        return memberDao.selectEmail(name);
+    }
+
+    public boolean searchPwd(Member member){
+        boolean result = false;
+
+        String memberNo = memberDao.selectNo(member.getEmail(),member.getName());
+        if (memberNo != null){
+            String pwdToken = mailService.createToken(8);
+            mailService.createMainContents(member.getName() + "님 My Blog By Xasquatch에 요청한 임시비밀번호입니다.",
+                    "            password: " + pwdToken,
+                    "<a href=\"http://myblog.xasquatch.net\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">로그인 하러가기</a>");
+            mailService.sendAuthMail(member.getEmail(),member.getName() + "님 My Blog By Xasquatch에 요청한 임시비밀번호입니다");
+            member.setNo(Long.valueOf(memberNo));
+            member.setPwd(pwdToken);
+            result = memberDao.updateMbrDefault(member);
+        }
+
         return result;
     }
 }

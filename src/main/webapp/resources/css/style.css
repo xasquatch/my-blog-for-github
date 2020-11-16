@@ -278,14 +278,14 @@
     margin-left: 0;
 }
 
-#user-sign-contents {
+#user-sign-contents > div{
     display: flex;
     justify-content: space-around;
     text-align: center;
     font-weight: bold;
 }
 
-#user-sign-contents > .btn {
+#user-sign-contents .btn {
     border-radius: 30px;
 }
 
