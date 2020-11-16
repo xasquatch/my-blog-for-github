@@ -65,36 +65,51 @@
                 </div>
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-default" type="button" onclick="loginInput()">Sign in</button>
+                <label>
+                    <a href="" target="_blank" class="btn btn-link" tabindex="-1">이메일 찾기</a>
+                </label>
+                <label>
+                    <a href="" target="_blank" class="btn btn-link" tabindex="-1">비밀번호 찾기</a>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-danger" type="button" onclick="loginInput()" style="width: 100%;">
+                    <h2 style="margin: 0;">Log In</h2>
+                </button>
             </div>
         </div>
     </form>
 
     <div id="user-sign-contents">
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
-            <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/google.png"><BR>
-            &nbsp;Google&nbsp;
-        </button>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
-            <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/GitHub-Mark-32px.png"><BR>
-            &nbsp;Github&nbsp;
-        </button>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
-            <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/facebook.png"> <BR>
-            Facebook
-        </button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" onclick="singUp();">
-            <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/Xasquatch.png" width="32" height="32"><BR>
-            Sing Up
-        </button>
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
+                <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/google.png"><BR>
+                &nbsp;Google&nbsp;
+            </button>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
+                <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/GitHub-Mark-32px.png"><BR>
+                &nbsp;Github&nbsp;
+            </button>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
+                <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/facebook.png"> <BR>
+                Facebook
+            </button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" onclick="singUp();">
+                <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/Xasquatch.png" width="32" height="32"><BR>
+                Sing Up
+            </button>
+        </div>
     </div>
 
 </section>
 <script>
 
-    document.querySelector('#home-login-pwd').addEventListener('keypress',function (e) {
+    document.querySelector('#home-login-pwd').addEventListener('keypress', function (e) {
         if (e.keyCode === 13) loginInput();
     })
 
@@ -114,7 +129,7 @@
                 } else if (uri.isContainWord(data, '/check-email')) {
                     window.location.href = '${path}' + data;
 
-                }else{
+                } else {
                     window.location.replace('${path}/');
 
                 }
