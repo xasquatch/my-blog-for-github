@@ -24,7 +24,8 @@ public class MailService {
     public String createSessionToken(int size) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < 6; i++) {
-            result.append(Math.round(Math.random() * 10));
+            long j = Math.round(Math.random() * 10);
+            if (!(j >= 10)) result.append(j);
         }
         return result.toString();
     }
