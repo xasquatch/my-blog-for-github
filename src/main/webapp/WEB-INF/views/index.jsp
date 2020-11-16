@@ -25,35 +25,11 @@
             <jsp:include page="contents/board/board-frame.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents == 'board-view-list'}">
+        <c:when test="${mainContents.contains('board-')}">
             <jsp:include page="contents/board/${mainContents}.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents == 'board-view-detail'}">
-            <jsp:include page="contents/board/${mainContents}.jsp"/>
-        </c:when>
-
-        <c:when test="${mainContents == 'user-change-email'}">
-            <jsp:include page="contents/user-info/${mainContents}.jsp"/>
-        </c:when>
-
-        <c:when test="${mainContents == 'user-check-email'}">
-            <jsp:include page="contents/user-info/${mainContents}.jsp"/>
-        </c:when>
-
-        <c:when test="${mainContents == 'user-check-password'}">
-            <jsp:include page="contents/user-info/${mainContents}.jsp"/>
-        </c:when>
-
-        <c:when test="${mainContents == 'user-information'}">
-            <jsp:include page="contents/user-info/user-information.jsp"/>
-        </c:when>
-
-        <c:when test="${mainContents == 'user-api'}">
-            <jsp:include page="contents/user-info/${mainContents}.jsp"/>
-        </c:when>
-
-        <c:when test="${mainContents == 'user-log-out'}">
+        <c:when test="${mainContents.contains('user-')}">
             <jsp:include page="contents/user-info/${mainContents}.jsp"/>
         </c:when>
 
