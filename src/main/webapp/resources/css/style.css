@@ -9,8 +9,8 @@
 }
 
 .dot-key {
-    font-family: Dotkey, monospace;
-    font-weight: bold;
+    font-family: Dotkey, monospace !important;
+    font-weight: bold !important;
 }
 
 /*-------------header, footer, aside----------------*/
