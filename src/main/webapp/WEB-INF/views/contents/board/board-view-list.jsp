@@ -43,26 +43,8 @@
     </article>
 
     <div id="board-list-toolbar" class="btn-group" role="group">
-        <button type="button" id="prev-btn" class="btn btn-link" onclick="boardListScript.ChangeMoveToThisPage(0)">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        </button>
         <button type="button" class="btn btn-link active" onclick="boardListScript.MoveToThisPage(this)">
             1
-        </button>
-        <button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">
-            2
-        </button>
-        <button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">
-            3
-        </button>
-        <button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">
-            4
-        </button>
-        <button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">
-            5
-        </button>
-        <button type="button" id="next-btn" class="btn btn-link" onclick="boardListScript.ChangeMoveToThisPage(6)">
-            <span class="glyphicon glyphicon-chevron-right"></span>
         </button>
     </div>
 
@@ -72,7 +54,7 @@
 <script>
 
     window.onload = function () {
-        boardListScript.ChangeMoveToThisPage(1);
+        boardListScript.changeBoardList(document.querySelector('#board-list-count').innerText);
 
     }
 </script>
