@@ -69,22 +69,22 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <label>
-                    <a href="" target="_blank" class="btn btn-link" tabindex="-1">이메일 찾기</a>
+                    <a href="${path}/find/email" target="_blank" class="btn btn-link" tabindex="-1">이메일 찾기</a>
                 </label>
                 <label>
-                    <a href="" target="_blank" class="btn btn-link" tabindex="-1">비밀번호 찾기</a>
+                    <a href="${path}/find/password" target="_blank" class="btn btn-link" tabindex="-1">비밀번호 찾기</a>
                 </label>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-danger" type="button" onclick="loginInput()" style="width: 100%;">
+                <button class="btn btn-link" type="button" onclick="loginInput()" style="width: 100%;">
                     <h2 style="margin: 0;">Log In</h2>
                 </button>
             </div>
         </div>
     </form>
-
+    <BR>
     <div id="user-sign-contents">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">

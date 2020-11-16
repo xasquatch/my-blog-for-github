@@ -31,6 +31,19 @@ public class MemberController {
     @Autowired
     private HomeController checkSessionController;
 
+    /*TODO: 회원 이메일 찾기 페이지로 이동*/
+    @GetMapping("/find/email")
+    public String findEmail(Model model) {
+
+        return "/contents/user-info/user-find-email";
+    }
+    /*TODO: 회원 비밀번호 찾기 페이지로 이동*/
+    @GetMapping("/find/password")
+    public String findPwd(Model model) {
+
+        return "/contents/user-info/user-find-password";
+    }
+
     /*TODO: information페이지 이동*/
     @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
     public String info(Model model, @PathVariable String memberNo, String checkPassword) {
