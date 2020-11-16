@@ -61,7 +61,6 @@ public class MemberService {
         sessionMember.setName((String) resultMap.get("name"));
         sessionMember.setImg((String) resultMap.get("img"));
 
-        System.out.println(sessionMember.toString());
         return String.valueOf(sessionMember.getNo());
     }
 
