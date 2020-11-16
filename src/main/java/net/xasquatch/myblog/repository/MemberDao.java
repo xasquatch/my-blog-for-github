@@ -19,6 +19,11 @@ public class MemberDao {
     @Autowired
     private MemberMapper memberMapper;
 
+    public String selectEmail(String name){
+        return memberMapper.selectEmail(name);
+
+    }
+
     public Map<String, Long> selectAuthorization() {
         Map<String, Long> authorizationMap = new Hashtable<String, Long>();
 
@@ -37,6 +42,9 @@ public class MemberDao {
 
     public String selectOneEmail(String email) {
         return memberMapper.selectOneEmail(email);
+    }
+    public String selectOneName(String name) {
+        return memberMapper.selectOneName(name);
     }
 
     public boolean insertMbrExceptionImg(Member member) {

@@ -69,10 +69,10 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <label>
-                    <a href="${path}/find/email" target="_blank" class="btn btn-link" tabindex="-1">이메일 찾기</a>
+                    <a href="${path}/user/find/email" target="_blank" class="btn btn-link" tabindex="-1">이메일 찾기</a>
                 </label>
                 <label>
-                    <a href="${path}/find/password" target="_blank" class="btn btn-link" tabindex="-1">비밀번호 찾기</a>
+                    <a href="${path}/user/find/password" target="_blank" class="btn btn-link" tabindex="-1">비밀번호 찾기</a>
                 </label>
             </div>
         </div>
@@ -295,6 +295,22 @@
             userNameExplain.style.color = 'GREEN';
 
         }
+
+        ajax.submit('POST', '${path}/user/sign-up/name', function (data) {
+            if (data === 'true') {
+                userNameExplain.innerHTML = element.value + '은(는) 이미 존재하는 이름입니다.';
+                userNameExplain.style.color = 'RED';
+                element.value = '';
+
+            } else {
+                userNameExplain.innerHTML = element.value + '은(는) 사용가능한 이름입니다.';
+                userNameExplain.style.color = 'GREEN';
+
+            }
+
+        }, 'FORM', 'name=' + element.value);
+
+
     }
 
 

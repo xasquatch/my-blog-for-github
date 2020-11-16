@@ -34,14 +34,15 @@ public class MemberController {
     /*TODO: 회원 이메일 찾기 페이지로 이동*/
     @GetMapping("/find/email")
     public String findEmail(Model model) {
-
-        return "/contents/user-info/user-find-email";
+        model.addAttribute("mainContents", "user-find-email");
+        return "index";
     }
+
     /*TODO: 회원 비밀번호 찾기 페이지로 이동*/
     @GetMapping("/find/password")
     public String findPwd(Model model) {
-
-        return "/contents/user-info/user-find-password";
+        model.addAttribute("mainContents", "user-find-password");
+        return "index";
     }
 
     /*TODO: information페이지 이동*/
@@ -115,6 +116,15 @@ public class MemberController {
         return "redirect:/";
     }
 
+    /*TODO: 회원 이메일 찾기 페이지로 이동*/
+    @RequestMapping(value = "/search/email", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String searchEmail(Model model) {
+        String name = (String) model.getAttribute("name");
+
+        return memberService.searchEmail(name);
+    }
+
     /*TODO: 회원 이메일 인증*/
     @PatchMapping(value = "/{memberNo}/auth-email", params = {"authorizationToken"})
     @ResponseBody
@@ -182,6 +192,12 @@ public class MemberController {
     @ResponseBody
     public String checkEmail(Member member) {
         return String.valueOf(memberService.isExistedEmail(member.getEmail()));
+    }
+    /*TODO:회원가입 이메일 중복체크*/
+    @PostMapping("/sign-up/name")
+    @ResponseBody
+    public String checkName(Member member) {
+        return String.valueOf(memberService.isExistedName(member.getName()));
     }
 
     /*TODO:회원가입*/

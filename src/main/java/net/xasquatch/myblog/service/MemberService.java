@@ -43,6 +43,13 @@ public class MemberService {
 
     }
 
+    public boolean isExistedName(String name) {
+        String memberName = memberDao.selectOneName(name);
+
+        return memberName != null;
+
+    }
+
     public String login(Member member) {
 
         Map<String, Object> resultMap = memberDao.selectOneMbr(member);
@@ -156,4 +163,9 @@ public class MemberService {
         log.debug("view: {}", member.toString());
         return result;
     }
+
+    public String searchEmail(String name){
+        return memberDao.selectEmail(name);
+    }
+
 }
