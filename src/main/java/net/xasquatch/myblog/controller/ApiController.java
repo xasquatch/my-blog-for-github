@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/api", method = {RequestMethod.GET, RequestMethod.POST})
+@RequestMapping(value = "/my-blog", method = {RequestMethod.GET, RequestMethod.POST})
 public class ApiController {
 
     @Autowired

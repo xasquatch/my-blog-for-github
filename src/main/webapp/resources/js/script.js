@@ -248,7 +248,7 @@ var boardListScript = {
         var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
         var uniform = uri.getUniform('/board/', '/view/list');
 
-        boardListScript.forwardUrl('/api/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
             document.querySelector('#board-list-count').innerHTML = count;
             var boardList = document.querySelector('#myblog-api-board-list');
             var jsonData = JSON.parse(data);
@@ -294,7 +294,7 @@ var boardListScript = {
                 btn.classList.remove('active');
             }
             element.classList.add('active');
-            boardListScript.forwardUrl('/api/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock, function () {
+            boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock, function () {
                 boardListScript.changeBoardList(limitCount);
             });
 
@@ -305,7 +305,7 @@ var boardListScript = {
         var limitCount = document.querySelector('#board-list-count').innerText;
         var uniform = uri.getUniform('/board/', '/view/list');
 
-        boardListScript.forwardUrl('/api/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock, function (data) {
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock, function (data) {
             var jsonData = JSON.parse(data);
 
             var defaultDiv = document.createElement('div');
