@@ -4,25 +4,40 @@
 
 <section id="main-section">
     <article class="board-list-title">
-        <div>
+        <div style="min-width: 150px">
             <h1 class="dot-key">글 목록</h1>
         </div>
-        <div style="display: flex; align-items: flex-end;">
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="boardListViewCount" data-toggle="dropdown" aria-expanded="true">
-                    <span id="board-list-count">10</span>
-                    <span class="caret"></span>
+        <div style="display: flex; align-items: baseline; flex-wrap: wrap; justify-content: flex-end;">
+            <div style="display: flex;">
+                <select class="form-control dot-key" id="search-range" style="max-width: 150px">
+                    <option>keyword</option>
+                    <option>title</option>
+                    <option>contents</option>
+                    <option>titleAndContents</option>
+                </select>
+                <input type="text" class="form-control dot-key" id="search-value" placeholder="search!">
+                <button class="btn-link dot-key" onclick="boardListScript.ChangeMoveToThisPage(1)">
+                    <span class="glyphicon glyphicon-search"></span>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="boardListViewCount">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(10);">10</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(20);">20</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(50);">50</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(100);">100</a></li>
-                </ul>
             </div>
-            <button type="button" class="btn btn-success" onclick="location.href='${path}/board/${sessionMember.no}/create'">
-                New
-            </button>
+            <div style="display: flex; align-items: baseline;">
+                <div class="dropdown">
+                    <button class="form-control dropdown-toggle" type="button" id="boardListViewCount" data-toggle="dropdown" aria-expanded="true">
+                        <span id="board-list-count">10</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="boardListViewCount">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(10);">10</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(20);">20</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(50);">50</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(100);">100</a></li>
+                    </ul>
+                </div>
+                <button type="button" class="btn btn-link dot-key" style="font-size: 15px;"
+                        onclick="location.href='${path}/board/${sessionMember.no}/create'">
+                    New
+                </button>
+            </div>
         </div>
     </article>
     <article class="board-list-contents table-responsive">
@@ -43,26 +58,8 @@
     </article>
 
     <div id="board-list-toolbar" class="btn-group" role="group">
-        <button type="button" id="prev-btn" class="btn btn-link" onclick="boardListScript.ChangeMoveToThisPage(0)">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        </button>
         <button type="button" class="btn btn-link active" onclick="boardListScript.MoveToThisPage(this)">
             1
-        </button>
-        <button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">
-            2
-        </button>
-        <button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">
-            3
-        </button>
-        <button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">
-            4
-        </button>
-        <button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">
-            5
-        </button>
-        <button type="button" id="next-btn" class="btn btn-link" onclick="boardListScript.ChangeMoveToThisPage(6)">
-            <span class="glyphicon glyphicon-chevron-right"></span>
         </button>
     </div>
 
@@ -71,8 +68,13 @@
 
 <script>
 
+    document.querySelector('#search-value').addEventListener('keypress', function (e) {
+        if (e.keyCode === 13) boardListScript.ChangeMoveToThisPage(1);
+    })
+
+
     window.onload = function () {
-        boardListScript.ChangeMoveToThisPage(1);
+        boardListScript.changeBoardList(document.querySelector('#board-list-count').innerText);
 
     }
 </script>

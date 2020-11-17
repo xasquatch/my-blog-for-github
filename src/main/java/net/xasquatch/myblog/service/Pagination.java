@@ -30,7 +30,7 @@ public class Pagination {
             this.startPageBlock = this.currentPageBlock - 4;
 
         } else {
-            this.startPageBlock = (this.currentPageBlock / 5) + 1;
+            this.startPageBlock = ((currentPageBlock / 5) * 5) + 1;
 
         }
 

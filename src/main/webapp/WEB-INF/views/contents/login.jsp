@@ -78,7 +78,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-link" type="button" onclick="loginInput()" style="width: 100%; outline: auto darkgray;">
+                <button class="btn btn-link" type="button" onclick="loginInput()" style="">
                     <h2 style="margin: 0;">Log In</h2>
                 </button>
             </div>

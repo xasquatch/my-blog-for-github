@@ -15,6 +15,7 @@ blockquote {
     color: black !important;
     transition: 0.5s all !important;
     text-decoration: none !important;
+    outline: auto darkgray!important;
 }
 .btn-link:HOVER{
     background-color: darkred !important;

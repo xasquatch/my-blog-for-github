@@ -13,13 +13,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.web.context.annotation.ApplicationScope;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
-import java.util.Hashtable;
-import java.util.Map;
 import java.util.Properties;
 
 //@Import({SecurityConfig.class})
