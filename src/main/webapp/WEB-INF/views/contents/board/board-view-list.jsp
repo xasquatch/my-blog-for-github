@@ -8,17 +8,21 @@
             <h1 class="dot-key">글 목록</h1>
         </div>
         <div style="display: flex; align-items: baseline; flex-wrap: wrap; justify-content: flex-end;">
-            <form class="form-inline">
-                <div class="input-group">
-                    <input type="text" class="form-control dot-key" name="search" placeholder="search!">
-                    <a class="input-group-addon dot-key" href="javascript:;">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </a>
-                </div>
-            </form>
+            <div style="display: flex;">
+                <select class="form-control dot-key" id="search-range" style="max-width: 150px">
+                    <option>Keyword</option>
+                    <option>title</option>
+                    <option>contents</option>
+                    <option>title, contents</option>
+                </select>
+                <input type="text" class="form-control dot-key" id="search-value" placeholder="search!">
+                <button class="btn-link dot-key" onclick="boardListScript.ChangeMoveToThisPage(1)">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
             <div style="display: flex; align-items: baseline;">
                 <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="boardListViewCount" data-toggle="dropdown" aria-expanded="true">
+                    <button class="form-control dropdown-toggle" type="button" id="boardListViewCount" data-toggle="dropdown" aria-expanded="true">
                         <span id="board-list-count">10</span>
                         <span class="caret"></span>
                     </button>
@@ -29,7 +33,8 @@
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(100);">100</a></li>
                     </ul>
                 </div>
-                <button type="button" class="btn btn-success dot-key" onclick="location.href='${path}/board/${sessionMember.no}/create'">
+                <button type="button" class="btn btn-link dot-key" style="font-size: 15px;"
+                        onclick="location.href='${path}/board/${sessionMember.no}/create'">
                     New
                 </button>
             </div>
@@ -62,6 +67,11 @@
 
 
 <script>
+
+    document.querySelector('#search-value').addEventListener('keypress', function (e) {
+        if (e.keyCode === 13) boardListScript.ChangeMoveToThisPage(1);
+    })
+
 
     window.onload = function () {
         boardListScript.changeBoardList(document.querySelector('#board-list-count').innerText);

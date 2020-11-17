@@ -315,8 +315,6 @@ var boardListScript = {
     MoveToThisPage: function (element) {
         var boardListToolbar = document.querySelector('#board-list-toolbar');
         var currentPageBlock = element.innerText;
-        var limitCount = document.querySelector('#board-list-count').innerHTML;
-        var uniform = uri.getUniform('/board/', '/view/list');
 
         if (!element.classList.contains('active')) {
             for (var btn of boardListToolbar.querySelectorAll('button')) {
@@ -330,7 +328,10 @@ var boardListScript = {
     ChangeMoveToThisPage: function (currentPageBlock) {
         var limitCount = document.querySelector('#board-list-count').innerText;
         var uniform = uri.getUniform('/board/', '/view/list');
+        var searchRange = document.querySelector('#search-range').value;
+        var searchValue = document.querySelector('#search-value').value;
 
+        console.log("searchRange: " + searchRange + ", searchValue: " + (searchValue === ''));
         boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock, function (data) {
             var jsonData = JSON.parse(data);
             console.log(data);
