@@ -10,10 +10,10 @@
         <div style="display: flex; align-items: baseline; flex-wrap: wrap; justify-content: flex-end;">
             <div style="display: flex;">
                 <select class="form-control dot-key" id="search-range" style="max-width: 150px">
-                    <option>Keyword</option>
+                    <option>keyword</option>
                     <option>title</option>
                     <option>contents</option>
-                    <option>title, contents</option>
+                    <option>titleAndContents</option>
                 </select>
                 <input type="text" class="form-control dot-key" id="search-value" placeholder="search!">
                 <button class="btn-link dot-key" onclick="boardListScript.ChangeMoveToThisPage(1)">

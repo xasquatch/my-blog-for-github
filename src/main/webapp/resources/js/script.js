@@ -331,14 +331,13 @@ var boardListScript = {
         var searchRange = document.querySelector('#search-range').value;
         var searchValue = document.querySelector('#search-value').value;
 
-        console.log("searchRange: " + searchRange + ", searchValue: " + (searchValue === ''));
-        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock, function (data) {
-            var jsonData = JSON.parse(data);
-            console.log(data);
-            boardListScript.getBoardList(jsonData, uniform);
-            boardListScript.getPagination(jsonData);
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock + '&' + searchRange + '=' + searchValue,
+            function (data) {
+                var jsonData = JSON.parse(data);
+                boardListScript.getBoardList(jsonData, uniform);
+                boardListScript.getPagination(jsonData);
 
-        });
+            });
 
     },
 

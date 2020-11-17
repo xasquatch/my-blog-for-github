@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -34,6 +31,19 @@ public class BoardService {
 
     @Value("${files.save.contents.name.blog}")
     String ContentsName;
+
+    public String[] parsingSearchValue(Map<String, String> map) {
+
+        String[] searchValue = new String[2];
+        map.forEach((key, value) -> {
+            if (!value.equals("empty")){
+                searchValue[0] = key;
+                searchValue[1] = '%' + value + '%';
+            }
+        });
+
+        return searchValue;
+    }
 
     public Object createDefaultBoard(String memberNo) {
         Map<String, Object> memberMap = new HashMap<String, Object>();
@@ -81,8 +91,18 @@ public class BoardService {
 
     }
 
-    public String getBoardList(String memberKey, int pageLimit, int currentPageBlock) {
-        List<HashMap<String, Object>> boardList = boardDao.SelectBoardList(memberKey, pageLimit, currentPageBlock);
+    public String getBoardList(String memberKey, int pageLimit, int currentPageBlock, String[] searchValue) {
+
+        List<HashMap<String, Object>> boardList;
+        if (searchValue[0] == null) {
+            boardList = boardDao.SelectBoardList(memberKey, pageLimit, currentPageBlock, null, null);
+
+        } else {
+            boardList = boardDao.SelectBoardList(memberKey, pageLimit, currentPageBlock, searchValue[0], searchValue[1]);
+
+        }
+
+
         int totalCount = boardDao.selectBoardListCount(memberKey);
 
 
