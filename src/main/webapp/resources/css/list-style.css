@@ -97,12 +97,29 @@
 }
 .repository-list-box>div{
     display: flex;
-    justify-content: center;
     align-items: center;
     width: 200px;
     height: 200px;
     margin: 5px;
     animation: 0.5s stretchWidth;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.repository-list-box>div>*{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.repository-list-box>div>h3{
+    margin: 0;
+    height: 3em;
+    overflow: hidden;
+    text-align: center;
+    width: 150px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 @keyframes stretchWidth {

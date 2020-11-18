@@ -21,26 +21,175 @@
         </div>
     </article>
     <article class="repository-list-box">
-        <div class="btn-link-red">
-            <p>hi</p>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3asdfasdfasdfasfasdasdfasd</h3>
+            <p>hi1231231231231234165243561245631462534651243321213321243512433121331123213132213132131212312hi1231231231231234165243561245631462534651243321213321243512433121331123213132213132131212312hi1231231231231234165243561245631462534651243321213321243512433121331123213132213132131212312hi1231231231231234165243561245631462534651243321213321243512433121331123213132213132131212312hi1231231231231234165243561245631462534651243321213321243512433121331123213132213132131212312</p>
         </div>
-        <div class="btn-link-red">
-            <p>hi</p>
-        </div><div class="btn-link-red">
-        <p>hi</p>
-    </div><div class="btn-link-red">
-        <p>hi</p>
-    </div><div class="btn-link-red">
-        <p>hi</p>
-    </div><div class="btn-link-red">
-        <p>hi</p>
-    </div><div class="btn-link-red">
-        <p>hi</p>
-    </div><div class="btn-link-red">
-        <p>hi</p>
-    </div><div class="btn-link-red">
-        <p>hi</p>
-    </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h123i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h234163i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h111i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>hi222</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>hi333</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
+            <h3>h3</h3>
+            <p>h444i</p>
+        </div>
+
     </article>
 
 
@@ -51,9 +200,19 @@
         if (e.keyCode === 13) extracted();
     })
 
-    function extracted() {
-        window.alert('hi');
+    function setClickEventDivContents() {
+        var divBox = document.querySelectorAll('.repository-list-box>div');
+        for (var box of divBox) {
+            var title = box.querySelector('h3').innerText;
+            var contents = box.querySelector('p').innerText;
+            box.setAttribute('onclick','modal.changeForm("'+title+'","'+contents+'")');
+
+        }
     }
 
+    function extracted(data) {
+        window.alert(data);
+    }
+    setClickEventDivContents()
 
 </script>

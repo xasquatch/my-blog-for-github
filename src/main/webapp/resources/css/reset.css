@@ -21,13 +21,17 @@ blockquote {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
+.btn-link-red:hover{
+    cursor: pointer;
+}
 .btn-link-red:hover,
 .btn-link-red:active {
     background-color: darkred;
-
 }
-
 .btn.active, .btn:active {
     color: darkred !important;
+}
 
+.modal-header, .modal-body{
+    word-break: break-all;
 }

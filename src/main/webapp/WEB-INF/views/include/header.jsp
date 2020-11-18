@@ -57,10 +57,10 @@
 
     // TOP padding값을 주는 것으로 sticky 구현
     window.addEventListener('scroll', function () {
-        if (mainHeader.style.marginTop < window.pageYOffset) {
+        if (mainHeader.style.marginTop <= window.pageYOffset) {
             mainHeader.style.position = 'fixed';
             mainHeader.style.top = 0;
-            mainHeader.style.zIndex = 2000;
+            mainHeader.style.zIndex = 1000;
 
         } else {
             mainHeader.style.position = 'static';
