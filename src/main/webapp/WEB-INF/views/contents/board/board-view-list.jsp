@@ -16,7 +16,7 @@
                     <option>titleAndContents</option>
                 </select>
                 <input type="text" class="form-control dot-key" id="search-value" placeholder="search!">
-                <button class="btn-link dot-key" onclick="boardListScript.ChangeMoveToThisPage(1)">
+                <button class="btn-link-red dot-key" onclick="boardListScript.ChangeMoveToThisPage(1)">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>
@@ -33,7 +33,7 @@
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:boardListScript.changeBoardList(100);">100</a></li>
                     </ul>
                 </div>
-                <button type="button" class="btn btn-link dot-key" style="font-size: 15px;"
+                <button type="button" class="btn btn-link-red dot-key" style="font-size: 15px;"
                         onclick="location.href='${path}/board/${sessionMember.no}/create'">
                     New
                 </button>
@@ -58,7 +58,7 @@
     </article>
 
     <div id="board-list-toolbar" class="btn-group" role="group">
-        <button type="button" class="btn btn-link active" onclick="boardListScript.MoveToThisPage(this)">
+        <button type="button" class="btn btn-link-red active" onclick="boardListScript.MoveToThisPage(this)">
             1
         </button>
     </div>

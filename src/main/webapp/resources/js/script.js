@@ -247,7 +247,7 @@ var boardListScript = {
         var boardListToolbar = document.querySelector('#board-list-toolbar');
         boardListToolbar.innerHTML = '';
         if (jsonData.pageBlockList.prevPageBlock !== 0) {
-            boardListToolbar.innerHTML += '<button type="button" class="btn btn-link" onclick="boardListScript.ChangeMoveToThisPage(' + jsonData.pageBlockList.prevPageBlock + ');">' +
+            boardListToolbar.innerHTML += '<button type="button" class="btn btn-link-red" onclick="boardListScript.ChangeMoveToThisPage(' + jsonData.pageBlockList.prevPageBlock + ');">' +
                 '            <span class="glyphicon glyphicon-chevron-left"></span>' +
                 '        </button>'
         }
@@ -257,17 +257,17 @@ var boardListScript = {
         for (var i = (jsonData.pageBlockList.startPageBlock % 5) - 1; i < forCount; i++) {
             if (jsonData.pageBlockList.startPageBlock + i === jsonData.pageBlockList.currentPageBlock) {
                 boardListToolbar.innerHTML +=
-                    '<button type="button" class="btn btn-link active" onclick="boardListScript.MoveToThisPage(this)">' + jsonData.pageBlockList.currentPageBlock + '</button>';
+                    '<button type="button" class="btn btn-link-red active" onclick="boardListScript.MoveToThisPage(this)">' + jsonData.pageBlockList.currentPageBlock + '</button>';
 
             } else {
                 boardListToolbar.innerHTML +=
-                    '<button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">' + (jsonData.pageBlockList.startPageBlock + i) + '</button>';
+                    '<button type="button" class="btn btn-link-red" onclick="boardListScript.MoveToThisPage(this)">' + (jsonData.pageBlockList.startPageBlock + i) + '</button>';
 
             }
         }
 
         if (jsonData.pageBlockList.nextPageBlock !== jsonData.pageBlockList.totalPageBlock) {
-            boardListToolbar.innerHTML += '<button type="button" class="btn btn-link" onclick="boardListScript.ChangeMoveToThisPage(' + jsonData.pageBlockList.nextPageBlock + ');">' +
+            boardListToolbar.innerHTML += '<button type="button" class="btn btn-link-red" onclick="boardListScript.ChangeMoveToThisPage(' + jsonData.pageBlockList.nextPageBlock + ');">' +
                 '            <span class="glyphicon glyphicon-chevron-right"></span>' +
                 '        </button>'
         }

@@ -17,7 +17,7 @@
                 <input type="email" class="form-control" name="checkEmail" placeholder="${sessionMember.email}">
             </div>
             <hr>
-            <button class="btn btn-link dot-key" style="font-size: 7rem;" type="submit">CHECK!</button>
+            <button class="btn btn-link-red dot-key" style="font-size: 7rem;" type="submit">CHECK!</button>
         </div>
     </form>
 </section>

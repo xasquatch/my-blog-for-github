@@ -43,7 +43,7 @@
     </article>
     <article>
         <section style="text-align: center; padding: 20px;">
-            <button class="btn btn-link dot-key" onclick="window.history.back();">뒤로 가기</button>
+            <button class="btn btn-link-red dot-key" onclick="window.history.back();">뒤로 가기</button>
         </section>
     </article>
 </section>

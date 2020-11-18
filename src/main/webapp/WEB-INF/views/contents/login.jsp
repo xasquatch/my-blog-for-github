@@ -69,16 +69,16 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <label>
-                    <a href="${path}/user/find/email" target="_blank" class="btn btn-link" tabindex="-1">이메일 찾기</a>
+                    <a href="${path}/user/find/email" target="_blank" class="btn btn-link-red" tabindex="-1">이메일 찾기</a>
                 </label>
                 <label>
-                    <a href="${path}/user/find/password" target="_blank" class="btn btn-link" tabindex="-1">비밀번호 찾기</a>
+                    <a href="${path}/user/find/password" target="_blank" class="btn btn-link-red" tabindex="-1">비밀번호 찾기</a>
                 </label>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-link" type="button" onclick="loginInput()" style="">
+                <button class="btn btn-link-red" type="button" onclick="loginInput()" style="">
                     <h2 style="margin: 0;">Log In</h2>
                 </button>
             </div>
@@ -87,19 +87,19 @@
     <BR>
     <div id="user-sign-contents">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
+            <button type="button" class="btn btn-link-red hidden" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
                 <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/google.png"><BR>
                 &nbsp;Google&nbsp;
             </button>
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
+            <button type="button" class="btn btn-link-red hidden" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
                 <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/GitHub-Mark-32px.png"><BR>
                 &nbsp;Github&nbsp;
             </button>
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
+            <button type="button" class="btn btn-link-red hidden" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
                 <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/facebook.png"> <BR>
                 Facebook
             </button>
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" onclick="singUp();">
+            <button type="button" class="btn btn-link-red" data-toggle="modal" data-target="#myModal" onclick="singUp();">
                 <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/Xasquatch.png" width="32" height="32"><BR>
                 Sing Up
             </button>
@@ -154,10 +154,10 @@
             '<div class="input-group">                                                                                                                   ' +
             '<div class="input-group-addon">Agreement</div>                                                                                              ' +
             '<div class="form-control" style="height: auto;">                                                                                            ' +
-            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>' +
+            '<a class="btn-link-red" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>' +
             '<label><input type="checkbox" name="membersAgreement">I agree</label>                                                                       ' +
             '<HR style="margin-top: 3px; margin-bottom: 3px;">                                                                                           ' +
-            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>' +
+            '<a class="btn-link-red" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>' +
             '<label><input type="checkbox" name="collectionAndUse">I agree</label>                                                                       ' +
             '</div>                                                                                                                                      ' +
             '</div>                                                                                                                                      ' +

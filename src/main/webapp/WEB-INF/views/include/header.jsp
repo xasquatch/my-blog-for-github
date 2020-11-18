@@ -15,7 +15,7 @@
     <%--custom css --%>
     <link rel="stylesheet" href="${path}/css/style.css">
     <link rel="stylesheet" href="${path}/css/reset.css">
-    <link rel="stylesheet" href="${path}/css/board-style.css">
+    <link rel="stylesheet" href="${path}/css/list-style.css">
     <%--END: custom css --%>
 
     <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -34,12 +34,12 @@
     </a>
     <div id="header-right">
         <c:if test="${mainContents != 'login' && mainContents != 'main' && (sessionMember != null)}">
-            <button type="button" id="mobile-hamburger" class="dot-key btn btn-link" onclick="popUpAside();">
+            <button type="button" id="mobile-hamburger" class="dot-key btn btn-link-red" onclick="popUpAside();">
                 <B>More</B>
             </button>
         </c:if>
         <c:if test="${sessionMember.no != null}">
-            <button type="button" class="btn btn-link" style="font-size: 20px; color: black;"
+            <button type="button" class="btn btn-link-red" style="font-size: 20px; color: black;"
                     onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/user/${sessionMember.no}/log-out'">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </button>

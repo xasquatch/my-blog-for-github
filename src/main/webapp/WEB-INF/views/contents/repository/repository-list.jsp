@@ -1,19 +1,59 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<section>
-    <h1 class="dot-key">My Repository</h1>
-    <div>
-        상단 검색바
-        <form action="${path}/repository/search">
-            <label>
-                검색: <input type="text">
-            </label>
-        </form>
+
+<section id="main-section">
+    <article class="repository-list-title">
+        <div>
+            <h1 class="dot-key">내 저장소</h1>
+        </div>
+        <div>
+            <div style="display: flex; align-items: flex-start; flex-wrap: nowrap; justify-content: flex-end;">
+                <input type="text" class="form-control dot-key" id="search-value" placeholder="search!">
+                <button class="btn-link-red dot-key" style="height: 35px" onclick="extracted();">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+                <button type="button" class="btn btn-link-red dot-key" style="font-size: 15px;"
+                        onclick="location.href='${path}/repository/${sessionMember.no}/create'">
+                    New
+                </button>
+            </div>
+        </div>
+    </article>
+    <article class="repository-list-box">
+        <div class="btn-link-red">
+            <p>hi</p>
+        </div>
+        <div class="btn-link-red">
+            <p>hi</p>
+        </div><div class="btn-link-red">
+        <p>hi</p>
+    </div><div class="btn-link-red">
+        <p>hi</p>
+    </div><div class="btn-link-red">
+        <p>hi</p>
+    </div><div class="btn-link-red">
+        <p>hi</p>
+    </div><div class="btn-link-red">
+        <p>hi</p>
+    </div><div class="btn-link-red">
+        <p>hi</p>
+    </div><div class="btn-link-red">
+        <p>hi</p>
     </div>
-    <div>
-        하단 리스트
-    </div>
+    </article>
 
 
 </section>
+<script>
+    document.querySelector('#search-value').addEventListener('keypress', function (e) {
+
+        if (e.keyCode === 13) extracted();
+    })
+
+    function extracted() {
+        window.alert('hi');
+    }
+
+
+</script>

@@ -18,7 +18,7 @@
                 <input type="text" class="form-control" name="authorizationToken" placeholder="000000">
             </div>
             <hr>
-            <button class="btn btn-link dot-key" style="font-size: 7rem;" type="button" onclick="submitToken();">CHECK!</button>
+            <button class="btn btn-link-red dot-key" style="font-size: 7rem;" type="button" onclick="submitToken();">CHECK!</button>
         </div>
     </form>
 </section>

@@ -21,7 +21,7 @@
                 <input type="text" class="form-control" id="search-pwd-input-name" name="name" placeholder="Jhon">
             </div>
             <hr>
-            <button class="btn btn-link dot-key" style="font-size: 7rem;" type="button" onclick="searchPwd()">Search!</button>
+            <button class="btn btn-link-red dot-key" style="font-size: 7rem;" type="button" onclick="searchPwd()">Search!</button>
         </div>
     </form>
 </section>

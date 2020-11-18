@@ -11,15 +11,22 @@ blockquote {
     font-size: inherit !important;
 
 }
-.btn-link{
-    color: black !important;
-    transition: 0.5s all !important;
-    text-decoration: none !important;
-    outline: auto darkgray!important;
+.btn-link-red{
+    color: black;
+    transition: 0.5s all;
+    text-decoration: none;
+    outline: auto darkgray;
+    border-color: transparent;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
-.btn-link:HOVER{
-    background-color: darkred !important;
+.btn-link-red:hover,
+.btn-link-red:active {
+    background-color: darkred;
+
 }
+
 .btn.active, .btn:active {
     color: darkred !important;
 

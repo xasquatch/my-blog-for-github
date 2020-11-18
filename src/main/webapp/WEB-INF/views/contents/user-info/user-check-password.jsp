@@ -18,7 +18,7 @@
                 <input type="password" class="form-control" name="checkPassword" placeholder="your Password">
             </div>
             <hr>
-            <button class="btn btn-link dot-key" style="font-size: 7rem;" type="submit">CHECK!</button>
+            <button class="btn btn-link-red dot-key" style="font-size: 7rem;" type="submit">CHECK!</button>
         </div>
     </form>
 </section>
