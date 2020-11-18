@@ -40,7 +40,7 @@ public class MailService {
                 "    <tr>" +
                 "        <th colspan=\"2\">" +
                 "            <h1>" +
-                "                <img src=\"http://myblog.xasquatch.net/img/Xasquatch.png\" style=\"width: 2rem; height: 2rem;\">" +
+                "                <img src=\"https://myblog.xasquatch.net/img/Xasquatch.png\" style=\"width: 2rem; height: 2rem;\">" +
                 "                My Blog By Xasquatch" +
                 "            </h1>" +
                 "        </th>" +
@@ -50,7 +50,7 @@ public class MailService {
                 "    <tr>" +
                 "        <td style=\"width: 300px;\">" + tbody1tr + "</td>"+
                 "        <td rowspan=\"2\">" +
-                "            <img src=\"http://myblog.xasquatch.net/img/banner/16.gif\" style=\"width: 100%;\">" +
+                "            <img src=\"https://myblog.xasquatch.net/img/banner/16.gif\" style=\"width: 100%;\">" +
                 "        </td>" +
                 "    </tr>" +
                 "    <tr>" +
@@ -77,7 +77,7 @@ public class MailService {
         if (this.mainContents == null) {
             createMainContents(sessionMember.getName() + "님 My Blog By Xasquatch에 오신것을 환영합니다.",
                     "            Token Number: " + this.token,
-                    "<a href=\"http://myblog.xasquatch.net/user/\"" + sessionMember.getNo() + "/check-email\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">이메일 인증하러가기</a>");
+                    "<a href=\"https://myblog.xasquatch.net/user/\"" + sessionMember.getNo() + "/check-email\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">이메일 인증하러가기</a>");
         }
         String mainContents = this.mainContents;
         MimeMessageHelper messageHelper = null;
