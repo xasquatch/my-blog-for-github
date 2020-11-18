@@ -36,13 +36,14 @@
 
     function searchPwd() {
 
+        var searchPwdInputEmail = document.querySelector('#search-pwd-input-email');
         var searchPwdInputName = document.querySelector('#search-pwd-input-name');
         var searchPwdForm = document.querySelector('#search-pwd-form');
         var searchFormData = new FormData(searchPwdForm)
 
         ajax.submit('POST', '${path}/user/search/password', function (data) {
             if (data !== 'false'){
-                window.alert('\"'+searchPwdInputName.value+'\"으로 임시 비밀번호를 전송하였습니다.')
+                window.alert('\"'+searchPwdInputEmail.value+'\"으로 임시 비밀번호를 전송하였습니다.')
                 
             }else{
                 window.alert('등록되지 않은 회원정보입니다. 입력한 양식을 다시 확인해주세요')

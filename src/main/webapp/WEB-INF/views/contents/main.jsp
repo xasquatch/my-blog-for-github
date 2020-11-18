@@ -63,10 +63,15 @@
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
+            var contents2 = document.createElement('a');
             contents1.setAttribute('href', '${path}/user/${sessionMember.no}/information');
+            contents2.setAttribute('href', '${path}/user/${sessionMember.no}/check-email');
             footerTarget.appendChild(contents1);
+            footerTarget.appendChild(contents2);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
-                '<img src="${path}/img/banner-white/user.png" style="max-height : 100px; max-width:100px;"><BR>내 정보<BR>정보확인과 함께 이메일 및 패스워드를 변경 하실 수 있습니다.', 10);
+                '<img src="${path}/img/banner-white/user.png" style="max-height : 100px; max-width:100px;"><BR>내 정보<BR>정보확인과 함께<BR>이메일 및 패스워드를<BR>변경 하실 수 있습니다.', 10);
+            textScript.insertText('#main-footer>div>a:nth-child(2)',
+                '<img src="${path}/img/banner-white/email.png" style="max-height : 100px; max-width:100px;"><BR>이메일 인증<BR>서비스를 제공받기 위해<BR>인증을 해주세요', 10);
         }
 
         function itemFocusBoard() {
@@ -79,9 +84,9 @@
             footerTarget.appendChild(contents1);
             footerTarget.appendChild(contents2);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
-                '<img src="${path}/img/banner-white/writeBoard.png" style="max-height : 100px; max-width:100px;"><BR>글 쓰기<BR>페이지에 꾸밀 게시판글을 작성할 수 있습니다.', 10);
+                '<img src="${path}/img/banner-white/writeBoard.png" style="max-height : 100px; max-width:100px;"><BR>글 쓰기<BR>페이지에 꾸밀 게시판글을<BR>작성할 수 있습니다.', 10);
             textScript.insertText('#main-footer>div>a:nth-child(2)',
-                '<img src="${path}/img/banner-white/boardList.png" style="max-height : 100px; max-width:100px;"><BR>글 목록<BR>작성한 글목록을 확인할 수 있습니다.', 10);
+                '<img src="${path}/img/banner-white/boardList.png" style="max-height : 100px; max-width:100px;"><BR>글 목록<BR>작성한 글목록을<BR>확인할 수 있습니다.', 10);
 
         }
 
@@ -92,7 +97,7 @@
             contents1.setAttribute('href', '${path}/repository/${sessionMember.no}/list');
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
-                '<img src="${path}/img/banner-white/repository.png" style="max-height : 100px; max-width:100px;"><BR>내 저장소<BR>JSON형식으로 나만의 저장소를 만들어 사용 할 수 있습니다.', 10);
+                '<img src="${path}/img/banner-white/repository.png" style="max-height : 100px; max-width:100px;"><BR>내 저장소<BR>JSON형식으로 나만의 저장소를 만들어<BR>사용 할 수 있습니다.', 10);
         }
 
         function itemFocusApi() {
@@ -102,7 +107,7 @@
             contents1.setAttribute('href', '${path}/user/${sessionMember.no}/api');
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
-                '<img src="${path}/img/banner-white/api.png" style="max-height : 100px; max-width:100px;"><BR>API<BR>나만의 글과 저장소를 다른 페이지로 공유할 수 있는 API를 제공합니다.', 10);
+                '<img src="${path}/img/banner-white/api.png" style="max-height : 100px; max-width:100px;"><BR>API<BR>나만의 글과 저장소를 다른 페이지로<BR>공유할 수 있는 API를 제공합니다.', 10);
         }
 
     </script>

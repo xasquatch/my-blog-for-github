@@ -34,21 +34,22 @@ public class MailService {
         return result.toString();
     }
 
-    public void createMainContents(String tbody1tr, String tbody2tr, String tfoot1tr) {
-        this.mainContents = "<table style=\"width: 500px; margin: 0 auto;\">" +
+    public String createMainContents(String tbody1tr, String tbody2tr, String tfoot1tr) {
+        this.mainContents = "<fieldset style=\"border: 1px solid; width: 500px; margin: 0 auto;\">" +
+                "<table>" +
                 "    <thead>" +
                 "    <tr>" +
                 "        <th colspan=\"2\">" +
                 "            <h1>" +
-                "                <img src=\"https://myblog.xasquatch.net/img/Xasquatch.png\" style=\"width: 2rem; height: 2rem;\">" +
+                "                <img src=\"https://myblog.xasquatch.net/img/Xasquatch.png\" style=\"border: 0px; width: 2rem; height: 2rem;\">" +
                 "                My Blog By Xasquatch" +
                 "            </h1>" +
                 "        </th>" +
                 "    </tr>" +
                 "    </thead>" +
-                "    <tbody>" +
+                "    <tbody style=\"text-align: center;\">" +
                 "    <tr>" +
-                "        <td style=\"width: 300px;\">" + tbody1tr + "</td>"+
+                "        <td style=\"width: 300px;\">" + tbody1tr + "</td>" +
                 "        <td rowspan=\"2\">" +
                 "            <img src=\"https://myblog.xasquatch.net/img/banner/16.gif\" style=\"width: 100%;\">" +
                 "        </td>" +
@@ -64,22 +65,35 @@ public class MailService {
                 "            </td>" +
                 "        </tr>" +
                 "    </tfoot>" +
-                "</table>";
+                "</table>" +
+                "</fieldset>";
+        return this.mainContents;
     }
 
     public void sendAuthMail(String email, String title) {
 
-        createToken(6);
-
+        String token = createToken(6);
+        String mainContents = null;
         MimeMessage mail = mailSender.createMimeMessage();
 
         sessionMember.setAuthKey(token);
-        if (this.mainContents == null) {
-            createMainContents(sessionMember.getName() + "님 My Blog By Xasquatch에 오신것을 환영합니다.",
-                    "            Token Number: " + this.token,
-                    "<a href=\"https://myblog.xasquatch.net/user/\"" + sessionMember.getNo() + "/check-email\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">이메일 인증하러가기</a>");
+        try {
+            if (this.mainContents.contains("Token Number")) {
+                mainContents = createMainContents(sessionMember.getName() + "님<BR>My Blog By Xasquatch에<BR>오신것을 환영합니다.",
+                        "            Token Number: " + token,
+                        "<a href=\"https://myblog.xasquatch.net/user/" + sessionMember.getNo() + "/check-email\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">이메일 다시 인증하러가기</a>");
+
+            } else {
+                mainContents = this.mainContents;
+
+            }
+        } catch (NullPointerException e) {
+            mainContents = createMainContents(sessionMember.getName() + "님<BR>My Blog By Xasquatch에<BR>오신것을 환영합니다.",
+                    "            Token Number: " + token,
+                    "<a href=\"https://myblog.xasquatch.net/user/" + sessionMember.getNo() + "/check-email\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">이메일 다시 인증하러가기</a>");
+
         }
-        String mainContents = this.mainContents;
+
         MimeMessageHelper messageHelper = null;
         try {
             messageHelper = new MimeMessageHelper(mail, true, "UTF-8");

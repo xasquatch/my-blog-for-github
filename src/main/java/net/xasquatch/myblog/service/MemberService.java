@@ -160,13 +160,6 @@ public class MemberService {
         return result;
     }
 
-
-    public boolean view(Member member) {
-        boolean result = false;
-        log.debug("view: {}", member.toString());
-        return result;
-    }
-
     public String searchEmail(String name){
         return memberDao.selectEmail(name);
     }
