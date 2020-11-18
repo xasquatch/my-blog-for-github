@@ -63,15 +63,17 @@
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
-            var contents2 = document.createElement('a');
             contents1.setAttribute('href', '${path}/user/${sessionMember.no}/information');
-            contents2.setAttribute('href', '${path}/user/${sessionMember.no}/check-email');
             footerTarget.appendChild(contents1);
-            footerTarget.appendChild(contents2);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
                 '<img src="${path}/img/banner-white/user.png" style="max-height : 100px; max-width:100px;"><BR>내 정보<BR>정보확인과 함께<BR>이메일 및 패스워드를<BR>변경 하실 수 있습니다.', 10);
+            <c:if test="${sessionMember.rank.contains('temp')}">
+            var contents2 = document.createElement('a');
+            contents2.setAttribute('href', '${path}/user/${sessionMember.no}/check-email');
+            footerTarget.appendChild(contents2);
             textScript.insertText('#main-footer>div>a:nth-child(2)',
                 '<img src="${path}/img/banner-white/email.png" style="max-height : 100px; max-width:100px;"><BR>이메일 인증<BR>서비스를 제공받기 위해<BR>인증을 해주세요', 10);
+            </c:if>
         }
 
         function itemFocusBoard() {
