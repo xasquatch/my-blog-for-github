@@ -170,7 +170,7 @@ public class MemberService {
         String memberNo = memberDao.selectNo(member.getEmail(),member.getName());
         if (memberNo != null){
             String pwdToken = mailService.createToken(8);
-            mailService.createMainContents(member.getName() + "님 My Blog By Xasquatch에 요청한 임시비밀번호입니다.",
+            mailService.createMainContents(member.getName() + "님<BR>My Blog By Xasquatch에<BR>요청한 임시비밀번호입니다.",
                     "            password: " + pwdToken,
                     "<a href=\"https://myblog.xasquatch.net\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">로그인 하러가기</a>");
             mailService.sendAuthMail(member.getEmail(),member.getName() + "님 My Blog By Xasquatch에 요청한 임시비밀번호입니다");
