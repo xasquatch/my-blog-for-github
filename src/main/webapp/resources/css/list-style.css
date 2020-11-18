@@ -89,6 +89,10 @@
     height: 30px !important;
 
 }
+#board-list-toolbar button{
+    margin: 5px;
+}
+
 .repository-list-box{
     display: flex;
     flex-direction: row;

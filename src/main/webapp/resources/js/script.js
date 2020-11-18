@@ -246,6 +246,7 @@ var boardListScript = {
     getPagination: function (jsonData) {
         var boardListToolbar = document.querySelector('#board-list-toolbar');
         boardListToolbar.innerHTML = '';
+        console.log(jsonData);
         if (jsonData.pageBlockList.prevPageBlock !== 0) {
             boardListToolbar.innerHTML += '<button type="button" class="btn btn-link-red" onclick="boardListScript.ChangeMoveToThisPage(' + jsonData.pageBlockList.prevPageBlock + ');">' +
                 '            <span class="glyphicon glyphicon-chevron-left"></span>' +
@@ -253,6 +254,7 @@ var boardListScript = {
         }
 
         var forCount = (jsonData.pageBlockList.endPageBlock % 5 > 0) ? jsonData.pageBlockList.endPageBlock % 5 : 5;
+        if (jsonData.pageBlockList.endPageBlock === 0) forCount = 1;
 
         for (var i = (jsonData.pageBlockList.startPageBlock % 5) - 1; i < forCount; i++) {
             if (jsonData.pageBlockList.startPageBlock + i === jsonData.pageBlockList.currentPageBlock) {
