@@ -26,8 +26,11 @@ public class RepositoryController {
 
     @GetMapping("/{memberNo}/list")
     public String viewList(Model model, @PathVariable String memberNo) {
-        model.addAttribute("mainContents", "repository-list");
-        return "index";
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+            model.addAttribute("mainContents", "repository-list");
+            return "index";
+        }
+        return "redirect:/";
 
     }
 

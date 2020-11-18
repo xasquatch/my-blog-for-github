@@ -281,7 +281,7 @@ var boardListScript = {
         for (var map of jsonData.boardList) {
             var trTag = document.createElement('tr');
             var titleInput = document.createElement('td');
-            titleInput.innerHTML = '<a href="/board/' + uniform + '/view/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
+            titleInput.innerHTML = '<a href="/board/' + uniform + '/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
             var rowNoInput = document.createElement('td');
             rowNoInput.innerText = map.rowno;
             var dateInput = document.createElement('td');
@@ -302,7 +302,7 @@ var boardListScript = {
     },
     changeBoardList: function (count) {
         var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
-        var uniform = uri.getUniform('/board/', '/view/list');
+        var uniform = uri.getUniform('/board/', '/list');
 
         boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
             document.querySelector('#board-list-count').innerHTML = count;
@@ -329,7 +329,7 @@ var boardListScript = {
     },
     ChangeMoveToThisPage: function (currentPageBlock) {
         var limitCount = document.querySelector('#board-list-count').innerText;
-        var uniform = uri.getUniform('/board/', '/view/list');
+        var uniform = uri.getUniform('/board/', '/list');
         var searchRange = document.querySelector('#search-range').value;
         var searchValue = document.querySelector('#search-value').value;
 
@@ -359,7 +359,7 @@ var boardListScript = {
     },
 
     deleteBoard: function (key) {
-        var uniform = uri.getUniform('/board/', '/view/list');
+        var uniform = uri.getUniform('/board/', '/list');
         if (window.confirm("정말 삭제하시겠습니까?"))
             location.href = '/board/' + uniform + '/delete/' + key;
 

@@ -82,7 +82,7 @@
             var contents1 = document.createElement('a');
             var contents2 = document.createElement('a');
             contents1.setAttribute('href', '${path}/board/${sessionMember.no}/create');
-            contents2.setAttribute('href', '${path}/board/${sessionMember.no}/view/list');
+            contents2.setAttribute('href', '${path}/board/${sessionMember.no}/list');
             footerTarget.appendChild(contents1);
             footerTarget.appendChild(contents2);
             textScript.insertText('#main-footer>div>a:nth-child(1)',

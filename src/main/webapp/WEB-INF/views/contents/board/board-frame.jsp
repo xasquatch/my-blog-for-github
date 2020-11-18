@@ -245,7 +245,7 @@
                     board.save();
 
                 } else if (data === 'true') {
-                    window.location.href = '${path}/board/${sessionMember.no}/view/list';
+                    window.location.href = '${path}/board/${sessionMember.no}/list';
 
                 }
 
@@ -260,7 +260,7 @@
 
                 } else if (data === 'true') {
                     window.alert('수정에 성공하였습니다.');
-                    window.location.href = '${path}/board/${sessionMember.no}/view/list';
+                    window.location.href = '${path}/board/${sessionMember.no}/list';
 
                 }
 

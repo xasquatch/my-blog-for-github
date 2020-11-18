@@ -78,7 +78,7 @@ public class BoarderController {
     }
 
     //TODO: 게시판 리스트 조회 페이지
-    @RequestMapping(value = "/{memberNo}/view/list", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/{memberNo}/list", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewList(Model model) {
 
         model.addAttribute("mainContents", "board-view-list");
@@ -86,7 +86,7 @@ public class BoarderController {
         return "index";
     }
 
-    @RequestMapping(value = "/{memberNo}/view/detail/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/{memberNo}/detail/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewDetail(Model model, @PathVariable String boardNo) {
 
         HashMap<String, Object> boardInfo = boardService.viewDetail(boardNo);
@@ -103,7 +103,7 @@ public class BoarderController {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)){
             boardService.delete(boardNo);
 
-            return "redirect:/board/" + memberNo + "/view/list";
+            return "redirect:/board/" + memberNo + "/list";
         }
             return "redirect:/";
     }

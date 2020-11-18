@@ -18,7 +18,7 @@
                 </a>
             </li>
             <li role="presentation">
-                <a href="${path}/board/${sessionMember.no}/view/list">
+                <a href="${path}/board/${sessionMember.no}/list">
                     <img style="width: 50px; height: auto;" src="${path}/img/banner-black/boardList.png">
                     글 목록
                 </a>
