@@ -14,7 +14,7 @@
     </form>
     <section id="resource-section">
 <textarea id="resource-json-input"
-placeholder='{
+          placeholder='{
     "key0":"value",
     "key1":["value1","value2"],
     "key2":"value",
@@ -35,13 +35,13 @@ placeholder='{
         <textarea id="resource-json-convert" class="dot-key" readonly>
         </textarea>
     </section>
-<div class="dot-key" style="text-align: center;">
-    본 페이지에서는 <b style="color: darkred">JSON</b>형식만을 지원합니다.<BR>
-    하단 URL을 통해 JSON에 대해 간략히 알아보실 수 있습니다.<BR>
-    <a href="https://developer.mozilla.org/ko/docs/Learn/JavaScript/Objects/JSON" target="_blank" style="color: #4d9be2 !important; word-break: break-all">
-        https://developer.mozilla.org/ko/docs/Learn/JavaScript/Objects/JSON(새 창으로 열기)
-    </a>
-</div>
+    <div class="dot-key" style="text-align: center;">
+        본 페이지에서는 <b style="color: darkred">JSON</b>형식만을 지원합니다.<BR>
+        하단 URL을 통해 JSON에 대해 간략히 알아보실 수 있습니다.<BR>
+        <a href="https://developer.mozilla.org/ko/docs/Learn/JavaScript/Objects/JSON" target="_blank" style="color: #4d9be2 !important; word-break: break-all">
+            https://developer.mozilla.org/ko/docs/Learn/JavaScript/Objects/JSON(새 창으로 열기)
+        </a>
+    </div>
 </section>
 
 <script>
@@ -63,10 +63,10 @@ placeholder='{
 
             ajax.submit('post', '${path}/resource/${sessionMember.no}/upload', function (data) {
 
-                if (data === 'false'){
+                if (data === 'false') {
                     window.alert('리소스 업로드에 실패하였습니다. 다시 시도해주세요.');
 
-                }else if (data === 'true'){
+                } else if (data === 'true') {
                     window.location.href = '${path}/resource/${sessionMember.no}/list'
 
                 }
@@ -84,7 +84,7 @@ placeholder='{
         var convertedData = document.querySelector('#resource-json-convert');
         try {
             convertedData.style.color = 'inherit';
-            convertedData.value = JSON.stringify(JSON.parse(inputData.value));
+            convertedData.value = JSON.stringify(JSON.parse(inputData.value), null, 2);
 
         } catch (e) {
             convertedData.style.color = 'red';
