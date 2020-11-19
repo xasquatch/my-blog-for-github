@@ -21,34 +21,62 @@
         </div>
     </article>
     <article class="resource-list-box">
-        <div class="btn-link-red" data-toggle="modal" data-target="#myModal" >
-            <h3>h3asdfasdfasdfasfasdasdfasd</h3>
-            <p>hi1231231231231234165243561245631462534651243321213321243512433121331123213132213132131212312hi1231231231231234165243561245631462534651243321213321243512433121331123213132213132131212312hi1231231231231234165243561245631462534651243321213321243512433121331123213132213132131212312hi1231231231231234165243561245631462534651243321213321243512433121331123213132213132131212312hi1231231231231234165243561245631462534651243321213321243512433121331123213132213132131212312</p>
-        </div>
-
+        <c:forEach items="${requestScope.resources}" var="resource">
+            <div class="btn-link-red" data-toggle="modal" data-target="#myModal">
+                <label class="sr-only">${resource.no}</label>
+                <h3>${resource.title}</h3>
+                <p>${resource.contents}</p>
+            </div>
+        </c:forEach>
     </article>
-
+    <article>
+        <BR><BR>
+        <button type="button" class="btn btn-link-red dot-key" style="font-size: 30px; width: 100%" onclick="moreLoad()">
+            More Load
+        </button>
+    </article>
 
 </section>
 <script>
     document.querySelector('#search-value').addEventListener('keypress', function (e) {
 
         if (e.keyCode === 13) extracted();
-    })
-
-    function setClickEventDivContents() {
-        var divBox = document.querySelectorAll('.resource-list-box>div');
-        for (var box of divBox) {
-            var title = box.querySelector('h3').innerText;
-            var contents = box.querySelector('p').innerText;
-            box.setAttribute('onclick','modal.changeForm("'+title+'","'+contents+'")');
-
-        }
-    }
+    });
 
     function extracted(data) {
         window.alert(data);
     }
+
+    function resourceViewSetting(element) {
+
+        var prettyContents = JSON.stringify(JSON.parse(element.querySelector('p').innerText), null, 2);
+        var textarea = document.createElement('textarea');
+        var emptyDiv = document.createElement('div');
+        textarea.style.width = '100%';
+        textarea.style.height = '30vh';
+        textarea.style.resize = 'none';
+        textarea.innerHTML = prettyContents;
+
+        emptyDiv.appendChild(textarea);
+
+        modal.changeForm("[Serial Number:" + element.querySelector('label').innerText + "] " + element.querySelector('h3').innerText, emptyDiv.innerHTML);
+
+    }
+
+    function setClickEventDivContents() {
+        var divBox = document.querySelectorAll('.resource-list-box>div');
+        for (var box of divBox) {
+            box.setAttribute('onclick',
+                'resourceViewSetting(this)');
+        }
+    }
+
+    function moreLoad() {
+        var lastNumber = document.querySelector('.resource-list-box>div:last-child>label').innerText;
+
+        ajax.submit('GET',)
+    }
+
     setClickEventDivContents();
 
 </script>

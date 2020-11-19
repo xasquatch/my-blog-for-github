@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/resource")
 public class ResourceController {
@@ -21,6 +23,9 @@ public class ResourceController {
     @GetMapping("/{memberNo}/list")
     public String viewList(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+            List<Resource> resources = resourceService.viewList(0);
+
+            model.addAttribute("resources", resources);
             model.addAttribute("mainContents", "resource-list");
             return "index";
         }

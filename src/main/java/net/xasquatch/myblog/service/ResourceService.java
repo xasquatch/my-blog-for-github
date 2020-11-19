@@ -1,12 +1,19 @@
 package net.xasquatch.myblog.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.repository.ResourceDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
+@Slf4j
 @Service
 public class ResourceService {
 
@@ -16,12 +23,19 @@ public class ResourceService {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
-    public boolean upload(net.xasquatch.myblog.model.Resource resource){
+    public boolean upload(net.xasquatch.myblog.model.Resource resource) {
         boolean result = false;
         resource.setMbr_no(sessionMember.getNo());
-        if (resourceDao.insertOne(resource) ==1) result = true;
+        if (resourceDao.insertOne(resource) == 1) result = true;
 
         return result;
     }
+
+    //리스트 전체를 web api로 세션없이 보여줄 생각은 없음
+    public List<net.xasquatch.myblog.model.Resource> viewList(int index) {
+
+        return resourceDao.selectAll(sessionMember.getNo(), index, index + 10);
+    }
+
 
 }
