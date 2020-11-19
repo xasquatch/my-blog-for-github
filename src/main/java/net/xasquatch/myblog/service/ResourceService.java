@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -46,6 +45,22 @@ public class ResourceService {
         } catch (JsonProcessingException e) {
             log.warn("JsonProcessingException: lastNumber={}",lastNumber);
         }
+
+        return result;
+    }
+
+    public boolean modify(net.xasquatch.myblog.model.Resource resource){
+        boolean result = false;
+        resource.setMbr_no(sessionMember.getNo());
+        if (resourceDao.updateOne(resource) == 1) result = true;
+
+        return result;
+    }
+
+    public boolean delete(net.xasquatch.myblog.model.Resource resource){
+        boolean result = false;
+        resource.setMbr_no(sessionMember.getNo());
+        if (resourceDao.deleteOne(resource) == 1) result = true;
 
         return result;
     }

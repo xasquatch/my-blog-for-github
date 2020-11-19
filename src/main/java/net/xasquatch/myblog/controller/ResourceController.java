@@ -63,4 +63,24 @@ public class ResourceController {
         return "false";
     }
 
+    @PutMapping("/{memberNo}/modify")
+    @ResponseBody
+    public String modifyData(Resource resource, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+
+            return String.valueOf(resourceService.modify(resource));
+        }
+        return "false";
+    }
+
+    @DeleteMapping("/{memberNo}/delete")
+    @ResponseBody
+    public String deleteData(Resource resource, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+
+            return String.valueOf(resourceService.delete(resource));
+        }
+        return "false";
+    }
+
 }

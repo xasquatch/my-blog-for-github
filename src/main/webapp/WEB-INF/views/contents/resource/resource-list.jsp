@@ -73,7 +73,7 @@
         emptyContentsDiv.appendChild(modifyForm);
 
         modal.changeForm('[Serial Number:' + serialNumber + '] ' +
-            '<button type="button" class="btn-link-red" onclick="removeResource(' + serialNumber + ')">' +
+            '<button type="button" class="btn-link-red" onclick="removeResource()">' +
             '<span class="glyphicon glyphicon-trash"></span>' +
             '</button>' +
             emptyTitleDiv.innerHTML,
@@ -114,15 +114,43 @@
 
         var formData = new FormData(targetForm);
 
-        for (var x of formData) {
-            console.log(x);
-        }
+        ajax.submit('PUT', '${path}/resource/${sessionMember.no}/modify', function (data) {
+            console.log(data);
+            if (data === 'false') {
+                window.alert('수정에 실패하였습니다. 잠시 후 다시시도해주세요')
+
+            } else if (data === 'true') {
+                window.location.reload(true);
+
+            }
+
+        }, 'FORMFILE', formData);
 
 
     }
 
-    function removeResource(serialNumber) {
-        alert('삭제'+serialNumber);
+    function removeResource() {
+        if (window.confirm('정말 삭제하시겠습니까?')) {
+            var targetForm = document.querySelector('#resource-target-form');
+            var title = document.querySelector('#resource-target-title');
+            var contents = document.querySelector('#resource-target-contents');
+
+            title.value = document.querySelector('#resource-title').value;
+            contents.value = document.querySelector('#resource-contents').value;
+
+            var formData = new FormData(targetForm);
+
+            ajax.submit('DELETE', '${path}/resource/${sessionMember.no}/delete', function (data) {
+                if (data === 'false') {
+                    window.alert('삭제에 실패하였습니다. 잠시 후 다시시도해주세요')
+
+                } else if (data === 'true') {
+                    window.location.reload(true);
+
+                }
+
+            }, 'FORMFILE', formData);
+        }
     }
 
     function setClickEventDivContents() {
