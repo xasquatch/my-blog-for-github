@@ -33,6 +33,17 @@ public class ResourceController {
 
     }
 
+    @GetMapping(value = "/{memberNo}/AdditionalList", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String AdditionalViewList(Model model, @PathVariable String memberNo,
+                                     @RequestParam(name = "lastNumber", required = true, defaultValue = "0") String lastNumber) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+            return resourceService.AdditionalViewList(lastNumber);
+        }
+        return "false";
+
+    }
+
     @GetMapping("/{memberNo}/create")
     public String create(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
