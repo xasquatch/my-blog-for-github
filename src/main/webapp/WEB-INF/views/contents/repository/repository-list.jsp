@@ -5,7 +5,7 @@
 <section id="main-section">
     <article class="repository-list-title">
         <div>
-            <h1 class="dot-key">내 저장소</h1>
+            <h1 class="dot-key" style="width: 200px">내 저장소</h1>
         </div>
         <div>
             <div style="display: flex; align-items: flex-start; flex-wrap: nowrap; justify-content: flex-end;">

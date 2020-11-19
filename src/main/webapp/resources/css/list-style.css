@@ -102,9 +102,9 @@
 .repository-list-box>div{
     display: flex;
     align-items: center;
-    width: 200px;
+    width: 160px;
     height: 200px;
-    margin: 5px;
+    margin: 3px;
     animation: 0.5s stretchWidth;
     flex-direction: column;
     justify-content: flex-start;
