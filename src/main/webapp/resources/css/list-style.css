@@ -62,7 +62,7 @@
     height: 100%;
 }
 
-.board-list-title, .repository-list-title{
+.board-list-title, .resource-list-title{
     display: flex;
     justify-content: space-between;
 }
@@ -93,30 +93,30 @@
     margin: 5px;
 }
 
-.repository-list-box{
+.resource-list-box{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
 }
-.repository-list-box>div{
+.resource-list-box>div{
     display: flex;
     align-items: center;
     width: 200px;
     height: 200px;
-    margin: 5px;
+    margin: 3px;
     animation: 0.5s stretchWidth;
     flex-direction: column;
     justify-content: flex-start;
 }
-.repository-list-box>div>*{
+.resource-list-box>div>*{
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-all;
     padding: 10px;
     box-sizing: border-box;
 }
-.repository-list-box>div>h3{
+.resource-list-box>div>h3{
     margin: 0;
     height: 3em;
     overflow: hidden;

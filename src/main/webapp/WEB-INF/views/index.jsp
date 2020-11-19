@@ -33,16 +33,16 @@
             <jsp:include page="contents/user-info/${mainContents}.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents == 'repository-list'}">
-            <jsp:include page="contents/repository/${mainContents}.jsp"/>
+        <c:when test="${mainContents == 'resource-list'}">
+            <jsp:include page="contents/resource/${mainContents}.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents == 'repository-create'}">
-            <jsp:include page="contents/repository/${mainContents}.jsp"/>
+        <c:when test="${mainContents == 'resource-create'}">
+            <jsp:include page="contents/resource/${mainContents}.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents == 'repository-view'}">
-            <jsp:include page="contents/repository/${mainContents}.jsp"/>
+        <c:when test="${mainContents == 'resource-view'}">
+            <jsp:include page="contents/resource/${mainContents}.jsp"/>
         </c:when>
     </c:choose>
 
