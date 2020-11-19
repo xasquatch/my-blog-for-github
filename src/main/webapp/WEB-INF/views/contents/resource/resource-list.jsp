@@ -74,7 +74,46 @@
     function moreLoad() {
         var lastNumber = document.querySelector('.resource-list-box>div:last-child>label').innerText;
 
-        ajax.submit('GET',)
+        ajax.submit('GET', '${path}/resource/${sessionMember.no}/AdditionalList?lastNumber=' + lastNumber, function (data) {
+            if (data === 'false') {
+                window.alert('리소스 가져오기에 실패하였습니다. 잠시 후 다시 시도해주세요.')
+
+            } else {
+                var jsonData = JSON.parse(data);
+                console.log(jsonData);
+                if (jsonData.length !== 0) {
+                    var resourceListBox = document.querySelector('.resource-list-box');
+
+                    for (var resource of jsonData) {
+                        // <div class="btn-link-red" data-toggle="modal" data-target="#myModal">
+                        var divContainerElement = document.createElement('div');
+                        divContainerElement.className = 'btn-link-red';
+                        divContainerElement.setAttribute('data-toggle', 'modal')
+                        divContainerElement.setAttribute('data-target', '#myModal')
+
+                        var labelElement = document.createElement('label');
+                        labelElement.className = 'sr-only';
+                        labelElement.innerText = resource.no;
+                        var h3Element = document.createElement('h3');
+                        h3Element.innerText = resource.title;
+                        var paragraphElement = document.createElement('p');
+                        paragraphElement.innerText = resource.contents;
+
+                        divContainerElement.appendChild(labelElement);
+                        divContainerElement.appendChild(h3Element);
+                        divContainerElement.appendChild(paragraphElement);
+
+                        resourceListBox.appendChild(divContainerElement);
+                        setClickEventDivContents();
+                    }
+
+                }else{
+                    window.alert('더이상 불러올 리소스가 없습니다.');
+
+                }
+            }
+
+        });
     }
 
     setClickEventDivContents();
