@@ -44,8 +44,8 @@
                 </a>
             </li>
             <li role="presentation">
-                <a href="${path}/repository/${sessionMember.no}/list">
-                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/repository.png">
+                <a href="${path}/resource/${sessionMember.no}/list">
+                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/resource.png">
                     내 저장소
                 </a>
             </li>

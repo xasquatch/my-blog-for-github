@@ -1,8 +1,7 @@
 package net.xasquatch.myblog.controller;
 
 import net.xasquatch.myblog.model.Member;
-import net.xasquatch.myblog.service.MailService;
-import net.xasquatch.myblog.service.MemberService;
+import net.xasquatch.myblog.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,20 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @Controller
-@RequestMapping("/repository")
-public class RepositoryController {
-
-    @Resource(name = "sessionMember")
-    private Member sessionMember;
+@RequestMapping("/resource")
+public class ResourceController {
 
     @Autowired
     private HomeController checkSessionController;
 
+    @Autowired
+    private ResourceService resourceService;
 
     @GetMapping("/{memberNo}/list")
     public String viewList(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            model.addAttribute("mainContents", "repository-list");
+            model.addAttribute("mainContents", "resource-list");
             return "index";
         }
         return "redirect:/";
@@ -34,20 +32,20 @@ public class RepositoryController {
     @GetMapping("/{memberNo}/create")
     public String create(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            model.addAttribute("mainContents", "repository-create");
+            model.addAttribute("mainContents", "resource-create");
             return "index";
         }
         return "redirect:/";
     }
 
     @PostMapping("/{memberNo}/upload")
-    @ResponseBody
     public String uploadData(@PathVariable String memberNo) {
-        String result = "false";
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            return "index";
+//            repositoryService.
+
+
         }
-        return result;
+        return "redirect:/";
     }
 
 }

@@ -16,8 +16,8 @@
     </section>
     <section>
         <div onclick="itemFocus(this)">
-            <img src="${path}/img/banner-white/repository.png">
-            <p>My Repository</p>
+            <img src="${path}/img/banner-white/resource.png">
+            <p>My Resource</p>
         </div>
         <div onclick="itemFocus(this)">
             <img src="${path}/img/banner-white/api.png">
@@ -50,8 +50,8 @@
             } else if (inputData === 'My Blog') {
                 itemFocusBoard();
 
-            } else if (inputData === 'My Repository') {
-                itemFocusRepository();
+            } else if (inputData === 'My Resource') {
+                itemFocusResource();
 
             } else if (inputData === 'API') {
                 itemFocusApi();
@@ -92,14 +92,14 @@
 
         }
 
-        function itemFocusRepository() {
+        function itemFocusResource() {
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
-            contents1.setAttribute('href', '${path}/repository/${sessionMember.no}/list');
+            contents1.setAttribute('href', '${path}/resource/${sessionMember.no}/list');
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
-                '<img src="${path}/img/banner-white/repository.png" style="max-height : 100px; max-width:100px;"><BR>내 저장소<BR>JSON형식으로 나만의 저장소를 만들어<BR>사용 할 수 있습니다.', 10);
+                '<img src="${path}/img/banner-white/resource.png" style="max-height : 100px; max-width:100px;"><BR>내 저장소<BR>JSON형식으로 나만의 저장소를 만들어<BR>사용 할 수 있습니다.', 10);
         }
 
         function itemFocusApi() {

@@ -5,15 +5,15 @@
     <section style="display: flex; flex-wrap: nowrap; flex-direction: row; justify-content: space-between;">
         <h1 class="dot-key">저장소 생성<BR>(only supported JSON)</h1>
     </section>
-    <form id="repository-form">
+    <form id="resource-form">
         <div class="input-group">
             <div class="input-group-addon">Title</div>
-            <input type="text" class="form-control" name="title" placeholder="Insert your repository name">
+            <input type="text" class="form-control" name="title" placeholder="Insert your resource name">
         </div>
-        <textarea id="repository-json-real" name="contents" hidden></textarea>
+        <textarea id="resource-json-real" name="contents" hidden></textarea>
     </form>
-    <section id="repository-section">
-<textarea id="repository-json-input"
+    <section id="resource-section">
+<textarea id="resource-json-input"
 placeholder='{
     "key0":"value",
     "key1":["value1","value2"]
@@ -21,7 +21,7 @@ placeholder='{
     "key3":"value",
 }'>
 </textarea>
-        <div class="repository-manipulation-btn">
+        <div class="resource-manipulation-btn">
             <button type="button" class="btn btn-link-red" style="width: 120px; height: fit-content;" onclick="uploadJSON()">
                 <span class="glyphicon glyphicon-hdd" style="font-size: 30px"></span>
                 Upload<BR>JSON
@@ -32,7 +32,7 @@ placeholder='{
             </button>
         </div>
 
-        <textarea id="repository-json-convert" class="dot-key" readonly>
+        <textarea id="resource-json-convert" class="dot-key" readonly>
         </textarea>
     </section>
 <div class="dot-key" style="text-align: center;">
@@ -45,7 +45,7 @@ placeholder='{
 </section>
 
 <script>
-    document.querySelector('#repository-json-input').addEventListener('keypress', function (e) {
+    document.querySelector('#resource-json-input').addEventListener('keypress', function (e) {
         console.log(e.keyCode);
     })
 
@@ -54,14 +54,14 @@ placeholder='{
         convertJSON();
 
         if (window.confirm('변환되는 JSON객체로 업로드됩니다. 이대로 진행하시겠습니까?')) {
-            var convertedData = document.querySelector('#repository-json-convert');
-            var realContents = document.querySelector('#repository-json-real');
+            var convertedData = document.querySelector('#resource-json-convert');
+            var realContents = document.querySelector('#resource-json-real');
             realContents.value = convertedData.value;
 
-            var repositoryForm = document.querySelector('#repository-form');
-            var formData = new FormData(repositoryForm);
+            var resourceForm = document.querySelector('#resource-form');
+            var formData = new FormData(resourceForm);
 
-            ajax.submit('post', '${path}/repository/${sessionMember.no}/upload', function (data) {
+            ajax.submit('post', '${path}/resource/${sessionMember.no}/upload', function (data) {
                 console.log(data);
 
             }, 'FORMFILE', formData);
@@ -72,13 +72,13 @@ placeholder='{
     }
 
     function convertJSON() {
-        var inputData = document.querySelector('#repository-json-input');
-        var convertedData = document.querySelector('#repository-json-convert');
+        var inputData = document.querySelector('#resource-json-input');
+        var convertedData = document.querySelector('#resource-json-convert');
         try {
-            convertedData.style.color = 'inherited';
+            convertedData.style.color = 'inherit';
             convertedData.value = JSON.stringify(JSON.parse(inputData.value));
+
         } catch (e) {
-            console.log(e);
             convertedData.style.color = 'red';
             convertedData.value = e;
 
