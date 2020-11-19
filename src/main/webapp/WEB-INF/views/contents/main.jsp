@@ -96,10 +96,15 @@
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
+            var contents2 = document.createElement('a');
             contents1.setAttribute('href', '${path}/resource/${sessionMember.no}/list');
+            contents2.setAttribute('href', '${path}/resource/${sessionMember.no}/create');
             footerTarget.appendChild(contents1);
+            footerTarget.appendChild(contents2);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
-                '<img src="${path}/img/banner-white/resource.png" style="max-height : 100px; max-width:100px;"><BR>내 저장소<BR>JSON형식으로 나만의 저장소를 만들어<BR>사용 할 수 있습니다.', 10);
+                '<img src="${path}/img/banner-white/resource.png" style="max-height : 100px; max-width:100px;"><BR>내 저장소<BR>JSON 형식으로 나만의 저장소를 만들어<BR>사용 할 수 있습니다.', 10);
+            textScript.insertText('#main-footer>div>a:nth-child(2)',
+                '<img src="${path}/img/banner-white/add-resource.png" style="max-height : 100px; max-width:100px;"><BR>리소스 추가<BR>JSON 파일을 작성합니다.', 10);
         }
 
         function itemFocusApi() {
