@@ -16,9 +16,12 @@ public class ResourceService {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
-    public boolean create(net.xasquatch.myblog.model.Resource resource){
-        
-        return false;
+    public boolean upload(net.xasquatch.myblog.model.Resource resource){
+        boolean result = false;
+        resource.setMbr_no(sessionMember.getNo());
+        if (resourceDao.insertOne(resource) ==1) result = true;
+
+        return result;
     }
 
 }

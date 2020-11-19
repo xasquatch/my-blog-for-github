@@ -8,7 +8,7 @@
     <form id="resource-form">
         <div class="input-group">
             <div class="input-group-addon">Title</div>
-            <input type="text" class="form-control" name="title" placeholder="Insert your resource name">
+            <input type="text" class="form-control" name="title" placeholder="Insert your resource name" maxlength="100">
         </div>
         <textarea id="resource-json-real" name="contents" hidden></textarea>
     </form>
@@ -16,9 +16,9 @@
 <textarea id="resource-json-input"
 placeholder='{
     "key0":"value",
-    "key1":["value1","value2"]
+    "key1":["value1","value2"],
     "key2":"value",
-    "key3":"value",
+    "key3":"value"
 }'>
 </textarea>
         <div class="resource-manipulation-btn">
@@ -62,7 +62,15 @@ placeholder='{
             var formData = new FormData(resourceForm);
 
             ajax.submit('post', '${path}/resource/${sessionMember.no}/upload', function (data) {
-                console.log(data);
+
+                if (data === 'false'){
+                    window.alert('리소스 업로드에 실패하였습니다. 다시 시도해주세요.');
+
+                }else if (data === 'true'){
+                    window.location.href = '${path}/resource/${sessionMember.no}/list'
+
+                }
+
 
             }, 'FORMFILE', formData);
 
