@@ -20,4 +20,8 @@ public class ResourceDao {
     public List<Resource> selectAll(Object mbr_no, Object startLimit, Object endLimit) {
         return resourceMapper.selectAll(mbr_no, startLimit, endLimit);
     }
+
+    public List<Resource> selectAddAll(Object mbr_no, Object lastNumber) {
+        return resourceMapper.selectAddAll(mbr_no, lastNumber);
+    }
 }

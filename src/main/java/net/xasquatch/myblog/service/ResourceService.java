@@ -37,5 +37,18 @@ public class ResourceService {
         return resourceDao.selectAll(sessionMember.getNo(), index, index + 10);
     }
 
+    public String AdditionalViewList(String lastNumber) {
+        String result = "";
+        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+
+        try {
+            result = objectWriter.writeValueAsString(resourceDao.selectAddAll(sessionMember.getNo(), lastNumber));
+        } catch (JsonProcessingException e) {
+            log.warn("JsonProcessingException: lastNumber={}",lastNumber);
+        }
+
+        return result;
+    }
+
 
 }

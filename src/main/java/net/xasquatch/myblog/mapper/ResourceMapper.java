@@ -14,4 +14,6 @@ public interface ResourceMapper {
     @Select("SELECT no, mbr_no, title, convert(contents USING UTF8) as contents FROM resource WHERE mbr_no = #{arg0} ORDER BY no DESC LIMIT #{arg1}, #{arg2}")
     List<Resource> selectAll(Object mbr_no, Object startLimit, Object endLimit);
 
+    @Select("SELECT no, mbr_no, title, convert(contents USING UTF8) as contents FROM resource WHERE mbr_no = #{arg0} AND no < #{arg1} ORDER BY no DESC LIMIT 0, 10")
+    List<Resource> selectAddAll(Object mbr_no, Object lastNumber);
 }
