@@ -6,10 +6,7 @@ import net.xasquatch.myblog.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -34,13 +31,23 @@ public class RepositoryController {
 
     }
 
-    @PostMapping("/{memberNo}/create")
-    public String createList(Model model, @PathVariable String memberNo) {
+    @GetMapping("/{memberNo}/create")
+    public String create(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             model.addAttribute("mainContents", "repository-create");
             return "index";
         }
         return "redirect:/";
+    }
+
+    @PostMapping("/{memberNo}/upload")
+    @ResponseBody
+    public String uploadData(@PathVariable String memberNo) {
+        String result = "false";
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+            return "index";
+        }
+        return result;
     }
 
 }

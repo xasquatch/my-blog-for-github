@@ -342,23 +342,57 @@
     color: white;
     overflow: hidden;
 }
+
 #error-section {
     padding: 20px;
     font-size: 2rem;
     height: 80vh;
 }
-#error-section > div{
+
+#error-section > div {
     text-align: center;
     background: url('/img/banner/3.gif');
     background-clip: text;
     -webkit-background-clip: text;
     background-size: cover;
-    color: rgba(255,255,255,0);
+    color: rgba(255, 255, 255, 0);
 
 }
+
 #error-section > div:first-child {
     font-size: 20vw;
     margin-top: 10vh;
 }
 
 /*END: error page-----------*/
+/*-----repository page-----------*/
+#repository-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#repository-section textarea {
+    width: 400px;
+    height: 60vh;
+    margin: 10px;
+    resize: none;
+}
+
+.repository-manipulation-btn {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+@media (max-width: 600px) {
+    .repository-manipulation-btn {
+        width: 100%;
+        flex-direction: row;
+    }
+    #repository-section textarea {
+        height: 300px;
+    }
+}
+
+/*END: repository page-----------*/

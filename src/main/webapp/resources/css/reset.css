@@ -35,3 +35,6 @@ blockquote {
 .modal-header, .modal-body{
     word-break: break-all;
 }
+.input-group-addon{
+    background-color: rgba(0,0,0,0) !important;
+}
