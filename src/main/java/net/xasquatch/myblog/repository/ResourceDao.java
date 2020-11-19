@@ -24,4 +24,14 @@ public class ResourceDao {
     public List<Resource> selectAddAll(Object mbr_no, Object lastNumber) {
         return resourceMapper.selectAddAll(mbr_no, lastNumber);
     }
+
+    public int updateOne(Resource resource){
+        return resourceMapper.updateOne(resource);
+    }
+
+    public int deleteOne(Resource resource){
+        return resourceMapper.deleteOne(resource);
+    }
+
 }
+
