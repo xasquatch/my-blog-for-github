@@ -14,13 +14,25 @@
             <li role="presentation">
                 <a href="${path}/board/${sessionMember.no}/create">
                     <img style="width: 50px; height: auto;" src="${path}/img/banner-black/writeBoard.png">
-                    글 쓰기
+                    새 글 쓰기
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="${path}/resource/${sessionMember.no}/create">
+                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/add-resource.png">
+                    새 저장소 만들기
                 </a>
             </li>
             <li role="presentation">
                 <a href="${path}/board/${sessionMember.no}/list">
-                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/boardList.png">
-                    글 목록
+                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/all-boards.png">
+                    전체 글 목록
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="${path}/board/${sessionMember.no}/list">
+                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/all-resources.png">
+                    전체 저장소 목록
                 </a>
             </li>
         </ul>
@@ -44,9 +56,15 @@
                 </a>
             </li>
             <li role="presentation">
+                <a href="${path}/board/${sessionMember.no}/list">
+                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/boardList.png">
+                    내 글 목록
+                </a>
+            </li>
+            <li role="presentation">
                 <a href="${path}/resource/${sessionMember.no}/list">
                     <img style="width: 50px; height: auto;" src="${path}/img/banner-black/resource.png">
-                    내 저장소
+                    내 저장소 목록
                 </a>
             </li>
         </ul>
