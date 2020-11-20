@@ -13,35 +13,14 @@ public class AccessorInfo {
 
     public String getIpAddress(HttpServletRequest request) {
 
-        String ip = null;
-        try {
+        String ip = request.getHeader("X-Forwarded-For");
 
-            boolean isLoopBack = true;
-            Enumeration<NetworkInterface> en;
-            en = NetworkInterface.getNetworkInterfaces();
-
-            while (en.hasMoreElements()) {
-                NetworkInterface ni = en.nextElement();
-                if (ni.isLoopback())
-                    continue;
-
-                Enumeration<InetAddress> inetAddresses = ni.getInetAddresses();
-                while (inetAddresses.hasMoreElements()) {
-                    InetAddress ia = inetAddresses.nextElement();
-                    if (ia.getHostAddress() != null && ia.getHostAddress().contains(".")) {
-                        ip = ia.getHostAddress();
-                        isLoopBack = false;
-                        break;
-                    }
-                }
-                if (!isLoopBack)
-                    break;
-            }
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
+        if (ip == null) ip = request.getHeader("Proxy-Client-IP");
+        if (ip == null) ip = request.getHeader("WL-Proxy-Client-IP");
+        if (ip == null) ip = request.getHeader("HTTP_CLIENT_IP");
+        if (ip == null) ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        if (ip == null) ip = request.getRemoteAddr();
 
         return ip;
     }
-
 }
