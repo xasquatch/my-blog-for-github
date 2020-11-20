@@ -95,11 +95,12 @@
 }
 
 #main-aside {
-    padding: 50px 0;
+    padding: 5px 0;
     width: 250px;
     font-size: 2rem;
     font-weight: bold;
     overflow-y: auto;
+    max-height: 80vh;
 }
 #mobile-hamburger {
     display: none;
@@ -363,8 +364,7 @@
 }
 
 #error-section > div:first-child {
-    font-size: 20vw;
-    margin-top: 10vh;
+    font-size: 15vw;
 }
 
 /*END: error page-----------*/

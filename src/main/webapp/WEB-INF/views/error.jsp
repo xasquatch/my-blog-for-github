@@ -15,6 +15,6 @@
 <jsp:include page="include/footer.jsp"/>
 <script>
     textScript.insertText('#error-explain',
-        '${requestScope.error}<BR>알 수 없는 원인으로<BR> 페이지를 찾지 못하였습니다.<BR> 잠시 후 다시 시도해주세요.',1,);
+        "${requestScope.error}"+'<BR>알 수 없는 원인으로<BR> 페이지를 찾지 못하였습니다.<BR> 잠시 후 다시 시도해주세요.',1,);
 
 </script>

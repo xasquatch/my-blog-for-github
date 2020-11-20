@@ -11,6 +11,26 @@ blockquote {
     font-size: inherit !important;
 
 }
+body::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+body::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+}
+body::-webkit-scrollbar-thumb:HOVER{
+    background: rgba(0, 0, 0, 1);
+}
+body *::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+body *::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+}
+body *::-webkit-scrollbar-thumb:HOVER{
+    background: rgba(0, 0, 0, 1);
+}
 .btn-link-red{
     color: black;
     transition: 0.5s all;
