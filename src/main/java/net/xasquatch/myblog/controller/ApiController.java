@@ -23,35 +23,27 @@ import java.util.Map;
 public class ApiController {
 
     @Autowired
-    private BoardService boardService;
-
-    @Autowired
     private ApiService apiService;
 
     @GetMapping(value = "/members/{memberNo}/boards")
     public String viewBoardList(@PathVariable String memberNo,
-                                @RequestParam(value = "pageLimit", required = false, defaultValue = "10") int pageLimit,
-                                @RequestParam(value = "currentPageBlock", required = false, defaultValue = "1") int currentPageBlock,
+                                @RequestParam(value = "page-limit", required = false, defaultValue = "10") int pageLimit,
+                                @RequestParam(value = "current-page-block", required = false, defaultValue = "1") int currentPageBlock,
                                 @RequestParam(value = "keyword", required = false, defaultValue = "empty") String keyword,
                                 @RequestParam(value = "title", required = false, defaultValue = "empty") String title,
                                 @RequestParam(value = "contents", required = false, defaultValue = "empty") String contents,
-                                @RequestParam(value = "titleAndContents", required = false, defaultValue = "empty") String titleAndContents) {
-        Map<String, String> searchValueMap = new HashMap<String, String>();
-        searchValueMap.put("keyword", keyword);
-        searchValueMap.put("title", title);
-        searchValueMap.put("contents", contents);
-        searchValueMap.put("titleAndContents", titleAndContents);
+                                @RequestParam(value = "title-and-contents", required = false, defaultValue = "empty") String titleAndContents) {
 
-        String[] searchValue = boardService.parsingSearchValue(searchValueMap);
+        String[] searchValue = apiService.parsingSearchValue(keyword, title, contents, titleAndContents);
 
-        return boardService.getBoardList(memberNo, pageLimit, currentPageBlock, searchValue);
+        return apiService.getBoardList(memberNo, pageLimit, currentPageBlock, searchValue);
 
     }
 
     @GetMapping(value = "/members/{memberNo}/boards/{boardNo}")
-    public String viewBoardDetail(@PathVariable String memberNo,@PathVariable String boardNo){
+    public String viewBoardDetail(@PathVariable String memberNo, @PathVariable String boardNo) {
 
-        return boardService.viewDetailToJSON(memberNo, boardNo);
+        return apiService.viewBoard(memberNo, boardNo);
 
     }
 
