@@ -22,12 +22,11 @@ public interface BoardMapper {
     @Delete("DELETE FROM board WHERE completed = 'false' AND member_no = #{member_no}")
     void deleteUnfinishedBoard(Map<String, Object> memberMap);
 
-    @Select("SELECT COUNT(*) as list_count FROM board WHERE member_no = #{arg0} AND completed = 'true'")
-    int selectBoardListCount(Object member_no);
-
     @Select("SELECT no, member_no, keyword, title, convert(contents USING UTF8) as contents, created_date, created_ip, thumbnail FROM board WHERE no = #{arg0}")
     HashMap<String, Object> selectOneBoard(Object board_no);
-
+/*-----------------------------------------------------------------*/
+    @Select("SELECT COUNT(*) as list_count FROM board WHERE member_no = #{arg0} AND completed = 'true'")
+    int selectBoardListCount(Object member_no);
 
     @Select("SELECT * FROM " +
                 "(SELECT @ROWNUM := @ROWNUM + 1 AS rowno, board.* " +
@@ -73,5 +72,56 @@ public interface BoardMapper {
             "ORDER BY SUB.rowno DESC " +
             "Limit #{arg1}, #{arg2};")
     List<HashMap<String, Object>> selectBoardListWhereLikeTitleAndContents(Object member_no, Object currentPage, Object lastPage, Object searchValue);
+
+    /*--------TODO:전체글 조회---------------------------------------------------------*/
+    @Select("SELECT COUNT(*) as list_count FROM board WHERE completed = 'true'")
+    int selectAllBoardListCount();
+
+    @Select("SELECT * FROM " +
+            "(SELECT @ROWNUM := @ROWNUM + 1 AS rowno, board.* " +
+            "FROM board board, (SELECT @ROWNUM := 0 ) TMP " +
+            "WHERE completed = 'true'" +
+            "ORDER BY board.no ASC)SUB " +
+            "ORDER BY SUB.rowno DESC " +
+            "Limit #{arg0}, #{arg1};")
+    List<HashMap<String, Object>> selectAllBoardList(Object currentPage, Object lastPage);
+
+    @Select("SELECT * FROM " +
+            "(SELECT @ROWNUM := @ROWNUM + 1 AS rowno, board.* " +
+            "FROM board board, (SELECT @ROWNUM := 0 ) TMP " +
+            "WHERE completed = 'true' AND (keyword LIKE #{arg2})" +
+            "ORDER BY board.no ASC)SUB " +
+            "ORDER BY SUB.rowno DESC " +
+            "Limit #{arg0}, #{arg1};")
+    List<HashMap<String, Object>> selectAllBoardListWhereLikeKeyword(Object currentPage, Object lastPage, Object searchValue);
+
+    @Select("SELECT * FROM " +
+            "(SELECT @ROWNUM := @ROWNUM + 1 AS rowno, board.* " +
+            "FROM board board, (SELECT @ROWNUM := 0 ) TMP " +
+            "WHERE completed = 'true' AND (title LIKE #{arg2})" +
+            "ORDER BY board.no ASC)SUB " +
+            "ORDER BY SUB.rowno DESC " +
+            "Limit #{arg0}, #{arg1};")
+    List<HashMap<String, Object>> selectAllBoardListWhereLikeTitle(Object currentPage, Object lastPage, Object searchValue);
+
+    @Select("SELECT * FROM " +
+            "(SELECT @ROWNUM := @ROWNUM + 1 AS rowno, board.* " +
+            "FROM board board, (SELECT @ROWNUM := 0 ) TMP " +
+            "WHERE completed = 'true' AND (contents LIKE #{arg2})" +
+            "ORDER BY board.no ASC)SUB " +
+            "ORDER BY SUB.rowno DESC " +
+            "Limit #{arg0}, #{arg1};")
+    List<HashMap<String, Object>> selectAllBoardListWhereLikeContents(Object currentPage, Object lastPage, Object searchValue);
+
+    @Select("SELECT * FROM " +
+            "(SELECT @ROWNUM := @ROWNUM + 1 AS rowno, board.* " +
+            "FROM board board, (SELECT @ROWNUM := 0 ) TMP " +
+            "WHERE completed = 'true' AND (title LIKE #{arg2} OR contents LIKE #{arg2})" +
+            "ORDER BY board.no ASC)SUB " +
+            "ORDER BY SUB.rowno DESC " +
+            "Limit #{arg0}, #{arg1};")
+    List<HashMap<String, Object>> selectAllBoardListWhereLikeTitleAndContents(Object currentPage, Object lastPage, Object searchValue);
+
+    /*-----------------------------------------------------------------*/
 
 }

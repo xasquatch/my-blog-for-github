@@ -116,17 +116,18 @@
 
         title.value = document.querySelector('#resource-title').value;
         contents.value = document.querySelector('#resource-contents').value;
-        try{
-        JSON.stringify(JSON.parse(contents.value));
-        }catch (e){
-            if (!window.confirm('수정된 내용은 JSON 형식에 어긋납니다. 업로드하시겠습니까?')){
+        try {
+            JSON.stringify(JSON.parse(contents.value));
+        } catch (e) {
+            if (!window.confirm('수정된 내용은 JSON 형식에 어긋납니다. 업로드하시겠습니까?')) {
                 return;
             }
         }
 
         var formData = new FormData(targetForm);
 
-        ajax.submit('PUT', '${path}/resource/${sessionMember.no}/modify', function (data) {
+        var uniform = uri.getUniform('/resource/', '/list');
+        ajax.submit('PUT', '${path}/resource/' + uniform + '/modify', function (data) {
             console.log(data);
             if (data === 'false') {
                 window.alert('수정에 실패하였습니다. 잠시 후 다시시도해주세요')
@@ -151,8 +152,9 @@
             contents.value = document.querySelector('#resource-contents').value;
 
             var formData = new FormData(targetForm);
+            var uniform = uri.getUniform('/resource/', '/list');
 
-            ajax.submit('DELETE', '${path}/resource/${sessionMember.no}/delete', function (data) {
+            ajax.submit('DELETE', '${path}/resource/' + uniform + '/delete', function (data) {
                 if (data === 'false') {
                     window.alert('삭제에 실패하였습니다. 잠시 후 다시시도해주세요')
 

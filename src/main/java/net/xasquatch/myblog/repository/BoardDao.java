@@ -89,12 +89,58 @@ public class BoardDao {
         return resultListMap;
     }
 
+    public int selectBoardListCount(Object memberKey) {
+        return boardMapper.selectBoardListCount(memberKey);
+    }
+    public List<HashMap<String, Object>> SelectAllBoardList(int pageLimit, int currentPageBlock, String searchRange, String searchValue) {
+        int block = 0;
+        try {
+            block = (currentPageBlock - 1) * pageLimit;
+
+        } catch (ArithmeticException e) {
+            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
+        }
+
+        List<HashMap<String, Object>> resultListMap;
+        try{
+
+
+        switch (searchRange) {
+            case "keyword":
+                resultListMap = boardMapper.selectAllBoardListWhereLikeKeyword(block, pageLimit, searchValue);
+
+                break;
+            case "title":
+                resultListMap = boardMapper.selectAllBoardListWhereLikeTitle(block, pageLimit, searchValue);
+
+                break;
+            case "contents":
+                resultListMap = boardMapper.selectAllBoardListWhereLikeContents(block, pageLimit, searchValue);
+
+                break;
+            case "titleAndContents":
+                resultListMap = boardMapper.selectAllBoardListWhereLikeTitleAndContents(block, pageLimit, searchValue);
+
+                break;
+            default:
+                resultListMap = boardMapper.selectAllBoardList(block, pageLimit);
+                break;
+        }
+        }catch (NullPointerException e){
+            log.debug("selectBoardList: {}","selectBoardList");
+            resultListMap = boardMapper.selectAllBoardList(block, pageLimit);
+        }
+
+        return resultListMap;
+    }
+
+    public int selectAllBoardListCount() {
+        return boardMapper.selectAllBoardListCount();
+    }
+
     public HashMap<String, Object> selectOneBoard(Object boardKey) {
 
         return boardMapper.selectOneBoard(boardKey);
     }
 
-    public int selectBoardListCount(Object memberKey) {
-        return boardMapper.selectBoardListCount(memberKey);
-    }
 }

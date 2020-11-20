@@ -17,6 +17,14 @@ public class ResourceDao {
         return resourceMapper.insertOne(resource);
     }
 
+    public int updateOne(Resource resource){
+        return resourceMapper.updateOne(resource);
+    }
+
+    public int deleteOne(Resource resource){
+        return resourceMapper.deleteOne(resource);
+    }
+
     public List<Resource> selectAll(Object mbr_no, Object startLimit, Object endLimit) {
         return resourceMapper.selectAll(mbr_no, startLimit, endLimit);
     }
@@ -25,12 +33,12 @@ public class ResourceDao {
         return resourceMapper.selectAddAll(mbr_no, lastNumber);
     }
 
-    public int updateOne(Resource resource){
-        return resourceMapper.updateOne(resource);
+    public List<Resource> selectAllNoWhere(Object startLimit, Object endLimit) {
+        return resourceMapper.selectAllNoWhere(startLimit, endLimit);
     }
 
-    public int deleteOne(Resource resource){
-        return resourceMapper.deleteOne(resource);
+    public List<Resource> selectAddAllNoWhere(Object lastNumber) {
+        return resourceMapper.selectAddAllNoWhere(lastNumber);
     }
 
 }

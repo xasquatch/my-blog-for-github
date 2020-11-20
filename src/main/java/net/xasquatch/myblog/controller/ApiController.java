@@ -41,9 +41,16 @@ public class ApiController {
         searchValueMap.put("contents",contents);
         searchValueMap.put("titleAndContents",titleAndContents);
 
-        String[] searchValue = boardService.parsingSearchValue(searchValueMap);
+        String[] searchValue = null;
 
-        return boardService.getBoardList(memberNo, pageLimit, currentPageBlock, searchValue);
+        searchValue = boardService.parsingSearchValue(searchValueMap);
+
+        if (memberNo.equals("all")){
+            return boardService.getAllBoardList(pageLimit, currentPageBlock, searchValue);
+        }else {
+            return boardService.getBoardList(memberNo, pageLimit, currentPageBlock, searchValue);
+        }
+
     }
 
     @PatchMapping(value = "/members/{memberNo}")

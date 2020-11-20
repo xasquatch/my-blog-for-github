@@ -128,4 +128,42 @@ public class BoardService {
 
         return resultDataString;
     }
+
+    public String getAllBoardList(int pageLimit, int currentPageBlock, String[] searchValue) {
+
+        List<HashMap<String, Object>> boardList;
+        if (searchValue[0] == null) {
+            boardList = boardDao.SelectAllBoardList(pageLimit, currentPageBlock, null, null);
+
+        } else {
+            boardList = boardDao.SelectAllBoardList(pageLimit, currentPageBlock, searchValue[0], searchValue[1]);
+
+        }
+
+
+        int totalCount = boardDao.selectAllBoardListCount();
+
+
+        Pagination pagination = Pagination.builder()
+                .pageLimit(pageLimit)
+                .currentPageBlock(currentPageBlock)
+                .totalCount(totalCount)
+                .build();
+        pagination.setPageBlogList();
+
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("boardList", boardList);
+        resultMap.put("pageBlockList", pagination);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String resultDataString = null;
+        try {
+            resultDataString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(resultMap);
+        } catch (JsonProcessingException e) {
+            log.warn("JsonProcessingException");
+        }
+
+
+        return resultDataString;
+    }
 }

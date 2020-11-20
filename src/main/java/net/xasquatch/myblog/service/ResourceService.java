@@ -48,6 +48,24 @@ public class ResourceService {
 
         return result;
     }
+    /*TODO:세션정보 없이 전체 공개*/
+    public List<net.xasquatch.myblog.model.Resource> viewAllList(int index) {
+
+        return resourceDao.selectAllNoWhere(index, index + 10);
+    }
+
+    public String AdditionalViewAllList(String lastNumber) {
+        String result = "";
+        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+
+        try {
+            result = objectWriter.writeValueAsString(resourceDao.selectAddAllNoWhere(lastNumber));
+        } catch (JsonProcessingException e) {
+            log.warn("JsonProcessingException: lastNumber={}",lastNumber);
+        }
+
+        return result;
+    }
 
     public boolean modify(net.xasquatch.myblog.model.Resource resource){
         boolean result = false;

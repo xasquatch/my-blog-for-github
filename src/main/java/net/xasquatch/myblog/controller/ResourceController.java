@@ -1,5 +1,6 @@
 package net.xasquatch.myblog.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.model.Resource;
 import net.xasquatch.myblog.service.ResourceService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/resource")
 public class ResourceController {
@@ -22,23 +24,33 @@ public class ResourceController {
 
     @GetMapping("/{memberNo}/list")
     public String viewList(Model model, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            List<Resource> resources = resourceService.viewList(0);
+        List<Resource> resources;
+        if (memberNo.equals("all")) {
+            resources = resourceService.viewAllList(0);
 
-            model.addAttribute("resources", resources);
-            model.addAttribute("mainContents", "resource-list");
-            return "index";
+        } else if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+            resources = resourceService.viewList(0);
+
+        }else{
+            return "redirect:/resource/all/list";
         }
-        return "redirect:/";
+        model.addAttribute("resources", resources);
+        model.addAttribute("mainContents", "resource-list");
+        return "index";
 
     }
 
     @GetMapping(value = "/{memberNo}/AdditionalList", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String AdditionalViewList(Model model, @PathVariable String memberNo,
+    public String additionalViewList(Model model, @PathVariable String memberNo,
                                      @RequestParam(name = "lastNumber", required = true, defaultValue = "0") String lastNumber) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            return resourceService.AdditionalViewList(lastNumber);
+            if (memberNo.equals("all")) {
+                return resourceService.AdditionalViewAllList(lastNumber);
+            } else {
+                return resourceService.AdditionalViewList(lastNumber);
+
+            }
         }
         return "false";
 
