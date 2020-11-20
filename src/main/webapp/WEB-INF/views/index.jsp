@@ -33,15 +33,7 @@
             <jsp:include page="contents/user-info/${mainContents}.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents == 'resource-list'}">
-            <jsp:include page="contents/resource/${mainContents}.jsp"/>
-        </c:when>
-
-        <c:when test="${mainContents == 'resource-create'}">
-            <jsp:include page="contents/resource/${mainContents}.jsp"/>
-        </c:when>
-
-        <c:when test="${mainContents == 'resource-view'}">
+        <c:when test="${mainContents.contains('resource-')}">
             <jsp:include page="contents/resource/${mainContents}.jsp"/>
         </c:when>
     </c:choose>

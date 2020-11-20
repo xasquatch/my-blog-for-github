@@ -80,8 +80,13 @@ public class BoarderController {
     //TODO: 게시판 리스트 조회 페이지
     @RequestMapping(value = "/{memberNo}/list", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewList(Model model, @PathVariable String memberNo) {
+        if (memberNo.equals("all")){
+            model.addAttribute("mainContents", "board-view-list-all");
 
-        model.addAttribute("mainContents", "board-view-list");
+        }else{
+            model.addAttribute("mainContents", "board-view-list");
+
+        }
 
         return "index";
     }

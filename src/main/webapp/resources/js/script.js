@@ -300,6 +300,43 @@ var boardListScript = {
 
         }
     },
+    getAllBoardList: function (jsonData, uniform) {
+        var boardList = document.querySelector('#myblog-api-board-list');
+        boardList.innerHTML = '';
+
+        for (var map of jsonData.boardList) {
+            var trTag = document.createElement('tr');
+            var titleInput = document.createElement('td');
+            titleInput.innerHTML = '<a href="/board/' + uniform + '/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
+            var rowNoInput = document.createElement('td');
+            rowNoInput.innerText = map.rowno;
+            var dateInput = document.createElement('td');
+            dateInput.innerText = boardListScript.getFormatDate(map.created_date);
+            var userNameInput = document.createElement('td');
+            userNameInput.innerHTML = map.member_no;
+
+            trTag.appendChild(rowNoInput)
+            trTag.appendChild(titleInput)
+            trTag.appendChild(dateInput);
+            trTag.appendChild(userNameInput);
+            boardList.appendChild(trTag);
+
+        }
+    },
+    changeAllBoardList: function (count) {
+        var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
+        var uniform = uri.getUniform('/board/', '/list');
+
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
+            document.querySelector('#board-list-count').innerHTML = count;
+            var jsonData = JSON.parse(data);
+            boardListScript.getAllBoardList(jsonData, uniform);
+            boardListScript.getPagination(jsonData);
+
+            window.scrollTo(0, 0);
+        });
+    },
+
     changeBoardList: function (count) {
         var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
         var uniform = uri.getUniform('/board/', '/list');

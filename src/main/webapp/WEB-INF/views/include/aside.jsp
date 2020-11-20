@@ -13,31 +13,29 @@
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
                 <a href="${path}/board/${sessionMember.no}/create">
-                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/writeBoard.png">
+                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/writeBoard.png">
                     새 글 쓰기
                 </a>
             </li>
             <li role="presentation">
                 <a href="${path}/resource/${sessionMember.no}/create">
-                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/add-resource.png">
+                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/add-resource.png">
                     새 저장소 만들기
                 </a>
             </li>
             <li role="presentation">
                 <a href="${path}/board/all/list">
-                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/all-boards.png">
+                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/all-boards.png">
                     전체 글 목록
                 </a>
             </li>
             <li role="presentation">
                 <a href="${path}/resource/all/list">
-                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/all-resources.png">
+                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/all-resources.png">
                     전체 저장소 목록
                 </a>
             </li>
         </ul>
-        <BR>
-        <BR>
         <h2 style="font-weight: bold;">
             마이 페이지
         </h2>
@@ -45,25 +43,25 @@
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
                 <a href="${path}/user/${sessionMember.no}/api">
-                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/api.png">
+                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/api.png">
                     My API
                 </a>
             </li>
             <li role="presentation">
                 <a href="${path}/user/${sessionMember.no}/information">
-                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/user.png">
+                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/user.png">
                     내 정보
                 </a>
             </li>
             <li role="presentation">
                 <a href="${path}/board/${sessionMember.no}/list">
-                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/boardList.png">
+                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/boardList.png">
                     내 글 목록
                 </a>
             </li>
             <li role="presentation">
                 <a href="${path}/resource/${sessionMember.no}/list">
-                    <img style="width: 50px; height: auto;" src="${path}/img/banner-black/resource.png">
+                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/resource.png">
                     내 저장소 목록
                 </a>
             </li>

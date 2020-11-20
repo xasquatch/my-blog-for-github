@@ -13,6 +13,7 @@ public class Resource {
 
     private long no;
     private long mbr_no;
+    private String mbr_name;
 
     @Size(max = 255)
     private String title;

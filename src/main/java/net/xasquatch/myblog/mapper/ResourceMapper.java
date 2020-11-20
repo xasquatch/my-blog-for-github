@@ -26,9 +26,15 @@ public interface ResourceMapper {
     List<Resource> selectAddAll(Object mbr_no, Object lastNumber);
 
     /*------TODO:전체 조회----------*/
-    @Select("SELECT no, mbr_no, title, convert(contents USING UTF8) as contents FROM resource ORDER BY no DESC LIMIT #{arg0}, #{arg1}")
+    @Select("SELECT r.no as no, mbr.name as mbr_name, r.title as title, convert(r.contents USING UTF8) as contents " +
+            "FROM resource r LEFT OUTER JOIN mbr mbr " +
+            "ON r.mbr_no = mbr.no " +
+            "ORDER BY no DESC LIMIT #{arg0}, #{arg1}")
     List<Resource> selectAllNoWhere(Object startLimit, Object endLimit);
 
-    @Select("SELECT no, mbr_no, title, convert(contents USING UTF8) as contents FROM resource WHERE no < #{arg0} ORDER BY no DESC LIMIT 0, 10")
+    @Select("SELECT r.no as no, mbr.name as mbr_name, r.title as title, convert(r.contents USING UTF8) as contents " +
+            "FROM resource r LEFT OUTER JOIN mbr mbr " +
+            "ON r.mbr_no = mbr.no " +
+            "WHERE r.no < #{arg0} ORDER BY r.no DESC LIMIT 0, 10")
     List<Resource> selectAddAllNoWhere(Object lastNumber);
 }

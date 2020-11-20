@@ -27,30 +27,30 @@ public class ResourceController {
         List<Resource> resources;
         if (memberNo.equals("all")) {
             resources = resourceService.viewAllList(0);
+            model.addAttribute("mainContents", "resource-list-all");
 
         } else if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             resources = resourceService.viewList(0);
+            model.addAttribute("mainContents", "resource-list");
 
-        }else{
+        } else {
             return "redirect:/resource/all/list";
         }
         model.addAttribute("resources", resources);
-        model.addAttribute("mainContents", "resource-list");
         return "index";
 
     }
 
     @GetMapping(value = "/{memberNo}/AdditionalList", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String additionalViewList(Model model, @PathVariable String memberNo,
+    public String additionalViewList(@PathVariable String memberNo,
                                      @RequestParam(name = "lastNumber", required = true, defaultValue = "0") String lastNumber) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            if (memberNo.equals("all")) {
-                return resourceService.AdditionalViewAllList(lastNumber);
-            } else {
-                return resourceService.AdditionalViewList(lastNumber);
+        if (memberNo.equals("all")) {
+            return resourceService.AdditionalViewAllList(lastNumber);
 
-            }
+        } else if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+            return resourceService.AdditionalViewList(lastNumber);
+
         }
         return "false";
 
