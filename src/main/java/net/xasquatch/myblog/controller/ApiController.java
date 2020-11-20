@@ -2,20 +2,22 @@ package net.xasquatch.myblog.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
+import net.xasquatch.myblog.model.Resource;
+import net.xasquatch.myblog.service.ApiService;
 import net.xasquatch.myblog.service.BoardService;
 import net.xasquatch.myblog.service.MemberService;
+import net.xasquatch.myblog.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/my-blog",
+@RequestMapping(value = "/api",
         method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE},
         produces = "text/plain;charset=UTF-8")
 public class ApiController {
@@ -24,44 +26,34 @@ public class ApiController {
     private BoardService boardService;
 
     @Autowired
-    private MemberService memberService;
+    private ApiService apiService;
 
-    @Resource(name = "sessionMember")
-    private Member sessionMember;
-
-    @GetMapping(value = "/members/{memberNo}/board/list")
-    public String viewBoardList(@PathVariable String memberNo, int pageLimit, int currentPageBlock,
+    @GetMapping(value = "/members/{memberNo}/boards")
+    public String viewBoardList(@PathVariable String memberNo,
+                                @RequestParam(value = "pageLimit", required = false, defaultValue = "10") int pageLimit,
+                                @RequestParam(value = "currentPageBlock", required = false, defaultValue = "1") int currentPageBlock,
                                 @RequestParam(value = "keyword", required = false, defaultValue = "empty") String keyword,
                                 @RequestParam(value = "title", required = false, defaultValue = "empty") String title,
                                 @RequestParam(value = "contents", required = false, defaultValue = "empty") String contents,
                                 @RequestParam(value = "titleAndContents", required = false, defaultValue = "empty") String titleAndContents) {
-        Map<String,String> searchValueMap = new HashMap<String, String>();
-        searchValueMap.put("keyword",keyword);
-        searchValueMap.put("title",title);
-        searchValueMap.put("contents",contents);
-        searchValueMap.put("titleAndContents",titleAndContents);
+        Map<String, String> searchValueMap = new HashMap<String, String>();
+        searchValueMap.put("keyword", keyword);
+        searchValueMap.put("title", title);
+        searchValueMap.put("contents", contents);
+        searchValueMap.put("titleAndContents", titleAndContents);
 
-        String[] searchValue = null;
+        String[] searchValue = boardService.parsingSearchValue(searchValueMap);
 
-        searchValue = boardService.parsingSearchValue(searchValueMap);
-
-        if (memberNo.equals("all")){
-            return boardService.getAllBoardList(pageLimit, currentPageBlock, searchValue);
-        }else {
-            return boardService.getBoardList(memberNo, pageLimit, currentPageBlock, searchValue);
-        }
+        return boardService.getBoardList(memberNo, pageLimit, currentPageBlock, searchValue);
 
     }
 
-    @PatchMapping(value = "/members/{memberNo}")
-    public String modifyMember(@PathVariable String memberNo, @Valid Member member, BindingResult bindingResult) {
-        member.setCollectionAndUse(true);
-        member.setMembersAgreement(true);
-        if (!bindingResult.hasErrors()) {
+    @GetMapping(value = "/members/{memberNo}/boards/{boardNo}")
+    public String viewBoardDetail(@PathVariable String memberNo,@PathVariable String boardNo){
 
-            return memberService.updateMember(member);
-        }
+        return boardService.viewDetailToJSON(memberNo, boardNo);
 
-        return "false";
     }
+
+
 }

@@ -1,5 +1,6 @@
 package net.xasquatch.myblog.config;
 
+import net.xasquatch.myblog.mapper.ApiMapper;
 import net.xasquatch.myblog.mapper.BoardMapper;
 import net.xasquatch.myblog.mapper.MemberMapper;
 import net.xasquatch.myblog.mapper.ResourceMapper;
@@ -87,6 +88,15 @@ public class RootAppContext {
     @Bean
     public MapperFactoryBean<ResourceMapper> getResourceMapper(SqlSessionFactory factory) {
         MapperFactoryBean<ResourceMapper> factoryBean = new MapperFactoryBean<ResourceMapper>(ResourceMapper.class);
+        factoryBean.setSqlSessionFactory(factory);
+        return factoryBean;
+
+    }
+
+
+    @Bean
+    public MapperFactoryBean<ApiMapper> getApiMapper(SqlSessionFactory factory) {
+        MapperFactoryBean<ApiMapper> factoryBean = new MapperFactoryBean<ApiMapper>(ApiMapper.class);
         factoryBean.setSqlSessionFactory(factory);
         return factoryBean;
 
