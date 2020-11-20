@@ -13,6 +13,11 @@ public class ApiDao {
     @Autowired
     private ApiMapper apiMapper;
 
+    public Map<String, Object> selectBoardOne(String memberNo, String boardNo) {
+
+        return apiMapper.selectBoardOne(memberNo,boardNo);
+    }
+
     public List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
                                                      Object searchTarget, Object searchValue){
 

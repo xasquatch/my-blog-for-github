@@ -93,9 +93,19 @@ public class ApiService {
         return result;
     }
 
-    public String viewBoard(String memberNo, String boardNo) {
+    public String getBoardDetail(String memberNo, String boardNo) {
+        String result = "false";
 
+        Map<String, Object> boardOne = apiDao.selectBoardOne(memberNo, boardNo);
 
-        return null;
+        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+
+        try {
+            result = objectWriter.writeValueAsString(boardOne);
+        } catch (JsonProcessingException e) {
+            log.warn("[getBoardDetail] JsonProcessingException");
+        }
+
+        return result;
     }
 }

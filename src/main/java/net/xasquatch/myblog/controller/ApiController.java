@@ -43,7 +43,7 @@ public class ApiController {
     @GetMapping(value = "/members/{memberNo}/boards/{boardNo}")
     public String viewBoardDetail(@PathVariable String memberNo, @PathVariable String boardNo) {
 
-        return apiService.viewBoard(memberNo, boardNo);
+        return apiService.getBoardDetail(memberNo, boardNo);
 
     }
 
