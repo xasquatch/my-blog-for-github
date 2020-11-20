@@ -52,6 +52,8 @@
 
     function uploadJSON() {
 
+        convertJSON();
+
         if (document.querySelector('#resource-json-convert').style.color !== 'red'
             && window.confirm('변환된 JSON객체로 업로드됩니다. 이대로 진행하시겠습니까?')) {
             var convertedData = document.querySelector('#resource-json-convert');

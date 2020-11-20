@@ -15,7 +15,9 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/my-blog", method = {RequestMethod.GET, RequestMethod.POST})
+@RequestMapping(value = "/my-blog",
+        method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE},
+        produces = "text/plain;charset=UTF-8")
 public class ApiController {
 
     @Autowired
@@ -41,7 +43,7 @@ public class ApiController {
 
         String[] searchValue = boardService.parsingSearchValue(searchValueMap);
 
-        return boardService.getBoardList(memberNo, pageLimit, currentPageBlock,searchValue);
+        return boardService.getBoardList(memberNo, pageLimit, currentPageBlock, searchValue);
     }
 
     @PatchMapping(value = "/members/{memberNo}")

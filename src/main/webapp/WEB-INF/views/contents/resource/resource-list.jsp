@@ -48,7 +48,12 @@
     }
 
     function resourceViewSetting(element) {
-        var prettyContents = JSON.stringify(JSON.parse(element.querySelector('p').innerText), null, 2);
+        var prettyContents = null;
+        try {
+            prettyContents = JSON.stringify(JSON.parse(element.querySelector('p').innerText), null, 2);
+        } catch (e) {
+            prettyContents = element.querySelector('p').innerText;
+        }
         var serialNumber = element.querySelector('label').innerText;
         var textarea = document.createElement('textarea');
         var emptyContentsDiv = document.createElement('div');
@@ -111,6 +116,13 @@
 
         title.value = document.querySelector('#resource-title').value;
         contents.value = document.querySelector('#resource-contents').value;
+        try{
+        JSON.stringify(JSON.parse(contents.value));
+        }catch (e){
+            if (!window.confirm('수정된 내용은 JSON 형식에 어긋납니다. 업로드하시겠습니까?')){
+                return;
+            }
+        }
 
         var formData = new FormData(targetForm);
 
@@ -162,8 +174,11 @@
     }
 
     function moreLoad() {
-        var lastNumber = document.querySelector('.resource-list-box>div:last-child>label').innerText;
-
+        try {
+            var lastNumber = document.querySelector('.resource-list-box>div:last-child>label').innerText;
+        } catch (e) {
+            window.alert('더이상 불러올 리소스가 없습니다.');
+        }
         ajax.submit('GET', '${path}/resource/${sessionMember.no}/AdditionalList?lastNumber=' + lastNumber, function (data) {
             if (data === 'false') {
                 window.alert('리소스 가져오기에 실패하였습니다. 잠시 후 다시 시도해주세요.')
