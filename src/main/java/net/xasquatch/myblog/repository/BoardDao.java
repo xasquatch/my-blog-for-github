@@ -138,9 +138,8 @@ public class BoardDao {
         return boardMapper.selectAllBoardListCount();
     }
 
-    public HashMap<String, Object> selectOneBoard(Object boardKey) {
-
-        return boardMapper.selectOneBoard(boardKey);
+    public HashMap<String, Object> selectOneBoard(Object memberNo, Object boardNo) {
+        return boardMapper.selectOneBoard(memberNo, boardNo);
     }
 
 }

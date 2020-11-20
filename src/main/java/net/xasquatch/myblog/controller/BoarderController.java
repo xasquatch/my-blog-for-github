@@ -67,7 +67,7 @@ public class BoarderController {
     @RequestMapping(value = "/{memberNo}/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String modify(Model model, @PathVariable String boardNo, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            HashMap<String, Object> board = boardService.viewDetail(boardNo);
+            HashMap<String, Object> board = boardService.viewDetail(memberNo, boardNo);
             model.addAttribute("board", board);
             model.addAttribute("mainContents", "board-modify");
 
@@ -92,9 +92,9 @@ public class BoarderController {
     }
 
     @RequestMapping(value = "/{memberNo}/detail/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewDetail(Model model, @PathVariable String boardNo) {
+    public String viewDetail(Model model, @PathVariable String boardNo,@PathVariable String memberNo) {
 
-        HashMap<String, Object> boardInfo = boardService.viewDetail(boardNo);
+        HashMap<String, Object> boardInfo = boardService.viewDetail(memberNo, boardNo);
 
         model.addAttribute("boardInfo", boardInfo);
         model.addAttribute("mainContents", "board-view-detail");

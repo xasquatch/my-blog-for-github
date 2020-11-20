@@ -2,6 +2,7 @@ package net.xasquatch.myblog.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Board;
 import net.xasquatch.myblog.repository.BoardDao;
@@ -81,10 +82,27 @@ public class BoardService {
 
     }
 
-    public HashMap<String, Object> viewDetail(Object boardKey) {
-        return boardDao.selectOneBoard(boardKey);
+    public HashMap<String, Object> viewDetail(Object memberNo, Object boardNo) {
+        return boardDao.selectOneBoard(memberNo, boardNo);
 
     }
+
+    public String viewDetailToJSON(Object memberNo, Object boardNo) {
+        String result = null;
+
+        HashMap<String, Object> map = boardDao.selectOneBoard(memberNo, boardNo);
+        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+
+        try {
+            result = objectWriter.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            log.warn("API JsonProcessingException");
+        }
+
+        return result;
+    }
+
+
 
     public void delete(Object boardKey) {
         boardDao.deleteOneBoard(boardKey);

@@ -22,8 +22,8 @@ public interface BoardMapper {
     @Delete("DELETE FROM board WHERE completed = 'false' AND member_no = #{member_no}")
     void deleteUnfinishedBoard(Map<String, Object> memberMap);
 
-    @Select("SELECT no, member_no, keyword, title, convert(contents USING UTF8) as contents, created_date, created_ip, thumbnail FROM board WHERE no = #{arg0}")
-    HashMap<String, Object> selectOneBoard(Object board_no);
+    @Select("SELECT no, member_no, keyword, title, convert(contents USING UTF8) as contents, created_date, created_ip, thumbnail FROM board WHERE no = #{arg1} AND member_no = #{arg0}")
+    HashMap<String, Object> selectOneBoard(Object mbr_no, Object board_no);
 /*-----------------------------------------------------------------*/
     @Select("SELECT COUNT(*) as list_count FROM board WHERE member_no = #{arg0} AND completed = 'true'")
     int selectBoardListCount(Object member_no);
