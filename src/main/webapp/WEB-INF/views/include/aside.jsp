@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li role="presentation">
-                <a href="${path}/board/${sessionMember.no}/list">
+                <a href="${path}/resource/${sessionMember.no}/list">
                     <img style="width: 50px; height: auto;" src="${path}/img/banner-black/all-resources.png">
                     전체 저장소 목록
                 </a>
