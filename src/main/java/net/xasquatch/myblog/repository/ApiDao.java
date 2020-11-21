@@ -15,17 +15,21 @@ public class ApiDao {
 
     public Map<String, Object> selectBoardOne(String memberNo, String boardNo) {
 
-        return apiMapper.selectBoardOne(memberNo,boardNo);
+        return apiMapper.selectBoardOne(memberNo, boardNo);
     }
 
     public List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
-                                                     Object searchTarget, Object searchValue){
+                                                     Object searchTarget, Object searchValue) {
 
-        return apiMapper.selectBoardList(memberNo,currentPage,pageLimit,searchTarget,searchValue);
+        return apiMapper.selectBoardList(memberNo, currentPage, pageLimit, searchTarget, searchValue);
     }
 
     public int selectBoardCount(Object memberNo) {
         return apiMapper.selectBoardCount(memberNo);
 
+    }
+
+    public Map<String, Object> selectResource(Object memberNo, Object resourceNo) {
+        return apiMapper.selectResourceOne(memberNo, resourceNo);
     }
 }

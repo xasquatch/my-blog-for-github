@@ -101,4 +101,27 @@ public class ApiService {
 
         return result;
     }
+
+    public String getResource(String memberNo, String resourceNo) {
+        String result = "false";
+
+        Map<String, Object> resource = apiDao.selectResource(memberNo, resourceNo);
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("board", resource);
+
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("data", data);
+        resultMap.put("document",
+                "https://myblog.xasquatch.net/document/members/{member-Number}/resources/{resource-Number}");
+
+        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+        try {
+            result = objectWriter.writeValueAsString(resultMap);
+        } catch (JsonProcessingException e) {
+            log.warn("[getResource] JsonProcessingException");
+        }
+
+        return result;
+    }
 }

@@ -32,10 +32,12 @@ public class ApiController {
 
     @GetMapping(value = "/members/{memberNo}/boards/{boardNo}")
     public String viewBoardDetail(@PathVariable String memberNo, @PathVariable String boardNo) {
-
         return apiService.getBoardDetail(memberNo, boardNo);
 
     }
 
-
+    @GetMapping(value = "/members/{memberNo}/resources/{resourceNo}")
+    public String viewResourceList(@PathVariable String memberNo, @PathVariable String resourceNo){
+        return apiService.getResource(memberNo, resourceNo);
+    }
 }
