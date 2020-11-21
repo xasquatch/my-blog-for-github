@@ -16,7 +16,7 @@ body::-webkit-scrollbar {
     background: transparent;
 }
 body::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.2);
 }
 body::-webkit-scrollbar-thumb:HOVER{
     background: rgba(0, 0, 0, 1);
@@ -26,7 +26,7 @@ body *::-webkit-scrollbar {
     background: transparent;
 }
 body *::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.2);
 }
 body *::-webkit-scrollbar-thumb:HOVER{
     background: rgba(0, 0, 0, 1);
