@@ -23,7 +23,7 @@ public class DocumentController {
         return "index";
     }
 
-    @GetMapping("/members/{memberNo}/resource/{resourceNo}")
+    @GetMapping("/members/{memberNo}/resources/{resourceNo}")
     public String viewResourceDetail(Model model){
         model.addAttribute("mainContents","document-api-resource-detail");
         return "index";
