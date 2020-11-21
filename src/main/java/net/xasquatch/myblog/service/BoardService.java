@@ -48,7 +48,7 @@ public class BoardService {
 
     public Object createDefaultBoard(String memberNo) {
         Map<String, Object> memberMap = new HashMap<String, Object>();
-        memberMap.put("member_no", memberNo);
+        memberMap.put("mbr_no", memberNo);
         boardDao.deleteUnfinishedBoard(memberMap);
         if (boardDao.insertDefaultBoard(memberMap)) {
             String path = File.separator + memberNo + SaveDir + File.separator + memberMap.get("no");

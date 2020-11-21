@@ -313,7 +313,7 @@ var boardListScript = {
             var dateInput = document.createElement('td');
             dateInput.innerText = boardListScript.getFormatDate(map.created_date);
             var userNameInput = document.createElement('td');
-            userNameInput.innerHTML = map.member_no;
+            userNameInput.innerHTML = map.mbr_no;
 
             trTag.appendChild(rowNoInput)
             trTag.appendChild(titleInput)
