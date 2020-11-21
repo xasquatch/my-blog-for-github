@@ -41,7 +41,7 @@
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/user/${sessionMember.no}/api">
+                <a href="${path}/user/${sessionMember.no}/api/clipboard">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/api.png">
                     My API
                 </a>

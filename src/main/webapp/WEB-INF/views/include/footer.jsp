@@ -43,6 +43,7 @@
 </footer>
 
 <%--custom script--%>
+<script src="${path}/js/myblog-api.js"></script>
 <script src="${path}/js/script.js"></script>
 <%--END: custom script--%>
 </body>

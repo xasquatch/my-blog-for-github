@@ -397,3 +397,25 @@
 }
 
 /*END: resource page-----------*/
+/*api clipboard page-----------*/
+#api-clipboard-section{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+
+}
+#api-clipboard-section>article{
+    margin: 5px;
+    padding: 5px;
+    height: 400px;
+}
+.api-clipboard{
+    border: 4px inset;
+    background-color: ghostwhite;
+    padding: 10px;
+    height: 300px;
+    overflow: auto;
+
+}
+/*END: api clipboard page-----------*/
