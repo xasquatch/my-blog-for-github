@@ -62,12 +62,10 @@ public class ApiService {
         data.put("boardList", boardList);
         data.put("pageBlockList", pageBlockList);
 
-        Map<String, Object> document = new HashMap<String, Object>();
-        document.put("document", "https://myblog.xasquatch.net/document/members/{member-Number}/boards");
-
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        resultMap.put("document", document);
         resultMap.put("data", data);
+        resultMap.put("document",
+                "https://myblog.xasquatch.net/document/members/{member-Number}/boards");
 
 
         ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
@@ -84,12 +82,19 @@ public class ApiService {
     public String getBoardDetail(String memberNo, String boardNo) {
         String result = "false";
 
-        Map<String, Object> boardOne = apiDao.selectBoardOne(memberNo, boardNo);
+        Map<String, Object> boardDetails = apiDao.selectBoardOne(memberNo, boardNo);
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("board", boardDetails);
+
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("data", data);
+        resultMap.put("document",
+                "https://myblog.xasquatch.net/document/members/{member-Number}/boards/{board-Number}");
 
         ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
-
         try {
-            result = objectWriter.writeValueAsString(boardOne);
+            result = objectWriter.writeValueAsString(resultMap);
         } catch (JsonProcessingException e) {
             log.warn("[getBoardDetail] JsonProcessingException");
         }
