@@ -8,8 +8,8 @@
         <hr>
         <article>
             <h4 class="dot-key">URL Explain</h4>
-            <p><i class="dot-key">{member-Number}</i> : My Information의 ID값(Long형 숫자타입)</p>
             <p>Method : GET</p>
+            <p><i class="dot-key">{member-Number}</i> : My Information의 ID값(Long형 숫자타입)</p>
             <p>Parameters Name : page-limit, current-page-block, {keyword, title, contents, title-and-contents}</p>
             <p>Parameters Count : 3</p>
         </article>
