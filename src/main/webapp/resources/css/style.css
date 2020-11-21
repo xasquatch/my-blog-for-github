@@ -80,8 +80,8 @@
     padding-top: 20px;
 }
 
-.footer-height-30vh {
-    height: 30vh !important;
+.footer-stretch {
+    height: 250px !important;
     transition: all 1s !important;
 }
 
@@ -267,13 +267,10 @@
     cursor: pointer;
 }
 
-.main-banner-img-focus {
-    width: 200px !important;
-}
-
 .main-banner-font-focus {
     font-size: 200%;
     font-weight: bold;
+    color: darkred;
 }
 
 .main-banner img {

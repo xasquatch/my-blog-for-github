@@ -32,15 +32,11 @@
         function itemFocus(element) {
             var inputData = element.querySelector('p').innerText;
 
-            for (var img of mainBannerImgTags) {
-                img.classList.remove('main-banner-img-focus');
-            }
             for (var p of mainBannerParagraphTags) {
                 p.classList.remove('main-banner-font-focus');
             }
-            element.querySelector('img').classList.add('main-banner-img-focus');
             element.querySelector('p').classList.add('main-banner-font-focus');
-            document.querySelector('#main-footer').classList.add('footer-height-30vh');
+            document.querySelector('#main-footer').classList.add('footer-stretch');
             document.querySelector('#main-footer>div').innerHTML = '';
 
             // element의 케이스에 맞춰 분기
