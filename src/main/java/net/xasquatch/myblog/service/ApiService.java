@@ -108,7 +108,7 @@ public class ApiService {
         Map<String, Object> resource = apiDao.selectResource(memberNo, resourceNo);
 
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("board", resource);
+        data.put("resource", resource);
 
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("data", data);
