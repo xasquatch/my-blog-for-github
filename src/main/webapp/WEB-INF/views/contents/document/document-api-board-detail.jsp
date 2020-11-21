@@ -21,7 +21,7 @@
             <p>- no: 해당 게시글의 고유 ID 입니다.(<i class="dot-key">{board-Number}</i>와 동일)</p>
             <p>- thumbnail: 해당 게시글의 썸네일 이미지입니다.</p>
             <p>- contents: 해당 게시글의 내용입니다.</p>
-            <p>- member_no: 해당 게시글의 작성자입니다.
+            <p>- mbr_no: 해당 게시글의 작성자입니다.
                 (<i class="dot-key">{Member-Number}</i>와 동일)
             </p>
             <p>- created_date: 해당 게시글의 작성일자입니다.</p>
