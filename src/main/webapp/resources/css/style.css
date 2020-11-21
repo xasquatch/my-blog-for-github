@@ -408,14 +408,15 @@
 #api-clipboard-section>article{
     margin: 5px;
     padding: 5px;
-    height: 400px;
 }
 .api-clipboard{
     border: 4px inset;
-    background-color: ghostwhite;
     padding: 10px;
-    height: 300px;
     overflow: auto;
 
+}
+.api-clipboard>pre{
+    height: 400px;
+    overflow: auto;
 }
 /*END: api clipboard page-----------*/
