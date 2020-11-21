@@ -2,9 +2,8 @@
 
 ### TODO LIST
 
-0. resource 검색기능 추가
-0. resource web api 작성 및 구현
 0. webAPI 복사용 클립보드 만들기
+0. resource 검색기능 추가
 0. 회원탈퇴 구현
 0. oauth 회원가입 구현
 0. 게스트 페이지 만들기
