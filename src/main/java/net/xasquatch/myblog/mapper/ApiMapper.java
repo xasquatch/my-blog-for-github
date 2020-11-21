@@ -18,7 +18,8 @@ public interface ApiMapper {
 
     @Select("SELECT no, member_no, keyword, title, " +
             "convert(contents USING UTF8) as contents, " +
-            "created_date, thumbnail, " +
+            "DATE_FORMAT(created_date, '%Y.%m.%d %H:%i:%s') AS created_date, " +
+            "thumbnail, " +
             "REPLACE(created_ip, RIGHT(created_ip,5),'*****') AS created_ip " +
             "FROM board " +
             "WHERE member_no = #{arg0} AND no = #{arg1}")
