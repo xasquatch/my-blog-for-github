@@ -25,16 +25,20 @@
             <jsp:include page="contents/board/board-frame.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents.contains('board-')}">
+        <c:when test="${mainContents.indexOf('board-')==0}">
             <jsp:include page="contents/board/${mainContents}.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents.contains('user-')}">
+        <c:when test="${mainContents.indexOf('user-')==0}">
             <jsp:include page="contents/user-info/${mainContents}.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents.contains('resource-')}">
+        <c:when test="${mainContents.indexOf('resource-')==0}">
             <jsp:include page="contents/resource/${mainContents}.jsp"/>
+        </c:when>
+
+        <c:when test="${mainContents.indexOf('document-')==0}">
+            <jsp:include page="contents/document/${mainContents}.jsp"/>
         </c:when>
     </c:choose>
 

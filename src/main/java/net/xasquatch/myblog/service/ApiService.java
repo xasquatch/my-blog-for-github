@@ -19,14 +19,14 @@ public class ApiService {
     @Autowired
     private ApiDao apiDao;
 
-    public String[] parsingSearchValue(String keyword, String title, String contents, String titleAndContents) {
+    public String[] parsingSearchValue(String keyword, String title, String contents, String titleOrContents) {
         Map<String, String> map = new HashMap<String, String>();
         String[] searchValue = new String[2];
 
         map.put("keyword", keyword);
         map.put("title", title);
         map.put("contents", contents);
-        map.put("titleAndContents", titleAndContents);
+        map.put("titleOrContents", titleOrContents);
 
         map.forEach((key, value) -> {
             if (!value.equals("empty")) {
@@ -61,31 +61,19 @@ public class ApiService {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("boardList", boardList);
         data.put("pageBlockList", pageBlockList);
-/*
 
-        Map<String, Object> explainDetail = new HashMap<String, Object>();
-        explainDetail.put("추가설명","GET요청 시 해당 인자를 생략하면 기본값으로 출력됩니다. page-limit(블록당 게시글 수)의 기본값은 10, current-page-block(현재페이지 블록번호)의 기본값은 1입니다.");
-        explainDetail.put("row_number","작성일자 기준으로 정렬된 번호입니다. 최근 작성일자가 제일 앞으로 표시됩니다. 고유 ID 와는 무관합니다.");
-        explainDetail.put("no","해당 게시글의 고유 ID 입니다.");
-        explainDetail.put("title","해당 게시글의 제목입니다.");
-        explainDetail.put("thumbnail","해당 게시글의 썸네일 이미지입니다.");
-        explainDetail.put("created_date","해당 게시글의 작성일자입니다.");
-
-        Map<String, Object> explain = new HashMap<String, Object>();
-        explain.put("boardList", explainDetail);
-        explain.put("pageBlockList", "다음 페이지버튼 리스트입니다." +
-                " 페이지블록 5개와 다음, 이전페이지블록 2개를 포함해 총 7개의 리스트가 출력됩니다.");
+        Map<String, Object> document = new HashMap<String, Object>();
+        document.put("document", "https://myblog.xasquatch.net/document/members/{member-Number}/boards");
 
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        resultMap.put("explain", explain);
+        resultMap.put("document", document);
         resultMap.put("data", data);
 
-*/
 
         ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
 
         try {
-            result = objectWriter.writeValueAsString(data);
+            result = objectWriter.writeValueAsString(resultMap);
         } catch (JsonProcessingException e) {
             log.warn("[getBoardList] JsonProcessingException");
         }

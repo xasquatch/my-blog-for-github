@@ -13,12 +13,20 @@ public class BoardBuilder {
                     "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
                     "b.thumbnail");
             FROM("board b", "(SELECT @ROWNUM := 0 ) TMP");
-            if (searchTarget != null) {
-                WHERE("member_no = " + memberNo
-                        + " AND completed = 'true' AND "
-                        + searchTarget + " LIKE '" + searchValue + "'");
-            } else {
+            if (searchTarget == null) {
                 WHERE("member_no = " + memberNo + " AND completed = 'true'");
+
+            }else if (searchTarget.equals("titleOrContents")) {
+                WHERE("member_no = " + memberNo
+                        + " AND completed = 'true'"
+                        + " AND (b.title LIKE '" + searchValue + "'"
+                        + " OR b.contents LIKE '" + searchValue + "')");
+
+            } else {
+                WHERE("member_no = " + memberNo
+                        + " AND completed = 'true'"
+                        + " AND " + searchTarget + " LIKE '" + searchValue + "'");
+
             }
             ORDER_BY("b.created_date DESC");
             LIMIT(currentPage + ", " + lastPage);

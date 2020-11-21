@@ -1,7 +1,6 @@
 package net.xasquatch.myblog.mapper;
 
 import net.xasquatch.myblog.mapper.provider.BoardBuilder;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 

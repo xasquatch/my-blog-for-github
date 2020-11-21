@@ -1,19 +1,9 @@
 package net.xasquatch.myblog.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import net.xasquatch.myblog.model.Member;
-import net.xasquatch.myblog.model.Resource;
 import net.xasquatch.myblog.service.ApiService;
-import net.xasquatch.myblog.service.BoardService;
-import net.xasquatch.myblog.service.MemberService;
-import net.xasquatch.myblog.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -32,9 +22,9 @@ public class ApiController {
                                 @RequestParam(value = "keyword", required = false, defaultValue = "empty") String keyword,
                                 @RequestParam(value = "title", required = false, defaultValue = "empty") String title,
                                 @RequestParam(value = "contents", required = false, defaultValue = "empty") String contents,
-                                @RequestParam(value = "title-and-contents", required = false, defaultValue = "empty") String titleAndContents) {
+                                @RequestParam(value = "title-or-contents", required = false, defaultValue = "empty") String titleOrContents) {
 
-        String[] searchValue = apiService.parsingSearchValue(keyword, title, contents, titleAndContents);
+        String[] searchValue = apiService.parsingSearchValue(keyword, title, contents, titleOrContents);
 
         return apiService.getBoardList(memberNo, pageLimit, currentPageBlock, searchValue);
 

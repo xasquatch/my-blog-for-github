@@ -73,8 +73,8 @@ public class BoardDao {
                 resultListMap = boardMapper.selectBoardListWhereLikeContents(memberNo, block, pageLimit, searchValue);
 
                 break;
-            case "titleAndContents":
-                resultListMap = boardMapper.selectBoardListWhereLikeTitleAndContents(memberNo, block, pageLimit, searchValue);
+            case "titleOrContents":
+                resultListMap = boardMapper.selectBoardListWhereLiketitleOrContents(memberNo, block, pageLimit, searchValue);
 
                 break;
             default:
@@ -118,8 +118,8 @@ public class BoardDao {
                 resultListMap = boardMapper.selectAllBoardListWhereLikeContents(block, pageLimit, searchValue);
 
                 break;
-            case "titleAndContents":
-                resultListMap = boardMapper.selectAllBoardListWhereLikeTitleAndContents(block, pageLimit, searchValue);
+            case "titleOrContents":
+                resultListMap = boardMapper.selectAllBoardListWhereLiketitleOrContents(block, pageLimit, searchValue);
 
                 break;
             default:

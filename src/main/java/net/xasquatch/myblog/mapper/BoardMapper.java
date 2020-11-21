@@ -71,7 +71,7 @@ public interface BoardMapper {
                 "ORDER BY board.no ASC)SUB " +
             "ORDER BY SUB.rowno DESC " +
             "Limit #{arg1}, #{arg2};")
-    List<HashMap<String, Object>> selectBoardListWhereLikeTitleAndContents(Object member_no, Object currentPage, Object lastPage, Object searchValue);
+    List<HashMap<String, Object>> selectBoardListWhereLiketitleOrContents(Object member_no, Object currentPage, Object lastPage, Object searchValue);
 
     /*--------TODO:전체글 조회---------------------------------------------------------*/
     @Select("SELECT COUNT(*) as list_count FROM board WHERE completed = 'true'")
@@ -120,7 +120,7 @@ public interface BoardMapper {
             "ORDER BY board.no ASC)SUB " +
             "ORDER BY SUB.rowno DESC " +
             "Limit #{arg0}, #{arg1};")
-    List<HashMap<String, Object>> selectAllBoardListWhereLikeTitleAndContents(Object currentPage, Object lastPage, Object searchValue);
+    List<HashMap<String, Object>> selectAllBoardListWhereLiketitleOrContents(Object currentPage, Object lastPage, Object searchValue);
 
     /*-----------------------------------------------------------------*/
 

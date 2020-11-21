@@ -34,12 +34,12 @@ public class TestApiController {
                                 @RequestParam(value = "keyword", required = false, defaultValue = "empty") String keyword,
                                 @RequestParam(value = "title", required = false, defaultValue = "empty") String title,
                                 @RequestParam(value = "contents", required = false, defaultValue = "empty") String contents,
-                                @RequestParam(value = "titleAndContents", required = false, defaultValue = "empty") String titleAndContents) {
+                                @RequestParam(value = "titleOrContents", required = false, defaultValue = "empty") String titleOrContents) {
         Map<String,String> searchValueMap = new HashMap<String, String>();
         searchValueMap.put("keyword",keyword);
         searchValueMap.put("title",title);
         searchValueMap.put("contents",contents);
-        searchValueMap.put("titleAndContents",titleAndContents);
+        searchValueMap.put("titleOrContents",titleOrContents);
 
         String[] searchValue = null;
 

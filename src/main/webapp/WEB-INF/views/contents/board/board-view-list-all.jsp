@@ -13,7 +13,7 @@
                     <option>keyword</option>
                     <option>title</option>
                     <option>contents</option>
-                    <option>titleAndContents</option>
+                    <option>titleOrContents</option>
                 </select>
                 <input type="text" class="form-control dot-key" id="search-value" placeholder="search!">
                 <button class="btn-link-red dot-key" onclick="boardListScript.ChangeMoveToThisPage(1)">
