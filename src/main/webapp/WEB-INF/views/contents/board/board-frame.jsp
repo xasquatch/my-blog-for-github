@@ -4,14 +4,15 @@
 
 
 <section>
-    <h1 class="dot-key">게시판 생성</h1>
+    <h1 class="dot-key">게시글 쓰기</h1>
     <div class="input-group">
-        <div class="input-group-addon"><b>Keyword</b></div>
+        <div class="input-group-addon dot-key"><b>글제목</b></div>
+        <input type="text" id="board-title-fake" class="form-control" placeholder="[Empty Title]" maxlength="50" value="${board.title}">
+    </div>
+    <div class="input-group">
+        <div class="input-group-addon dot-key"><b>키워드</b></div>
         <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="ex) Life, health....etc" value="${board.keyword}">
     </div>
-
-    <input type="text" id="board-title-fake" class="form-control" placeholder="Title" maxlength="50" value="${board.title}">
-
     <div id="board-bar" class="well">
 
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" tabindex="-1"

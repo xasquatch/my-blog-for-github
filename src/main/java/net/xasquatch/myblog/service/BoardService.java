@@ -63,7 +63,7 @@ public class BoardService {
     }
 
     public boolean createFinish(Board board) {
-        if (board.getTitle().equals("") || board.getTitle() == null) board.setTitle("[No Title]");
+        if (board.getTitle().equals("") || board.getTitle() == null) board.setTitle("[Empty Title]");
 
         byte[] bytes = (board.getTitle() + System.lineSeparator() + board.getCreated_ip() + System.lineSeparator() + board.getContents()).getBytes();
 
