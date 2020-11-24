@@ -62,7 +62,10 @@ public class Pagination {
         List<String> blockList = new ArrayList<String>();
         for (int i = prevPageBlock; i <= nextPageBlock; i++) {
             if (i != 0) {
-                if (i == prevPageBlock) {
+                if (i == currentPageBlock) {
+                    blockList.add("<a class='myblog-page-block'>" + i + "</a>");
+
+                } else if (i == prevPageBlock) {
                     blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?'"
                             + "page-limit=" + pageLimit + "&"
                             + "current-page-block=" + currentPageBlock + "&"
@@ -73,9 +76,6 @@ public class Pagination {
                             + "page-limit=" + pageLimit + "&"
                             + "current-page-block=" + currentPageBlock + "&"
                             + searchTarget + "=" + searchValue + ">next</a>");
-
-                } else if (i == currentPageBlock) {
-                    blockList.add("<a class='myblog-page-block'>" + i + "</a>");
 
                 } else {
                     blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?'"
