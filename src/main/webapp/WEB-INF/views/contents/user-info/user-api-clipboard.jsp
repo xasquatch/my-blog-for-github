@@ -17,8 +17,8 @@
             <p>Method : GET</p>
             <p><i class="dot-key">{member-Number}</i> : My Information의 ID값(Long형 숫자타입)</p>
             <p><i class="dot-key">{board-Number}</i> : 해당 게시글의 ID값(Long형 숫자타입)</p>
-<pre contenteditable="true">
-ㅎㅇㅇㅇ
+            <h3 class="dot-key" style="color: darkred;">Example</h3>
+<pre contenteditable="true" id="get-board-pre">
 </pre>
 
         </div>
@@ -35,8 +35,8 @@
             <p>Method : GET</p>
             <p>Parameters Name : page-limit, current-page-block, {keyword, title, contents, title-and-contents}</p>
             <p>Parameters Count : 3</p>
-<pre contenteditable="true">
-ㅎㅇㅇㅇ
+            <h3 class="dot-key" style="color: darkred;">Example</h3>
+<pre contenteditable="true" id="get-board-list-pre">
 </pre>
 
         </div>
@@ -55,10 +55,28 @@
             <p>Method : GET</p>
             <p><i class="dot-key">{member-Number}</i> : My Information의 ID값(Long형 숫자타입)</p>
             <p><i class="dot-key">{resource-Number}</i> : 해당 리소스의 ID값(Long형 숫자타입)</p>
-<pre contenteditable="true">
-ㅎㅇㅇㅇ
+            <h3 class="dot-key" style="color: darkred;">Example</h3>
+<pre contenteditable="true"  id="get-resource-pre">
+
 </pre>
 
         </div>
     </article>
 </section>
+<script>
+    window.onload = function (){
+        myAjax.submit('GET','https://myblog.xasquatch.net/html/form/get-board-pre.html',function (data) {
+            document.querySelector('#get-board-pre').innerText = data;
+
+        });
+        myAjax.submit('GET','https://myblog.xasquatch.net/html/form/get-board-list-pre.html',function (data) {
+            document.querySelector('#get-board-list-pre').innerText = data;
+
+        });
+        myAjax.submit('GET','https://myblog.xasquatch.net/html/form/get-resource-pre.html',function (data) {
+            document.querySelector('#get-resource-pre').innerText = data;
+
+        });
+    };
+
+</script>
