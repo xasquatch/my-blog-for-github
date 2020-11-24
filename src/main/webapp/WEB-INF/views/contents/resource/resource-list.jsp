@@ -127,7 +127,7 @@
         var formData = new FormData(targetForm);
 
         var uniform = uri.getUniform('/resource/', '/list');
-        ajax.submit('PUT', '${path}/resource/' + uniform + '/modify', function (data) {
+        myAjax.submit('PUT', '${path}/resource/' + uniform + '/modify', function (data) {
             console.log(data);
             if (data === 'false') {
                 window.alert('수정에 실패하였습니다. 잠시 후 다시시도해주세요')
@@ -154,7 +154,7 @@
             var formData = new FormData(targetForm);
             var uniform = uri.getUniform('/resource/', '/list');
 
-            ajax.submit('DELETE', '${path}/resource/' + uniform + '/delete', function (data) {
+            myAjax.submit('DELETE', '${path}/resource/' + uniform + '/delete', function (data) {
                 if (data === 'false') {
                     window.alert('삭제에 실패하였습니다. 잠시 후 다시시도해주세요')
 
@@ -181,7 +181,7 @@
         } catch (e) {
             window.alert('더이상 불러올 리소스가 없습니다.');
         }
-        ajax.submit('GET', '${path}/resource/${sessionMember.no}/AdditionalList?lastNumber=' + lastNumber, function (data) {
+        myAjax.submit('GET', '${path}/resource/${sessionMember.no}/AdditionalList?lastNumber=' + lastNumber, function (data) {
             if (data === 'false') {
                 window.alert('리소스 가져오기에 실패하였습니다. 잠시 후 다시 시도해주세요.')
 

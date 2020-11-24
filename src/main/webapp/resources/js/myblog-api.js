@@ -1,4 +1,4 @@
-var ajax = {
+var myAjax = {
 
     json: 'application/json',
     form: 'application/x-www-form-urlencoded',
@@ -8,13 +8,13 @@ var ajax = {
         var contentsType = 'text/plain';
 
         if (inputContentsType.toUpperCase() === 'FORM') {
-            contentsType = ajax.form;
+            contentsType = myAjax.form;
 
         } else if (inputContentsType.toUpperCase() === 'FORMFILE') {
-            contentsType = ajax.formFile;
+            contentsType = myAjax.formFile;
 
         } else if (inputContentsType.toUpperCase() === 'JSON') {
-            contentsType = ajax.json;
+            contentsType = myAjax.json;
 
         }
         return contentsType;
@@ -47,9 +47,9 @@ var ajax = {
             xhr.send();
         } else if (method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT' || method.toUpperCase() === 'DELETE' || method.toUpperCase() === 'PATCH') {
             method = method.toUpperCase();
-            contentsType = ajax.setContentsType(inputContentsType);
+            contentsType = myAjax.setContentsType(inputContentsType);
             xhr.open(method, url, true);
-            if (contentsType !== ajax.formFile)
+            if (contentsType !== myAjax.formFile)
                 xhr.setRequestHeader('Content-type', contentsType);
             xhr.send(sendData);
         }
@@ -58,4 +58,11 @@ var ajax = {
 
 }
 
+var myBoard = {
 
+    getBoardData: function (memberNo, boardNo, callback) {
+        myAjax.submit('GET', 'https://myblog.xasquatch.net/api/members/' + memberNo + '/boards/' + boardNo, callback);
+    }
+
+
+}

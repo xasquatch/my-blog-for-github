@@ -95,7 +95,7 @@
         }
         var uniform = uri.getUniform('/resource/', '/list');
 
-        ajax.submit('GET', '${path}/resource/' + uniform + '/AdditionalList?lastNumber=' + lastNumber, function (data) {
+        myAjax.submit('GET', '${path}/resource/' + uniform + '/AdditionalList?lastNumber=' + lastNumber, function (data) {
             if (data === 'false') {
                 window.alert('리소스 가져오기에 실패하였습니다. 잠시 후 다시 시도해주세요.')
 

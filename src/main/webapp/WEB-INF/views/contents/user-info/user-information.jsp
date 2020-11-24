@@ -55,7 +55,7 @@
 
         var userForm = document.querySelector('#user-info');
         var userFormData = new FormData(userForm);
-        ajax.submit('PATCH', '${path}/my-blog/members/${sessionMember.no}', function (data) {
+        myAjax.submit('PATCH', '${path}/my-blog/members/${sessionMember.no}', function (data) {
 
             if (data === 'false') {
                 window.alert('정보 수정에 실패하였습니다. 수정조건을 확인 후 다시 시도해주세요.');
