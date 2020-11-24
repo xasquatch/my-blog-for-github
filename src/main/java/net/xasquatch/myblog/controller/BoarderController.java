@@ -3,6 +3,7 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Board;
+import net.xasquatch.myblog.service.ApiService;
 import net.xasquatch.myblog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,9 @@ public class BoarderController {
 
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private ApiService apiService;
 
     @Autowired
     private HomeController checkSessionController;
@@ -92,11 +96,10 @@ public class BoarderController {
     }
 
     @RequestMapping(value = "/{memberNo}/detail/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewDetail(Model model, @PathVariable String boardNo,@PathVariable String memberNo) {
+    public String viewDetail(Model model, @PathVariable String boardNo, @PathVariable String memberNo) {
 
-        HashMap<String, Object> boardInfo = boardService.viewDetail(memberNo, boardNo);
-
-        model.addAttribute("boardInfo", boardInfo);
+        model.addAttribute("boardNo", boardNo);
+        model.addAttribute("memberNo", memberNo);
         model.addAttribute("mainContents", "board-view-detail");
 
         return "index";
