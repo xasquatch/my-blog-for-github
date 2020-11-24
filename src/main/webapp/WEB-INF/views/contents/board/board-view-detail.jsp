@@ -2,48 +2,48 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <section>
-    <article>
-        <h1>${boardInfo.title}</h1>
-        <table class="table table-hover table-responsive" style="margin: 0;">
-            <tr>
-                <td class="dot-key" style="width: 100px">
-                    Keyword
-                </td>
-                <td>
-                    <kbd>${boardInfo.keyword}</kbd>
-                </td>
-            </tr>
-        </table>
-        <table class="table table-hover table-responsive" style="margin: 0;">
-            <tr>
-                <td class="dot-key" style="width: 100px">
-                    작성일자
-                </td>
-                <td>
-                    <kbd>${boardInfo.created_date}</kbd>
-                </td>
-            </tr>
-        </table>
-        <table class="table table-hover table-responsive" style="margin: 0;">
-            <tr>
-                <td class="dot-key" style="width: 100px">
-                    IP
-                </td>
-                <td>
-                    <kbd>${boardInfo.created_ip}</kbd>
-                </td>
-            </tr>
-        </table>
-    </article>
-    <article style="overflow: auto">
-        <div id="board-view-contents">
-            ${boardInfo.contents}
-
-        </div>
-    </article>
-    <article>
-        <section style="text-align: center; padding: 20px;">
-            <button class="btn btn-link-red dot-key" onclick="window.history.back();">뒤로 가기</button>
-        </section>
-    </article>
+    <section id="example-board">
+    </section>
+    <section style="text-align: center; padding: 20px;">
+        <button class="btn btn-link-red dot-key" onclick="window.history.back();">뒤로 가기</button>
+    </section>
 </section>
+
+<script>
+    window.onload = function () {
+        exampleBoardDetail(document.querySelector('#example-board'), ${requestScope.memberNo}, ${requestScope.boardNo});
+
+    }
+
+    function exampleBoardDetail(element, memberNo, boardNo) {
+        myBoard.getBoardData(memberNo, boardNo, function (data) {
+            console.log('----------origin data--------------');
+            console.log(data);
+            var boardMap = JSON.parse(data).data.board;
+            console.log('----------parsed data--------------');
+            console.log(JSON.stringify(boardMap, null, 2));
+            console.log('-----------------------------------');
+
+
+            var container = document.createElement('section');
+
+            var boardDetailTable = document.createElement('table');
+            boardDetailTable.className = 'table table-hover table-responsive';
+            boardDetailTable.style.margin = '0';
+
+            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">no</td><td><kbd>' + boardMap.no + '</kbd></td></tr>';
+            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">thumbnail</td><td>' + boardMap.thumbnail + '</td></tr>';
+            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">title</td><td><kbd>' + boardMap.title + '</kbd></td></tr>';
+            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">keyword</td><td><kbd>' + boardMap.keyword + '</kbd></td></tr>';
+            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">name</td><td><kbd>' + boardMap.name + '</kbd></td></tr>';
+            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">created_date</td><td><kbd>' + boardMap.created_date + '</kbd></td></tr>';
+            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">created_ip</td><td><kbd>' + boardMap.created_ip + '</kbd></td></tr>';
+
+            container.appendChild(boardDetailTable);
+            container.innerHTML += '<section id="board-view-contents">' + boardMap.contents + '</section>';
+            element.appendChild(container);
+        });
+
+    }
+
+</script>
