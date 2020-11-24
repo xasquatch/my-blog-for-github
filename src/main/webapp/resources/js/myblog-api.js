@@ -62,7 +62,11 @@ var myBoard = {
 
     getBoardData: function (memberNo, boardNo, callback) {
         myAjax.submit('GET', 'https://myblog.xasquatch.net/api/members/' + memberNo + '/boards/' + boardNo, callback);
+
+    },
+
+    getBoardList: function (memberNo, callback) {
+        myAjax.submit('GET', 'https://myblog.xasquatch.net/api/members/' + memberNo + '/boards', callback);
+
     }
-
-
 }
