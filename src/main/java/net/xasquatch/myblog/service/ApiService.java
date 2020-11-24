@@ -56,7 +56,7 @@ public class ApiService {
 
         int totalCount = apiDao.selectBoardCount(memberNo);
 
-        List<Integer> pageBlockList = new Pagination().getBlockList(pageLimit, currentPageBlock, totalCount);
+        List<String> pageBlockList = new Pagination().getBlockList(Long.parseLong(memberNo), pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("boardList", boardList);

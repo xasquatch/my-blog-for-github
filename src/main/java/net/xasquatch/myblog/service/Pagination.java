@@ -21,38 +21,70 @@ public class Pagination {
     private int prevPageBlock;
     private int nextPageBlock;
 
-    public List<Integer> getBlockList(int pageLimit, int currentPageBlock, int totalCount) {
+    public List<String> getBlockList(long memberNo, int pageLimit, int currentPageBlock, int totalCount, String searchTarget, String searchValue) {
 
-        this.totalPageBlock = (totalCount / pageLimit);
+        int totalPageBlock = (totalCount / pageLimit);
+        int startPageBlock = 1;
+        int endPageBlock = 5;
         if (totalCount % pageLimit > 0)
-            this.totalPageBlock++;
+            totalPageBlock += 1;
 
         if (currentPageBlock % 5 == 1) {
-            this.startPageBlock = currentPageBlock;
+            startPageBlock = currentPageBlock;
 
         } else if (currentPageBlock % 5 == 0) {
-            this.startPageBlock = currentPageBlock - 4;
+            startPageBlock = currentPageBlock - 4;
 
         } else {
-            this.startPageBlock = ((currentPageBlock / 5) * 5) + 1;
+            startPageBlock = ((currentPageBlock / 5) * 5) + 1;
 
         }
 
-        this.endPageBlock = this.startPageBlock + 4; // 4 = 5-1
-        if (this.endPageBlock > this.totalPageBlock)
-            this.endPageBlock = this.totalPageBlock;
+        endPageBlock = startPageBlock + 4; // 4 = 5-1
+        if (endPageBlock > totalPageBlock)
+            endPageBlock = totalPageBlock;
 
-        this.prevPageBlock = this.startPageBlock - 1;
+        int prevPageBlock = startPageBlock - 1;
 
-        this.nextPageBlock = this.endPageBlock + 1;
-        if (this.nextPageBlock > this.totalPageBlock)
-            this.nextPageBlock = this.totalPageBlock;
+        int nextPageBlock = endPageBlock + 1;
+        if (nextPageBlock > totalPageBlock)
+            nextPageBlock = totalPageBlock;
 
+        if (searchTarget == null) {
+            searchTarget = "";
+            searchValue = "";
 
-        List<Integer> blockList = new ArrayList<Integer>();
-        for (int i = this.prevPageBlock; i <= this.nextPageBlock; i++) {
-            if (i != 0) blockList.add(i);
+        } else if (searchValue != null) {
+            searchValue = searchValue.replaceAll("%", "");
 
+        }
+
+        List<String> blockList = new ArrayList<String>();
+        for (int i = prevPageBlock; i <= nextPageBlock; i++) {
+            if (i != 0) {
+                if (i == prevPageBlock) {
+                    blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?'"
+                            + "page-limit=" + pageLimit + "&"
+                            + "current-page-block=" + currentPageBlock + "&"
+                            + searchTarget + "=" + searchValue + ">prev</a>");
+
+                } else if (i == nextPageBlock) {
+                    blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?'"
+                            + "page-limit=" + pageLimit + "&"
+                            + "current-page-block=" + currentPageBlock + "&"
+                            + searchTarget + "=" + searchValue + ">next</a>");
+
+                } else if (i == currentPageBlock) {
+                    blockList.add("<a class='myblog-page-block'>" + i + "</a>");
+
+                } else {
+                    blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?'"
+                            + "page-limit=" + pageLimit + "&"
+                            + "current-page-block=" + currentPageBlock + "&"
+                            + searchTarget + "=" + searchValue + ">" + i + "</a>");
+
+                }
+            }
         }
 
         return blockList;
