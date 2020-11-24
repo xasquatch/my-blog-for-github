@@ -121,7 +121,7 @@
 
             var loginForm = document.querySelector('#home-login');
             var formData = new FormData(loginForm);
-            ajax.submit('POST', '${path}/user/login', function (data) {
+            myAjax.submit('POST', '${path}/user/login', function (data) {
 
                 if (data === 'false') {
                     window.alert('로그인에 실패하였습니다. email, password를 확인해주세요');
@@ -221,7 +221,7 @@
             return;
         }
 
-        ajax.submit('POST', '${path}/user/sign-up/email', function (data) {
+        myAjax.submit('POST', '${path}/user/sign-up/email', function (data) {
             if (data === 'true') {
                 userEmailExplain.innerHTML = element.value + '은(는) 이미 존재하는 이메일계정입니다.';
                 userEmailExplain.style.color = 'RED';
@@ -296,7 +296,7 @@
 
         }
 
-        ajax.submit('POST', '${path}/user/sign-up/name', function (data) {
+        myAjax.submit('POST', '${path}/user/sign-up/name', function (data) {
             if (data === 'true') {
                 userNameExplain.innerHTML = element.value + '은(는) 이미 존재하는 이름입니다.';
                 userNameExplain.style.color = 'RED';
@@ -336,7 +336,7 @@
         var signupForm = document.querySelector('#user-signup');
         var signupFormData = new FormData(signupForm);
 
-        ajax.submit('POST', '${path}/user/sign-up', function (data) {
+        myAjax.submit('POST', '${path}/user/sign-up', function (data) {
             if (data === 'false') {
                 window.alert('회원가입에 실패하였습니다. 잠시 후 다시 시도해주세요.');
 
