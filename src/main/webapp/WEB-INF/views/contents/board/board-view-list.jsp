@@ -40,7 +40,7 @@
             </div>
         </div>
     </article>
-    <article class="board-list-contents table-responsive">
+    <article id="board-list-contents" class="table-responsive">
         <table class="table table-hover table-condensed">
             <thead>
             <tr>
@@ -67,14 +67,30 @@
 
 
 <script>
+    /*
+        document.querySelector('#search-value').addEventListener('keypress', function (e) {
+            if (e.keyCode === 13) boardListScript.ChangeMoveToThisPage(1);
+        })
 
-    document.querySelector('#search-value').addEventListener('keypress', function (e) {
-        if (e.keyCode === 13) boardListScript.ChangeMoveToThisPage(1);
-    })
 
+        window.onload = function () {
+            boardListScript.changeBoardList(document.querySelector('#board-list-count').innerText);
 
+        }
+        */
     window.onload = function () {
-        boardListScript.changeBoardList(document.querySelector('#board-list-count').innerText);
-
+        myBoard.getBoardList(1, function (data) {
+            var boardList = JSON.parse(data).data.boardList;
+            var pageBlockList = JSON.parse(data).data.pageBlockList;
+            console.log('----------origin data-----------------');
+            console.log(data);
+            console.log('---------pageBlockList data-----------');
+            console.log(JSON.stringify(pageBlockList, null, 2));
+            console.log('----------boardList data--------------');
+            console.log(JSON.stringify(boardList, null, 2));
+            console.log('--------------------------------------');
+        });
     }
+
+
 </script>

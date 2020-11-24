@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <section>
-    <section id="example-board">
+    <section id="board-details">
     </section>
     <section style="text-align: center; padding: 20px;">
         <button class="btn btn-link-red dot-key" onclick="window.history.back();">뒤로 가기</button>
@@ -11,11 +11,11 @@
 
 <script>
     window.onload = function () {
-        exampleBoardDetail(document.querySelector('#example-board'), ${requestScope.memberNo}, ${requestScope.boardNo});
+        BoardDetail(document.querySelector('#board-details'), ${requestScope.memberNo}, ${requestScope.boardNo});
 
     }
 
-    function exampleBoardDetail(element, memberNo, boardNo) {
+    function BoardDetail(element, memberNo, boardNo) {
         myBoard.getBoardData(memberNo, boardNo, function (data) {
             console.log('----------origin data--------------');
             console.log(data);

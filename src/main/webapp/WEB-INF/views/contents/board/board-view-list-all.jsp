@@ -40,7 +40,7 @@
             </div>
         </div>
     </article>
-    <article class="board-list-contents table-responsive">
+    <article id="board-list-contents" class="table-responsive">
         <table class="table table-hover table-condensed">
             <thead>
             <tr>
