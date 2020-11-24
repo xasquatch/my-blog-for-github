@@ -51,7 +51,7 @@ public class Pagination {
 
         List<Integer> blockList = new ArrayList<Integer>();
         for (int i = this.prevPageBlock; i <= this.nextPageBlock; i++) {
-            blockList.add(i);
+            if (i != 0) blockList.add(i);
 
         }
 
