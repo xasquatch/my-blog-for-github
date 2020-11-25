@@ -57,16 +57,86 @@ var myAjax = {
     }
 
 }
+var url = {
+    parsing: function (target) {
+        return window.location.href.slice(window.location.origin.length);
+
+    },
+    isContainWord: function (url, word) {
+        return url.indexOf(word) > 0;
+    },
+    isContainWordCurrentPath: function (word) {
+        return window.location.href.slice(window.location.origin.length).indexOf(word) > 0;
+    },
+    getUniform(startUrl, endUrl) {
+        var i = url.parsing();
+        return i.slice(i.indexOf(startUrl) + startUrl.length, i.indexOf(endUrl));
+    }
+}
+var uri = {
+    isContainWord: function (url, word) {
+        return url.indexOf(word) > 0;
+    },
+    getUniform(target, startUrl, endUrl) {
+        return target.slice(target.indexOf(startUrl) + startUrl.length, target.indexOf(endUrl));
+    }
+}
+
 
 var myBoard = {
 
-    getBoardData: function (memberNo, boardNo, callback) {
+    getBoardData: function (callback, memberNo, boardNo) {
         myAjax.submit('GET', 'https://myblog.xasquatch.net/api/members/' + memberNo + '/boards/' + boardNo, callback);
 
     },
 
-    getBoardList: function (memberNo, callback) {
-        myAjax.submit('GET', 'https://myblog.xasquatch.net/api/members/' + memberNo + '/boards', callback);
+    recursiveGetBoardList: function (memberNo, url) {
+        myBoard.getBoardList(function (data) {
+            myBoard.pageBlockDecoration(data);
+            myBoard.boardListDecoration(data);
+            var pageBlockList = document.querySelectorAll('.myblog-page-block');
+            for (var pageBlock of pageBlockList) {
+                pageBlock.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var href = this.getAttribute('href');
+                    if (href !== null) {
+                        memberNo = uri.getUniform(href,'/members/','/boards');
+                        myBoard.getBoardList(function (data) {
+                            myBoard.pageBlockDecoration(data);
+                            myBoard.boardListDecoration(data);
+                            myBoard.recursiveGetBoardList(memberNo,'https://myblog.xasquatch.net' + href);
+                        }, 'https://myblog.xasquatch.net' + href);
+                    }
+                });
+            }
 
+        }, url);
+
+    },
+
+    getBoardList: function (callback, url) {
+        myAjax.submit('GET', url, callback);
+
+    },
+
+    pageBlockDecoration: function (data) {
+        var pageBlockList = JSON.parse(data).data.pageBlockList;
+
+        document.querySelector('#board-list-toolbar').innerHTML = '';
+
+        for (var pageBlock of pageBlockList) {
+            document.querySelector('#board-list-toolbar').innerHTML += pageBlock;
+
+        }
+        var blockList = document.querySelectorAll('#board-list-toolbar>a');
+        for (var block of blockList) {
+            block.classList.add('btn');
+            block.classList.add('btn-link-red');
+        }
+    },
+    boardListDecoration: function (data) {
+        var boardList = JSON.parse(data).data.boardList;
     }
+
+
 }

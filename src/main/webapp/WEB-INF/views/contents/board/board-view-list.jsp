@@ -58,9 +58,9 @@
     </article>
 
     <div id="board-list-toolbar" class="btn-group" role="group">
-        <button type="button" class="btn btn-link-red active" onclick="boardListScript.MoveToThisPage(this)">
-            1
-        </button>
+        <%--        <button type="button" class="btn btn-link-red active" onclick="boardListScript.MoveToThisPage(this)">--%>
+        <%--            1--%>
+        <%--        </button>--%>
     </div>
 
 </section>
@@ -79,18 +79,12 @@
         }
         */
     window.onload = function () {
-        myBoard.getBoardList(1, function (data) {
-            var boardList = JSON.parse(data).data.boardList;
-            var pageBlockList = JSON.parse(data).data.pageBlockList;
-            console.log('----------origin data-----------------');
-            console.log(data);
-            console.log('---------pageBlockList data-----------');
-            console.log(JSON.stringify(pageBlockList, null, 2));
-            console.log('----------boardList data--------------');
-            console.log(JSON.stringify(boardList, null, 2));
-            console.log('--------------------------------------');
-        });
+        var memberNo = 1;
+        var pageLimit = 1;
+        myBoard.recursiveGetBoardList(memberNo, 'https://myblog.xasquatch.net/api/members/' + memberNo + '/boards?page-limit=' + pageLimit);
     }
+
+
 
 
 </script>
