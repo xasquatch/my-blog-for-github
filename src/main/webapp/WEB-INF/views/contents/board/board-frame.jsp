@@ -239,7 +239,7 @@
 
         var formData = new FormData(boardFormTag);
 
-        if (uri.isContainWordCurrentPath('/create')) {
+        if (url.isContainWordCurrentPath('/create')) {
 
             myAjax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/create', function (data) {
                 if (data === 'false') {
@@ -254,7 +254,7 @@
             }, 'FORMFILE', formData);
 
 
-        } else if (uri.isContainWordCurrentPath('/modify')) {
+        } else if (url.isContainWordCurrentPath('/modify')) {
 
             myAjax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/modify', function (data) {
                 if (data === 'false') {

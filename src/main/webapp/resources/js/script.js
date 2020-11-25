@@ -11,23 +11,6 @@ var modal = {
 
 }
 
-var uri = {
-    parsing: function () {
-        return window.location.href.slice(window.location.origin.length);
-
-    },
-    isContainWord: function (url, word) {
-        return url.indexOf(word) > 0;
-    },
-    isContainWordCurrentPath: function (word) {
-        return window.location.href.slice(window.location.origin.length).indexOf(word) > 0;
-    },
-    getUniform(startUrl, endUrl) {
-        var i = uri.parsing();
-        return i.slice(i.indexOf(startUrl) + startUrl.length, i.indexOf(endUrl));
-    }
-}
-
 var board = {
 
 
@@ -265,7 +248,7 @@ var boardListScript = {
     },
     changeAllBoardList: function (count) {
         var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
-        var uniform = uri.getUniform('/board/', '/list');
+        var uniform = url.getUniform('/board/', '/list');
 
         boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
             document.querySelector('#board-list-count').innerHTML = count;
@@ -279,7 +262,7 @@ var boardListScript = {
 
     changeBoardList: function (count) {
         var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
-        var uniform = uri.getUniform('/board/', '/list');
+        var uniform = url.getUniform('/board/', '/list');
 
         boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
             document.querySelector('#board-list-count').innerHTML = count;
@@ -306,7 +289,7 @@ var boardListScript = {
     },
     ChangeMoveToThisPage: function (currentPageBlock) {
         var limitCount = document.querySelector('#board-list-count').innerText;
-        var uniform = uri.getUniform('/board/', '/list');
+        var uniform = url.getUniform('/board/', '/list');
         var searchRange = document.querySelector('#search-range').value;
         var searchValue = document.querySelector('#search-value').value;
 
@@ -336,7 +319,7 @@ var boardListScript = {
     },
 
     deleteBoard: function (key) {
-        var uniform = uri.getUniform('/board/', '/list');
+        var uniform = url.getUniform('/board/', '/list');
         if (window.confirm("정말 삭제하시겠습니까?"))
             location.href = '/board/' + uniform + '/delete/' + key;
 

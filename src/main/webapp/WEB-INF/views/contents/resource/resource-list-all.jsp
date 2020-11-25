@@ -93,7 +93,7 @@
         } catch (e) {
             window.alert('더이상 불러올 리소스가 없습니다.');
         }
-        var uniform = uri.getUniform('/resource/', '/list');
+        var uniform = url.getUniform('/resource/', '/list');
 
         myAjax.submit('GET', '${path}/resource/' + uniform + '/AdditionalList?lastNumber=' + lastNumber, function (data) {
             if (data === 'false') {

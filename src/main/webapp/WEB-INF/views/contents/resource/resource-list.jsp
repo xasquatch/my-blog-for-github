@@ -126,7 +126,7 @@
 
         var formData = new FormData(targetForm);
 
-        var uniform = uri.getUniform('/resource/', '/list');
+        var uniform = url.getUniform('/resource/', '/list');
         myAjax.submit('PUT', '${path}/resource/' + uniform + '/modify', function (data) {
             console.log(data);
             if (data === 'false') {
@@ -152,7 +152,7 @@
             contents.value = document.querySelector('#resource-contents').value;
 
             var formData = new FormData(targetForm);
-            var uniform = uri.getUniform('/resource/', '/list');
+            var uniform = url.getUniform('/resource/', '/list');
 
             myAjax.submit('DELETE', '${path}/resource/' + uniform + '/delete', function (data) {
                 if (data === 'false') {

@@ -126,7 +126,7 @@
                 if (data === 'false') {
                     window.alert('로그인에 실패하였습니다. email, password를 확인해주세요');
 
-                } else if (uri.isContainWord(data, '/check-email')) {
+                } else if (url.isContainWord(data, '/check-email')) {
                     window.location.href = '${path}' + data;
 
                 } else {
