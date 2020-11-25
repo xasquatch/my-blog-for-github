@@ -7,7 +7,7 @@
     }
 
     function exampleBoardDetail(element, memberNo, boardNo) {
-        myBoard.getBoardData(memberNo, boardNo, function (data) {
+        myBoard.getBoardData(function (data) {
             console.log('----------origin data--------------');
             console.log(data);
             var boardMap = JSON.parse(data).data.board;
@@ -29,7 +29,7 @@
             container.innerHTML += '<div><label>contents</label><BR>' + boardMap.contents + '</div>';
 
             element.appendChild(container);
-        });
+        }, memberNo, boardNo);
 
     }
 
