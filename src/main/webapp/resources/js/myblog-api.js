@@ -90,20 +90,20 @@ var myBoard = {
 
     },
 
-    recursiveGetBoardList: function (memberNo, url) {
+    recursiveGetBoardList: function (memberNo, url, boardListContainerQuery, pageBlockContainerQuery) {
         myBoard.getBoardList(function (data) {
-            myBoard.pageBlockDecoration(data);
-            myBoard.boardListDecoration(data);
+            myBoard.pageBlockDecoration(data, boardListContainerQuery);
+            myBoard.boardListDecoration(data, pageBlockContainerQuery);
             var pageBlockList = document.querySelectorAll('.myblog-page-block');
             for (var pageBlock of pageBlockList) {
                 pageBlock.addEventListener('click', function (e) {
                     e.preventDefault();
                     var href = this.getAttribute('href');
                     if (href !== null) {
-                        memberNo = uri.getUniform(href,'/members/','/boards');
-                        myBoard.pageBlockDecoration(data);
-                        myBoard.boardListDecoration(data);
-                        myBoard.recursiveGetBoardList(memberNo,'https://myblog.xasquatch.net' + href);
+                        memberNo = uri.getUniform(href, '/members/', '/boards');
+                        myBoard.pageBlockDecoration(data, boardListContainerQuery);
+                        myBoard.boardListDecoration(data, pageBlockContainerQuery);
+                        myBoard.recursiveGetBoardList(memberNo, 'https://myblog.xasquatch.net' + href, boardListContainerQuery, pageBlockContainerQuery);
 
                     }
                 });
@@ -118,22 +118,22 @@ var myBoard = {
 
     },
 
-    pageBlockDecoration: function (data) {
+    pageBlockDecoration: function (data, pageBlockContainerQuery) {
         var pageBlockList = JSON.parse(data).data.pageBlockList;
 
-        document.querySelector('#board-list-toolbar').innerHTML = '';
+        document.querySelector(pageBlockContainerQuery).innerHTML = '';
 
         for (var pageBlock of pageBlockList) {
-            document.querySelector('#board-list-toolbar').innerHTML += pageBlock;
+            document.querySelector(pageBlockContainerQuery).innerHTML += pageBlock;
 
         }
-        var blockList = document.querySelectorAll('#board-list-toolbar>a');
+        var blockList = document.querySelectorAll(pageBlockContainerQuery + '>a');
         for (var block of blockList) {
             block.classList.add('btn');
             block.classList.add('btn-link-red');
         }
     },
-    boardListDecoration: function (data) {
+    boardListDecoration: function (data, boardListContainerQuery) {
         var boardList = JSON.parse(data).data.boardList;
     }
 

@@ -40,51 +40,24 @@
             </div>
         </div>
     </article>
-    <article id="board-list-contents" class="table-responsive">
-        <table class="table table-hover table-condensed">
-            <thead>
-            <tr>
-                <th style="width: 40px;">No</th>
-                <th>Title</th>
-                <th style="width: 200px;">Date</th>
-                <th style="width: 60px;">Modify</th>
-                <th style="width: 60px;">Delete</th>
-            </tr>
-            </thead>
-            <tbody id="myblog-api-board-list">
+    <article id="board-list-contents">
 
-            </tbody>
-        </table>
     </article>
+    <article id="board-list-toolbar">
 
-    <div id="board-list-toolbar" class="btn-group" role="group">
-        <%--        <button type="button" class="btn btn-link-red active" onclick="boardListScript.MoveToThisPage(this)">--%>
-        <%--            1--%>
-        <%--        </button>--%>
-    </div>
+    </article>
 
 </section>
 
 
 <script>
-    /*
-        document.querySelector('#search-value').addEventListener('keypress', function (e) {
-            if (e.keyCode === 13) boardListScript.ChangeMoveToThisPage(1);
-        })
-
-
-        window.onload = function () {
-            boardListScript.changeBoardList(document.querySelector('#board-list-count').innerText);
-
-        }
-        */
     window.onload = function () {
         var memberNo = 1;
         var pageLimit = 1;
-        myBoard.recursiveGetBoardList(memberNo, 'https://myblog.xasquatch.net/api/members/' + memberNo + '/boards?page-limit=' + pageLimit);
+        var searchTarget = document.querySelector('#search-range').value;
+        var searchValue = document.querySelector('#search-value').value;
+        myBoard.recursiveGetBoardList(memberNo,
+            'https://myblog.xasquatch.net/api/members/' + memberNo + '/boards?page-limit=' + pageLimit + '&' + searchTarget + '=' + searchValue,
+            '#board-list-contents', '#board-list-toolbar');
     }
-
-
-
-
 </script>
