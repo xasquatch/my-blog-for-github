@@ -101,11 +101,10 @@ var myBoard = {
                     var href = this.getAttribute('href');
                     if (href !== null) {
                         memberNo = uri.getUniform(href,'/members/','/boards');
-                        myBoard.getBoardList(function (data) {
-                            myBoard.pageBlockDecoration(data);
-                            myBoard.boardListDecoration(data);
-                            myBoard.recursiveGetBoardList(memberNo,'https://myblog.xasquatch.net' + href);
-                        }, 'https://myblog.xasquatch.net' + href);
+                        myBoard.pageBlockDecoration(data);
+                        myBoard.boardListDecoration(data);
+                        myBoard.recursiveGetBoardList(memberNo,'https://myblog.xasquatch.net' + href);
+
                     }
                 });
             }
