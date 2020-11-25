@@ -66,22 +66,22 @@ public class Pagination {
                     blockList.add("<a class='myblog-page-block'>" + i + "</a>");
 
                 } else if (i == prevPageBlock) {
-                    blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?'"
+                    blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?"
                             + "page-limit=" + pageLimit + "&"
-                            + "current-page-block=" + currentPageBlock + "&"
-                            + searchTarget + "=" + searchValue + ">prev</a>");
+                            + "current-page-block=" + i + "&"
+                            + searchTarget + "=" + searchValue + "'>prev</a>");
 
                 } else if (i == nextPageBlock) {
-                    blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?'"
+                    blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?"
                             + "page-limit=" + pageLimit + "&"
-                            + "current-page-block=" + currentPageBlock + "&"
-                            + searchTarget + "=" + searchValue + ">next</a>");
+                            + "current-page-block=" + i + "&"
+                            + searchTarget + "=" + searchValue + "'>next</a>");
 
                 } else {
-                    blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?'"
+                    blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?"
                             + "page-limit=" + pageLimit + "&"
-                            + "current-page-block=" + currentPageBlock + "&"
-                            + searchTarget + "=" + searchValue + ">" + i + "</a>");
+                            + "current-page-block=" + i + "&"
+                            + searchTarget + "=" + searchValue + "'>" + i + "</a>");
 
                 }
             }
