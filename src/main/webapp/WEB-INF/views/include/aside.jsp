@@ -28,12 +28,6 @@
                     전체 글 목록
                 </a>
             </li>
-            <li role="presentation">
-                <a href="${path}/resource/all/list">
-                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/all-resources.png">
-                    전체 저장소 목록
-                </a>
-            </li>
         </ul>
         <h2 style="font-weight: bold;">
             마이 페이지
@@ -71,20 +65,7 @@
 
 <script>
 
-    var mainAside = document.querySelector('#main-aside');
 
-    function popUpAside() {
-        mainAside.classList.toggle('forward-to-top');
-        mainAside.style.marginTop = 0;
-    }
-
-    // css sticky 속성이 부모태그가 그리드인 상태에서는 적용되지가 않아서
-    // TOP padding값을 주는 것으로 sticky 구현
-    window.addEventListener('scroll', function () {
-        if (mainAside.classList.contains('forward-to-top')) {
-            mainAside.style.marginTop = window.pageYOffset;
-        }
-    });
 
 
 </script>
