@@ -63,7 +63,7 @@ public class Pagination {
         for (int i = prevPageBlock; i <= nextPageBlock; i++) {
             if (i != 0) {
                 if (i == currentPageBlock) {
-                    blockList.add("<a class='myblog-page-block'>" + i + "</a>");
+                    blockList.add("<a class='myblog-page-block current-page'>" + i + "</a>");
 
                 } else if (i == prevPageBlock) {
                     blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?"
@@ -71,7 +71,7 @@ public class Pagination {
                             + "current-page-block=" + i + "&"
                             + searchTarget + "=" + searchValue + "'>prev</a>");
 
-                } else if (i == nextPageBlock) {
+                } else if (i == nextPageBlock && i != endPageBlock) {
                     blockList.add("<a class='myblog-page-block' href='/api/members/" + memberNo + "/boards?"
                             + "page-limit=" + pageLimit + "&"
                             + "current-page-block=" + i + "&"
