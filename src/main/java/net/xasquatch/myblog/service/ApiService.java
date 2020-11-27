@@ -29,7 +29,7 @@ public class ApiService {
         map.put("titleOrContents", titleOrContents);
 
         map.forEach((key, value) -> {
-            if (!value.equals("empty")) {
+            if (!value.equals("empty") && !value.equals("undefined")) {
                 searchValue[0] = key;
                 searchValue[1] = '%' + value + '%';
             }
