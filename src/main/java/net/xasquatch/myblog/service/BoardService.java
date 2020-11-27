@@ -64,7 +64,7 @@ public class BoardService {
 
     public boolean createFinish(Board board) {
         if (board.getTitle().equals("") || board.getTitle() == null) board.setTitle("[Empty Title]");
-
+        if (board.getThumbnail().trim().equals("")||board.getThumbnail() == null) board.setThumbnail("<img style=\"max-width: 140px; max-height: 140px;\" src=\"https://myblog.xasquatch.net/img/no_image.png\"/>");
         byte[] bytes = (board.getTitle() + System.lineSeparator() + board.getCreated_ip() + System.lineSeparator() + board.getContents()).getBytes();
 
         fileService.writeFile(bytes, File.separator + board.getMbr_no() + SaveDir + File.separator + board.getNo(), ContentsName + "-origin");
