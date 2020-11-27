@@ -24,9 +24,13 @@ public class ApiDao {
         return apiMapper.selectBoardList(memberNo, currentPage, pageLimit, searchTarget, searchValue);
     }
 
-    public int selectBoardCount(Object memberNo) {
-        return apiMapper.selectBoardCount(memberNo);
+    public int selectBoardCount(Object memberNo, String searchTarget, String searchValue) {
+        try {
+            return apiMapper.selectBoardCount(memberNo, searchTarget, searchValue);
 
+        }catch (Exception e){
+            return apiMapper.selectBoardCount(memberNo, "", "");
+        }
     }
 
     public Map<String, Object> selectResource(Object memberNo, Object resourceNo) {

@@ -13,8 +13,8 @@ public interface ApiMapper {
     List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
                                               Object searchTarget, Object searchValue);
 
-    @Select("SELECT COUNT(*) as total_count FROM board WHERE mbr_no = #{arg0} AND completed = 'true'")
-    int selectBoardCount(Object memberNo);
+    @SelectProvider(type = BoardBuilder.class, method = "selectBoardCount")
+    int selectBoardCount(Object memberNo, String searchTarget, String searchValue);
 
     @Select("SELECT b.no AS no, " +
             "b.mbr_no AS mbr_no, " +
