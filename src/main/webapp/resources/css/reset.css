@@ -31,6 +31,13 @@ body *::-webkit-scrollbar-thumb {
 body *::-webkit-scrollbar-thumb:HOVER{
     background: rgba(0, 0, 0, 1);
 }
+select, input, button{
+    padding: 0.5rem;
+    border-radius: 5px;
+    line-height: normal !important;
+    outline: auto darkgray; !important;
+}
+
 .btn-link-red{
     color: black;
     transition: 0.5s all;
