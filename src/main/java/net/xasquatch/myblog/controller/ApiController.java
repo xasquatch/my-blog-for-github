@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/api",
         method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE},
         produces = "text/plain;charset=UTF-8")
