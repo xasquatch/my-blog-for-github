@@ -20,10 +20,10 @@ public class ApiController {
     public String viewBoardList(@PathVariable String memberNo,
                                 @RequestParam(value = "page-limit", required = false, defaultValue = "10") int pageLimit,
                                 @RequestParam(value = "current-page-block", required = false, defaultValue = "1") int currentPageBlock,
-                                @RequestParam(value = "keyword", required = false, defaultValue = "empty") String keyword,
-                                @RequestParam(value = "title", required = false, defaultValue = "empty") String title,
-                                @RequestParam(value = "contents", required = false, defaultValue = "empty") String contents,
-                                @RequestParam(value = "title-or-contents", required = false, defaultValue = "empty") String titleOrContents) {
+                                @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                                @RequestParam(value = "title", required = false, defaultValue = "") String title,
+                                @RequestParam(value = "contents", required = false, defaultValue = "") String contents,
+                                @RequestParam(value = "title-or-contents", required = false, defaultValue = "") String titleOrContents) {
 
         String[] searchValue = apiService.parsingSearchValue(keyword, title, contents, titleOrContents);
 
