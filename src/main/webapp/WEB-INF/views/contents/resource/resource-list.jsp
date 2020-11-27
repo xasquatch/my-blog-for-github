@@ -9,9 +9,9 @@
         </div>
         <div>
             <div style="display: flex; align-items: flex-start; flex-wrap: nowrap; justify-content: flex-end;">
-                <input type="text" class="form-control dot-key" id="search-value" placeholder="search!">
-                <button class="btn-link-red dot-key" style="height: 35px" onclick="extracted();">
-                    <span class="glyphicon glyphicon-search"></span>
+                <input type="text" class="dot-key" id="search-value" placeholder="search!">
+                <button class="btn-link-red dot-key" onclick="extracted();">
+                    Search
                 </button>
                 <button type="button" class="btn btn-link-red dot-key" style="font-size: 15px;"
                         onclick="location.href='${path}/resource/${sessionMember.no}/create'">
