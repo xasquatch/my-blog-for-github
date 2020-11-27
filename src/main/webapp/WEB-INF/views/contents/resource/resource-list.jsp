@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<section id="main-section">
+<section id="myblog-main-section">
     <article class="resource-list-title">
         <div>
             <h1 class="dot-key" style="width: 200px">내 저장소</h1>
