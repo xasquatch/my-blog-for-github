@@ -9,10 +9,11 @@ public class BoardBuilder {
 
         return new SQL() {{
             SELECT("@ROWNUM := @ROWNUM + 1 AS row_number",
-                    "b.no", "b.title",
+                    "b.no", "b.title","b.mbr_no",
                     "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
                     "b.thumbnail");
             FROM("board b", "(SELECT @ROWNUM := 0 ) TMP");
+
             if (searchTarget == null) {
                 WHERE("mbr_no = " + memberNo + " AND completed = 'true'");
 
@@ -28,6 +29,7 @@ public class BoardBuilder {
                         + " AND " + searchTarget + " LIKE '" + searchValue + "'");
 
             }
+
             ORDER_BY("b.created_date DESC");
             LIMIT(currentPage + ", " + lastPage);
         }}.toString();
