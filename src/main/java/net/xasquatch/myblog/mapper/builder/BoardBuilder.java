@@ -34,7 +34,7 @@ public class BoardBuilder {
             if (searchTarget == null) {
                 WHERE("completed = 'true'");
 
-            } else if (searchTarget.equals("titleOrContents")) {
+            } else if (searchTarget.equals("title-or-contents")) {
                 WHERE("completed = 'true'"
                         + " AND (b.title LIKE '" + searchValue + "'"
                         + " OR b.contents LIKE '" + searchValue + "')");
@@ -62,7 +62,7 @@ public class BoardBuilder {
             if (searchTarget == null) {
                 WHERE("mbr_no = " + memberNo + " AND completed = 'true'");
 
-            } else if (searchTarget.equals("titleOrContents")) {
+            } else if (searchTarget.equals("title-or-contents")) {
                 WHERE("mbr_no = " + memberNo
                         + " AND completed = 'true'"
                         + " AND (b.title LIKE '" + searchValue + "'"
@@ -98,7 +98,7 @@ public class BoardBuilder {
             if (searchTarget == null) {
                 WHERE("mbr_no = " + memberNo + " AND completed = 'true'");
 
-            } else if (searchTarget.equals("titleOrContents")) {
+            } else if (searchTarget.equals("title-or-contents")) {
                 WHERE("mbr_no = " + memberNo + " AND completed = 'true' AND (title LIKE '" + searchValue + "' OR contents '" + searchValue + "')");
 
             } else {
@@ -116,7 +116,7 @@ public class BoardBuilder {
             if (searchTarget == null) {
                 WHERE("completed = 'true'");
 
-            } else if (searchTarget.equals("titleOrContents")) {
+            } else if (searchTarget.equals("title-or-contents")) {
                 WHERE("completed = 'true' AND (title LIKE '" + searchValue + "' OR contents '" + searchValue + "')");
 
             } else {

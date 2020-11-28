@@ -40,7 +40,7 @@ public class BoardService {
         map.put("keyword", keyword);
         map.put("title", title);
         map.put("contents", contents);
-        map.put("titleOrContents", titleOrContents);
+        map.put("title-or-contents", titleOrContents);
 
         map.forEach((key, value) -> {
             if (!value.equals("") && !value.equals("undefined")) {
