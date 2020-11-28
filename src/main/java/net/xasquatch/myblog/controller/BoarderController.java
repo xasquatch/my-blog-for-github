@@ -25,9 +25,6 @@ public class BoarderController {
     private BoardService boardService;
 
     @Autowired
-    private ApiService apiService;
-
-    @Autowired
     private HomeController checkSessionController;
 
 
