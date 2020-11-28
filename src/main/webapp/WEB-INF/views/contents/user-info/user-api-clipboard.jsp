@@ -3,7 +3,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <section id="api-clipboard-section">
     <a class="btn btn-link-red dot-key" style="text-align: center; font-size: 30px"
-    href="${path}/user/${sessionMember.no}/api/quick-guide">
+    href="${path}/members/${sessionMember.no}/api/quick-guide">
         Click for board quick guide
     </a>
     <article>

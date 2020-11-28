@@ -14,7 +14,7 @@
         <div class="input-group">
             <div class="input-group-addon">Email</div>
             <input class="form-control" id="user-info-email" type="email" name="email" value="${sessionMember.email}" readonly>
-            <a class="input-group-addon black-hover-btn" href="javascript:window.location.replace('${path}/user/${sessionMember.no}/change-email');">변경</a>
+            <a class="input-group-addon black-hover-btn" href="javascript:window.location.replace('${path}/members/${sessionMember.no}/change-email');">변경</a>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Password</div>
@@ -62,7 +62,7 @@
 
             } else {
                 window.alert('정보 수정이 완료되었습니다. 다시 로그인 해주세요');
-                window.location.href = "${path}/user/${sessionMember.no}/log-out"
+                window.location.href = "${path}/members/${sessionMember.no}/log-out"
 
             }
 

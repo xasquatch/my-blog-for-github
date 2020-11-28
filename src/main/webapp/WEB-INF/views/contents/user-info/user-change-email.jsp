@@ -3,7 +3,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <section class="wrap-min">
-    <form class="form-horizontal" action="${path}/user/${sessionMember.no}/check-email" method="POST">
+    <form class="form-horizontal" action="${path}/members/${sessionMember.no}/check-email" method="POST">
         <div id="check-pwd-explain" class="dot-key" style="font-size: 3rem;">
             <script>
                 window.onload =function (){

@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/members")
 public class MemberController {
 
     @Autowired

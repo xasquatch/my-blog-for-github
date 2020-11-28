@@ -59,13 +59,13 @@
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
-            contents1.setAttribute('href', '${path}/user/${sessionMember.no}/information');
+            contents1.setAttribute('href', '${path}/members/${sessionMember.no}/information');
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
                 '<img src="${path}/img/banner-white/user.png" style="max-height : 100px; max-width:100px;"><BR>내 정보<BR>정보확인과 함께<BR>이메일 및 패스워드를<BR>변경 하실 수 있습니다.', 10);
 <c:if test="${sessionMember.rank.contains('temp')}">
             var contents2 = document.createElement('a');
-            contents2.setAttribute('href', '${path}/user/${sessionMember.no}/check-email');
+            contents2.setAttribute('href', '${path}/members/${sessionMember.no}/check-email');
             footerTarget.appendChild(contents2);
             textScript.insertText('#main-footer>div>a:nth-child(2)',
                 '<img src="${path}/img/banner-white/email.png" style="max-height : 100px; max-width:100px;"><BR>이메일 인증<BR>서비스를 제공받기 위해<BR>인증을 해주세요', 10);
@@ -107,7 +107,7 @@
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
-            contents1.setAttribute('href', '${path}/user/${sessionMember.no}/api/clipboard');
+            contents1.setAttribute('href', '${path}/members/${sessionMember.no}/api/clipboard');
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
                 '<img src="${path}/img/banner-white/api.png" style="max-height : 100px; max-width:100px;"><BR>API<BR>나만의 글과 저장소를 다른 페이지로<BR>공유할 수 있는 API를 제공합니다.', 10);
