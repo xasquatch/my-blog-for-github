@@ -409,6 +409,11 @@
     margin: 5px;
     padding: 5px;
 }
+#api-clipboard-section pre{
+    word-break: break-all;
+    white-space: pre-wrap;
+    width: 65vw;
+}
 .api-clipboard{
     border: 4px inset;
     padding: 10px;

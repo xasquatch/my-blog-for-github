@@ -229,8 +229,66 @@
             <p><i class="dot-key">{member-Number}</i> : My Information의 ID값(Long형 숫자타입)</p>
             <p><i class="dot-key">{resource-Number}</i> : 해당 리소스의 ID값(Long형 숫자타입)</p>
             <h3 class="dot-key" style="color: darkred;">Example</h3>
-            <pre contenteditable="true" id="get-resource-pre">
+            <h4 class="dot-key">결과 - Example: xmlHttpRequest 이용한 내 저장소 가져오기</h4>
+<pre>
+<section id="example3">
+</section>
+<script>
+    exampleBoardList(document.querySelector('#example3'), 1, 1);
+    function exampleBoardList(element, memberNo, resourceNo) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://myblog.xasquatch.net/api/members/' + memberNo + '/resources/'+resourceNo);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === xhr.DONE) {
+                if (xhr.status === 200 || xhr.status === 201) {
+                    var result = xhr.response;
+                    console.log(result);
+                    var resource = JSON.parse(result).data.resource;
 
+                    element.innerHTML += "no: " + resource.no + "<BR>";
+                    element.innerHTML += "mbr_no: " + resource.mbr_no + "<BR>";
+                    element.innerHTML += "title: " + resource.title + "<BR>";
+                    element.innerHTML += "contents: " + resource.contents + "<BR>";
+
+                } else {
+                    alert('Fail');
+                }
+            }
+        };
+        xhr.send();
+    }
+</script>
+</pre>
+
+            <h4 class="dot-key">코드 - Example: xmlHttpRequest 이용한 내 저장소 가져오기</h4>
+<pre>
+&lt;section id="example3">
+&lt;/section>
+&lt;script>
+    exampleBoardList(document.querySelector('#example3'), 1, 1);
+    function exampleBoardList(element, memberNo, resourceNo) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://myblog.xasquatch.net/api/members/' + memberNo + '/resources/'+resourceNo);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === xhr.DONE) {
+                if (xhr.status === 200 || xhr.status === 201) {
+                    var result = xhr.response;
+                    console.log(result);
+                    var resource = JSON.parse(result).data.resource;
+
+                    element.innerHTML += "no: " + resource.no + "&lt;BR>";
+                    element.innerHTML += "mbr_no: " + resource.mbr_no + "&lt;BR>";
+                    element.innerHTML += "title: " + resource.title + "&lt;BR>";
+                    element.innerHTML += "contents: " + resource.contents + "&lt;BR>";
+
+                } else {
+                    alert('Fail');
+                }
+            }
+        };
+        xhr.send();
+    }
+&lt;/script>
 </pre>
 
         </div>
