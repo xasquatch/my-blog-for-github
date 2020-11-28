@@ -56,6 +56,17 @@ public class MemberController {
 
         return "redirect:/";
     }
+    /*TODO: 회원 api QUICK GUIDE PAGE로 이동*/
+    @RequestMapping(value = "/{memberNo}/api/quick-guide", method = {RequestMethod.GET, RequestMethod.POST})
+    public String goApiQuickGuide(Model model, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSession(memberNo)) {
+            model.addAttribute("mainContents", "user-api-quick-guide");
+            return "index";
+
+        }
+
+        return "redirect:/";
+    }
 
     /*TODO: information페이지 이동*/
     @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
