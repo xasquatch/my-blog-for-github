@@ -81,7 +81,7 @@ public class MailService {
             if (this.mainContents.contains("Token Number")) {
                 mainContents = createMainContents(sessionMember.getName() + "님<BR>My Blog By Xasquatch에<BR>오신것을 환영합니다.",
                         "            Token Number: " + token,
-                        "<a href=\"https://myblog.xasquatch.net/user/" + sessionMember.getNo() + "/check-email\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">이메일 다시 인증하러가기</a>");
+                        "<a href=\"https://myblog.xasquatch.net/members/" + sessionMember.getNo() + "/check-email\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">이메일 다시 인증하러가기</a>");
 
             } else {
                 mainContents = this.mainContents;
@@ -90,7 +90,7 @@ public class MailService {
         } catch (NullPointerException e) {
             mainContents = createMainContents(sessionMember.getName() + "님<BR>My Blog By Xasquatch에<BR>오신것을 환영합니다.",
                     "            Token Number: " + token,
-                    "<a href=\"https://myblog.xasquatch.net/user/" + sessionMember.getNo() + "/check-email\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">이메일 다시 인증하러가기</a>");
+                    "<a href=\"https://myblog.xasquatch.net/members/" + sessionMember.getNo() + "/check-email\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">이메일 다시 인증하러가기</a>");
 
         }
 
