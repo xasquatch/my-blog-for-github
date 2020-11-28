@@ -25,7 +25,7 @@ public class BoardBuilder {
     public static String selectAllBoardListSubQuery(Object searchTarget, Object searchValue) {
 
         return new SQL() {{
-            SELECT("@ROWNUM := @ROWNUM + 1 AS row_number",
+            SELECT("FORMAT(@ROWNUM := @ROWNUM + 1, 0) AS row_number",
                     "b.no", "b.title", "b.mbr_no",
                     "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
                     "b.thumbnail");
@@ -53,7 +53,7 @@ public class BoardBuilder {
     public static String selectBoardListSubQuery(Object memberNo, Object searchTarget, Object searchValue) {
 
         return new SQL() {{
-            SELECT("@ROWNUM := @ROWNUM + 1 AS row_number",
+            SELECT("FORMAT(@ROWNUM := @ROWNUM + 1, 0) AS row_number",
                     "b.no", "b.title", "b.mbr_no",
                     "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
                     "b.thumbnail");
