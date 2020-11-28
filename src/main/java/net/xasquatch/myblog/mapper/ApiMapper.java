@@ -30,6 +30,6 @@ public interface ApiMapper {
             "WHERE b.mbr_no = #{arg0} AND b.no = #{arg1}")
     Map<String, Object> selectBoardOne(String memberNo, String boardNo);
 
-    @Select("SELECT no, mbr_no, title, contents FROM resource WHERE mbr_no = #{arg0} AND no = #{arg1}")
+    @Select("SELECT no, mbr_no, title, convert(contents USING UTF8) AS contents FROM resource WHERE mbr_no = #{arg0} AND no = #{arg1}")
     Map<String, Object> selectResourceOne(Object memberNo, Object resourceNo);
 }
