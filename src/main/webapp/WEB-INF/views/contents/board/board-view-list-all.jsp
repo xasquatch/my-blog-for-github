@@ -63,17 +63,3 @@
     </div>
 
 </section>
-
-
-<script>
-
-    document.querySelector('#search-value').addEventListener('keypress', function (e) {
-        if (e.keyCode === 13) boardListScript.ChangeMoveToThisPage(1);
-    })
-
-
-    window.onload = function () {
-        boardListScript.changeAllBoardList(document.querySelector('#board-list-count').innerText);
-
-    }
-</script>

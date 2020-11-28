@@ -78,16 +78,21 @@ public class BoarderController {
         return "redirect:/";
     }
 
+    //TODO: 전체 게시판 리스트 조회 페이지
+    @RequestMapping(value = "/all/list", method = {RequestMethod.GET, RequestMethod.POST})
+    public String viewAllList(Model model) {
+
+        
+
+        model.addAttribute("mainContents", "board-view-list-all");
+        return "index";
+    }
+
     //TODO: 게시판 리스트 조회 페이지
     @RequestMapping(value = "/{memberNo}/list", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewList(Model model, @PathVariable String memberNo) {
-        if (memberNo.equals("all")){
-            model.addAttribute("mainContents", "board-view-list-all");
+        model.addAttribute("mainContents", "board-view-list");
 
-        }else{
-            model.addAttribute("mainContents", "board-view-list");
-
-        }
 
         return "index";
     }
@@ -105,12 +110,12 @@ public class BoarderController {
     @RequestMapping(value = "/{memberNo}/delete/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String deleteBoard(@PathVariable String memberNo, @PathVariable String boardNo) {
 
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)){
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             boardService.delete(boardNo);
 
             return "redirect:/board/" + memberNo + "/list";
         }
-            return "redirect:/";
+        return "redirect:/";
     }
 
 }
