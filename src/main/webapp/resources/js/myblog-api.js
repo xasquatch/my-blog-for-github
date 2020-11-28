@@ -104,13 +104,13 @@ var myBoard = {
             var boardDetailTable = document.createElement('table');
             boardDetailTable.style.margin = '0';
 
-            boardDetailTable.innerHTML += '<tr><td style="width: 100px">no</td><td><kbd>' + boardMap.no + '</kbd></td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">no</td><td>' + boardMap.no + '</td></tr>';
             boardDetailTable.innerHTML += '<tr><td style="width: 100px">thumbnail</td><td>' + boardMap.thumbnail + '</td></tr>';
-            boardDetailTable.innerHTML += '<tr><td style="width: 100px">title</td><td><kbd>' + boardMap.title + '</kbd></td></tr>';
-            boardDetailTable.innerHTML += '<tr><td style="width: 100px">keyword</td><td><kbd>' + boardMap.keyword + '</kbd></td></tr>';
-            boardDetailTable.innerHTML += '<tr><td style="width: 100px">name</td><td><kbd>' + boardMap.name + '</kbd></td></tr>';
-            boardDetailTable.innerHTML += '<tr><td style="width: 100px">created_date</td><td><kbd>' + boardMap.created_date + '</kbd></td></tr>';
-            boardDetailTable.innerHTML += '<tr><td style="width: 100px">created_ip</td><td><kbd>' + boardMap.created_ip + '</kbd></td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">title</td><td>' + boardMap.title + '</td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">keyword</td><td>' + boardMap.keyword + '</td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">name</td><td>' + boardMap.name + '</td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">created_date</td><td>' + boardMap.created_date + '</td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">created_ip</td><td>' + boardMap.created_ip + '</td></tr>';
 
             container.appendChild(boardDetailTable);
             container.innerHTML += '<section id="board-view-contents" style="padding: 10px 20px; margin-bottom: 50px;">'
