@@ -67,7 +67,7 @@ public class BoardService {
 
         int totalCount = boardDao.selectBoardCount(memberNo, searchValue[0], searchValue[1]);
 
-        List<String> pageBlockList = new Pagination().getBlockList(memberNo, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+        List<String> pageBlockList = new Pagination().getBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("boardList", boardList);
