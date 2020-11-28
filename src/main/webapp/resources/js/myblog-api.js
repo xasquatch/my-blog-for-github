@@ -188,8 +188,6 @@ var myBoard = {
             '            <input type="text" class="dot-key" id="myblog-search-value" style="width: 70px;" placeholder="search!">' +
             '            <button class="btn btn-link-red dot-key" id="myblog-search-btn" style="width: 70px;">Search</button>' +
             '            <select class="dot-key" id="myblog-board-page-limit">' +
-            '                <option disabled>Count</option>' +
-            '                <option>5</option>' +
             '                <option>10</option>' +
             '                <option>20</option>' +
             '                <option>50</option>' +
