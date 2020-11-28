@@ -35,7 +35,7 @@
         var searchEmailForm = document.querySelector('#search-email-form');
         var searchFormData = new FormData(searchEmailForm)
 
-        ajax.submit('POST', '${path}/user/search/email', function (data) {
+        myAjax.submit('POST', '${path}/user/search/email', function (data) {
             if (data !== ''){
                 window.alert('회원님의 이메일은 \"' + data + '\"입니다.');
 

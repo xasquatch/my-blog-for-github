@@ -2,16 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<section id="main-section">
+<section id="myblog-main-section">
     <article class="resource-list-title">
         <div>
             <h1 class="dot-key" style="width: 200px">내 저장소</h1>
         </div>
         <div>
             <div style="display: flex; align-items: flex-start; flex-wrap: nowrap; justify-content: flex-end;">
-                <input type="text" class="form-control dot-key" id="search-value" placeholder="search!">
-                <button class="btn-link-red dot-key" style="height: 35px" onclick="extracted();">
-                    <span class="glyphicon glyphicon-search"></span>
+                <input type="text" class="dot-key" id="search-value" placeholder="search!">
+                <button class="btn-link-red dot-key" onclick="extracted();">
+                    Search
                 </button>
                 <button type="button" class="btn btn-link-red dot-key" style="font-size: 15px;"
                         onclick="location.href='${path}/resource/${sessionMember.no}/create'">
@@ -126,8 +126,8 @@
 
         var formData = new FormData(targetForm);
 
-        var uniform = uri.getUniform('/resource/', '/list');
-        ajax.submit('PUT', '${path}/resource/' + uniform + '/modify', function (data) {
+        var uniform = url.getUniform('/resource/', '/list');
+        myAjax.submit('PUT', '${path}/resource/' + uniform + '/modify', function (data) {
             console.log(data);
             if (data === 'false') {
                 window.alert('수정에 실패하였습니다. 잠시 후 다시시도해주세요')
@@ -152,9 +152,9 @@
             contents.value = document.querySelector('#resource-contents').value;
 
             var formData = new FormData(targetForm);
-            var uniform = uri.getUniform('/resource/', '/list');
+            var uniform = url.getUniform('/resource/', '/list');
 
-            ajax.submit('DELETE', '${path}/resource/' + uniform + '/delete', function (data) {
+            myAjax.submit('DELETE', '${path}/resource/' + uniform + '/delete', function (data) {
                 if (data === 'false') {
                     window.alert('삭제에 실패하였습니다. 잠시 후 다시시도해주세요')
 
@@ -181,7 +181,7 @@
         } catch (e) {
             window.alert('더이상 불러올 리소스가 없습니다.');
         }
-        ajax.submit('GET', '${path}/resource/${sessionMember.no}/AdditionalList?lastNumber=' + lastNumber, function (data) {
+        myAjax.submit('GET', '${path}/resource/${sessionMember.no}/AdditionalList?lastNumber=' + lastNumber, function (data) {
             if (data === 'false') {
                 window.alert('리소스 가져오기에 실패하였습니다. 잠시 후 다시 시도해주세요.')
 

@@ -4,14 +4,15 @@
 
 
 <section>
-    <h1 class="dot-key">게시판 생성</h1>
+    <h1 class="dot-key">게시글 쓰기</h1>
     <div class="input-group">
-        <div class="input-group-addon"><b>Keyword</b></div>
+        <div class="input-group-addon dot-key"><b>글제목</b></div>
+        <input type="text" id="board-title-fake" class="form-control" placeholder="[Empty Title]" maxlength="50" value="${board.title}">
+    </div>
+    <div class="input-group">
+        <div class="input-group-addon dot-key"><b>키워드</b></div>
         <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="ex) Life, health....etc" value="${board.keyword}">
     </div>
-
-    <input type="text" id="board-title-fake" class="form-control" placeholder="Title" maxlength="50" value="${board.title}">
-
     <div id="board-bar" class="well">
 
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" tabindex="-1"
@@ -158,7 +159,7 @@
         var boardUploadTag = document.querySelector('#board-upload');
         var imgFormData = new FormData(boardUploadImageForm);
 
-        ajax.submit('POST', '${path}/img/${sessionMember.no}/board/${requestScope.boardNo}/upload', function (data) {
+        myAjax.submit('POST', '${path}/img/${sessionMember.no}/board/${requestScope.boardNo}/upload', function (data) {
 
             var requestData = data.slice(1, data.length - 1);
             var imgArray = requestData.split(',');
@@ -238,9 +239,9 @@
 
         var formData = new FormData(boardFormTag);
 
-        if (uri.isContainWordCurrentPath('/create')) {
+        if (url.isContainWordCurrentPath('/create')) {
 
-            ajax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/create', function (data) {
+            myAjax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/create', function (data) {
                 if (data === 'false') {
                     window.alert('업로드에 실패하였습니다. 잠시 후 다시 시도해주세요.');
                     board.save();
@@ -253,9 +254,9 @@
             }, 'FORMFILE', formData);
 
 
-        } else if (uri.isContainWordCurrentPath('/modify')) {
+        } else if (url.isContainWordCurrentPath('/modify')) {
 
-            ajax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/modify', function (data) {
+            myAjax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/modify', function (data) {
                 if (data === 'false') {
                     window.alert('수정에 실패하였습니다. 잠시 후 다시 시도해주세요.');
 

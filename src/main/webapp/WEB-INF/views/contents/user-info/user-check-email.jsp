@@ -26,7 +26,7 @@
     function submitToken() {
         var authForm = document.querySelector("#email-auth-form");
         var authFormData = new FormData(authForm);
-        ajax.submit('PATCH', '${path}/user/${sessionMember.no}/auth-email', function (data) {
+        myAjax.submit('PATCH', '${path}/user/${sessionMember.no}/auth-email', function (data) {
             if (data === 'true') {
                 window.alert('인증에 성공하였습니다. 다시 로그인해주세요.');
                 window.location.href = '${path}/user/${sessionMember.no}/log-out';

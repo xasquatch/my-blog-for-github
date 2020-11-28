@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<section id="main-section">
+<section id="myblog-main-section">
     <article class="board-list-title">
         <div style="min-width: 150px">
             <h1 class="dot-key">글 목록</h1>
@@ -40,7 +40,7 @@
             </div>
         </div>
     </article>
-    <article class="board-list-contents table-responsive">
+    <article id="board-list-contents" class="table-responsive">
         <table class="table table-hover table-condensed">
             <thead>
             <tr>

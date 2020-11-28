@@ -29,7 +29,7 @@ public class ApiService {
         map.put("titleOrContents", titleOrContents);
 
         map.forEach((key, value) -> {
-            if (!value.equals("empty")) {
+            if (!value.equals("") && !value.equals("undefined")) {
                 searchValue[0] = key;
                 searchValue[1] = '%' + value + '%';
             }
@@ -54,9 +54,9 @@ public class ApiService {
         List<Map<String, Object>> boardList
                 = apiDao.selectBoardList(memberNo, currentPage, pageLimit, searchValue[0], searchValue[1]);
 
-        int totalCount = apiDao.selectBoardCount(memberNo);
+        int totalCount = apiDao.selectBoardCount(memberNo, searchValue[0], searchValue[1]);
 
-        List<Integer> pageBlockList = new Pagination().getBlockList(pageLimit, currentPageBlock, totalCount);
+        List<String> pageBlockList = new Pagination().getBlockList(Long.parseLong(memberNo), pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("boardList", boardList);

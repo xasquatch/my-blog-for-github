@@ -45,6 +45,29 @@ public class MemberController {
         return "index";
     }
 
+    /*TODO: 회원 api 클립보드 페이지로 이동*/
+    @RequestMapping(value = "/{memberNo}/api/clipboard", method = {RequestMethod.GET, RequestMethod.POST})
+    public String goApiClipBoard(Model model, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSession(memberNo)) {
+            model.addAttribute("mainContents", "user-api-clipboard");
+            return "index";
+
+        }
+
+        return "redirect:/";
+    }
+    /*TODO: 회원 api QUICK GUIDE PAGE로 이동*/
+    @RequestMapping(value = "/{memberNo}/api/quick-guide", method = {RequestMethod.GET, RequestMethod.POST})
+    public String goApiQuickGuide(Model model, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckSession(memberNo)) {
+            model.addAttribute("mainContents", "user-api-quick-guide");
+            return "index";
+
+        }
+
+        return "redirect:/";
+    }
+
     /*TODO: information페이지 이동*/
     @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
     public String info(Model model, @PathVariable String memberNo, String checkPassword) {
@@ -142,18 +165,6 @@ public class MemberController {
 
         return result;
     }
-
-    /*TODO: api페이지 이동*/
-    @RequestMapping(value = "/{memberNo}/api", method = {RequestMethod.GET, RequestMethod.POST})
-    public String callApi(Model model, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            model.addAttribute("mainContents", "user-api");
-            return "index";
-        }
-
-        return "redirect:/";
-    }
-
 
     /*TODO: 로그아웃 처리 후 루트페이지로 리다이렉트*/
     @RequestMapping(value = "/{memberNo}/log-out", method = {RequestMethod.GET, RequestMethod.POST})

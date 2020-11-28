@@ -107,7 +107,7 @@
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
-            contents1.setAttribute('href', '${path}/user/${sessionMember.no}/api');
+            contents1.setAttribute('href', '${path}/user/${sessionMember.no}/api/clipboard');
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
                 '<img src="${path}/img/banner-white/api.png" style="max-height : 100px; max-width:100px;"><BR>API<BR>나만의 글과 저장소를 다른 페이지로<BR>공유할 수 있는 API를 제공합니다.', 10);

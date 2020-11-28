@@ -50,31 +50,3 @@
 
     </div>
 </header>
-<script>
-    window.addEventListener('DOMContentLoaded', function () {
-
-        textScript.insertText('#main-header-logo', 'My Blog', 20);
-        textScript.insertText('#header-center','현재 테스트중인 서버입니다.',1);
-
-    });
-
-    var mainHeader = document.querySelector('#main-header');
-/*
-
-    // TOP padding값을 주는 것으로 sticky 구현 -> 취소
-    window.addEventListener('scroll', function () {
-        if (mainHeader.style.marginTop <= window.pageYOffset) {
-            mainHeader.style.position = 'fixed';
-            mainHeader.style.top = 0;
-            mainHeader.style.zIndex = 1000;
-
-        } else {
-            mainHeader.style.position = 'static';
-            mainHeader.style.top = '';
-
-        }
-    });
-*/
-
-
-</script>
