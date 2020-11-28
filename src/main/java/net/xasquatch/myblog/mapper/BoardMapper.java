@@ -1,8 +1,10 @@
 package net.xasquatch.myblog.mapper;
 
+import net.xasquatch.myblog.mapper.builder.BoardBuilder;
 import net.xasquatch.myblog.model.Board;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
 import java.util.Map;
 
 public interface BoardMapper {
@@ -39,8 +41,10 @@ public interface BoardMapper {
             "WHERE b.mbr_no = #{arg0} AND b.no = #{arg1}")
     Map<String, Object> selectOneBoard(Object mbr_no, Object board_no);
 
-    
+    @SelectProvider(type = BoardBuilder.class, method = "selectBoardList")
+    List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
+                                              Object searchTarget, Object searchValue);
 
-
-
+    @SelectProvider(type = BoardBuilder.class, method = "selectBoardCount")
+    int selectBoardCount(Object memberNo, String searchTarget, String searchValue);
 }

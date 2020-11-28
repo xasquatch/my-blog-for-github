@@ -21,7 +21,7 @@ public class Pagination {
     private int prevPageBlock;
     private int nextPageBlock;
 
-    public List<String> getBlockList(long memberNo, int pageLimit, int currentPageBlock, int totalCount, String searchTarget, String searchValue) {
+    public List<String> getBlockList(Object memberNo, int pageLimit, int currentPageBlock, int totalCount, String searchTarget, String searchValue) {
 
         int totalPageBlock = (totalCount / pageLimit);
         int startPageBlock = 1;
