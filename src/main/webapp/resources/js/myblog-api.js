@@ -301,12 +301,12 @@ myHistory = {
         }
     },
     pushState: function (data, url) {
-        window.history.pushState(data, 'My Blog By Xasquatch', url);
         myHistory.autoSetting();
+        window.history.pushState(data, 'My Blog By Xasquatch', url);
     },
     replaceState: function (data) {
-        window.history.replaceState(data, 'My Blog By Xasquatch', window.location.href);
         myHistory.autoSetting();
+        window.history.replaceState(data, 'My Blog By Xasquatch', window.location.href);
     }
 
 }
