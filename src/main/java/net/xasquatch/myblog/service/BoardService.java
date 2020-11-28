@@ -82,7 +82,7 @@ public class BoardService {
 
     }
 
-    public HashMap<String, Object> viewDetail(Object memberNo, Object boardNo) {
+    public Map<String, Object> viewDetail(Object memberNo, Object boardNo) {
         return boardDao.selectOneBoard(memberNo, boardNo);
 
     }
@@ -90,7 +90,7 @@ public class BoardService {
     public String viewDetailToJSON(Object memberNo, Object boardNo) {
         String result = null;
 
-        HashMap<String, Object> map = boardDao.selectOneBoard(memberNo, boardNo);
+        Map<String, Object> map = boardDao.selectOneBoard(memberNo, boardNo);
         ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
 
         try {

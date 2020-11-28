@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -68,7 +69,7 @@ public class BoarderController {
     @RequestMapping(value = "/{memberNo}/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String modify(Model model, @PathVariable String boardNo, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            HashMap<String, Object> board = boardService.viewDetail(memberNo, boardNo);
+            Map<String, Object> board = boardService.viewDetail(memberNo, boardNo);
             model.addAttribute("board", board);
             model.addAttribute("mainContents", "board-modify");
 
@@ -82,7 +83,7 @@ public class BoarderController {
     @RequestMapping(value = "/all/list", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewAllList(Model model) {
 
-        
+
 
         model.addAttribute("mainContents", "board-view-list-all");
         return "index";
