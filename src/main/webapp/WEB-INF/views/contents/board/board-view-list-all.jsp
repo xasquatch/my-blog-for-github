@@ -16,7 +16,9 @@
                 <option>title-or-contents</option>
             </select>
             <input type="text" id="myblog-search-value" class="dot-key" style="width: 70px;" placeholder="search!" value="${searchValue}">
-            <button id="myblog-search-btn" class="dot-key btn-link-red" style="width: 70px;" onclick="changeViewSetting()">Search</button>
+            <button id="myblog-search-btn" class="dot-key btn-link-red" onclick="changeViewSetting()">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
             <select class="dot-key" id="myblog-board-page-limit" onchange="changeViewSetting()">
                 <option selected style="background: lightgray;">${pageLimit}</option>
                 <option>10</option>
