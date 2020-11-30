@@ -6,7 +6,6 @@ import net.xasquatch.myblog.model.Board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,8 +50,8 @@ public class BoardDao {
 
     }
 
-    public void deleteOneBoard(Object boardKey) {
-        boardMapper.deleteOneBoard(boardKey);
+    public int deleteOneBoard(Object boardKey) {
+        return boardMapper.deleteOneBoard(boardKey);
 
     }
 

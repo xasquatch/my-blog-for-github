@@ -13,7 +13,6 @@ var modal = {
 
 var board = {
 
-
     boardNo: document.querySelector('#board-no'),
     boardMbrNo: document.querySelector('#board-no-mbr'),
     fakeKeyword: document.querySelector('#board-keyword-fake'),
@@ -62,6 +61,31 @@ var board = {
             board.fakeImages.innerHTML = '';
         }
 
+    },
+    delete: function (memberKey, boardKey) {
+        if (window.confirm("정말 삭제하시겠습니까?")) {
+            myAjax.submit('DELETE','https://myblog.xasquatch.net/board/' + memberKey + '/delete/' + boardKey,function (data) {
+                if (data === 'false'){
+                    console.log('잘못 된 요청입니다.');
+
+                }else if(data === 'true' && uri.isContainWord(location.href,'/list')){
+                    console.log('삭제가 완료되었습니다.');
+                    window.history.go(0);
+
+                }else if(data === 'true' && uri.isContainWord(location.href,'/list')){
+                    console.log('삭제가 완료되었습니다.');
+                    window.history.back();
+
+                }
+            },'','');
+        }
+
+    },
+    GoModify: function (memberKey, boardKey) {
+        if (window.confirm("수정 페이지로 이동하시겠습니까?")) {
+            location.href = '/board/' + memberKey + '/modify/' + boardKey;
+
+        }
     }
 }
 
@@ -316,14 +340,6 @@ var boardListScript = {
         minute = minute >= 10 ? minute : '0' + minute;
 
         return year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
-    },
-
-    deleteBoard: function (key) {
-        var uniform = url.getUniform('/board/', '/list');
-        if (window.confirm("정말 삭제하시겠습니까?"))
-            location.href = '/board/' + uniform + '/delete/' + key;
-
     }
-
 
 }

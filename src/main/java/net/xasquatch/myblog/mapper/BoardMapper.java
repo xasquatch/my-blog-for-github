@@ -14,7 +14,7 @@ public interface BoardMapper {
     @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
     int insertDefaultBoard(Map<String, Object> memberMap);
 
-    //TODO: 게시글 작성 1단계에서 확보한 selectKey를 통해 나머지 내역 업데이트, 글 작성완료
+    //TODO: 게시글 작성 1단계에서 확보한 selectKey를 통해 나머지 내역 업데이트, 글 작성완료  ----> 글 새로 작성, 글 수정에 쓰임
     @Update("UPDATE board SET keyword = #{keyword}, title = #{title}, contents = #{contents}, thumbnail = #{thumbnail}, created_ip = #{created_ip}, completed = 'true' WHERE no = #{no}")
     int updateBoard(Board board);
 
@@ -24,7 +24,7 @@ public interface BoardMapper {
 
     //TODO: 게시글 삭제
     @Delete("DELETE FROM board WHERE no = #{arg0}")
-    void deleteOneBoard(Object boardKey);
+    int deleteOneBoard(Object boardKey);
 
     //TODO: 게시글 상세보기
     @Select("SELECT b.no AS no,  " +

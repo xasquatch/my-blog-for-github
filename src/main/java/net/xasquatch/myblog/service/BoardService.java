@@ -116,25 +116,11 @@ public class BoardService {
         return boardDao.selectOneBoard(memberNo, boardNo);
 
     }
-
-    public String viewDetailToJSON(Object memberNo, Object boardNo) {
-        String result = null;
-
-        Map<String, Object> map = boardDao.selectOneBoard(memberNo, boardNo);
-        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
-
-        try {
-            result = objectWriter.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            log.warn("API JsonProcessingException");
-        }
-
+    public boolean delete(Object boardKey) {
+        boolean result = false;
+        if (boardDao.deleteOneBoard(boardKey) == 1)
+            result = true;
         return result;
-    }
-
-    public void delete(Object boardKey) {
-        boardDao.deleteOneBoard(boardKey);
-
     }
 
 }
