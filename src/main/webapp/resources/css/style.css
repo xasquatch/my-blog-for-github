@@ -307,13 +307,6 @@
     width: 100px;
 }
 
-.black-hover-btn:HOVER {
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 1);
-    color: white;
-    transition: all 0.5s;
-}
-
 .form-explain {
     font-weight: bold;
     font-size: 0.7em !important;
