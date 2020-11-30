@@ -1,9 +1,10 @@
 package net.xasquatch.myblog.mapper;
 
+import net.xasquatch.myblog.mapper.builder.ResourceBuilder;
 import net.xasquatch.myblog.model.Resource;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -19,22 +20,10 @@ public interface ResourceMapper {
     @Delete("DELETE FROM resource WHERE no = #{no} AND mbr_no = #{mbr_no}")
     int deleteOne(Resource resource);
 
-    @Select("SELECT no, mbr_no, title, convert(contents USING UTF8) as contents FROM resource WHERE mbr_no = #{arg0} ORDER BY no DESC LIMIT #{arg1}, #{arg2}")
-    List<Resource> selectAll(Object mbr_no, Object startLimit, Object endLimit);
+    @SelectProvider(type = ResourceBuilder.class, method = "getResourceList")
+    List<Resource> selectAll(Object memberNo, Object startLimit, Object endLimit, Object searchValue);
 
-    @Select("SELECT no, mbr_no, title, convert(contents USING UTF8) as contents FROM resource WHERE mbr_no = #{arg0} AND no < #{arg1} ORDER BY no DESC LIMIT 0, 10")
-    List<Resource> selectAddAll(Object mbr_no, Object lastNumber);
+    @SelectProvider(type = ResourceBuilder.class, method = "getAddResourceList")
+    List<Resource> selectAddAll(Object memberNo, Object lastNumber, Object searchValue);
 
-    /*------TODO:전체 조회----------*/
-    @Select("SELECT r.no as no, mbr.name as mbr_name, r.title as title, convert(r.contents USING UTF8) as contents " +
-            "FROM resource r LEFT OUTER JOIN mbr mbr " +
-            "ON r.mbr_no = mbr.no " +
-            "ORDER BY no DESC LIMIT #{arg0}, #{arg1}")
-    List<Resource> selectAllNoWhere(Object startLimit, Object endLimit);
-
-    @Select("SELECT r.no as no, mbr.name as mbr_name, r.title as title, convert(r.contents USING UTF8) as contents " +
-            "FROM resource r LEFT OUTER JOIN mbr mbr " +
-            "ON r.mbr_no = mbr.no " +
-            "WHERE r.no < #{arg0} ORDER BY r.no DESC LIMIT 0, 10")
-    List<Resource> selectAddAllNoWhere(Object lastNumber);
 }

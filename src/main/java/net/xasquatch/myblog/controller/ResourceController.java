@@ -1,7 +1,6 @@
 package net.xasquatch.myblog.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.model.Resource;
 import net.xasquatch.myblog.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +22,15 @@ public class ResourceController {
     private ResourceService resourceService;
 
     @GetMapping("/{memberNo}/list")
-    public String viewList(Model model, @PathVariable String memberNo) {
+    public String viewList(Model model, @PathVariable String memberNo,
+                           @RequestParam(name = "search", required = false, defaultValue = "") String searchValue) {
         List<Resource> resources;
-        if (memberNo.equals("all")) {
-            resources = resourceService.viewAllList(0);
-            model.addAttribute("mainContents", "resource-list-all");
-
-        } else if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            resources = resourceService.viewList(0);
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+            resources = resourceService.viewList(0, searchValue);
             model.addAttribute("mainContents", "resource-list");
+            model.addAttribute("resources", resources);
 
-        } else {
-            return "redirect:/resource/all/list";
         }
-        model.addAttribute("resources", resources);
         return "index";
 
     }
@@ -44,14 +38,12 @@ public class ResourceController {
     @GetMapping("/{memberNo}/AdditionalList")
     @ResponseBody
     public String additionalViewList(@PathVariable String memberNo,
-                                     @RequestParam(name = "lastNumber", required = true, defaultValue = "0") String lastNumber) {
-        if (memberNo.equals("all")) {
-            return resourceService.AdditionalViewAllList(lastNumber);
+                                     @RequestParam(name = "last-number", required = true, defaultValue = "100000000000") String lastNumber,
+                                     @RequestParam(name = "search", required = false, defaultValue = "") String searchValue) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo))
+            return resourceService.AdditionalViewList(lastNumber, searchValue);
 
-        } else if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            return resourceService.AdditionalViewList(lastNumber);
 
-        }
         return "false";
 
     }

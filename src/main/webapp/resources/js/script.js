@@ -64,20 +64,20 @@ var board = {
     },
     delete: function (memberKey, boardKey) {
         if (window.confirm("정말 삭제하시겠습니까?")) {
-            myAjax.submit('DELETE','https://myblog.xasquatch.net/board/' + memberKey + '/delete/' + boardKey,function (data) {
-                if (data === 'false'){
+            myAjax.submit('DELETE', 'https://myblog.xasquatch.net/board/' + memberKey + '/delete/' + boardKey, function (data) {
+                if (data === 'false') {
                     console.log('잘못 된 요청입니다.');
 
-                }else if(data === 'true' && uri.isContainWord(location.href,'/list')){
+                } else if (data === 'true' && uri.isContainWord(location.href, '/list')) {
                     console.log('삭제가 완료되었습니다.');
                     window.history.go(0);
 
-                }else if(data === 'true' && uri.isContainWord(location.href,'/list')){
+                } else if (data === 'true' && uri.isContainWord(location.href, '/list')) {
                     console.log('삭제가 완료되었습니다.');
                     window.history.back();
 
                 }
-            },'','');
+            }, '', '');
         }
 
     },
@@ -87,6 +87,199 @@ var board = {
 
         }
     }
+}
+
+var resources = {
+
+    resourceViewSetting: function (element) {
+        var prettyContents = null;
+        try {
+            prettyContents = JSON.stringify(JSON.parse(element.querySelector('p').innerText), null, 2);
+        } catch (e) {
+            prettyContents = element.querySelector('p').innerText;
+        }
+        var serialNumber = element.querySelector('label').innerText;
+        var textarea = document.createElement('textarea');
+        var emptyContentsDiv = document.createElement('div');
+        var emptyTitleDiv = document.createElement('div');
+        var titleInput = document.createElement('input');
+        titleInput.id = 'resource-title';
+        textarea.id = 'resource-contents';
+
+        textarea.style.width = '100%';
+        textarea.style.height = '30vh';
+        textarea.style.resize = 'none';
+        textarea.innerHTML = prettyContents;
+
+        titleInput.className = 'form-control';
+        titleInput.type = 'text';
+        titleInput.setAttribute('value', element.querySelector('h3').innerText);
+
+        var modifyForm = resources.createModifyForm(serialNumber);
+
+        emptyTitleDiv.appendChild(titleInput)
+        emptyContentsDiv.appendChild(textarea);
+        emptyContentsDiv.appendChild(modifyForm);
+
+        modal.changeForm('[Serial Number:' + serialNumber + '] ' +
+            '<button type="button" class="btn-link-red" onclick="resources.removeResource()">' +
+            '<span class="glyphicon glyphicon-trash"></span>' +
+            '</button>' +
+            emptyTitleDiv.innerHTML,
+            emptyContentsDiv.innerHTML);
+        var confirmBtn = document.querySelector('#modal-confirm-btn');
+        confirmBtn.setAttribute('onclick', 'resources.modifyResource();');
+    },
+
+    createModifyForm: function (serialNumber) {
+        var form = document.createElement('form');
+        form.id = "resource-target-form";
+        form.className = 'hidden';
+        var no = document.createElement('input');
+        no.name = 'no';
+        var title = document.createElement('input');
+        title.name = 'title';
+        title.id = 'resource-target-title';
+        var contents = document.createElement('textarea');
+        contents.name = 'contents';
+        contents.id = 'resource-target-contents';
+
+        no.setAttribute('value', serialNumber);
+
+        form.appendChild(no);
+        form.appendChild(title);
+        form.appendChild(contents);
+
+        return form;
+    },
+
+    modifyResource: function () {
+        if (window.confirm('현재 내용으로 수정하시겠습니까?') === false) {
+            return;
+        }
+        var targetForm = document.querySelector('#resource-target-form');
+        var title = document.querySelector('#resource-target-title');
+        var contents = document.querySelector('#resource-target-contents');
+
+        title.value = document.querySelector('#resource-title').value;
+        contents.value = document.querySelector('#resource-contents').value;
+        try {
+            JSON.stringify(JSON.parse(contents.value));
+        } catch (e) {
+            if (!window.confirm('수정된 내용은 JSON 형식에 어긋납니다. 업로드하시겠습니까?')) {
+                return;
+            }
+        }
+
+        var formData = new FormData(targetForm);
+
+        var uniform = url.getUniform('/resource/', '/list');
+        myAjax.submit('PUT', '/resource/' + uniform + '/modify', function (data) {
+            console.log(data);
+            if (data === 'false') {
+                window.alert('수정에 실패하였습니다. 잠시 후 다시시도해주세요')
+
+            } else if (data === 'true') {
+                window.location.reload(true);
+
+            }
+
+        }, 'FORMFILE', formData);
+
+
+    },
+
+    removeResource: function () {
+        if (window.confirm('정말 삭제하시겠습니까?')) {
+            var targetForm = document.querySelector('#resource-target-form');
+            var title = document.querySelector('#resource-target-title');
+            var contents = document.querySelector('#resource-target-contents');
+
+            title.value = document.querySelector('#resource-title').value;
+            contents.value = document.querySelector('#resource-contents').value;
+
+            var formData = new FormData(targetForm);
+            var uniform = url.getUniform('/resource/', '/list');
+
+            myAjax.submit('DELETE', '/resource/' + uniform + '/delete', function (data) {
+                if (data === 'false') {
+                    window.alert('삭제에 실패하였습니다. 잠시 후 다시시도해주세요')
+
+                } else if (data === 'true') {
+                    window.location.reload(true);
+
+                }
+
+            }, 'FORMFILE', formData);
+        }
+    },
+
+    setClickEventDivContents: function () {
+        var divBox = document.querySelectorAll('.resource-list-box>div');
+        for (var box of divBox) {
+            box.setAttribute('onclick',
+                'resources.resourceViewSetting(this)');
+        }
+    },
+    searchResource: function (memberNo) {
+        var resourceBox = document.querySelector('.resource-list-box');
+        resourceBox.innerHTML = '';
+        this.moreLoad(memberNo);
+
+    },
+    moreLoad: function (memberNo) {
+        try {
+            var searchValue = document.querySelector('#resource-search-value').value;
+            var lastNumber = document.querySelector('.resource-list-box>div:last-child>label').innerText;
+
+        } catch (e) {
+        }
+
+        if (searchValue === undefined) searchValue = '';
+        if (lastNumber === undefined) lastNumber = Number.MAX_SAFE_INTEGER;
+
+
+        myAjax.submit('GET', '/resource/' + memberNo + '/AdditionalList?last-number=' + lastNumber + '&search=' + searchValue, function (data) {
+            if (data === 'false') {
+                window.alert('리소스 가져오기에 실패하였습니다. 잠시 후 다시 시도해주세요.')
+
+            } else {
+                var jsonData = JSON.parse(data);
+                if (jsonData.length !== 0) {
+                    var resourceListBox = document.querySelector('.resource-list-box');
+
+                    for (var resource of jsonData) {
+                        // <div class="btn-link-red" data-toggle="modal" data-target="#myModal">
+                        var divContainerElement = document.createElement('div');
+                        divContainerElement.className = 'btn-link-red';
+                        divContainerElement.setAttribute('data-toggle', 'modal')
+                        divContainerElement.setAttribute('data-target', '#myModal')
+
+                        var labelElement = document.createElement('label');
+                        labelElement.className = 'sr-only';
+                        labelElement.innerText = resource.no;
+                        var h3Element = document.createElement('h3');
+                        h3Element.innerText = resource.title;
+                        var paragraphElement = document.createElement('p');
+                        paragraphElement.innerText = resource.contents;
+
+                        divContainerElement.appendChild(labelElement);
+                        divContainerElement.appendChild(h3Element);
+                        divContainerElement.appendChild(paragraphElement);
+
+                        resourceListBox.appendChild(divContainerElement);
+                        resources.setClickEventDivContents();
+                    }
+
+                } else {
+                    window.alert('더이상 불러올 리소스가 없습니다.');
+
+                }
+            }
+
+        });
+    }
+
 }
 
 var textScript = {
