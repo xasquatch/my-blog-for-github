@@ -31,35 +31,17 @@ public class ResourceService {
     }
 
     //리스트 전체를 web api로 세션없이 보여줄 생각은 없음
-    public List<net.xasquatch.myblog.model.Resource> viewList(int index) {
+    public List<net.xasquatch.myblog.model.Resource> viewList(int index, String searchValue) {
 
-        return resourceDao.selectAll(sessionMember.getNo(), index, index + 10);
+        return resourceDao.selectAll(sessionMember.getNo(), index, index + 5, searchValue);
     }
 
-    public String AdditionalViewList(String lastNumber) {
+    public String AdditionalViewList(String lastNumber, String searchValue) {
         String result = "";
         ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
 
         try {
-            result = objectWriter.writeValueAsString(resourceDao.selectAddAll(sessionMember.getNo(), lastNumber));
-        } catch (JsonProcessingException e) {
-            log.warn("JsonProcessingException: lastNumber={}",lastNumber);
-        }
-
-        return result;
-    }
-    /*TODO:세션정보 없이 전체 공개*/
-    public List<net.xasquatch.myblog.model.Resource> viewAllList(int index) {
-
-        return resourceDao.selectAllNoWhere(index, index + 10);
-    }
-
-    public String AdditionalViewAllList(String lastNumber) {
-        String result = "";
-        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
-
-        try {
-            result = objectWriter.writeValueAsString(resourceDao.selectAddAllNoWhere(lastNumber));
+            result = objectWriter.writeValueAsString(resourceDao.selectAddAll(sessionMember.getNo(), lastNumber, searchValue));
         } catch (JsonProcessingException e) {
             log.warn("JsonProcessingException: lastNumber={}",lastNumber);
         }
