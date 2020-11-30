@@ -10,7 +10,7 @@
         <div>
             <div style="display: flex; align-items: flex-start; flex-wrap: nowrap; justify-content: flex-end;">
                 <input type="text" class="dot-key" id="search-value" placeholder="search!">
-                <button class="btn-link-red dot-key" onclick="extracted();">
+                <button class="btn-link-red dot-key" onclick="searchResource();">
                     Search
                 </button>
                 <button type="button" class="btn btn-link-red dot-key" style="font-size: 15px;"
@@ -40,11 +40,12 @@
 <script>
     document.querySelector('#search-value').addEventListener('keypress', function (e) {
 
-        if (e.keyCode === 13) extracted();
+        if (e.keyCode === 13) searchResource();
     });
 
-    function extracted(data) {
+    function searchResource(data) {
         window.alert(data);
+        // 이거 구현 필요
     }
 
     function resourceViewSetting(element) {
