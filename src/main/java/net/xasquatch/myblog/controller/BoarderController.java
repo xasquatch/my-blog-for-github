@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Slf4j
 @Controller
-@RequestMapping("/board")
+@RequestMapping(value = "/board", produces = "text/plain;charset=UTF-8")
 public class BoarderController {
 
     @Autowired

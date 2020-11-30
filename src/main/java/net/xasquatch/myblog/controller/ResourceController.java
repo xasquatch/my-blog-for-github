@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/resource")
+@RequestMapping(value = "/resource", produces = "text/plain;charset=UTF-8")
 public class ResourceController {
 
     @Autowired
@@ -41,7 +41,7 @@ public class ResourceController {
 
     }
 
-    @GetMapping(value = "/{memberNo}/AdditionalList", produces = "text/plain;charset=UTF-8")
+    @GetMapping("/{memberNo}/AdditionalList")
     @ResponseBody
     public String additionalViewList(@PathVariable String memberNo,
                                      @RequestParam(name = "lastNumber", required = true, defaultValue = "0") String lastNumber) {
