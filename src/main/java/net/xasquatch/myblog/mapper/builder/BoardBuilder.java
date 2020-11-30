@@ -17,8 +17,8 @@ public class BoardBuilder {
 
             }
             LEFT_OUTER_JOIN("mbr m ON b.mbr_no = m.no");
-            ORDER_BY("row_number DESC");
             LIMIT(currentPage + ", " + pageLimit);
+            ORDER_BY("b.created_date DESC", "b.row_number DESC");
         }}.toString();
     }
 
@@ -87,7 +87,6 @@ public class BoardBuilder {
         } else {
             return selectMemberBoardCount(memberNo, searchTarget, searchValue);
         }
-
 
     }
 
