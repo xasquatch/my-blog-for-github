@@ -9,13 +9,16 @@ import java.util.Map;
 
 public interface ApiMapper {
 
+    //TODO:게시글 목록 조회
     @SelectProvider(type = BoardBuilder.class, method = "selectBoardList")
     List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
                                               Object searchTarget, Object searchValue);
 
+    //TODO:게시글 총 갯수 조회
     @SelectProvider(type = BoardBuilder.class, method = "selectBoardCount")
     int selectBoardCount(Object memberNo, String searchTarget, String searchValue);
 
+    //TODO:게시글 상세 조회
     @Select("SELECT b.no AS no, " +
             "b.mbr_no AS mbr_no, " +
             "m.name AS name, " +
@@ -30,6 +33,7 @@ public interface ApiMapper {
             "WHERE b.mbr_no = #{arg0} AND b.no = #{arg1}")
     Map<String, Object> selectBoardOne(String memberNo, String boardNo);
 
+    //TODO:리소스 상세 조회
     @Select("SELECT no, mbr_no, title, convert(contents USING UTF8) AS contents FROM resource WHERE mbr_no = #{arg0} AND no = #{arg1}")
     Map<String, Object> selectResourceOne(Object memberNo, Object resourceNo);
 }

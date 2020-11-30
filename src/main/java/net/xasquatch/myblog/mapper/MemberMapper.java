@@ -15,10 +15,6 @@ public interface MemberMapper {
     @Select("SELECT name FROM mbr WHERE name = #{name}")
     String selectOneName(String name);
 
-    @Insert("INSERT INTO mbr(email, pwd, name, img) VALUES(#{email}, #{pwd}, #{name}, #{img})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
-    void insertOneMbr(Member member);
-
     @Insert("INSERT INTO mbr(email, pwd, name) VALUES(#{email}, #{pwd}, #{name})")
     @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
     void insertMbrExceptionImg(Member member);

@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @Controller
-@RequestMapping("/user")
+@RequestMapping(value = "/members", produces = "text/plain;charset=UTF-8")
 public class MemberController {
 
     @Autowired
@@ -77,7 +77,7 @@ public class MemberController {
                 return "index";
 
             } else {
-                return "redirect:/user/" + sessionMember.getNo() + "/check-password";
+                return "redirect:/members/" + sessionMember.getNo() + "/check-password";
 
             }
         }
@@ -193,7 +193,7 @@ public class MemberController {
             result = memberService.login(member);
             if (!result.equals("false")) {
                 if (sessionMember.getRank().equals("temporary")) {
-                    result = "/user/" + sessionMember.getNo() + "/check-email";
+                    result = "/members/" + sessionMember.getNo() + "/check-email";
                 }
                 session.setAttribute("sessionMember", sessionMember);
             }

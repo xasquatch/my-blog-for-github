@@ -41,7 +41,7 @@
         var searchPwdForm = document.querySelector('#search-pwd-form');
         var searchFormData = new FormData(searchPwdForm)
 
-        myAjax.submit('POST', '${path}/user/search/password', function (data) {
+        myAjax.submit('POST', '${path}/members/search/password', function (data) {
             if (data !== 'false'){
                 window.alert('\"'+searchPwdInputEmail.value+'\"으로 임시 비밀번호를 전송하였습니다.')
                 

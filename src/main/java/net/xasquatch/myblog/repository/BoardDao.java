@@ -6,7 +6,6 @@ import net.xasquatch.myblog.model.Board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +15,17 @@ public class BoardDao {
 
     @Autowired
     BoardMapper boardMapper;
+
+    public List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
+                                                     Object searchTarget, Object searchValue) {
+
+        return boardMapper.selectBoardList(memberNo, currentPage, pageLimit, searchTarget, searchValue);
+    }
+
+    public int selectBoardCount(Object memberNo, String searchTarget, String searchValue) {
+        return boardMapper.selectBoardCount(memberNo, searchTarget, searchValue);
+
+    }
 
     public void deleteUnfinishedBoard(Map<String, Object> memberMap) {
         boardMapper.deleteUnfinishedBoard(memberMap);
@@ -40,105 +50,12 @@ public class BoardDao {
 
     }
 
-
-    public void deleteOneBoard(Object boardKey) {
-        boardMapper.deleteOneBoard(boardKey);
+    public int deleteOneBoard(Object boardKey) {
+        return boardMapper.deleteOneBoard(boardKey);
 
     }
 
-    public List<HashMap<String, Object>> SelectBoardList(String memberKey, int pageLimit, int currentPageBlock, String searchRange, String searchValue) {
-        Long memberNo = Long.parseLong(memberKey);
-        int block = 0;
-        try {
-            block = (currentPageBlock - 1) * pageLimit;
-
-        } catch (ArithmeticException e) {
-            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
-        }
-
-        List<HashMap<String, Object>> resultListMap;
-        try{
-
-
-        switch (searchRange) {
-            case "keyword":
-                resultListMap = boardMapper.selectBoardListWhereLikeKeyword(memberNo, block, pageLimit, searchValue);
-
-                break;
-            case "title":
-                resultListMap = boardMapper.selectBoardListWhereLikeTitle(memberNo, block, pageLimit, searchValue);
-
-                break;
-            case "contents":
-                resultListMap = boardMapper.selectBoardListWhereLikeContents(memberNo, block, pageLimit, searchValue);
-
-                break;
-            case "titleOrContents":
-                resultListMap = boardMapper.selectBoardListWhereLiketitleOrContents(memberNo, block, pageLimit, searchValue);
-
-                break;
-            default:
-                resultListMap = boardMapper.selectBoardList(memberNo, block, pageLimit);
-                break;
-        }
-        }catch (NullPointerException e){
-            log.debug("selectBoardList: {}","selectBoardList");
-            resultListMap = boardMapper.selectBoardList(memberNo, block, pageLimit);
-        }
-
-        return resultListMap;
-    }
-
-    public int selectBoardListCount(Object memberKey) {
-        return boardMapper.selectBoardListCount(memberKey);
-    }
-    public List<HashMap<String, Object>> SelectAllBoardList(int pageLimit, int currentPageBlock, String searchRange, String searchValue) {
-        int block = 0;
-        try {
-            block = (currentPageBlock - 1) * pageLimit;
-
-        } catch (ArithmeticException e) {
-            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
-        }
-
-        List<HashMap<String, Object>> resultListMap;
-        try{
-
-
-        switch (searchRange) {
-            case "keyword":
-                resultListMap = boardMapper.selectAllBoardListWhereLikeKeyword(block, pageLimit, searchValue);
-
-                break;
-            case "title":
-                resultListMap = boardMapper.selectAllBoardListWhereLikeTitle(block, pageLimit, searchValue);
-
-                break;
-            case "contents":
-                resultListMap = boardMapper.selectAllBoardListWhereLikeContents(block, pageLimit, searchValue);
-
-                break;
-            case "titleOrContents":
-                resultListMap = boardMapper.selectAllBoardListWhereLiketitleOrContents(block, pageLimit, searchValue);
-
-                break;
-            default:
-                resultListMap = boardMapper.selectAllBoardList(block, pageLimit);
-                break;
-        }
-        }catch (NullPointerException e){
-            log.debug("selectBoardList: {}","selectBoardList");
-            resultListMap = boardMapper.selectAllBoardList(block, pageLimit);
-        }
-
-        return resultListMap;
-    }
-
-    public int selectAllBoardListCount() {
-        return boardMapper.selectAllBoardListCount();
-    }
-
-    public HashMap<String, Object> selectOneBoard(Object memberNo, Object boardNo) {
+    public Map<String, Object> selectOneBoard(Object memberNo, Object boardNo) {
         return boardMapper.selectOneBoard(memberNo, boardNo);
     }
 

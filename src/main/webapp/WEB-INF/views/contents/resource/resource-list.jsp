@@ -10,7 +10,7 @@
         <div>
             <div style="display: flex; align-items: flex-start; flex-wrap: nowrap; justify-content: flex-end;">
                 <input type="text" class="dot-key" id="search-value" placeholder="search!">
-                <button class="btn-link-red dot-key" onclick="extracted();">
+                <button class="btn-link-red dot-key" onclick="searchResource();">
                     Search
                 </button>
                 <button type="button" class="btn btn-link-red dot-key" style="font-size: 15px;"
@@ -40,11 +40,12 @@
 <script>
     document.querySelector('#search-value').addEventListener('keypress', function (e) {
 
-        if (e.keyCode === 13) extracted();
+        if (e.keyCode === 13) searchResource();
     });
 
-    function extracted(data) {
+    function searchResource(data) {
         window.alert(data);
+        // 이거 구현 필요
     }
 
     function resourceViewSetting(element) {
@@ -178,9 +179,7 @@
     function moreLoad() {
         try {
             var lastNumber = document.querySelector('.resource-list-box>div:last-child>label').innerText;
-        } catch (e) {
-            window.alert('더이상 불러올 리소스가 없습니다.');
-        }
+        } catch (e) {}
         myAjax.submit('GET', '${path}/resource/${sessionMember.no}/AdditionalList?lastNumber=' + lastNumber, function (data) {
             if (data === 'false') {
                 window.alert('리소스 가져오기에 실패하였습니다. 잠시 후 다시 시도해주세요.')

@@ -91,7 +91,7 @@
     <div style="display: grid; grid-template-columns: 150px 1fr;">
         <div>
             <B>Thumbnail</B>
-            <button class="btn btn-default" style="border-radius: 50%" tabindex="-1" onclick="removeThumbnailImage();">
+            <button class="btn btn-default" tabindex="-1" onclick="removeThumbnailImage();">
                 <span class="glyphicon glyphicon-refresh"></span>
             </button>
             <div id="board-contents-thumbnail" class="well" style="">
@@ -101,7 +101,7 @@
 
         <div>
             <B>Insert To Click</B>
-            <button class="btn btn-default" style="border-radius: 50%" tabindex="-1" onclick="removeContentsImages();">
+            <button class="btn btn-default" tabindex="-1" onclick="removeContentsImages();">
                 <span class="glyphicon glyphicon-refresh"></span>
             </button>
             <div id="board-contents-image" class="well">

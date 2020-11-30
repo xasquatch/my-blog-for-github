@@ -102,16 +102,15 @@ var myBoard = {
             var container = document.createElement('section');
 
             var boardDetailTable = document.createElement('table');
-            boardDetailTable.className = 'table table-hover table-responsive';
             boardDetailTable.style.margin = '0';
 
-            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">no</td><td><kbd>' + boardMap.no + '</kbd></td></tr>';
-            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">thumbnail</td><td>' + boardMap.thumbnail + '</td></tr>';
-            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">title</td><td><kbd>' + boardMap.title + '</kbd></td></tr>';
-            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">keyword</td><td><kbd>' + boardMap.keyword + '</kbd></td></tr>';
-            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">name</td><td><kbd>' + boardMap.name + '</kbd></td></tr>';
-            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">created_date</td><td><kbd>' + boardMap.created_date + '</kbd></td></tr>';
-            boardDetailTable.innerHTML += '<tr><td class="dot-key" style="width: 100px">created_ip</td><td><kbd>' + boardMap.created_ip + '</kbd></td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">no</td><td>' + boardMap.no + '</td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">thumbnail</td><td>' + boardMap.thumbnail + '</td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">title</td><td>' + boardMap.title + '</td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">keyword</td><td>' + boardMap.keyword + '</td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">name</td><td>' + boardMap.name + '</td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">created_date</td><td>' + boardMap.created_date + '</td></tr>';
+            boardDetailTable.innerHTML += '<tr><td style="width: 100px">created_ip</td><td>' + boardMap.created_ip + '</td></tr>';
 
             container.appendChild(boardDetailTable);
             container.innerHTML += '<section id="board-view-contents" style="padding: 10px 20px; margin-bottom: 50px;">'
@@ -163,11 +162,6 @@ var myBoard = {
             pageBlockContainer.innerHTML += pageBlock;
 
         }
-        var blockList = document.querySelectorAll(pageBlockContainerQuery + '>a');
-        for (var block of blockList) {
-            block.classList.add('btn');
-            block.classList.add('btn-link-red');
-        }
     },
 
     addSettingBoardListUnit: function (memberNo, url) {
@@ -176,18 +170,18 @@ var myBoard = {
         mainSection.innerHTML = '';
         mainSection.innerHTML = '<article style="width: 100%;">' +
             '        <div style="min-width: 150px">' +
-            '            <h1 class="dot-key">글 목록</h1>' +
+            '            <h1>글 목록</h1>' +
             '        </div>' +
             '        <div style="display: flex; align-items: flex-start; flex-wrap: nowrap; justify-content: flex-end;">' +
-            '            <select class="dot-key" id="myblog-search-target" style="width: 70px;">' +
+            '            <select id="myblog-search-target" style="width: 70px;">' +
             '                <option>keyword</option>' +
             '                <option>title</option>' +
             '                <option>contents</option>' +
             '                <option>title-or-contents</option>' +
             '            </select>' +
-            '            <input type="text" class="dot-key" id="myblog-search-value" style="width: 70px;" placeholder="search!">' +
-            '            <button class="btn btn-link-red dot-key" id="myblog-search-btn" style="width: 70px;">Search</button>' +
-            '            <select class="dot-key" id="myblog-board-page-limit">' +
+            '            <input type="text" id="myblog-search-value" style="width: 70px;" placeholder="search!">' +
+            '            <button id="myblog-search-btn" style="width: 70px;">Search</button>' +
+            '            <select id="myblog-board-page-limit">' +
             '                <option>10</option>' +
             '                <option>20</option>' +
             '                <option>50</option>' +

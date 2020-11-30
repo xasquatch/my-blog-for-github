@@ -33,17 +33,54 @@ public class BoardService {
     @Value("${files.save.contents.name.blog}")
     String ContentsName;
 
-    public String[] parsingSearchValue(Map<String, String> map) {
-
+    public String[] parsingSearchValue(String keyword, String title, String contents, String titleOrContents) {
+        Map<String, String> map = new HashMap<String, String>();
         String[] searchValue = new String[2];
+
+        map.put("keyword", keyword);
+        map.put("title", title);
+        map.put("contents", contents);
+        map.put("title-or-contents", titleOrContents);
+
         map.forEach((key, value) -> {
-            if (!value.equals("empty")){
+            if (!value.equals("") && !value.equals("undefined")) {
                 searchValue[0] = key;
                 searchValue[1] = '%' + value + '%';
             }
         });
 
         return searchValue;
+    }
+
+    public Map<String, Object> getBoardList(Object memberNo, int pageLimit, int currentPageBlock, String[] searchValue) {
+
+        int currentPage = 0;
+        try {
+            currentPage = (currentPageBlock - 1) * pageLimit;
+
+        } catch (ArithmeticException e) {
+            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
+        }
+
+        List<Map<String, Object>> boardList
+                = boardDao.selectBoardList(memberNo, currentPage, pageLimit, searchValue[0], searchValue[1]);
+
+        int totalCount = boardDao.selectBoardCount(memberNo, searchValue[0], searchValue[1]);
+
+        List<String> pageBlockList;
+        if (memberNo.equals("all")){
+            pageBlockList= new Pagination().getBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+
+        }else {
+            pageBlockList= new Pagination().getBlockList(memberNo, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+
+        }
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("boardList", boardList);
+        data.put("pageBlockList", pageBlockList);
+
+        return data;
     }
 
     public Object createDefaultBoard(String memberNo) {
@@ -82,106 +119,15 @@ public class BoardService {
 
     }
 
-    public HashMap<String, Object> viewDetail(Object memberNo, Object boardNo) {
+    public Map<String, Object> viewDetail(Object memberNo, Object boardNo) {
         return boardDao.selectOneBoard(memberNo, boardNo);
 
     }
-
-    public String viewDetailToJSON(Object memberNo, Object boardNo) {
-        String result = null;
-
-        HashMap<String, Object> map = boardDao.selectOneBoard(memberNo, boardNo);
-        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
-
-        try {
-            result = objectWriter.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            log.warn("API JsonProcessingException");
-        }
-
+    public boolean delete(Object boardKey) {
+        boolean result = false;
+        if (boardDao.deleteOneBoard(boardKey) == 1)
+            result = true;
         return result;
     }
 
-
-
-    public void delete(Object boardKey) {
-        boardDao.deleteOneBoard(boardKey);
-
-    }
-
-    public String getBoardList(String memberKey, int pageLimit, int currentPageBlock, String[] searchValue) {
-
-        List<HashMap<String, Object>> boardList;
-        if (searchValue[0] == null) {
-            boardList = boardDao.SelectBoardList(memberKey, pageLimit, currentPageBlock, null, null);
-
-        } else {
-            boardList = boardDao.SelectBoardList(memberKey, pageLimit, currentPageBlock, searchValue[0], searchValue[1]);
-
-        }
-
-
-        int totalCount = boardDao.selectBoardListCount(memberKey);
-
-
-        Pagination pagination = Pagination.builder()
-                .pageLimit(pageLimit)
-                .currentPageBlock(currentPageBlock)
-                .totalCount(totalCount)
-                .build();
-        pagination.setPageBlogList();
-
-        HashMap<String, Object> resultMap = new HashMap<>();
-        resultMap.put("boardList", boardList);
-        resultMap.put("pageBlockList", pagination);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String resultDataString = null;
-        try {
-            resultDataString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(resultMap);
-        } catch (JsonProcessingException e) {
-            log.warn("JsonProcessingException");
-        }
-
-
-        return resultDataString;
-    }
-
-    public String getAllBoardList(int pageLimit, int currentPageBlock, String[] searchValue) {
-
-        List<HashMap<String, Object>> boardList;
-        if (searchValue[0] == null) {
-            boardList = boardDao.SelectAllBoardList(pageLimit, currentPageBlock, null, null);
-
-        } else {
-            boardList = boardDao.SelectAllBoardList(pageLimit, currentPageBlock, searchValue[0], searchValue[1]);
-
-        }
-
-
-        int totalCount = boardDao.selectAllBoardListCount();
-
-
-        Pagination pagination = Pagination.builder()
-                .pageLimit(pageLimit)
-                .currentPageBlock(currentPageBlock)
-                .totalCount(totalCount)
-                .build();
-        pagination.setPageBlogList();
-
-        HashMap<String, Object> resultMap = new HashMap<>();
-        resultMap.put("boardList", boardList);
-        resultMap.put("pageBlockList", pagination);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String resultDataString = null;
-        try {
-            resultDataString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(resultMap);
-        } catch (JsonProcessingException e) {
-            log.warn("JsonProcessingException");
-        }
-
-
-        return resultDataString;
-    }
 }

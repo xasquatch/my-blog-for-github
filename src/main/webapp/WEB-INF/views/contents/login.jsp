@@ -69,10 +69,10 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <label>
-                    <a href="${path}/user/find/email" target="_blank" class="btn btn-link-red" tabindex="-1">이메일 찾기</a>
+                    <a href="${path}/members/find/email" target="_blank" class="btn btn-link-red" tabindex="-1">이메일 찾기</a>
                 </label>
                 <label>
-                    <a href="${path}/user/find/password" target="_blank" class="btn btn-link-red" tabindex="-1">비밀번호 찾기</a>
+                    <a href="${path}/members/find/password" target="_blank" class="btn btn-link-red" tabindex="-1">비밀번호 찾기</a>
                 </label>
             </div>
         </div>
@@ -121,7 +121,7 @@
 
             var loginForm = document.querySelector('#home-login');
             var formData = new FormData(loginForm);
-            myAjax.submit('POST', '${path}/user/login', function (data) {
+            myAjax.submit('POST', '${path}/members/login', function (data) {
 
                 if (data === 'false') {
                     window.alert('로그인에 실패하였습니다. email, password를 확인해주세요');
@@ -221,7 +221,7 @@
             return;
         }
 
-        myAjax.submit('POST', '${path}/user/sign-up/email', function (data) {
+        myAjax.submit('POST', '${path}/members/sign-up/email', function (data) {
             if (data === 'true') {
                 userEmailExplain.innerHTML = element.value + '은(는) 이미 존재하는 이메일계정입니다.';
                 userEmailExplain.style.color = 'RED';
@@ -296,7 +296,7 @@
 
         }
 
-        myAjax.submit('POST', '${path}/user/sign-up/name', function (data) {
+        myAjax.submit('POST', '${path}/members/sign-up/name', function (data) {
             if (data === 'true') {
                 userNameExplain.innerHTML = element.value + '은(는) 이미 존재하는 이름입니다.';
                 userNameExplain.style.color = 'RED';
@@ -336,7 +336,7 @@
         var signupForm = document.querySelector('#user-signup');
         var signupFormData = new FormData(signupForm);
 
-        myAjax.submit('POST', '${path}/user/sign-up', function (data) {
+        myAjax.submit('POST', '${path}/members/sign-up', function (data) {
             if (data === 'false') {
                 window.alert('회원가입에 실패하였습니다. 잠시 후 다시 시도해주세요.');
 

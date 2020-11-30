@@ -35,7 +35,6 @@ select, input, button{
     padding: 0.5rem;
     border-radius: 5px;
     line-height: normal !important;
-    outline: auto darkgray; !important;
 }
 
 .btn-link-red{
