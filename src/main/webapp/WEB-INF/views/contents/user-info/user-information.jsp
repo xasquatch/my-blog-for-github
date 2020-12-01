@@ -4,8 +4,14 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <section class="dot-key">
-
-    <h1 class="dot-key">My Information</h1>
+    <div style="display: flex; justify-content: space-between">
+        <h1 class="dot-key">My Information</h1>
+        <div>
+            <button id="delete-member" class="dot-key btn btn-link-red" onclick="deleteMember(${sessionMember.no})">
+                회원탈퇴
+            </button>
+        </div>
+    </div>
     <form class="form-horizontal" id="user-info">
         <div class="input-group">
             <div class="input-group-addon">ID</div>
@@ -14,7 +20,7 @@
         <div class="input-group">
             <div class="input-group-addon">Email</div>
             <input class="form-control" id="user-info-email" type="email" name="email" value="${sessionMember.email}" readonly>
-            <a class="input-group-addon black-hover-btn" href="javascript:window.location.replace('${path}/members/${sessionMember.no}/change-email');">변경</a>
+            <a class="input-group-addon black-hover-btn dot-key" href="javascript:window.location.replace('${path}/members/${sessionMember.no}/change-email');">Email 변경</a>
         </div>
         <div class="input-group">
             <div class="input-group-addon">Password</div>
@@ -24,7 +30,7 @@
             <div class="input-group-addon black-hover-btn" onclick="changeVisiblePwd();"><B>비밀번호<BR>표시</B></div>
         </div>
         <div class="input-group">
-            <div class="input-group-addon">Name</div>
+            <div class="input-group-addon">Nick Name</div>
             <input class="form-control" type="text" name="name" value="${sessionMember.name}" required onchange="checkName(this)">
             <div class="form-control form-explain" id="user-info-explain-name">영문또는 숫자로 3~20자이내 입력해주세요</div>
         </div>
@@ -48,6 +54,28 @@
 
 <script>
 
+    document.querySelector('#delete-member').addEventListener('mouseover', function (e) {
+        document.querySelector('#delete-member').style.marginRight = '50px';
+    })
+
+    function deleteMember(memberNo) {
+        var inputPrompt = window.prompt('회원탈퇴를 진행하시겠습니까? 계속 진행하시려면 \n"회원탈퇴: ${sessionMember.email}"를 입력해주세요.');
+        if (inputPrompt === ('회원탈퇴: ${sessionMember.email}') && window.confirm('회원탈퇴를 진행합니다.')) {
+            myAjax.submit('DELETE', '${path}/members/' + memberNo + '/delete', function (data) {
+                if (data === 'false'){
+                    window.alert('회원탈퇴 과정에 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.');
+
+                }else if (data === 'true'){
+                    window.alert('[회원탈퇴완료]\n그 동안 이용해주셔서 감사합니다.');
+                    window.location.href = window.location.origin;
+                }else{
+                    window.alert('서버에 올바른 응답이 돌아오지 않았습니다.\n잠시 후 다시 시도해주세요.');
+
+                }
+            },'')
+        }
+    }
+
     function modifyProfile(e) {
         // e.preventDefault();
 
@@ -55,7 +83,7 @@
 
         var userForm = document.querySelector('#user-info');
         var userFormData = new FormData(userForm);
-        myAjax.submit('PATCH', '${path}/my-blog/members/${sessionMember.no}', function (data) {
+        myAjax.submit('PUT', '${path}/members/${sessionMember.no}/update', function (data) {
 
             if (data === 'false') {
                 window.alert('정보 수정에 실패하였습니다. 수정조건을 확인 후 다시 시도해주세요.');
@@ -138,6 +166,22 @@
             userNameExplain.style.color = 'GREEN';
 
         }
+
+        myAjax.submit('POST', '${path}/members/sign-up/name', function (data) {
+            if (data === 'true') {
+                userNameExplain.innerHTML = element.value + '은(는) 이미 존재하는 이름입니다.';
+                userNameExplain.style.color = 'RED';
+                element.value = '';
+
+            } else {
+                userNameExplain.innerHTML = element.value + '은(는) 사용가능한 이름입니다.';
+                userNameExplain.style.color = 'GREEN';
+
+            }
+
+        }, 'FORM', 'name=' + element.value);
+
+
     }
 
 

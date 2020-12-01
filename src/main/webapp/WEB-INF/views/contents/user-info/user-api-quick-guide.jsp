@@ -9,7 +9,7 @@
 </section>
 <script src="https://myblog.xasquatch.net/js/myblog-api.js"></script>
 <script>
-    myBoard.recursiveGetBoardList(${memberNo}, 'https://myblog.xasquatch.net/api/members/' + ${memberNo} +'/boards');
+    myBoard.recursiveGetBoardList(${memberNo}, 'https://myblog.xasquatch.net/api/members/${memberNo}/boards');
 </script>
 
 </pre>
@@ -20,7 +20,7 @@
 &lt;/section>
 &lt;script src="https://myblog.xasquatch.net/js/myblog-api.js">&lt;/script>
 &lt;script>
-    myBoard.recursiveGetBoardList(${memberNo}, 'https://myblog.xasquatch.net/api/members/' + ${memberNo} +'/boards');
+    myBoard.recursiveGetBoardList(${memberNo}, 'https://myblog.xasquatch.net/api/members/${memberNo}/boards');
 &lt;/script>
 </pre>
 

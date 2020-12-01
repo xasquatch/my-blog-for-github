@@ -182,7 +182,7 @@
             '<div class="form-control form-explain" id="user-signup-explain-pwd">영문또는 숫자로 8~20자이내 입력해주세요</div>                                 ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
-            '<div class="input-group-addon">Name</div>                                                                                                   ' +
+            '<div class="input-group-addon">Nick Name</div>                                                                                              ' +
             '<input class="form-control" type="text" name="name" placeholder="ex) Jordan" required onchange="checkName(this)">                           ' +
             '<div class="form-control form-explain" id="user-signup-explain-name">영문또는 숫자로 3~20자이내 입력해주세요</div>                                ' +
             '</div>                                                                                                                                      ' +
