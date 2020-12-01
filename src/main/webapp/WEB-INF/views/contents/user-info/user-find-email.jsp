@@ -13,7 +13,7 @@
         </div>
         <div style="text-align: center;">
             <div class="input-group form-group-lg">
-                <div class="input-group-addon dot-key">Name</div>
+                <div class="input-group-addon dot-key">Nick Name</div>
                 <input type="text" class="form-control" id="search-email-input" name="name" placeholder="Jhon">
             </div>
             <hr>
