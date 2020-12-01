@@ -56,6 +56,7 @@ public class MemberController {
 
         return "redirect:/";
     }
+
     /*TODO: 회원 api QUICK GUIDE PAGE로 이동*/
     @RequestMapping(value = "/{memberNo}/api/quick-guide", method = {RequestMethod.GET, RequestMethod.POST})
     public String goApiQuickGuide(Model model, @PathVariable String memberNo) {
@@ -83,6 +84,20 @@ public class MemberController {
         }
 
         return "redirect:/";
+    }
+
+    @PutMapping("/{memberNo}/update")
+    @ResponseBody
+    public String update(@Valid Member member, BindingResult bindingResult, @PathVariable String memberNo) {
+        String result = "false";
+        member.setMembersAgreement(true);
+        member.setCollectionAndUse(true);
+        if (!bindingResult.hasErrors() && checkSessionController.isCheckSession(memberNo)) {
+            result = memberService.updateMember(member);
+        }
+
+        return result;
+
     }
 
     /*TODO:회원 비밀번호 인증으로 이동*/
@@ -115,7 +130,7 @@ public class MemberController {
         if (checkSessionController.isCheckSession(memberNo)) {
             if (!checkEmail.equals("empty")) {
                 if (!memberService.isExistedEmail(checkEmail)) {
-                    mailService.sendAuthMail(checkEmail,"[My Blog By Xasquatch]이메일 인증 요청");
+                    mailService.sendAuthMail(checkEmail, "[My Blog By Xasquatch]이메일 인증 요청");
                     sessionMember.setEmail(checkEmail);
                     model.addAttribute("email", checkEmail);
                     model.addAttribute("mainContents", "user-check-email");
@@ -127,7 +142,7 @@ public class MemberController {
                 }
 
             } else {
-                mailService.sendAuthMail(sessionMember.getEmail(),"[My Blog By Xasquatch]이메일 인증 요청");
+                mailService.sendAuthMail(sessionMember.getEmail(), "[My Blog By Xasquatch]이메일 인증 요청");
                 model.addAttribute("email", sessionMember.getEmail());
                 model.addAttribute("mainContents", "user-check-email");
 
