@@ -94,8 +94,8 @@ var uri = {
 var myBoard = {
 
     getBoardData: function (memberNo, boardNo) {
+        var mainSection = document.querySelector('#myblog-main-section');
         myAjax.submit('GET', 'https://myblog.xasquatch.net/api/members/' + memberNo + '/boards/' + boardNo, function (data) {
-            var mainSection = document.querySelector('#myblog-main-section');
             mainSection.innerHTML = '';
 
             var boardMap = JSON.parse(data).data.board;
@@ -122,10 +122,37 @@ var myBoard = {
                 '        <button class="btn btn-link-red dot-key" onclick="window.history.back();">뒤로 가기</button>' +
                 '    </section>';
 
+            try {
+                myHistory.pushState({
+                    "data": mainSection.innerHTML,
+                    "memberNo": memberNo,
+                    "url": '/api/members/' + memberNo + '/boards/' + boardNo
+                }, 'https://myblog.xasquatch.net/api/members/' + memberNo + '/boards/' + boardNo);
 
-            myHistory.pushState(mainSection.innerHTML, '/api/members/' + memberNo + '/boards/' + boardNo);
+            } catch (e) {
+                myHistory.pushState({
+                    "data": mainSection.innerHTML,
+                    "memberNo": memberNo,
+                    "url": '/api/members/' + memberNo + '/boards/' + boardNo
+                }, '/api/members/' + memberNo + '/boards/' + boardNo);
+            }
+
+
         });
 
+    },
+
+    pageBlockClickEventSetting: function (memberNo) {
+        var pageBlockList = document.querySelectorAll('.myblog-page-block');
+        for (var pageBlock of pageBlockList) {
+            pageBlock.addEventListener('click', function (e) {
+                e.preventDefault();
+                var href = this.href.substr(this.href.indexOf('/api/members/'), this.href.length);
+                if (href !== null) {
+                    myBoard.recursiveGetBoardList(memberNo, 'https://myblog.xasquatch.net' + href);
+                }
+            });
+        }
     },
 
     recursiveGetBoardList: function (memberNo, url) {
@@ -133,21 +160,13 @@ var myBoard = {
             myBoard.addSettingBoardListUnit(memberNo, url);
             myBoard.boardListDecoration(data, '#myblog-board-list-contents');
             myBoard.pageBlockDecoration(data, '#myblog-board-list-toolbar');
-            var pageBlockList = document.querySelectorAll('.myblog-page-block');
-            for (var pageBlock of pageBlockList) {
-                pageBlock.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    var href = this.getAttribute('href');
-                    if (href !== null) {
-                        memberNo = uri.getUniform(href, '/members/', '/boards');
-                        myBoard.boardListDecoration(data, '#myblog-board-list-contents');
-                        myBoard.pageBlockDecoration(data, '#myblog-board-list-toolbar');
-                        myBoard.recursiveGetBoardList(memberNo, 'https://myblog.xasquatch.net' + href);
-
-                    }
-                });
-            }
-            myHistory.replaceState(document.querySelector('#myblog-main-section').innerHTML, '/api/members/' + memberNo + '/boards/');
+            myBoard.pageBlockClickEventSetting(memberNo);
+            myHistory.pushState({
+                    "data": document.querySelector('#myblog-main-section').innerHTML,
+                    "memberNo": memberNo,
+                    "url": url
+                },
+                window.location.href);
         });
     },
 
@@ -201,33 +220,30 @@ var myBoard = {
         var subStrUrl = url.substring(url.indexOf('?') + 1);
         var queryArray = subStrUrl.split('&');
         for (var key of queryArray) {
-            console.log(key);
             if (key.includes('page-limit') && !(key.substr(11, key.length) === ''))
-            document.querySelector('#myblog-board-page-limit').value = key.substr(11, key.length);
+                document.querySelector('#myblog-board-page-limit').value = key.substr(11, key.length);
 
             var searchTarget = document.querySelector('#myblog-search-target');
             var searchValue = document.querySelector('#myblog-search-value');
 
-            if (key.includes('keyword') && !(key.substr(8, key.length) === '')){
+            if (key.includes('keyword') && !(key.substr(8, key.length) === '')) {
                 searchTarget.value = 'keyword';
                 searchValue.value = key.substr(8, key.length);
             }
-            if (key.includes('title') && !(key.substr(6, key.length) === '')){
+            if (key.includes('title') && !(key.substr(6, key.length) === '')) {
                 searchTarget.value = 'title';
                 searchValue.value = key.substr(6, key.length);
             }
-            if (key.includes('contents') && !(key.substr(9, key.length) === '')){
+            if (key.includes('contents') && !(key.substr(9, key.length) === '')) {
                 searchTarget.value = 'contents';
                 searchValue.value = key.substr(9, key.length);
             }
-            if (key.includes('title-or-contents') && !(key.substr(18, key.length) === '')){
+            if (key.includes('title-or-contents') && !(key.substr(18, key.length) === '')) {
                 searchTarget.value = 'title-or-contents';
                 searchValue.value = key.substr(18, key.length);
             }
 
         }
-
-
 
         mainSection.querySelector('#myblog-search-btn').setAttribute('onclick', 'myBoard.changeViewListSetting(' + memberNo + ');')
         mainSection.querySelector('#myblog-board-page-limit').setAttribute('onchange', 'myBoard.changeViewListSetting(' + memberNo + ');')
@@ -250,36 +266,33 @@ var myBoard = {
 
     },
 
-    boardListDecoration:
+    boardListDecoration: function (data, boardListContainerQuery) {
+        var boardList = JSON.parse(data).data.boardList;
+        var boardListContainer = document.querySelector(boardListContainerQuery);
+        boardListContainer.style.display = 'flex';
+        boardListContainer.style.flexDirection = 'row';
+        boardListContainer.style.flexWrap = 'wrap';
+        boardListContainer.style.justifyContent = 'space-evenly';
+        boardListContainer.style.margin = '20px 0';
+        for (var board of boardList) {
+            var boardContainer = document.createElement('a');
+            boardContainer.style.width = '150px';
+            boardContainer.style.height = 'auto';
+            boardContainer.style.margin = '5px';
+            boardContainer.style.padding = '5px';
+            boardContainer.style.outlineStyle = 'auto';
+            boardContainer.href = 'javascript:myBoard.getBoardData(' + board.mbr_no + ',' + board.no + ')';
 
-        function (data, boardListContainerQuery) {
-            var boardList = JSON.parse(data).data.boardList;
-            // console.log(JSON.stringify(boardList,null,2));
-            var boardListContainer = document.querySelector(boardListContainerQuery);
-            boardListContainer.style.display = 'flex';
-            boardListContainer.style.flexDirection = 'row';
-            boardListContainer.style.flexWrap = 'wrap';
-            boardListContainer.style.justifyContent = 'space-evenly';
-            boardListContainer.style.margin = '20px 0';
-            for (var board of boardList) {
-                var boardContainer = document.createElement('a');
-                boardContainer.style.width = '150px';
-                boardContainer.style.height = 'auto';
-                boardContainer.style.margin = '5px';
-                boardContainer.style.padding = '5px';
-                boardContainer.style.outlineStyle = 'auto';
-                boardContainer.href = 'javascript:myBoard.getBoardData(' + board.mbr_no + ',' + board.no + ')';
-
-                boardContainer.innerHTML += '<div style="display: none;">' + board.no + '</div>';
-                boardContainer.innerHTML += board.thumbnail;
-                boardContainer.innerHTML += '<p style="word-break: break-all; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">' +
-                    '<span>' + board.row_number + '.&nbsp;</span><span>' + board.title + '</span></p>';
-                boardContainer.innerHTML += '<div style="display: none;">' + board.no + '</div>';
-                boardListContainer.appendChild(boardContainer);
-            }
-
-
+            boardContainer.innerHTML += '<div style="display: none;">' + board.no + '</div>';
+            boardContainer.innerHTML += board.thumbnail;
+            boardContainer.innerHTML += '<p style="word-break: break-all; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">' +
+                '<span>' + board.row_number + '.&nbsp;</span><span>' + board.title + '</span></p>';
+            boardContainer.innerHTML += '<div style="display: none;">' + board.no + '</div>';
+            boardListContainer.appendChild(boardContainer);
         }
+
+
+    }
 
 
 }
@@ -287,9 +300,11 @@ myHistory = {
     autoSetting: function () {
         window.onpopstate = function (e) {
             if (e.state !== null) {
-                document.querySelector('#myblog-main-section').innerHTML = e.state;
+                document.querySelector('#myblog-main-section').innerHTML = e.state.data;
+                myBoard.pageBlockClickEventSetting(e.state.memberNo);
             }
-            console.dir(e);
+            console.dir(e.state);
+
         }
     },
     pushState: function (data, url) {
