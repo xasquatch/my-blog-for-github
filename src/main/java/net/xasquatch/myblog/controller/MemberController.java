@@ -86,6 +86,7 @@ public class MemberController {
         return "redirect:/";
     }
 
+    //TODO: 회원정보 변경
     @PutMapping("/{memberNo}/update")
     @ResponseBody
     public String update(@Valid Member member, BindingResult bindingResult, @PathVariable String memberNo) {
@@ -242,6 +243,17 @@ public class MemberController {
 
         }
         return String.valueOf(result);
+    }
+
+    @DeleteMapping("/{memberNo}/delete")
+    @ResponseBody
+    public String delete(@PathVariable String memberNo) {
+        String result = "false";
+        if (checkSessionController.isCheckSession(memberNo)) {
+            result = String.valueOf(memberService.delete(sessionMember));
+            memberService.reset(sessionMember);
+        }
+        return result;
     }
 
 }

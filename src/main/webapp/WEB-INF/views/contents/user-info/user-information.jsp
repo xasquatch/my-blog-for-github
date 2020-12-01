@@ -4,8 +4,14 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <section class="dot-key">
-
-    <h1 class="dot-key">My Information</h1>
+    <div style="display: flex; justify-content: space-between">
+        <h1 class="dot-key">My Information</h1>
+        <div>
+            <button id="delete-member" class="dot-key btn btn-link-red" onclick="deleteMember(${sessionMember.no})">
+                회원탈퇴
+            </button>
+        </div>
+    </div>
     <form class="form-horizontal" id="user-info">
         <div class="input-group">
             <div class="input-group-addon">ID</div>
@@ -47,6 +53,28 @@
 </section>
 
 <script>
+
+    document.querySelector('#delete-member').addEventListener('mouseover', function (e) {
+        document.querySelector('#delete-member').style.marginRight = '50px';
+    })
+
+    function deleteMember(memberNo) {
+        var inputPrompt = window.prompt('회원탈퇴를 진행하시겠습니까? 계속 진행하시려면 \n"회원탈퇴: ${sessionMember.email}"를 입력해주세요.');
+        if (inputPrompt === ('회원탈퇴: ${sessionMember.email}') && window.confirm('회원탈퇴를 진행합니다.')) {
+            myAjax.submit('DELETE', '${path}/members/' + memberNo + '/delete', function (data) {
+                if (data === 'false'){
+                    window.alert('회원탈퇴 과정에 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.');
+
+                }else if (data === 'true'){
+                    window.alert('[회원탈퇴완료]\n그 동안 이용해주셔서 감사합니다.');
+                    window.location.href = window.location.origin;
+                }else{
+                    window.alert('서버에 올바른 응답이 돌아오지 않았습니다.\n잠시 후 다시 시도해주세요.');
+
+                }
+            },'')
+        }
+    }
 
     function modifyProfile(e) {
         // e.preventDefault();
