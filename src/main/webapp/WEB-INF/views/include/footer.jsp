@@ -73,6 +73,6 @@
 <script src="${path}/js/myblog-api.js"></script>
 <script src="${path}/js/script.js"></script>
 <%--END: custom script--%>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://apis.google.com/js/api:client.js"></script>
 </body>
 </html>

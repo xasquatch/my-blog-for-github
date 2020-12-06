@@ -87,6 +87,10 @@
     <BR>
     <div id="user-sign-contents">
         <div class="col-sm-offset-2 col-sm-10">
+            <div id="customBtn" class="btn btn-link-red customGPlusSignIn" style="width: 75px">
+                <span class="google-icon"></span>
+                <span class="google-buttonText">Google</span>
+            </div>
             <button type="button" class="btn btn-link-red" data-toggle="modal" data-target="#myModal" onclick="singUp();">
                 <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/Xasquatch.png" width="32" height="32"><BR>
                 Sing Up
@@ -101,19 +105,9 @@
         if (e.keyCode === 13) loginInput();
     })
 
-    function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        console.log('Full Name: ' + profile.getName());
-        console.log('Given Name: ' + profile.getGivenName());
-        console.log('Family Name: ' + profile.getFamilyName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
 
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
+    window.onload = function (){
+        googleOAuth.startApp();
     }
 
     function loginInput() {
@@ -142,31 +136,6 @@
         } else {
             window.alert('이메일을 다시 확인해주세요');
         }
-
-    }
-
-
-    function oAuth(target) {
-//회원인지 확인먼저 필요(미구현)
-
-        modal.changeForm('Sign Up',
-            '<form class="form-horizontal" id="user-signup">                                                                                             ' +
-            '<div align="center">                                                                                                                        ' +
-            target.innerHTML +
-            '</div>                                                                                                                                      ' +
-            '<div class="input-group">                                                                                                                   ' +
-            '<div class="input-group-addon">Agreement</div>                                                                                              ' +
-            '<div class="form-control" style="height: auto;">                                                                                            ' +
-            '<a class="btn-link-red" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>' +
-            '<label><input type="checkbox" name="membersAgreement">I agree</label>                                                                       ' +
-            '<HR style="margin-top: 3px; margin-bottom: 3px;">                                                                                           ' +
-            '<a class="btn-link-red" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>' +
-            '<label><input type="checkbox" name="collectionAndUse">I agree</label>                                                                       ' +
-            '</div>                                                                                                                                      ' +
-            '</div>                                                                                                                                      ' +
-            '</form>');
-        var confirmBtn = document.querySelector('#modal-confirm-btn');
-        confirmBtn.setAttribute('onclick', 'oAuthConfirmSignUp();');
 
     }
 
