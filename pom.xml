@@ -186,6 +186,12 @@
             <version>${spring-version}</version>
         </dependency>
 
+<!--        google oauth-->
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-appengine</artifactId>
+            <version>1.31.2</version>
+        </dependency>
 
     </dependencies>
 

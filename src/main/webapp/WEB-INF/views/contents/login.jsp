@@ -87,18 +87,6 @@
     <BR>
     <div id="user-sign-contents">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="button" class="btn btn-link-red hidden" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
-                <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/google.png"><BR>
-                &nbsp;Google&nbsp;
-            </button>
-            <button type="button" class="btn btn-link-red hidden" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
-                <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/GitHub-Mark-32px.png"><BR>
-                &nbsp;Github&nbsp;
-            </button>
-            <button type="button" class="btn btn-link-red hidden" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
-                <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/facebook.png"> <BR>
-                Facebook
-            </button>
             <button type="button" class="btn btn-link-red" data-toggle="modal" data-target="#myModal" onclick="singUp();">
                 <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/Xasquatch.png" width="32" height="32"><BR>
                 Sing Up
@@ -112,6 +100,21 @@
     document.querySelector('#home-login-pwd').addEventListener('keypress', function (e) {
         if (e.keyCode === 13) loginInput();
     })
+
+    function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+    }
 
     function loginInput() {
         var loginEmail = document.querySelector('#home-login-email');
