@@ -46,6 +46,7 @@ public interface MemberMapper {
      * 패스워드는 임의의 랜덤값으로 삽입
      */
     @Insert("INSERT INTO mbr(email, pwd, token, name, img) VALUES(#{email}, #{pwd}, #{token}, #{name}, #{img})")
+    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
     void insertMbrForToken(Member member);
 
     /**
