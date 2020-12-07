@@ -42,6 +42,13 @@ public interface MemberMapper {
     int updateMbrImg(Member member);
 
     /**
+     * @param member
+     * 패스워드는 임의의 랜덤값으로 삽입
+     */
+    @Insert("INSERT INTO mbr(email, pwd, token, name, img) VALUES(#{email}, #{pwd}, #{token}, #{name}, #{img})")
+    void insertMbrForToken(Member member);
+
+    /**
      * @param no
      * @param pwdKey
      * @return 이메일 변경 시 해당 멤버가 맞는지 확인 후 결과값 반환 성공시 1, 실패시 0

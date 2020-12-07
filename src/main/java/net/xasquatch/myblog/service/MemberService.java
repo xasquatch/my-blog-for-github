@@ -105,8 +105,14 @@ public class MemberService {
         sessionMember.setCheckSession(false);
     }
 
-    //TODO:img파일 저장 및 경로 설정 + result false시 해당 폴더 제거 구현 필요
+    public boolean saveForToken(Member member){
+        boolean result = false;
+        result = memberDao.insertMbrForToken(member);
 
+        return result;
+    }
+
+    //TODO:img파일 저장 및 경로 설정 + result false시 해당 폴더 제거 구현 필요
     public boolean save(Member member) {
         boolean result = false;
 

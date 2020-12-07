@@ -68,6 +68,14 @@ public class MemberDao {
         return result;
     }
 
+    public boolean insertMbrForToken(Member member){
+
+        //TODO: DB저장 후 member.setNo 호출하여 PK 저장
+        memberMapper.insertMbrForToken(member);
+
+        return member.getNo() != null;
+    }
+
     public int selectMbr(Object no, String pwdKey) {
         int result = 0;
         try {
