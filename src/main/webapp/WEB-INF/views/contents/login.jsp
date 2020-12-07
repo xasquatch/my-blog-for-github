@@ -98,9 +98,6 @@
             </button>
         </div>
     </div>
-    <pre>
-    ${result}
-    </pre>
 </section>
 <script>
 
