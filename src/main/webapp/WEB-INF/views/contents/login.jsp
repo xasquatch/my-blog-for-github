@@ -87,28 +87,26 @@
     <BR>
     <div id="user-sign-contents">
         <div class="col-sm-offset-2 col-sm-10">
-            <div id="customBtn" class="btn btn-link-red customGPlusSignIn" style="width: 75px">
-                <span class="google-icon"></span>
-                <span class="google-buttonText">Google</span>
-            </div>
-            <button type="button" class="btn btn-link-red" data-toggle="modal" data-target="#myModal" onclick="singUp();">
+            <button type="button" class="btn btn-link-red" style="width: 75px;" onclick="oAuth.google.signInAndUp(this)">
+                <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/google.png" width="32" height="32"><BR>
+                Google
+            </button>
+            <button type="button" class="btn btn-link-red" style="width: 75px;"
+                    data-toggle="modal" data-target="#myModal" onclick="singUp();">
                 <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/Xasquatch.png" width="32" height="32"><BR>
                 Sing Up
             </button>
         </div>
     </div>
-
+    <pre>
+    ${result}
+    </pre>
 </section>
 <script>
 
     document.querySelector('#home-login-pwd').addEventListener('keypress', function (e) {
         if (e.keyCode === 13) loginInput();
     })
-
-
-    window.onload = function (){
-        googleOAuth.startApp();
-    }
 
     function loginInput() {
         var loginEmail = document.querySelector('#home-login-email');
@@ -319,11 +317,6 @@
         }, 'FORMFILE', signupFormData);
 
     }
-
-    function oAuthConfirmSignUp() {
-
-    }
-
 
     function addUploadImage(e) {
         var imgFit = document.querySelector('#user-signup-imageFit');
