@@ -65,6 +65,8 @@ public class OauthController {
             ResponseEntity<String> responseEntity = googleOAuthService.requestAccessToken(authCode);
             Map<String, Object> accessTokenMap = googleOAuthService.getAccessToken(responseEntity);
 
+            if (googleOAuthService.verifyToken((String) accessTokenMap.get("JWT")) == null) return "redirect:/";
+            
             Member convertedMember = googleOAuthService.convertModelToMember(accessTokenMap);
             if (!memberService.isExistedEmail(convertedMember.getEmail())) {
                 memberService.saveForToken(convertedMember);
@@ -78,8 +80,8 @@ public class OauthController {
             memberService.loginForToken(convertedMember);
             session.setAttribute("sessionMember", sessionMember);
 
-        } catch (JsonProcessingException e) {
-            log.warn("OAuth JsonProcessingException : GOOGLE [{}]", "googleSignUpAndIn");
+        } catch (GeneralSecurityException | IOException e) {
+            log.warn("OAuth Exception : GOOGLE [{}]", "googleSignUpAndIn");
         }
         model.addAttribute("result", result);
 

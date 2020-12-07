@@ -117,11 +117,9 @@ public class MemberDao {
 
 
     public Map<String, Object> selectOneMbrForToken(Member member) {
-
         String email = member.getEmail();
-        String token = member.getToken();
 
-        return memberMapper.selectOneMbrForToken(email, token);
+        return memberMapper.selectOneMbrForToken(email);
     }
 
 
