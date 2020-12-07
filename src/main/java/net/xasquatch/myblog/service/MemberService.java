@@ -81,7 +81,7 @@ public class MemberService {
 
     public String loginForToken(Member member) {
 
-        Map<String, Object> resultMap = memberDao.selectOneMbr(member);
+        Map<String, Object> resultMap = memberDao.selectOneMbrForToken(member);
 
         try {
             long sessionMemberNo = ((BigInteger) resultMap.get("no")).longValue();
