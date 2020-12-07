@@ -39,6 +39,11 @@ public class MemberService {
         return memberDao.updateRank(number, email);
     }
 
+    public long findNumberForEmail(String email){
+
+        return memberDao.selectOneNo(email);
+    }
+
     public boolean isExistedEmail(String email) {
         String memberEmail = memberDao.selectOneEmail(email);
 

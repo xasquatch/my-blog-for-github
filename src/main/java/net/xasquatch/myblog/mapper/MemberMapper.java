@@ -11,12 +11,18 @@ import java.util.Map;
 public interface MemberMapper {
 
     /**
-     *
      * @param email
      * @return 이메일 중복확인 후 해당 이메일 반환 없으면 null
      */
     @Select("SELECT email FROM mbr WHERE email = #{email}")
     String selectOneEmail(String email);
+
+    /**
+     * @param email
+     * @return
+     */
+    @Select("SELECT no FROM mbr WHERE email = #{email}")
+    long selectOneNo(String email);
 
     /**
      *

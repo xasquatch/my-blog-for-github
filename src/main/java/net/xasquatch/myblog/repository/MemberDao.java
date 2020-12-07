@@ -42,6 +42,10 @@ public class MemberDao {
         return result;
     }
 
+    public long selectOneNo(String email) {
+        return memberMapper.selectOneNo(email);
+    }
+
     public String selectOneEmail(String email) {
         return memberMapper.selectOneEmail(email);
     }
