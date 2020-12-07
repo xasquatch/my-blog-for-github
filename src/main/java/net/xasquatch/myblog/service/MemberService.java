@@ -74,6 +74,27 @@ public class MemberService {
         return String.valueOf(sessionMember.getNo());
     }
 
+    public String loginForToken(Member member) {
+
+        Map<String, Object> resultMap = memberDao.selectOneMbr(member);
+
+        try {
+            long sessionMemberNo = ((BigInteger) resultMap.get("no")).longValue();
+            sessionMember.setNo(sessionMemberNo);
+
+        } catch (Exception e) {
+            log.warn("CLASS CAST EXCEPTION: member no->{}", "null");
+            return "false";
+        }
+        sessionMember.setRank((String) resultMap.get("rank"));
+        sessionMember.setEmail((String) resultMap.get("email"));
+        sessionMember.setToken((String) resultMap.get("token"));
+        sessionMember.setName((String) resultMap.get("name"));
+        sessionMember.setImg((String) resultMap.get("img"));
+
+        return String.valueOf(sessionMember.getNo());
+    }
+
     public void reset(Member sessionMember) {
         sessionMember.setNo(null);
         sessionMember.setEmail(null);

@@ -45,4 +45,5 @@ public class Member {
     private boolean checkSession;
 
     private String authKey;
+    private String token;
 }

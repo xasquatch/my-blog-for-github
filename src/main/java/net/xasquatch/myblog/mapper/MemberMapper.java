@@ -77,6 +77,17 @@ public interface MemberMapper {
     Map<String, Object> selectOneMbr(String email, String pwd);
 
     /**
+     * @param email
+     * @param token
+     * @return 이메일과 토큰을 대조하여 DB에서 멤버테이블과 권한 테이블은 조인하여 Map형태로 반환
+     */
+    @Select("SELECT m.no as no, a.rank as rank, m.email as email, m.token as token, m.name as name, m.img as img " +
+            "FROM mbr m LEFT OUTER JOIN authorization a " +
+            "ON m.authorization_no = a.no " +
+            "WHERE m.email = #{arg0} AND m.token = #{arg1}")
+    Map<String, Object> selectOneMbrForToken(String email, String token);
+
+    /**
      * @return 권한테이블 DB에서 권한들 목록을 가져옴
      */
     @Select("SELECT * FROM authorization")
