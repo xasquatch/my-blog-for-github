@@ -66,7 +66,7 @@ public class OauthController {
             Map<String, Object> accessTokenMap = googleOAuthService.getAccessToken(responseEntity);
 
             if (googleOAuthService.verifyToken((String) accessTokenMap.get("JWT")) == null) return "redirect:/";
-            
+
             Member convertedMember = googleOAuthService.convertModelToMember(accessTokenMap);
             if (!memberService.isExistedEmail(convertedMember.getEmail())) {
                 memberService.saveForToken(convertedMember);
@@ -78,6 +78,7 @@ public class OauthController {
 
             memberService.updateRank(convertedMember.getNo(), convertedMember.getEmail());
             memberService.loginForToken(convertedMember);
+            sessionMember.setCheckSession(true);
             session.setAttribute("sessionMember", sessionMember);
 
         } catch (GeneralSecurityException | IOException e) {
