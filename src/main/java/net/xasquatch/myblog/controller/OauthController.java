@@ -66,18 +66,17 @@ public class OauthController {
             Map<String, Object> accessTokenMap = googleOAuthService.getAccessToken(responseEntity);
 
             Member convertedMember = googleOAuthService.convertModelToMember(accessTokenMap);
-            if (memberService.isExistedEmail(convertedMember.getEmail())) {
-                memberService.updateRank(sessionMember.getEmail());
-                memberService.loginForToken(convertedMember);
-                session.setAttribute("sessionMember", sessionMember);
-                result = "이메일이 이미 있습니다.";
+            if (!memberService.isExistedEmail(convertedMember.getEmail())) {
+                memberService.saveForToken(convertedMember);
 
             }else{
-                memberService.saveForToken(convertedMember);
-                memberService.updateRank(sessionMember.getEmail());
-                memberService.loginForToken(convertedMember);
-                session.setAttribute("sessionMember", sessionMember);
+                long memberNo = memberService.findNumberForEmail(convertedMember.getEmail());
+                convertedMember.setNo(memberNo);
             }
+
+            memberService.updateRank(convertedMember.getNo(), convertedMember.getEmail());
+            memberService.loginForToken(convertedMember);
+            session.setAttribute("sessionMember", sessionMember);
 
         } catch (JsonProcessingException e) {
             log.warn("OAuth JsonProcessingException : GOOGLE [{}]", "googleSignUpAndIn");
