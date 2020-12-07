@@ -5,7 +5,16 @@ var oAuth = {
                 window.open('https://accounts.google.com/o/oauth2/v2/auth?' + data);
 
             });
+        },
+
+        verifyToken: function (token) {
+            myAjax.submit('POST', '/oauth/google/token', function (data) {
+
+                alert(data);
+
+            }, 'form', 'google-token=' + token);
         }
+
     }
 }
 
