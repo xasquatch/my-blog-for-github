@@ -175,7 +175,7 @@ public class MemberController {
     public String authorizationEmail(@PathVariable String memberNo, String authorizationToken) {
         String result = "false";
         if (checkSessionController.isCheckSession(memberNo) && authorizationToken.equals(sessionMember.getAuthKey())) {
-            result = String.valueOf(memberService.updateRank(sessionMember.getEmail()));
+            result = String.valueOf(memberService.updateRank(sessionMember.getNo(), sessionMember.getEmail()));
 
         }
 

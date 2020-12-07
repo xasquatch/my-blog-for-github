@@ -35,8 +35,8 @@ public class MemberService {
         return memberDao.selectAuthorization();
     }
 
-    public boolean updateRank(String email){
-        return memberDao.updateRank(sessionMember.getNo(), email);
+    public boolean updateRank(long number, String email){
+        return memberDao.updateRank(number, email);
     }
 
     public boolean isExistedEmail(String email) {
