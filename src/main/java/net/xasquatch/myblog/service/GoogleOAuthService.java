@@ -130,9 +130,9 @@ public class GoogleOAuthService {
 
         Member member = Member.builder()
                 .email(decodedToken.get("email"))
-                .pwd(token.substring(10,30))
+                .pwd(token.substring(token.lastIndexOf("."), token.lastIndexOf(".") + 20))
                 .token(token)
-                .name(decodedToken.get("name") + (Math.random() * 10000000))
+                .name(decodedToken.get("name") + Math.round(Math.random() * 10000000))
                 .img(decodedToken.get("picture"))
                 .build();
 
