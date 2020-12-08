@@ -7,7 +7,6 @@
     window.addEventListener('DOMContentLoaded', function () {
 
         textScript.insertText('#main-header-logo', 'My Blog', 20);
-        textScript.insertText('#header-center','현재 테스트중인 서버입니다.',1);
 
     });
 
