@@ -11,6 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -184,9 +187,19 @@ public class MemberController {
 
     /*TODO: 로그아웃 처리 후 루트페이지로 리다이렉트*/
     @RequestMapping(value = "/{memberNo}/log-out", method = {RequestMethod.GET, RequestMethod.POST})
-    public String logOut(HttpSession session) {
+    public String logOut(HttpServletRequest request, HttpServletResponse response) {
 
-        session.removeAttribute("sessionMember");
+        request.getSession().removeAttribute("sessionMember");
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("oauth-token")) {
+                cookie.setMaxAge(0);
+                cookie.setValue("");
+                cookie.setPath("/");
+                response.addCookie(cookie);
+
+            }
+        }
         memberService.reset(sessionMember);
         return "redirect:/";
     }
