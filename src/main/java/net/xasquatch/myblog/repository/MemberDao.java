@@ -1,21 +1,30 @@
 package net.xasquatch.myblog.repository;
 
+
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.mapper.MemberMapper;
 import net.xasquatch.myblog.model.Authorization;
 import net.xasquatch.myblog.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.Hashtable;
 import java.util.Map;
 
 @Slf4j
 @Repository
+@PropertySource("/WEB-INF/properties/security.properties")
 public class MemberDao {
 
     @Autowired
     private MemberMapper memberMapper;
+
+    @Value("${password.encryption.salt}")
+    private String salt;
 
     public String selectEmail(String name) {
         return memberMapper.selectEmail(name);
@@ -56,6 +65,8 @@ public class MemberDao {
 
     public boolean insertMbrExceptionImg(Member member) {
 
+        member.setPwd(encryptPwd(member.getPwd()));
+
         //TODO: DB저장 후 member.setNo 호출하여 PK 저장
         memberMapper.insertMbrExceptionImg(member);
 
@@ -74,6 +85,8 @@ public class MemberDao {
 
     public boolean insertMbrForToken(Member member){
 
+        member.setPwd(encryptPwd(member.getPwd()));
+
         //TODO: DB저장 후 member.setNo 호출하여 PK 저장
         memberMapper.insertMbrForToken(member);
 
@@ -83,7 +96,7 @@ public class MemberDao {
     public int selectMbr(Object no, String pwdKey) {
         int result = 0;
         try {
-            result = memberMapper.selectMbr(no, pwdKey);
+            result = memberMapper.selectMbr(no, encryptPwd(pwdKey));
         } catch (Exception e) {
             log.warn("selectMbr Exception: no:{} key:{}", no, pwdKey);
         }
@@ -101,6 +114,7 @@ public class MemberDao {
     public boolean updateMbrDefault(Member member) {
         boolean result = false;
 
+        member.setPwd(encryptPwd(member.getPwd()));
         if (memberMapper.updateMbrDefault(member) == 1) result = true;
 
         return result;
@@ -111,8 +125,7 @@ public class MemberDao {
         String email = member.getEmail();
         String pwd = member.getPwd();
 
-
-        return memberMapper.selectOneMbr(email, pwd);
+        return memberMapper.selectOneMbr(email, encryptPwd(pwd));
     }
 
 
@@ -122,5 +135,19 @@ public class MemberDao {
         return memberMapper.selectOneMbrForToken(email);
     }
 
+    public String encryptPwd(String pwd){
+
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-512");
+            md.update(salt.getBytes());
+            md.update(pwd.getBytes());
+
+        } catch (Exception e) {
+            log.warn("암호화 예외 발생");
+        }
+
+        return String.format("%0128x", new BigInteger(1, md.digest()));
+    }
 
 }

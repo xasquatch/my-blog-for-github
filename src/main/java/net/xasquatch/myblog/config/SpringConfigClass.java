@@ -11,7 +11,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 import javax.servlet.*;
 import java.util.Collections;
 
-@PropertySource("/WEB-INF/properties/file/FileManager.properties")
+@PropertySource("/WEB-INF/properties/file-manager.properties")
 public class SpringConfigClass implements WebApplicationInitializer {
 
     @Value("${files.save.path}")
@@ -63,7 +63,7 @@ public class SpringConfigClass implements WebApplicationInitializer {
 
 /*
 
-@PropertySource("/WEB-INF/properties/file/FileManager.properties")
+@PropertySource("/WEB-INF/properties/file-manager.properties")
 public class SpringConfigClass extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Value("${files.save.path}")

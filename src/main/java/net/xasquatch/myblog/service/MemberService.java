@@ -72,7 +72,6 @@ public class MemberService {
         }
         sessionMember.setRank((String) resultMap.get("rank"));
         sessionMember.setEmail((String) resultMap.get("email"));
-        sessionMember.setPwd((String) resultMap.get("pwd"));
         sessionMember.setName((String) resultMap.get("name"));
         sessionMember.setImg((String) resultMap.get("img"));
 
@@ -93,7 +92,6 @@ public class MemberService {
         }
         sessionMember.setRank((String) resultMap.get("rank"));
         sessionMember.setEmail((String) resultMap.get("email"));
-        sessionMember.setToken((String) resultMap.get("token"));
         sessionMember.setName((String) resultMap.get("name"));
         sessionMember.setImg((String) resultMap.get("img"));
 

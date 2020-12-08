@@ -46,5 +46,4 @@ public class Member {
     private boolean loginOAuth;
 
     private String authKey;
-    private String token;
 }
