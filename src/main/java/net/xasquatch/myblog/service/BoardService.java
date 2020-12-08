@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Slf4j
 @Service
-@PropertySource("/WEB-INF/properties/file/FileManager.properties")
+@PropertySource("/WEB-INF/properties/file-manager.properties")
 public class BoardService {
 
     @Autowired

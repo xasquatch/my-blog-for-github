@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@PropertySource("/WEB-INF/properties/file/FileManager.properties")
+@PropertySource("/WEB-INF/properties/file-manager.properties")
 public class ImgService {
 
     @Autowired
