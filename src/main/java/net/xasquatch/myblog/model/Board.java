@@ -7,7 +7,6 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Builder
-@ToString
 @Setter
 @Getter
 @NoArgsConstructor
@@ -16,11 +15,12 @@ public class Board {
 
     private Long no;
     private Long mbr_no;
+    private String mbr_name;
 
-    @Size(max = 500)
+    @Size(max = 255)
     private String keyword;
 
-    @Size(max = 500)
+    @Size(max = 255)
     private String title;
     private String contents;
     private String thumbnail;

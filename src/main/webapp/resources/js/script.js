@@ -1,3 +1,23 @@
+var oAuth = {
+    google: {
+        signInAndUp: function () {
+            myAjax.submit('GET', 'https://myblog.xasquatch.net/oauth/google/information', function (data) {
+                window.open('https://accounts.google.com/o/oauth2/v2/auth?' + data);
+
+            });
+        },
+
+        verifyToken: function (token) {
+
+            myAjax.submit('POST', '/oauth/google/token', function (data) {
+                if (data !== 'false') history.go(0);
+
+            }, 'form', 'oauth-token=' + token);
+        }
+
+    }
+}
+
 var modal = {
 
     myModalTitle: document.querySelector('.modal-title'),
@@ -11,25 +31,7 @@ var modal = {
 
 }
 
-var uri = {
-    parsing: function () {
-        return window.location.href.slice(window.location.origin.length);
-
-    },
-    isContainWord: function (url, word) {
-        return url.indexOf(word) > 0;
-    },
-    isContainWordCurrentPath: function (word) {
-        return window.location.href.slice(window.location.origin.length).indexOf(word) > 0;
-    },
-    getUniform(startUrl, endUrl) {
-        var i = uri.parsing();
-        return i.slice(i.indexOf(startUrl) + startUrl.length, i.indexOf(endUrl));
-    }
-}
-
 var board = {
-
 
     boardNo: document.querySelector('#board-no'),
     boardMbrNo: document.querySelector('#board-no-mbr'),
@@ -79,7 +81,225 @@ var board = {
             board.fakeImages.innerHTML = '';
         }
 
+    },
+    delete: function (memberKey, boardKey) {
+        if (window.confirm("정말 삭제하시겠습니까?")) {
+            myAjax.submit('DELETE', 'https://myblog.xasquatch.net/board/' + memberKey + '/delete/' + boardKey, function (data) {
+                if (data === 'false') {
+                    console.log('잘못 된 요청입니다.');
+
+                } else if (data === 'true' && uri.isContainWord(location.href, '/list')) {
+                    console.log('삭제가 완료되었습니다.');
+                    window.history.go(0);
+
+                } else if (data === 'true' && uri.isContainWord(location.href, '/list')) {
+                    console.log('삭제가 완료되었습니다.');
+                    window.history.back();
+
+                }
+            }, '', '');
+        }
+
+    },
+    GoModify: function (memberKey, boardKey) {
+        if (window.confirm("수정 페이지로 이동하시겠습니까?")) {
+            location.href = '/board/' + memberKey + '/modify/' + boardKey;
+
+        }
     }
+}
+
+var resources = {
+
+    resourceViewSetting: function (element) {
+        var prettyContents = null;
+        try {
+            prettyContents = JSON.stringify(JSON.parse(element.querySelector('p').innerText), null, 2);
+        } catch (e) {
+            prettyContents = element.querySelector('p').innerText;
+        }
+        var serialNumber = element.querySelector('label').innerText;
+        var textarea = document.createElement('textarea');
+        var emptyContentsDiv = document.createElement('div');
+        var emptyTitleDiv = document.createElement('div');
+        var titleInput = document.createElement('input');
+        titleInput.id = 'resource-title';
+        textarea.id = 'resource-contents';
+
+        textarea.style.width = '100%';
+        textarea.style.height = '30vh';
+        textarea.style.resize = 'none';
+        textarea.innerHTML = prettyContents;
+
+        titleInput.className = 'form-control';
+        titleInput.type = 'text';
+        titleInput.setAttribute('value', element.querySelector('h3').innerText);
+
+        var modifyForm = resources.createModifyForm(serialNumber);
+
+        emptyTitleDiv.appendChild(titleInput)
+        emptyContentsDiv.appendChild(textarea);
+        emptyContentsDiv.appendChild(modifyForm);
+
+        modal.changeForm('[Serial Number:' + serialNumber + '] ' +
+            '<button type="button" class="btn-link-red" onclick="resources.removeResource()">' +
+            '<span class="glyphicon glyphicon-trash"></span>' +
+            '</button>' +
+            emptyTitleDiv.innerHTML,
+            emptyContentsDiv.innerHTML);
+        var confirmBtn = document.querySelector('#modal-confirm-btn');
+        confirmBtn.setAttribute('onclick', 'resources.modifyResource();');
+    },
+
+    createModifyForm: function (serialNumber) {
+        var form = document.createElement('form');
+        form.id = "resource-target-form";
+        form.className = 'hidden';
+        var no = document.createElement('input');
+        no.name = 'no';
+        var title = document.createElement('input');
+        title.name = 'title';
+        title.id = 'resource-target-title';
+        var contents = document.createElement('textarea');
+        contents.name = 'contents';
+        contents.id = 'resource-target-contents';
+
+        no.setAttribute('value', serialNumber);
+
+        form.appendChild(no);
+        form.appendChild(title);
+        form.appendChild(contents);
+
+        return form;
+    },
+
+    modifyResource: function () {
+        if (window.confirm('현재 내용으로 수정하시겠습니까?') === false) {
+            return;
+        }
+        var targetForm = document.querySelector('#resource-target-form');
+        var title = document.querySelector('#resource-target-title');
+        var contents = document.querySelector('#resource-target-contents');
+
+        title.value = document.querySelector('#resource-title').value;
+        contents.value = document.querySelector('#resource-contents').value;
+        try {
+            JSON.stringify(JSON.parse(contents.value));
+        } catch (e) {
+            if (!window.confirm('수정된 내용은 JSON 형식에 어긋납니다. 업로드하시겠습니까?')) {
+                return;
+            }
+        }
+
+        var formData = new FormData(targetForm);
+
+        var uniform = url.getUniform('/resource/', '/list');
+        myAjax.submit('PUT', '/resource/' + uniform + '/modify', function (data) {
+            console.log(data);
+            if (data === 'false') {
+                window.alert('수정에 실패하였습니다. 잠시 후 다시시도해주세요')
+
+            } else if (data === 'true') {
+                window.location.reload(true);
+
+            }
+
+        }, 'FORMFILE', formData);
+
+
+    },
+
+    removeResource: function () {
+        if (window.confirm('정말 삭제하시겠습니까?')) {
+            var targetForm = document.querySelector('#resource-target-form');
+            var title = document.querySelector('#resource-target-title');
+            var contents = document.querySelector('#resource-target-contents');
+
+            title.value = document.querySelector('#resource-title').value;
+            contents.value = document.querySelector('#resource-contents').value;
+
+            var formData = new FormData(targetForm);
+            var uniform = url.getUniform('/resource/', '/list');
+
+            myAjax.submit('DELETE', '/resource/' + uniform + '/delete', function (data) {
+                if (data === 'false') {
+                    window.alert('삭제에 실패하였습니다. 잠시 후 다시시도해주세요')
+
+                } else if (data === 'true') {
+                    window.location.reload(true);
+
+                }
+
+            }, 'FORMFILE', formData);
+        }
+    },
+
+    setClickEventDivContents: function () {
+        var divBox = document.querySelectorAll('.resource-list-box>div');
+        for (var box of divBox) {
+            box.setAttribute('onclick',
+                'resources.resourceViewSetting(this)');
+        }
+    },
+    searchResource: function (memberNo) {
+        var resourceBox = document.querySelector('.resource-list-box');
+        resourceBox.innerHTML = '';
+        this.moreLoad(memberNo);
+
+    },
+    moreLoad: function (memberNo) {
+        try {
+            var searchValue = document.querySelector('#resource-search-value').value;
+            var lastNumber = document.querySelector('.resource-list-box>div:last-child>label').innerText;
+
+        } catch (e) {
+        }
+
+        if (searchValue === undefined) searchValue = '';
+        if (lastNumber === undefined) lastNumber = Number.MAX_SAFE_INTEGER;
+
+
+        myAjax.submit('GET', '/resource/' + memberNo + '/AdditionalList?last-number=' + lastNumber + '&search=' + searchValue, function (data) {
+            if (data === 'false') {
+                window.alert('리소스 가져오기에 실패하였습니다. 잠시 후 다시 시도해주세요.')
+
+            } else {
+                var jsonData = JSON.parse(data);
+                if (jsonData.length !== 0) {
+                    var resourceListBox = document.querySelector('.resource-list-box');
+
+                    for (var resource of jsonData) {
+                        // <div class="btn-link-red" data-toggle="modal" data-target="#myModal">
+                        var divContainerElement = document.createElement('div');
+                        divContainerElement.className = 'btn-link-red';
+                        divContainerElement.setAttribute('data-toggle', 'modal')
+                        divContainerElement.setAttribute('data-target', '#myModal')
+
+                        var labelElement = document.createElement('label');
+                        labelElement.className = 'sr-only';
+                        labelElement.innerText = resource.no;
+                        var h3Element = document.createElement('h3');
+                        h3Element.innerText = resource.title;
+                        var paragraphElement = document.createElement('p');
+                        paragraphElement.innerText = resource.contents;
+
+                        divContainerElement.appendChild(labelElement);
+                        divContainerElement.appendChild(h3Element);
+                        divContainerElement.appendChild(paragraphElement);
+
+                        resourceListBox.appendChild(divContainerElement);
+                        resources.setClickEventDivContents();
+                    }
+
+                } else {
+                    window.alert('더이상 불러올 리소스가 없습니다.');
+
+                }
+            }
+
+        });
+    }
+
 }
 
 var textScript = {
@@ -156,66 +376,6 @@ var textScript = {
     }
 };
 
-var ajax = {
-
-    json: 'application/json',
-    form: 'application/x-www-form-urlencoded',
-    formFile: 'multipart/form-data',
-
-    setContentsType: function (inputContentsType) {
-        var contentsType = 'text/plain';
-
-        if (inputContentsType.toUpperCase() === 'FORM') {
-            contentsType = ajax.form;
-
-        } else if (inputContentsType.toUpperCase() === 'FORMFILE') {
-            contentsType = ajax.formFile;
-
-        } else if (inputContentsType.toUpperCase() === 'JSON') {
-            contentsType = ajax.json;
-
-        }
-        return contentsType;
-    },
-
-
-    submit: function (method, url, callback, inputContentsType, sendData) {
-        var xhr = new XMLHttpRequest();
-
-        var result = null;
-        var contentsType = null;
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === xhr.DONE) {
-                footerEffect.loadingToggle();
-                if (xhr.status === 200 || xhr.status === 201) {
-                    result = xhr.response;
-                    callback(result);
-                } else {
-                    result = xhr.response;
-                    alert('잘못 된 접근 입니다 다시 시도해주세요');
-                }
-            } else {
-                footerEffect.addLoadingState();
-            }
-        };
-
-        if (method.toUpperCase() === 'GET') {
-            xhr.open(method, url);
-            xhr.send();
-        } else if (method.toUpperCase() === 'POST') {
-            method = 'POST';
-            contentsType = ajax.setContentsType(inputContentsType);
-            xhr.open(method, url, true);
-            if (contentsType !== ajax.formFile)
-                xhr.setRequestHeader('Content-type', contentsType);
-            xhr.send(sendData);
-        }
-
-    }
-
-}
-
 var footerEffect = {
     loadingToggle: function () {
         var loadingFooter = document.querySelector('#main-footer');
@@ -240,109 +400,143 @@ var footerEffect = {
 var boardListScript = {
 
     forwardUrl: function (url, callback) {
-        ajax.submit('GET', url, callback);
+        myAjax.submit('GET', url, callback);
 
+    },
+    getPagination: function (jsonData) {
+        var boardListToolbar = document.querySelector('#board-list-toolbar');
+        boardListToolbar.innerHTML = '';
+        console.log(jsonData);
+        if (jsonData.pageBlockList.prevPageBlock !== 0) {
+            boardListToolbar.innerHTML += '<button type="button" class="btn btn-link-red" onclick="boardListScript.ChangeMoveToThisPage(' + jsonData.pageBlockList.prevPageBlock + ');">' +
+                '            <span class="glyphicon glyphicon-chevron-left"></span>' +
+                '        </button>'
+        }
+
+        var forCount = (jsonData.pageBlockList.endPageBlock % 5 > 0) ? jsonData.pageBlockList.endPageBlock % 5 : 5;
+        if (jsonData.pageBlockList.endPageBlock === 0) forCount = 1;
+
+        for (var i = (jsonData.pageBlockList.startPageBlock % 5) - 1; i < forCount; i++) {
+            if (jsonData.pageBlockList.startPageBlock + i === jsonData.pageBlockList.currentPageBlock) {
+                boardListToolbar.innerHTML +=
+                    '<button type="button" class="btn btn-link-red active" onclick="boardListScript.MoveToThisPage(this)">' + jsonData.pageBlockList.currentPageBlock + '</button>';
+
+            } else {
+                boardListToolbar.innerHTML +=
+                    '<button type="button" class="btn btn-link-red" onclick="boardListScript.MoveToThisPage(this)">' + (jsonData.pageBlockList.startPageBlock + i) + '</button>';
+
+            }
+        }
+
+        if (jsonData.pageBlockList.nextPageBlock !== jsonData.pageBlockList.totalPageBlock) {
+            boardListToolbar.innerHTML += '<button type="button" class="btn btn-link-red" onclick="boardListScript.ChangeMoveToThisPage(' + jsonData.pageBlockList.nextPageBlock + ');">' +
+                '            <span class="glyphicon glyphicon-chevron-right"></span>' +
+                '        </button>'
+        }
+    },
+    getBoardList: function (jsonData, uniform) {
+        var boardList = document.querySelector('#myblog-api-board-list');
+        boardList.innerHTML = '';
+
+        for (var map of jsonData.boardList) {
+            var trTag = document.createElement('tr');
+            var titleInput = document.createElement('td');
+            titleInput.innerHTML = '<a href="/board/' + uniform + '/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
+            var rowNoInput = document.createElement('td');
+            rowNoInput.innerText = map.rowno;
+            var dateInput = document.createElement('td');
+            dateInput.innerText = boardListScript.getFormatDate(map.created_date);
+            var modifyInput = document.createElement('td');
+            modifyInput.innerHTML = '<span class="glyphicon glyphicon-cog" style="cursor:pointer;" onclick="location.href=\'/board/' + uniform + '/modify/' + map.no + '\'"></span>';
+            var deleteInput = document.createElement('td');
+            deleteInput.innerHTML = '<span class="glyphicon glyphicon-trash" style="cursor:pointer;" onclick="boardListScript.deleteBoard(' + map.no + ');"></span>';
+
+            trTag.appendChild(rowNoInput)
+            trTag.appendChild(titleInput)
+            trTag.appendChild(dateInput);
+            trTag.appendChild(modifyInput);
+            trTag.appendChild(deleteInput);
+            boardList.appendChild(trTag);
+
+        }
+    },
+    getAllBoardList: function (jsonData, uniform) {
+        var boardList = document.querySelector('#myblog-api-board-list');
+        boardList.innerHTML = '';
+
+        for (var map of jsonData.boardList) {
+            var trTag = document.createElement('tr');
+            var titleInput = document.createElement('td');
+            titleInput.innerHTML = '<a href="/board/' + uniform + '/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
+            var rowNoInput = document.createElement('td');
+            rowNoInput.innerText = map.rowno;
+            var dateInput = document.createElement('td');
+            dateInput.innerText = boardListScript.getFormatDate(map.created_date);
+            var userNameInput = document.createElement('td');
+            userNameInput.innerHTML = map.mbr_no;
+
+            trTag.appendChild(rowNoInput)
+            trTag.appendChild(titleInput)
+            trTag.appendChild(dateInput);
+            trTag.appendChild(userNameInput);
+            boardList.appendChild(trTag);
+
+        }
+    },
+    changeAllBoardList: function (count) {
+        var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
+        var uniform = url.getUniform('/board/', '/list');
+
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
+            document.querySelector('#board-list-count').innerHTML = count;
+            var jsonData = JSON.parse(data);
+            boardListScript.getAllBoardList(jsonData, uniform);
+            boardListScript.getPagination(jsonData);
+
+            window.scrollTo(0, 0);
+        });
     },
 
     changeBoardList: function (count) {
         var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
-        var uniform = uri.getUniform('/board/', '/view/list');
+        var uniform = url.getUniform('/board/', '/list');
 
-        boardListScript.forwardUrl('/api/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
             document.querySelector('#board-list-count').innerHTML = count;
-            var boardList = document.querySelector('#myblog-api-board-list');
             var jsonData = JSON.parse(data);
-
-            boardList.innerHTML = '';
-
-            for (var map of jsonData.boardList) {
-                var trTag = document.createElement('tr');
-                var titleInput = document.createElement('td');
-                titleInput.innerHTML = '<a href="/board/'+ uniform +'/view/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
-                var rowNoInput = document.createElement('td');
-                rowNoInput.innerText = map.rowno;
-                var dateInput = document.createElement('td');
-                dateInput.innerText = boardListScript.getFormatDate(map.created_date);
-                var modifyInput = document.createElement('td');
-                modifyInput.innerHTML = '<span class="glyphicon glyphicon-cog" style="cursor:pointer;" onclick="location.href=\'/board/' + uniform + '/modify/' + map.no + '\'"></span>';
-                var deleteInput = document.createElement('td');
-                deleteInput.innerHTML = '<span class="glyphicon glyphicon-trash" style="cursor:pointer;" onclick="boardListScript.deleteBoard(' + map.no + ');"></span>';
-
-                trTag.appendChild(rowNoInput)
-                trTag.appendChild(titleInput)
-                trTag.appendChild(dateInput);
-                trTag.appendChild(modifyInput);
-                trTag.appendChild(deleteInput);
-                boardList.appendChild(trTag);
-
-            }
-
-
-
+            boardListScript.getBoardList(jsonData, uniform);
+            boardListScript.getPagination(jsonData);
 
             window.scrollTo(0, 0);
         });
-
     },
 
     MoveToThisPage: function (element) {
         var boardListToolbar = document.querySelector('#board-list-toolbar');
         var currentPageBlock = element.innerText;
-        var limitCount = document.querySelector('#board-list-count').innerHTML;
-        var uniform = uri.getUniform('/board/', '/view/list');
 
         if (!element.classList.contains('active')) {
             for (var btn of boardListToolbar.querySelectorAll('button')) {
                 btn.classList.remove('active');
             }
             element.classList.add('active');
-            boardListScript.forwardUrl('/api/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock, function () {
-                boardListScript.changeBoardList(limitCount);
-            });
-
+            boardListScript.ChangeMoveToThisPage(currentPageBlock);
         }
 
     },
     ChangeMoveToThisPage: function (currentPageBlock) {
         var limitCount = document.querySelector('#board-list-count').innerText;
-        var uniform = uri.getUniform('/board/', '/view/list');
+        var uniform = url.getUniform('/board/', '/list');
+        var searchRange = document.querySelector('#search-range').value;
+        var searchValue = document.querySelector('#search-value').value;
 
-        boardListScript.forwardUrl('/api/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock, function (data) {
-            var jsonData = JSON.parse(data);
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock + '&' + searchRange + '=' + searchValue,
+            function (data) {
+                var jsonData = JSON.parse(data);
+                boardListScript.getBoardList(jsonData, uniform);
+                boardListScript.getPagination(jsonData);
 
-            var defaultDiv = document.createElement('div');
-            defaultDiv.innerHTML = currentPageBlock;
-
-            boardListScript.MoveToThisPage(defaultDiv);
-
-            var boardListToolbar = document.querySelector('#board-list-toolbar');
-            boardListToolbar.innerHTML = '';
-            if (jsonData.pageBlockList.prevPageBlock !== 0) {
-                boardListToolbar.innerHTML += '<button type="button" class="btn btn-link" onclick="boardListScript.ChangeMoveToThisPage(' + jsonData.pageBlockList.prevPageBlock + ');">' +
-                    '            <span class="glyphicon glyphicon-chevron-left"></span>' +
-                    '        </button>'
-            }
-
-            var forCount = (jsonData.pageBlockList.endPageBlock % 5 > 0) ? jsonData.pageBlockList.endPageBlock % 5 : 5;
-
-            for (var i = (jsonData.pageBlockList.startPageBlock % 5) - 1; i < forCount; i++) {
-                if (jsonData.pageBlockList.startPageBlock + i === jsonData.pageBlockList.currentPageBlock) {
-                    boardListToolbar.innerHTML +=
-                        '<button type="button" class="btn btn-link active" onclick="boardListScript.MoveToThisPage(this)">' + jsonData.pageBlockList.currentPageBlock + '</button>';
-
-                } else {
-                    boardListToolbar.innerHTML +=
-                        '<button type="button" class="btn btn-link" onclick="boardListScript.MoveToThisPage(this)">' + (jsonData.pageBlockList.startPageBlock + i) + '</button>';
-
-                }
-            }
-
-            if (jsonData.pageBlockList.nextPageBlock !== jsonData.pageBlockList.totalPageBlock) {
-                boardListToolbar.innerHTML += '<button type="button" class="btn btn-link" onclick="boardListScript.ChangeMoveToThisPage(' + jsonData.pageBlockList.nextPageBlock + ');">' +
-                    '            <span class="glyphicon glyphicon-chevron-right"></span>' +
-                    '        </button>'
-            }
-        });
+            });
 
     },
 
@@ -359,14 +553,6 @@ var boardListScript = {
         minute = minute >= 10 ? minute : '0' + minute;
 
         return year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
-    },
-
-    deleteBoard: function (key) {
-        var uniform = uri.getUniform('/board/', '/view/list');
-        if (window.confirm("정말 삭제하시겠습니까?"))
-            location.href = '/board/' + uniform + '/delete/' + key;
-
     }
-
 
 }

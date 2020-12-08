@@ -2,6 +2,32 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
+<script>
+// ---header
+    window.addEventListener('DOMContentLoaded', function () {
+
+        textScript.insertText('#main-header-logo', 'My Blog', 20);
+
+    });
+
+// ---aside
+    var mainAside = document.querySelector('#main-aside');
+
+    function popUpAside() {
+        mainAside.classList.toggle('forward-to-top');
+        mainAside.style.marginTop = 0;
+    }
+
+    // css sticky 속성이 부모태그가 그리드인 상태에서는 적용되지가 않아서
+    // TOP padding값을 주는 것으로 sticky 구현
+    window.addEventListener('scroll', function () {
+        if (mainAside.classList.contains('forward-to-top')) {
+            mainAside.style.marginTop = window.pageYOffset;
+        }
+    });
+
+</script>
+
 
 <!-- Modal -->
 <div class="modal fade dot-key" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -43,6 +69,7 @@
 </footer>
 
 <%--custom script--%>
+<script src="${path}/js/myblog-api.js"></script>
 <script src="${path}/js/script.js"></script>
 <%--END: custom script--%>
 </body>

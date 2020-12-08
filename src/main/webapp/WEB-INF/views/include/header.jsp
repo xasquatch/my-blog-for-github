@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<c:set var="mainContents" value="${requestScope.mainContents}"/>
 
 <html>
 <head>
@@ -14,7 +15,7 @@
     <%--custom css --%>
     <link rel="stylesheet" href="${path}/css/style.css">
     <link rel="stylesheet" href="${path}/css/reset.css">
-    <link rel="stylesheet" href="${path}/css/board-style.css">
+    <link rel="stylesheet" href="${path}/css/list-style.css">
     <%--END: custom css --%>
 
     <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -22,7 +23,7 @@
     <script src="${path}/webjars/jquery/1.11.1/jquery.min.js"></script>
     <script src="${path}/webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-    <title>my blog for github</title>
+    <title>My Blog By Xasquatch</title>
 </head>
 <body>
 
@@ -31,46 +32,21 @@
         <img src="${path}/img/Xasquatch.png"/>
         <h1 id="main-header-logo"></h1>
     </a>
+    <div id="header-center" style="color: red;">
+
+    </div>
     <div id="header-right">
-        <button type="button" id="mobile-hamburger" class="dot-key btn btn-default" onclick="popUpAside();">
-            <script>
-                window.onload = function () {
-                    if (!document.querySelector('#main-aside') || document.querySelector('#main-aside').innerText === '')
-                        document.querySelector('#mobile-hamburger').style.display = 'none';
-                }
-            </script>
-            <B>More</B>
-        </button>
+        <c:if test="${mainContents != 'login' && mainContents != 'main' && sessionMember != null && !(mainContents.contains('check')||mainContents.contains('find'))}">
+            <button type="button" id="mobile-hamburger" class="dot-key btn btn-link-red" onclick="popUpAside();">
+                <B>More</B>
+            </button>
+        </c:if>
         <c:if test="${sessionMember.no != null}">
-            <button type="button" class="btn btn-link" style="font-size: 30px; color: black;"
-                    onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/user/${sessionMember.no}/log-out'">
+            <button type="button" class="btn btn-link-red" style="font-size: 20px; color: black;"
+                    onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/members/${sessionMember.no}/log-out'">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </button>
         </c:if>
 
     </div>
 </header>
-<script>
-    window.addEventListener('DOMContentLoaded', function () {
-
-        textScript.insertText('#main-header-logo', 'My Blog', 20);
-    });
-
-    var mainHeader = document.querySelector('#main-header');
-
-    // TOP padding값을 주는 것으로 sticky 구현
-    window.addEventListener('scroll', function () {
-        if (mainHeader.style.marginTop < window.pageYOffset) {
-            mainHeader.style.position = 'fixed';
-            mainHeader.style.top = 0;
-            mainHeader.style.zIndex = 2000;
-
-        } else {
-            mainHeader.style.position = 'static';
-            mainHeader.style.top = '';
-
-        }
-    });
-
-
-</script>

@@ -11,15 +11,65 @@ blockquote {
     font-size: inherit !important;
 
 }
-.btn-link{
-    color: black !important;
-    transition: 0.5s all !important;
-    text-decoration: none !important;
+body::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
 }
-.btn-link:HOVER{
-    background-color: darkred !important;
+body::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
 }
+body::-webkit-scrollbar-thumb:HOVER{
+    background: rgba(0, 0, 0, 1);
+}
+body *::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+body *::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+}
+body *::-webkit-scrollbar-thumb:HOVER{
+    background: rgba(0, 0, 0, 1);
+}
+select, input, button{
+    padding: 0.5rem;
+    border-radius: 5px;
+    line-height: normal !important;
+}
+
+.btn-link-red{
+    color: black;
+    transition: 0.5s all;
+    text-decoration: none;
+    outline: auto darkgray;
+    border-color: transparent;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.btn-link-red:hover{
+    cursor: pointer;
+}
+.btn-link-red:hover,
+.btn-link-red:active {
+    background-color: darkred;
+}
+/*부트스트랩*/
 .btn.active, .btn:active {
     color: darkred !important;
-
 }
+.modal-header, .modal-body{
+    word-break: break-all;
+}
+.input-group-addon{
+    background-color: rgba(0,0,0,0) !important;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+    word-break: break-all;
+}
+
+

@@ -25,36 +25,20 @@
             <jsp:include page="contents/board/board-frame.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents == 'board-view-list'}">
-            <jsp:include page="contents/board/board-view-list.jsp"/>
+        <c:when test="${mainContents.indexOf('board-')==0}">
+            <jsp:include page="contents/board/${mainContents}.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents == 'board-view-detail'}">
-            <jsp:include page="contents/board/board-view-detail.jsp"/>
+        <c:when test="${mainContents.indexOf('user-')==0}">
+            <jsp:include page="contents/user-info/${mainContents}.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents == 'user-info'}">
-            <jsp:include page="contents/user-info/user-information.jsp"/>
+        <c:when test="${mainContents.indexOf('resource-')==0}">
+            <jsp:include page="contents/resource/${mainContents}.jsp"/>
         </c:when>
 
-        <c:when test="${mainContents == 'user-api'}">
-            <jsp:include page="contents/user-info/user-api.jsp"/>
-        </c:when>
-
-        <c:when test="${mainContents == 'user-log-out'}">
-            <jsp:include page="contents/user-info/user-log-out.jsp"/>
-        </c:when>
-
-        <c:when test="${mainContents == 'repository-list'}">
-            <jsp:include page="contents/repository/repository-list.jsp"/>
-        </c:when>
-
-        <c:when test="${mainContents == 'repository-create'}">
-            <jsp:include page="contents/repository/repository-create.jsp"/>
-        </c:when>
-
-        <c:when test="${mainContents == 'repository-view'}">
-            <jsp:include page="contents/repository/repository-view.jsp"/>
+        <c:when test="${mainContents.indexOf('document-')==0}">
+            <jsp:include page="contents/document/${mainContents}.jsp"/>
         </c:when>
     </c:choose>
 

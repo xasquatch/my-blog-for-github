@@ -6,7 +6,6 @@ import net.xasquatch.myblog.model.Board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +15,17 @@ public class BoardDao {
 
     @Autowired
     BoardMapper boardMapper;
+
+    public List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
+                                                     Object searchTarget, Object searchValue) {
+
+        return boardMapper.selectBoardList(memberNo, currentPage, pageLimit, searchTarget, searchValue);
+    }
+
+    public int selectBoardCount(Object memberNo, String searchTarget, String searchValue) {
+        return boardMapper.selectBoardCount(memberNo, searchTarget, searchValue);
+
+    }
 
     public void deleteUnfinishedBoard(Map<String, Object> memberMap) {
         boardMapper.deleteUnfinishedBoard(memberMap);
@@ -40,31 +50,13 @@ public class BoardDao {
 
     }
 
-
-    public void deleteOneBoard(Object boardKey) {
-        boardMapper.deleteOneBoard(boardKey);
+    public int deleteOneBoard(Object boardKey) {
+        return boardMapper.deleteOneBoard(boardKey);
 
     }
 
-    public List<HashMap<String, Object>> SelectBoardList(String memberKey, int pageLimit, int currentPageBlock) {
-        Long memberNo = Long.parseLong(memberKey);
-        int block = 0;
-        try {
-            block = (currentPageBlock - 1) * pageLimit;
-
-        } catch (ArithmeticException e) {
-            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
-        }
-
-        return boardMapper.selectBoardList(memberNo, block, pageLimit);
+    public Map<String, Object> selectOneBoard(Object memberNo, Object boardNo) {
+        return boardMapper.selectOneBoard(memberNo, boardNo);
     }
 
-    public HashMap<String, Object> selectOneBoard(Object boardKey) {
-
-        return boardMapper.selectOneBoard(boardKey);
-    }
-
-    public int selectBoardListCount(Object memberKey){
-        return boardMapper.selectBoardListCount(memberKey);
-    }
 }

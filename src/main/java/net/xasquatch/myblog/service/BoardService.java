@@ -1,11 +1,8 @@
 package net.xasquatch.myblog.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Board;
 import net.xasquatch.myblog.repository.BoardDao;
-import net.xasquatch.myblog.service.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -20,7 +17,7 @@ import java.util.Map;
 
 @Slf4j
 @Service
-@PropertySource("/WEB-INF/properties/file/FileManager.properties")
+@PropertySource("/WEB-INF/properties/file-manager.properties")
 public class BoardService {
 
     @Autowired
@@ -35,9 +32,59 @@ public class BoardService {
     @Value("${files.save.contents.name.blog}")
     String ContentsName;
 
+    public String[] parsingSearchValue(String keyword, String title, String contents, String titleOrContents) {
+        Map<String, String> map = new HashMap<String, String>();
+        String[] searchValue = new String[2];
+
+        map.put("keyword", keyword);
+        map.put("title", title);
+        map.put("contents", contents);
+        map.put("title-or-contents", titleOrContents);
+
+        map.forEach((key, value) -> {
+            if (!value.equals("") && !value.equals("undefined")) {
+                searchValue[0] = key;
+                searchValue[1] = '%' + value + '%';
+            }
+        });
+
+        return searchValue;
+    }
+
+    public Map<String, Object> getBoardList(Object memberNo, int pageLimit, int currentPageBlock, String[] searchValue) {
+
+        int currentPage = 0;
+        try {
+            currentPage = (currentPageBlock - 1) * pageLimit;
+
+        } catch (ArithmeticException e) {
+            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
+        }
+
+        List<Map<String, Object>> boardList
+                = boardDao.selectBoardList(memberNo, currentPage, pageLimit, searchValue[0], searchValue[1]);
+
+        int totalCount = boardDao.selectBoardCount(memberNo, searchValue[0], searchValue[1]);
+
+        List<String> pageBlockList;
+        if (memberNo.equals("all")){
+            pageBlockList= new Pagination().getBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+
+        }else {
+            pageBlockList= new Pagination().getBlockList(memberNo, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+
+        }
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("boardList", boardList);
+        data.put("pageBlockList", pageBlockList);
+
+        return data;
+    }
+
     public Object createDefaultBoard(String memberNo) {
         Map<String, Object> memberMap = new HashMap<String, Object>();
-        memberMap.put("member_no", memberNo);
+        memberMap.put("mbr_no", memberNo);
         boardDao.deleteUnfinishedBoard(memberMap);
         if (boardDao.insertDefaultBoard(memberMap)) {
             String path = File.separator + memberNo + SaveDir + File.separator + memberMap.get("no");
@@ -52,6 +99,8 @@ public class BoardService {
     }
 
     public boolean createFinish(Board board) {
+        if (board.getTitle().equals("") || board.getTitle() == null) board.setTitle("[Empty Title]");
+        if (board.getThumbnail().trim().equals("")||board.getThumbnail() == null) board.setThumbnail("<img style=\"max-width: 140px; max-height: 140px;\" src=\"https://myblog.xasquatch.net/img/no_image.png\"/>");
         byte[] bytes = (board.getTitle() + System.lineSeparator() + board.getCreated_ip() + System.lineSeparator() + board.getContents()).getBytes();
 
         fileService.writeFile(bytes, File.separator + board.getMbr_no() + SaveDir + File.separator + board.getNo(), ContentsName + "-origin");
@@ -69,41 +118,15 @@ public class BoardService {
 
     }
 
-    public HashMap<String, Object> viewDetail(Object boardKey) {
-        return boardDao.selectOneBoard(boardKey);
+    public Map<String, Object> viewDetail(Object memberNo, Object boardNo) {
+        return boardDao.selectOneBoard(memberNo, boardNo);
 
     }
-
-    public void delete(Object boardKey) {
-        boardDao.deleteOneBoard(boardKey);
-
+    public boolean delete(Object boardKey) {
+        boolean result = false;
+        if (boardDao.deleteOneBoard(boardKey) == 1)
+            result = true;
+        return result;
     }
 
-    public String getBoardList(String memberKey, int pageLimit, int currentPageBlock) {
-        List<HashMap<String, Object>> boardList = boardDao.SelectBoardList(memberKey, pageLimit, currentPageBlock);
-        int totalCount = boardDao.selectBoardListCount(memberKey);
-
-
-        Pagination pagination = Pagination.builder()
-                .pageLimit(pageLimit)
-                .currentPageBlock(currentPageBlock)
-                .totalCount(totalCount)
-                .build();
-        pagination.setPageBlogList();
-
-        HashMap<String, Object> resultMap = new HashMap<>();
-        resultMap.put("boardList", boardList);
-        resultMap.put("pageBlockList", pagination);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String resultDataString = null;
-        try {
-            resultDataString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(resultMap);
-        } catch (JsonProcessingException e) {
-            log.warn("JsonProcessingException");
-        }
-
-
-        return resultDataString;
-    }
 }

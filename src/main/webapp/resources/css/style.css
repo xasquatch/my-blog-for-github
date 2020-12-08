@@ -9,21 +9,25 @@
 }
 
 .dot-key {
-    font-family: Dotkey, monospace;
-    font-weight: bold;
+    font-family: Dotkey, monospace !important;
+    font-weight: bold !important;
 }
 
 /*-------------header, footer, aside----------------*/
 
 #main-header {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 200px 1fr 1fr;
     top: 0;
     padding: 10px;
     background-color: white;
     width: 100%;
+    z-index: 1000;
+    position: sticky;
 }
+#header-center{
 
+}
 #header-left {
     display: flex;
     width: 200px;
@@ -67,19 +71,17 @@
     transition: all 0.1s;
 
 }
-#main-footer>div{
+
+#main-footer > div {
     display: flex;
     justify-content: space-around;
     flex-wrap: nowrap;
     overflow: auto;
     padding-top: 20px;
 }
-#main-footer>div>*{
-    margin: auto 10px;
-}
 
-.footer-height-30vh{
-    height: 30vh !important;
+.footer-stretch {
+    height: 250px !important;
     transition: all 1s !important;
 }
 
@@ -93,18 +95,18 @@
 }
 
 #main-aside {
-    padding: 50px 0;
-    width: 200px;
+    padding: 5px 0;
+    width: 250px;
     font-size: 2rem;
     font-weight: bold;
-
+    overflow-y: auto;
+    max-height: 80vh;
 }
-
 #mobile-hamburger {
     display: none;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
     .header-menu-btn {
         display: none !important;
     }
@@ -112,7 +114,7 @@
     #main-aside {
         display: block;
         position: fixed;
-        padding: 100px 5vw 20px 5vw;
+        padding: 5px 5vw 5px 5vw;
         width: 100%;
         height: 100%;
         box-sizing: border-box;
@@ -171,10 +173,10 @@
 }
 
 .wrap-grid {
-    max-width: 1200px;
+    max-width: 1300px;
     display: grid;
     padding: 10px;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 250px 1fr;
     box-sizing: border-box;
     margin: 0 auto;
 }
@@ -185,9 +187,9 @@
 
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
     .wrap-grid {
-        max-width: 1200px;
+        max-width: 1300px;
         display: block;
         box-sizing: border-box;
         margin: 0 auto;
@@ -227,38 +229,51 @@
     color: white;
     text-align: center;
 }
-.banner  * {
+
+.banner * {
     transition: 0.5s all;
 }
-.login-banner{
-    background-size: auto 30vh;
-    height : 30vh;
+
+.login-banner {
+    background-size: auto 40vh;
+    height: 40vh;
     background-image: url('/img/banner/11.gif');
 
 }
-.main-banner{
+
+.main-banner {
     background-size: auto 50vh;
-    height : 50vh;
+    height: 50vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+    overflow: auto;
+}
+
+.main-banner > section {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
     overflow: auto;
 }
-.main-banner>div{
+
+.main-banner div {
     margin: auto 10px;
 }
-.main-banner>div:HOVER{
+
+.main-banner div:HOVER {
     cursor: pointer;
 }
-.main-banner-img-focus{
-    width: 200px !important;
-}
-.main-banner-font-focus{
+
+.main-banner-font-focus {
     font-size: 200%;
     font-weight: bold;
+    color: darkred;
 }
-.main-banner img{
+
+.main-banner img {
     max-width: 200px;
     max-height: 200px;
     width: 100px;
@@ -271,15 +286,11 @@
     margin-left: 0;
 }
 
-#user-sign-contents {
+#user-sign-contents > div {
     display: flex;
     justify-content: space-around;
     text-align: center;
     font-weight: bold;
-}
-
-#user-sign-contents > .btn {
-    border-radius: 30px;
 }
 
 .xasquatch-btn-logo {
@@ -293,22 +304,29 @@
 }
 
 #user-signup .input-group-addon, #user-info .input-group-addon {
-    width: 150px;
-}
-
-#user-info-email+div:HOVER{
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 1);
-    color: white;
-    transition: all 0.5s;
+    width: 100px;
 }
 
 .form-explain {
     font-weight: bold;
-    font-size: 0.5em !important;
+    font-size: 0.7em !important;
     background-color: lightgray !important;
     padding: 5px !important;
 }
+
+.google-icon {
+    background: url('/img/oauth-img/google.png') transparent 50% no-repeat;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+.google-buttonText {
+    display: block;
+}
+
+
+
+
 
 /*END: login.jsp------------------*/
 /*----------contents-aside-------*/
@@ -322,3 +340,95 @@
 
 
 /*END: contents-aside-------*/
+/*----------error page-------*/
+
+.error-body {
+    background-color: black;
+    height: 100vh;
+    position: fixed;
+    width: 100vw;
+    color: white;
+    overflow: hidden;
+}
+
+#error-section {
+    padding: 20px;
+    font-size: 2rem;
+    height: 80vh;
+}
+
+#error-section > div {
+    text-align: center;
+    background: url('/img/banner/3.gif');
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: cover;
+    color: rgba(255, 255, 255, 0);
+
+}
+
+#error-section > div:first-child {
+    font-size: 15vw;
+}
+
+/*END: error page-----------*/
+/*-----resource page-----------*/
+#resource-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#resource-section textarea {
+    width: 360px;
+    height: 60vh;
+    margin: 10px;
+    resize: none;
+}
+
+.resource-manipulation-btn {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+@media (max-width: 600px) {
+    .resource-manipulation-btn {
+        width: 100%;
+        flex-direction: row;
+    }
+    #resource-section textarea {
+        width: 100%;
+        height: 300px;
+    }
+}
+
+/*END: resource page-----------*/
+/*api clipboard page-----------*/
+#api-clipboard-section{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+
+}
+#api-clipboard-section>article{
+    margin: 5px;
+    padding: 5px;
+}
+#api-clipboard-section pre{
+    word-break: break-all;
+    white-space: pre-wrap;
+    width: 100%;
+}
+.api-clipboard{
+    border: 4px inset;
+    padding: 10px;
+    overflow: auto;
+
+}
+.api-clipboard>pre{
+    height: 400px;
+    overflow: auto;
+}
+/*END: api clipboard page-----------*/

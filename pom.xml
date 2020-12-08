@@ -11,6 +11,8 @@
     <properties>
         <java-version>11</java-version>
         <spring-version>5.2.7.RELEASE</spring-version>
+        <oauth-google>1.31.1</oauth-google>
+
     </properties>
 
     <dependencies>
@@ -171,8 +173,27 @@
             <version>6.1.6.Final</version>
         </dependency>
 
+        <!--TODO:email 인증-->
 
+        <!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+
+        <!--TODO: oauth-google-->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>${oauth-google}</version>
+        </dependency>
 
     </dependencies>
 

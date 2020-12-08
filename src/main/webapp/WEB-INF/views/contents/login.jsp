@@ -65,34 +65,64 @@
                 </div>
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-default" onclick="loginInput()">Sign in</button>
+                <label>
+                    <a href="${path}/members/find/email" target="_blank" class="btn btn-link-red" tabindex="-1">이메일 찾기</a>
+                </label>
+                <label>
+                    <a href="${path}/members/find/password" target="_blank" class="btn btn-link-red" tabindex="-1">비밀번호 찾기</a>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-link-red" type="button" onclick="loginInput()" style="">
+                    <h2 style="margin: 0;">Log In</h2>
+                </button>
             </div>
         </div>
     </form>
-
+    <BR>
     <div id="user-sign-contents">
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
-            <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/google.png"><BR>
-            &nbsp;Google&nbsp;
-        </button>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
-            <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/GitHub-Mark-32px.png"><BR>
-            &nbsp;Github&nbsp;
-        </button>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="oAuth(this);">
-            <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/facebook.png"> <BR>
-            Facebook
-        </button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" onclick="singUp();">
-            <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/Xasquatch.png" width="32" height="32"><BR>
-            Sing Up
-        </button>
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-link-red" style="width: 75px;" onclick="oAuth.google.signInAndUp(this)">
+                <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/google.png" width="32" height="32"><BR>
+                Google
+            </button>
+            <button type="button" class="btn btn-link-red" style="width: 75px;"
+                    data-toggle="modal" data-target="#myModal" onclick="singUp();">
+                <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/Xasquatch.png" width="32" height="32"><BR>
+                Sing Up
+            </button>
+        </div>
     </div>
-
 </section>
 <script>
+
+    document.querySelector('#home-login-pwd').addEventListener('keypress', function (e) {
+        if (e.keyCode === 13) loginInput();
+    })
+
+    <%
+    String authToken = null;
+    Cookie[] cookies = request.getCookies();
+    for (Cookie cookie : cookies) {
+        if (cookie.getName().equals("oauth-token"))
+            authToken = cookie.getValue();
+
+    }
+
+    if (authToken != null){
+    %>
+    window.onload = function (){
+        oAuth.google.verifyToken('<%=authToken%>');
+    }
+    <%
+    }
+    %>
+
 
     function loginInput() {
         var loginEmail = document.querySelector('#home-login-email');
@@ -102,42 +132,24 @@
 
             var loginForm = document.querySelector('#home-login');
             var formData = new FormData(loginForm);
-            ajax.submit('POST', '${path}/user/login', function (data) {
+            myAjax.submit('POST', '${path}/members/login', function (data) {
 
-                if (data === 'false') window.alert('로그인에 실패하였습니다. email, password를 확인해주세요');
+                if (data === 'false') {
+                    window.alert('로그인에 실패하였습니다. email, password를 확인해주세요');
 
-                window.location.replace('${path}/');
+                } else if (url.isContainWord(data, '/check-email')) {
+                    window.location.href = '${path}' + data;
+
+                } else {
+                    window.location.replace('${path}/');
+
+                }
 
             }, 'FORMFILE', formData);
 
         } else {
             window.alert('이메일을 다시 확인해주세요');
         }
-
-    }
-
-
-    function oAuth(target) {
-//회원인지 확인먼저 필요(미구현)
-
-        modal.changeForm('Sign Up',
-            '<form class="form-horizontal" id="user-signup">                                                                                             ' +
-            '<div align="center">                                                                                                                        ' +
-            target.innerHTML +
-            '</div>                                                                                                                                      ' +
-            '<div class="input-group">                                                                                                                   ' +
-            '<div class="input-group-addon">Agreement</div>                                                                                              ' +
-            '<div class="form-control" style="height: auto;">                                                                                            ' +
-            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/agreement.html" role="button">회원약관 [전문보기]</a><BR>' +
-            '<label><input type="checkbox" name="membersAgreement">I agree</label>                                                                       ' +
-            '<HR style="margin-top: 3px; margin-bottom: 3px;">                                                                                           ' +
-            '<a class="btn-link" style="font-weight:bold;" target="_blank" href="${path}/html/sign-up/collection-and-use.html" role="button">개인정보 수집 및 이용 안내 [전문보기]</a><BR>' +
-            '<label><input type="checkbox" name="collectionAndUse">I agree</label>                                                                       ' +
-            '</div>                                                                                                                                      ' +
-            '</div>                                                                                                                                      ' +
-            '</form>');
-        var confirmBtn = document.querySelector('#modal-confirm-btn');
-        confirmBtn.setAttribute('onclick', 'oAuthConfirmSignUp();');
 
     }
 
@@ -156,12 +168,12 @@
             '<div class="form-control form-explain" id="user-signup-explain-pwd">영문또는 숫자로 8~20자이내 입력해주세요</div>                                 ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
-            '<div class="input-group-addon">Name</div>                                                                                                   ' +
+            '<div class="input-group-addon">Nick Name</div>                                                                                              ' +
             '<input class="form-control" type="text" name="name" placeholder="ex) Jordan" required onchange="checkName(this)">                           ' +
             '<div class="form-control form-explain" id="user-signup-explain-name">영문또는 숫자로 3~20자이내 입력해주세요</div>                                ' +
             '</div>                                                                                                                                      ' +
             '<div class="input-group">                                                                                                                   ' +
-            '<div class="input-group-addon">Profile Image</div>                                                                                          ' +
+            '<div class="input-group-addon">Profile<BR>Image</div>                                                                                       ' +
             '<input type="file" class="form-control" onchange="addUploadImage(event)">                                                                   ' +
             '<textarea class="hidden" id="imgFile" name="imgFile" ></textarea>                                                                           ' +
             '<div class="form-control" id="user-signup-imageFit" style="height: auto;">                                                                  ' +
@@ -195,7 +207,7 @@
             return;
         }
 
-        ajax.submit('POST', '${path}/user/sign-up/email', function (data) {
+        myAjax.submit('POST', '${path}/members/sign-up/email', function (data) {
             if (data === 'true') {
                 userEmailExplain.innerHTML = element.value + '은(는) 이미 존재하는 이메일계정입니다.';
                 userEmailExplain.style.color = 'RED';
@@ -260,7 +272,7 @@
         var userNameExplain = document.querySelector('#user-signup-explain-name');
 
         if (!isAvailableNameRegExp(element.value)) {
-            userNameExplain.innerHTML = element.value + '은(는) 사용불가능한 비밀번호 형식입니다. 영문또는 숫자로 3~20자이내 입력해주세요';
+            userNameExplain.innerHTML = element.value + '은(는) 사용불가능한 이름 형식입니다. 영문또는 숫자로 3~20자이내 입력해주세요';
             userNameExplain.style.color = 'RED';
             element.value = '';
 
@@ -269,6 +281,22 @@
             userNameExplain.style.color = 'GREEN';
 
         }
+
+        myAjax.submit('POST', '${path}/members/sign-up/name', function (data) {
+            if (data === 'true') {
+                userNameExplain.innerHTML = element.value + '은(는) 이미 존재하는 이름입니다.';
+                userNameExplain.style.color = 'RED';
+                element.value = '';
+
+            } else {
+                userNameExplain.innerHTML = element.value + '은(는) 사용가능한 이름입니다.';
+                userNameExplain.style.color = 'GREEN';
+
+            }
+
+        }, 'FORM', 'name=' + element.value);
+
+
     }
 
 
@@ -294,7 +322,7 @@
         var signupForm = document.querySelector('#user-signup');
         var signupFormData = new FormData(signupForm);
 
-        ajax.submit('POST', '${path}/user/sign-up', function (data) {
+        myAjax.submit('POST', '${path}/members/sign-up', function (data) {
             if (data === 'false') {
                 window.alert('회원가입에 실패하였습니다. 잠시 후 다시 시도해주세요.');
 
@@ -305,11 +333,6 @@
         }, 'FORMFILE', signupFormData);
 
     }
-
-    function oAuthConfirmSignUp() {
-
-    }
-
 
     function addUploadImage(e) {
         var imgFit = document.querySelector('#user-signup-imageFit');

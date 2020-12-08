@@ -3,9 +3,8 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Board;
-import net.xasquatch.myblog.model.Member;
+import net.xasquatch.myblog.service.ApiService;
 import net.xasquatch.myblog.service.BoardService;
-import net.xasquatch.myblog.service.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +13,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
-@RequestMapping("/board")
+@RequestMapping(value = "/board", produces = "text/plain;charset=UTF-8")
 public class BoarderController {
 
     @Autowired
@@ -33,7 +33,7 @@ public class BoarderController {
     //TODO: 글작성 화면으로 이동
     @RequestMapping(value = "/{memberNo}/create", method = {RequestMethod.GET, RequestMethod.POST})
     public String forwardCreate(Model model, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionNo(memberNo)) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             long boardNo = (long) boardService.createDefaultBoard(memberNo);
             model.addAttribute("boardNo", boardNo);
             model.addAttribute("mainContents", "board-create");
@@ -48,7 +48,7 @@ public class BoarderController {
     @PostMapping("/{memberNo}/upload/{boardNo}/{method}")
     @ResponseBody
     public String upload(MultipartHttpServletRequest request, Board board, @PathVariable String method, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionNo(memberNo)) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             boolean result = false;
             board.setCreated_ip(accessorInfo.getIpAddress(request));
 
@@ -69,8 +69,8 @@ public class BoarderController {
     //TODO: 작성글 수정페이지로 이동
     @RequestMapping(value = "/{memberNo}/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String modify(Model model, @PathVariable String boardNo, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionNo(memberNo)) {
-            HashMap<String, Object> board = boardService.viewDetail(boardNo);
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+            Map<String, Object> board = boardService.viewDetail(memberNo, boardNo);
             model.addAttribute("board", board);
             model.addAttribute("mainContents", "board-modify");
 
@@ -81,34 +81,67 @@ public class BoarderController {
     }
 
     //TODO: 게시판 리스트 조회 페이지
-    @RequestMapping(value = "/{memberNo}/view/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewList(Model model, @PathVariable String memberNo) {
+    @RequestMapping(value = "/{memberNo}/list", method = {RequestMethod.GET, RequestMethod.POST})
+    public String viewList(Model model, @PathVariable String memberNo,
+                           @RequestParam(value = "page-limit", required = false, defaultValue = "10") int pageLimit,
+                           @RequestParam(value = "current-page-block", required = false, defaultValue = "1") int currentPageBlock,
+                           @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                           @RequestParam(value = "title", required = false, defaultValue = "") String title,
+                           @RequestParam(value = "contents", required = false, defaultValue = "") String contents,
+                           @RequestParam(value = "title-or-contents", required = false, defaultValue = "") String titleOrContents) {
 
-        model.addAttribute("mainContents", "board-view-list");
+        String[] searchValue = boardService.parsingSearchValue(keyword, title, contents, titleOrContents);
+        Map<String, Object> boardUnit;
+        if (memberNo.equals("all")) {
+            boardUnit = boardService.getBoardList("all", pageLimit, currentPageBlock, searchValue);
+            model.addAttribute("mainContents", "board-view-list-all");
+
+        }else{
+            boardUnit = boardService.getBoardList(memberNo, pageLimit, currentPageBlock, searchValue);
+            model.addAttribute("mainContents", "board-view-list");
+
+        }
+        List<Map<String, Object>> boardList = (List<Map<String, Object>>) boardUnit.get("boardList");
+        Object pageBlockList = boardUnit.get("pageBlockList");
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("pageBlockList", pageBlockList);
+        model.addAttribute("pageLimit", pageLimit);
+
+        try {
+            model.addAttribute("searchTarget", searchValue[0]);
+            model.addAttribute("searchValue", searchValue[1].substring(1, searchValue[1].length() - 1));
+
+        }catch (NullPointerException e){
+            log.debug("viewList {}",e.getMessage());
+            model.addAttribute("searchTarget", "keyword");
+        }
 
         return "index";
     }
 
-    @RequestMapping(value = "/{memberNo}/view/detail/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewDetail(Model model, @PathVariable String boardNo) {
+    @RequestMapping(value = "/{memberNo}/read/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
+    public String viewDetail(Model model, @PathVariable String boardNo, @PathVariable String memberNo) {
 
-        HashMap<String, Object> boardInfo = boardService.viewDetail(boardNo);
+        Map<String, Object> board = boardService.viewDetail(memberNo, boardNo);
 
-        model.addAttribute("boardInfo", boardInfo);
+        model.addAttribute("board", board);
+        model.addAttribute("boardNo", boardNo);
+        model.addAttribute("memberNo", memberNo);
         model.addAttribute("mainContents", "board-view-detail");
 
         return "index";
     }
 
-    @RequestMapping(value = "/{memberNo}/delete/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
+    @DeleteMapping("/{memberNo}/delete/{boardNo}")
+    @ResponseBody
     public String deleteBoard(@PathVariable String memberNo, @PathVariable String boardNo) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+            if (boardService.delete(boardNo))
+            return "true";
 
-        if (checkSessionController.isCheckSessionNo(memberNo)){
-            boardService.delete(boardNo);
-
-            return "redirect:/board/" + memberNo + "/view/list";
         }
-            return "redirect:/";
+        return "false";
     }
 
 }

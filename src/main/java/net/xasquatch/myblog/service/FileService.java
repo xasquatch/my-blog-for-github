@@ -15,7 +15,7 @@ import java.util.Base64;
 
 @Component
 @Slf4j
-@PropertySource("/WEB-INF/properties/file/FileManager.properties")
+@PropertySource("/WEB-INF/properties/file-manager.properties")
 @Getter
 @Setter
 public class FileService {
