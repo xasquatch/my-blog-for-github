@@ -31,7 +31,7 @@ import java.util.Map;
 
 @Slf4j
 @Service
-@PropertySource("/WEB-INF/properties/oauth/oauth-setting.properties")
+@PropertySource("/WEB-INF/properties/oauth-setting.properties")
 public class GoogleOAuthService {
 
     @Value("${oauth.google.client_id}")
