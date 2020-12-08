@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -42,13 +44,15 @@ public class OauthController {
 
     @PostMapping("/google/token")
     @ResponseBody
-    public String login(@RequestParam(value = "google-token") String JWT) {
-        String result = null;
+    public String login(@RequestParam(value = "oauth-token") String JWT, HttpSession session) {
+        String result = "false";
 
         try {
             Member member = googleOAuthService.verifyToken(JWT);
             if (member == null) return "false";
             result = memberService.loginForToken(member);
+            sessionMember.setLoginOAuth(true);
+            session.setAttribute("sessionMember", sessionMember);
 
         } catch (GeneralSecurityException | IOException e) {
             log.warn("OAuth JsonProcessingException : GOOGLE [{}]", "verify");
@@ -58,7 +62,7 @@ public class OauthController {
     }
 
     @GetMapping("/google")
-    public String googleSignUpAndIn(Model model, HttpSession session, @RequestParam(value = "code") String authCode) {
+    public String googleSignUpAndIn(Model model, HttpSession session, HttpServletResponse response, @RequestParam(value = "code") String authCode) {
         String result = null;
 
         try {
@@ -78,8 +82,14 @@ public class OauthController {
 
             memberService.updateRank(convertedMember.getNo(), convertedMember.getEmail());
             memberService.loginForToken(convertedMember);
-            sessionMember.setCheckSession(true);
+            sessionMember.setLoginOAuth(true);
             session.setAttribute("sessionMember", sessionMember);
+            Cookie cookie = new Cookie("oauth-token", (String) accessTokenMap.get("JWT"));
+            cookie.setPath("/");
+            cookie.setSecure(true);
+            cookie.setHttpOnly(true);
+            cookie.setMaxAge(60*60*60*24);
+            response.addCookie(cookie);
 
         } catch (GeneralSecurityException | IOException e) {
             log.warn("OAuth Exception : GOOGLE [{}]", "googleSignUpAndIn");
