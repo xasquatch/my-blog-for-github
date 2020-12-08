@@ -1,3 +1,4 @@
+<%@ page import="java.util.Arrays" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
@@ -104,6 +105,25 @@
     document.querySelector('#home-login-pwd').addEventListener('keypress', function (e) {
         if (e.keyCode === 13) loginInput();
     })
+
+    <%
+    String authToken = null;
+    Cookie[] cookies = request.getCookies();
+    for (Cookie cookie : cookies) {
+        if (cookie.getName().equals("oauth-token"))
+            authToken = cookie.getValue();
+
+    }
+
+    if (authToken != null){
+    %>
+    window.onload = function (){
+        oAuth.google.verifyToken('<%=authToken%>');
+    }
+    <%
+    }
+    %>
+
 
     function loginInput() {
         var loginEmail = document.querySelector('#home-login-email');
