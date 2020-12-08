@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <section id="api-clipboard-section">
-    <a class="btn btn-link-red dot-key" style="position: sticky; top: 65px; text-align: center; font-size: 30px"
+    <a class="btn btn-success dot-key" style="position: sticky; top: 100px; text-align: center; font-size: 20px; color: white !important;"
     href="${path}/members/${sessionMember.no}/api/quick-guide">
         Click for board quick guide
     </a>

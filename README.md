@@ -1,7 +1,6 @@
 # My Blog by xasquatch
 
 ### TODO LIST
-0. API페이지 모바일에 맞게 구현 필요   
 0. 비밀번호 암호화   
 0. 관리자 페이지 만들기
 - 회원관리

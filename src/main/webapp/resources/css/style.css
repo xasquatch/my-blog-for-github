@@ -419,7 +419,7 @@
 #api-clipboard-section pre{
     word-break: break-all;
     white-space: pre-wrap;
-    width: 65vw;
+    width: 100%;
 }
 .api-clipboard{
     border: 4px inset;
