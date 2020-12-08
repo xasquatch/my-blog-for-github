@@ -73,7 +73,7 @@ public class MemberController {
     @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
     public String info(Model model, @PathVariable String memberNo, String checkPassword) {
         if (checkSessionController.isCheckSession(memberNo)) {
-            if (sessionMember.isCheckSession() && memberService.checkMember(checkPassword)) {
+            if ((sessionMember.isCheckSession() && memberService.checkMember(checkPassword)) || sessionMember.isLoginOAuth()) {
                 model.addAttribute("mainContents", "user-information");
                 return "index";
 
