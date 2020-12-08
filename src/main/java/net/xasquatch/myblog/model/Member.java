@@ -19,7 +19,7 @@ public class Member {
     private String rank;
 
     @NotNull
-    @Size(min = 10, max = 40)
+    @Size(min = 10, max = 50)
     @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}")
     private String email;
 
@@ -30,7 +30,7 @@ public class Member {
 
     @NotNull
     @Size(min = 3, max = 20)
-    @Pattern(regexp = "^[A-Za-z0-9가-힣]{3,20}")
+    @Pattern(regexp = "^[A-Za-z0-9가-힣 ]{3,50}")
     private String name;
 
     private String img;

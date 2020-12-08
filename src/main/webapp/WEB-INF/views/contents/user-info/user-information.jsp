@@ -186,7 +186,7 @@
 
 
     function isAvailableNameRegExp(data) {
-        var regExp = /^[A-Za-z0-9가-힣]{3,20}$/;
+        var regExp = /^[A-Za-z0-9가-힣 ]{3,50}$/;
         return regExp.test(data);
 
     }
