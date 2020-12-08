@@ -1,3 +1,23 @@
+var oAuth = {
+    google: {
+        signInAndUp: function () {
+            myAjax.submit('GET', 'https://myblog.xasquatch.net/oauth/google/information', function (data) {
+                window.open('https://accounts.google.com/o/oauth2/v2/auth?' + data);
+
+            });
+        },
+
+        verifyToken: function (token) {
+
+            myAjax.submit('POST', '/oauth/google/token', function (data) {
+                if (data !== 'false') history.go(0);
+
+            }, 'form', 'oauth-token=' + token);
+        }
+
+    }
+}
+
 var modal = {
 
     myModalTitle: document.querySelector('.modal-title'),

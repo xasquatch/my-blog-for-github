@@ -314,6 +314,20 @@
     padding: 5px !important;
 }
 
+.google-icon {
+    background: url('/img/oauth-img/google.png') transparent 50% no-repeat;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+.google-buttonText {
+    display: block;
+}
+
+
+
+
+
 /*END: login.jsp------------------*/
 /*----------contents-aside-------*/
 .wrap-grid > section {

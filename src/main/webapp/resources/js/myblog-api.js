@@ -58,7 +58,7 @@ var myAjax = {
             contentsType = myAjax.setContentsType(inputContentsType);
             xhr.open(method, url, true);
             if (contentsType !== myAjax.formFile)
-                xhr.setRequestHeader('Content-type', contentsType);
+                xhr.setRequestHeader('Content-Type', contentsType);
             xhr.send(sendData);
         }
 

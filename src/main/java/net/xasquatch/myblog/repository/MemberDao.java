@@ -42,6 +42,10 @@ public class MemberDao {
         return result;
     }
 
+    public long selectOneNo(String email) {
+        return memberMapper.selectOneNo(email);
+    }
+
     public String selectOneEmail(String email) {
         return memberMapper.selectOneEmail(email);
     }
@@ -66,6 +70,14 @@ public class MemberDao {
         if (memberMapper.updateMbrImg(member) == 1) result = true;
 
         return result;
+    }
+
+    public boolean insertMbrForToken(Member member){
+
+        //TODO: DB저장 후 member.setNo 호출하여 PK 저장
+        memberMapper.insertMbrForToken(member);
+
+        return member.getNo() != null;
     }
 
     public int selectMbr(Object no, String pwdKey) {
@@ -102,4 +114,13 @@ public class MemberDao {
 
         return memberMapper.selectOneMbr(email, pwd);
     }
+
+
+    public Map<String, Object> selectOneMbrForToken(Member member) {
+        String email = member.getEmail();
+
+        return memberMapper.selectOneMbrForToken(email);
+    }
+
+
 }

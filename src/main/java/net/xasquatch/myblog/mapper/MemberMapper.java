@@ -11,12 +11,18 @@ import java.util.Map;
 public interface MemberMapper {
 
     /**
-     *
      * @param email
      * @return 이메일 중복확인 후 해당 이메일 반환 없으면 null
      */
     @Select("SELECT email FROM mbr WHERE email = #{email}")
     String selectOneEmail(String email);
+
+    /**
+     * @param email
+     * @return
+     */
+    @Select("SELECT no FROM mbr WHERE email = #{email}")
+    long selectOneNo(String email);
 
     /**
      *
@@ -40,6 +46,14 @@ public interface MemberMapper {
      */
     @Update("UPDATE mbr SET img = #{img} WHERE no = #{no}")
     int updateMbrImg(Member member);
+
+    /**
+     * @param member
+     * 패스워드는 임의의 랜덤값으로 삽입
+     */
+    @Insert("INSERT INTO mbr(email, pwd, name, img) VALUES(#{email}, #{pwd}, #{name}, #{img})")
+    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
+    void insertMbrForToken(Member member);
 
     /**
      * @param no
@@ -75,6 +89,16 @@ public interface MemberMapper {
             "ON m.authorization_no = a.no " +
             "WHERE m.email = #{arg0} AND m.pwd = #{arg1}")
     Map<String, Object> selectOneMbr(String email, String pwd);
+
+    /**
+     * @param email
+     * @return 이메일을 확인하여 DB에서 멤버테이블과 권한 테이블은 조인하여 Map형태로 반환
+     */
+    @Select("SELECT m.no as no, a.rank as rank, m.email as email, m.name as name, m.img as img " +
+            "FROM mbr m LEFT OUTER JOIN authorization a " +
+            "ON m.authorization_no = a.no " +
+            "WHERE m.email = #{arg0}")
+    Map<String, Object> selectOneMbrForToken(String email);
 
     /**
      * @return 권한테이블 DB에서 권한들 목록을 가져옴

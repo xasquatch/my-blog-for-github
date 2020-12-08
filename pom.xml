@@ -11,6 +11,8 @@
     <properties>
         <java-version>11</java-version>
         <spring-version>5.2.7.RELEASE</spring-version>
+        <oauth-google>1.31.1</oauth-google>
+
     </properties>
 
     <dependencies>
@@ -186,6 +188,12 @@
             <version>${spring-version}</version>
         </dependency>
 
+        <!--TODO: oauth-google-->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>${oauth-google}</version>
+        </dependency>
 
     </dependencies>
 

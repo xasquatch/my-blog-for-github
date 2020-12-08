@@ -35,8 +35,13 @@ public class MemberService {
         return memberDao.selectAuthorization();
     }
 
-    public boolean updateRank(String email){
-        return memberDao.updateRank(sessionMember.getNo(), email);
+    public boolean updateRank(long number, String email){
+        return memberDao.updateRank(number, email);
+    }
+
+    public long findNumberForEmail(String email){
+
+        return memberDao.selectOneNo(email);
     }
 
     public boolean isExistedEmail(String email) {
@@ -74,6 +79,27 @@ public class MemberService {
         return String.valueOf(sessionMember.getNo());
     }
 
+    public String loginForToken(Member member) {
+
+        Map<String, Object> resultMap = memberDao.selectOneMbrForToken(member);
+
+        try {
+            long sessionMemberNo = ((BigInteger) resultMap.get("no")).longValue();
+            sessionMember.setNo(sessionMemberNo);
+
+        } catch (Exception e) {
+            log.warn("CLASS CAST EXCEPTION: member no->{}", "null");
+            return "false";
+        }
+        sessionMember.setRank((String) resultMap.get("rank"));
+        sessionMember.setEmail((String) resultMap.get("email"));
+        sessionMember.setToken((String) resultMap.get("token"));
+        sessionMember.setName((String) resultMap.get("name"));
+        sessionMember.setImg((String) resultMap.get("img"));
+
+        return String.valueOf(sessionMember.getNo());
+    }
+
     public void reset(Member sessionMember) {
         sessionMember.setNo(null);
         sessionMember.setEmail(null);
@@ -84,8 +110,14 @@ public class MemberService {
         sessionMember.setCheckSession(false);
     }
 
-    //TODO:img파일 저장 및 경로 설정 + result false시 해당 폴더 제거 구현 필요
+    public boolean saveForToken(Member member){
+        boolean result = false;
+        result = memberDao.insertMbrForToken(member);
 
+        return result;
+    }
+
+    //TODO:img파일 저장 및 경로 설정 + result false시 해당 폴더 제거 구현 필요
     public boolean save(Member member) {
         boolean result = false;
 
