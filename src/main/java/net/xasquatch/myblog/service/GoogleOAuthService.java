@@ -131,7 +131,6 @@ public class GoogleOAuthService {
         Member member = Member.builder()
                 .email(decodedToken.get("email"))
                 .pwd(token.substring(token.lastIndexOf("."), token.lastIndexOf(".") + 20))
-                .token(token)
                 .name(decodedToken.get("name") + Math.round(Math.random() * 10000000))
                 .img(decodedToken.get("picture"))
                 .build();
@@ -182,7 +181,6 @@ public class GoogleOAuthService {
 
             member = Member.builder()
                     .email(email)
-                    .token(JWT)
                     .build();
 
         } else {

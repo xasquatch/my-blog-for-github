@@ -84,7 +84,7 @@ public interface MemberMapper {
      * @param pwd
      * @return 이메일과 비밀번호를 대조하여 DB에서 멤버테이블과 권한 테이블은 조인하여 Map형태로 반환
      */
-    @Select("SELECT m.no as no, a.rank as rank, m.email as email, m.pwd as pwd, m.name as name, m.img as img " +
+    @Select("SELECT m.no as no, a.rank as rank, m.email as email, m.name as name, m.img as img " +
             "FROM mbr m LEFT OUTER JOIN authorization a " +
             "ON m.authorization_no = a.no " +
             "WHERE m.email = #{arg0} AND m.pwd = #{arg1}")
