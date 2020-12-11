@@ -181,10 +181,10 @@
             var imgArray = requestData.split(',');
             for (var i of imgArray) {
                 var file
-                if (i.indexOf('mp4') !== -1 || i.indexOf('avi') !== -1) {
+                if (i.indexOf('mp4') !== -1 || i.indexOf('avi') !== -1 || i.indexOf('wmv') !== -1) {
                     file = document.createElement('video');
                     file.controls = true;
-                    file.style.width = '100%';
+                    file.style.maxWidth = '100%';
 
                 } else {
                     file = document.createElement('img');
