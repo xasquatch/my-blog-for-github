@@ -47,6 +47,22 @@
         </div>
 
         <div class="flex-row">
+
+            <div class="dropdown">
+                <button type="button" class="btn btn-default dropdown-toggle" id="board-font-size" data-toggle="dropdown" aria-expanded="true" tabindex="-1">
+                    <span class="glyphicon glyphicon-text-size" id="board-font-size-name"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="board-font-size">
+                    <li role="presentation"><a style="font-size: xxx-large;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">7</a></li>
+                    <li role="presentation"><a style="font-size: xx-large;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">6</a></li>
+                    <li role="presentation"><a style="font-size: x-large;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">5</a></li>
+                    <li role="presentation"><a style="font-size: large;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">4</a></li>
+                    <li role="presentation"><a style="font-size: medium; color: darkred !important; font-weight: bold;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">3</a></li>
+                    <li role="presentation"><a style="font-size: small;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">2</a></li>
+                    <li role="presentation"><a style="font-size: x-small;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">1</a></li>
+                </ul>
+            </div>
+
             <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('bold');">
                 <span class="glyphicon glyphicon-bold"></span>
             </button>

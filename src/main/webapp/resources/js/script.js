@@ -72,6 +72,12 @@ var board = {
         document.execCommand('fontName', false, fontName.value);
 
     },
+    changeFontSize: function (element) {
+        var fontName = document.querySelector('#board-font-size');
+        fontName.value = element.innerText;
+        document.execCommand('fontSize', false, fontName.value);
+
+    },
     reset: function () {
         if (confirm('작성 중인 내용을 초기화 하시겠습니까?')) {
             board.fakeKeyword.value = '';
