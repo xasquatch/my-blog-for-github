@@ -57,7 +57,8 @@
                     <li role="presentation"><a style="font-size: xx-large;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">6</a></li>
                     <li role="presentation"><a style="font-size: x-large;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">5</a></li>
                     <li role="presentation"><a style="font-size: large;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">4</a></li>
-                    <li role="presentation"><a style="font-size: medium; color: darkred !important; font-weight: bold;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">3</a></li>
+                    <li role="presentation"><a style="font-size: medium; color: darkred !important; font-weight: bold;" role="menuitem" tabindex="-1" href="#"
+                                               onclick="board.changeFontSize(this);">3</a></li>
                     <li role="presentation"><a style="font-size: small;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">2</a></li>
                     <li role="presentation"><a style="font-size: x-small;" role="menuitem" tabindex="-1" href="#" onclick="board.changeFontSize(this);">1</a></li>
                 </ul>
@@ -158,31 +159,39 @@
     function uploadImages() {
         modal.changeForm('Image Upload',
             '<form id="board-upload-image-form">' +
-            '<input type="file" id="board-upload-image-items" class="btn btn-default" placeholder="upload" name="imgPackage" multiple onchange="addUploadImage(this); ">' +
+            '<input type="file" id="board-upload-image-items" class="btn btn-default" placeholder="upload" name="imgPackage" multiple onchange="addUploadFile(this); ">' +
             '</form>' +
             '<section id="board-upload">' +
             '' +
             '</section>'
         );
         var confirmBtn = document.querySelector('#modal-confirm-btn');
-        confirmBtn.setAttribute('onclick', 'ConfirmUploadImages();');
+        confirmBtn.setAttribute('onclick', 'confirmUploadFiles();');
 
 
     }
 
-    function addUploadImage(element) {
+    function addUploadFile(element) {
         var boardUploadImageForm = document.querySelector('#board-upload-image-form');
         var boardUploadTag = document.querySelector('#board-upload');
         var imgFormData = new FormData(boardUploadImageForm);
 
         myAjax.submit('POST', '${path}/img/${sessionMember.no}/board/${requestScope.boardNo}/upload', function (data) {
-
             var requestData = data.slice(1, data.length - 1);
             var imgArray = requestData.split(',');
             for (var i of imgArray) {
-                var img = document.createElement('img');
-                img.src = i.trim();
-                boardUploadTag.appendChild(img);
+                var file
+                if (i.indexOf('mp4') !== -1 || i.indexOf('avi') !== -1) {
+                    file = document.createElement('video');
+                    file.controls = true;
+                    file.style.width = '100%';
+
+                } else {
+                    file = document.createElement('img');
+
+                }
+                file.src = i.trim();
+                boardUploadTag.appendChild(file);
             }
 
         }, 'FORMFILE', imgFormData);
@@ -191,19 +200,19 @@
     }
 
 
-    function ConfirmUploadImages() {
+    function confirmUploadFiles() {
         document.querySelector('#board-contents-image').innerHTML += document.querySelector('#board-upload').innerHTML;
         document.querySelector('#modal-close-btn').click();
-        SettingInsertImage();
+        SettingInsertFiles();
     }
 
     // --------------------------
 
-    function SettingInsertImage() {
-        var contentsImgs = document.querySelectorAll('#board-contents-image > img');
+    function SettingInsertFiles() {
+        var contentsFiles = document.querySelectorAll('#board-contents-image>*');
 
-        for (let i = 0; i < contentsImgs.length; i++) {
-            contentsImgs[i].addEventListener('click', function (e) {
+        for (let i = 0; i < contentsFiles.length; i++) {
+            contentsFiles[i].addEventListener('click', function (e) {
 // 썸네일처리
                 var thumbnailImg = document.createElement("img");
                 thumbnailImg.src = this.src;
@@ -216,7 +225,9 @@
                 document.querySelector('#board-contents-thumbnail').innerHTML = '';
                 document.querySelector('#board-contents-thumbnail').appendChild(thumbnailImg);
 //END: 썸네일처리
-                document.execCommand('insertImage', false, this.src);
+                var temporaryContainer = document.createElement('div');
+                temporaryContainer.appendChild(this.cloneNode());
+                document.execCommand('insertHTML', false, temporaryContainer.innerHTML);
 
             });
         }
@@ -292,7 +303,7 @@
     function contentsCssResizeInit() {
         document.querySelector('#board-contents-fake').addEventListener('click', function (e) {
             var target = e.target
-            if (target.localName === 'img' || target.localName === 'video') {
+            if (target.localName === 'img') {
                 var originTargetWidth = target.width;
                 var inputWidthData = window.prompt('가로길이를 몇으로 설정하시겠습니까?(현재 길이: ' + originTargetWidth + 'px, 숫자만 입력해주세요)', 'auto');
 
@@ -310,7 +321,7 @@
 
 
     function boardInit() {
-        SettingInsertImage();
+        SettingInsertFiles();
         contentsCssResizeInit();
     }
 
