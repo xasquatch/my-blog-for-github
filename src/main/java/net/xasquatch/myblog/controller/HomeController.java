@@ -6,17 +6,17 @@ import net.xasquatch.myblog.service.ImgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
+import java.util.Enumeration;
 import java.util.List;
 
 @Slf4j
 @Controller
+@RequestMapping(produces = "application/json; charset=utf8")
 public class HomeController {
 
     @Autowired
@@ -54,7 +54,11 @@ public class HomeController {
     @PostMapping("/img/{memberNo}/board/{boardNo}/upload")
     @ResponseBody
     public String boardImgUpload(MultipartHttpServletRequest request, @PathVariable String memberNo, @PathVariable String boardNo) {
-
+        try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            log.warn("acquired ImgUpload Exception");
+        }
         List<String> resultList = imgService.uploadImage(request, memberNo, boardNo);
 
         return resultList.toString();
