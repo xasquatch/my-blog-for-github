@@ -190,7 +190,7 @@
                     file = document.createElement('img');
 
                 }
-                file.src = i.trim();
+                file.src = 'https://myblog.xasquatch.net' + i.trim();
                 boardUploadTag.appendChild(file);
             }
 
@@ -303,7 +303,7 @@
     function contentsCssResizeInit() {
         document.querySelector('#board-contents-fake').addEventListener('click', function (e) {
             var target = e.target
-            if (target.localName === 'img') {
+            if (target.localName === 'img' || target.localName === 'video') {
                 var originTargetWidth = target.width;
                 var inputWidthData = window.prompt('가로길이를 몇으로 설정하시겠습니까?(현재 길이: ' + originTargetWidth + 'px, 숫자만 입력해주세요)', 'auto');
 
