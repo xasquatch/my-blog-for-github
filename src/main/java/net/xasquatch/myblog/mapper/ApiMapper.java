@@ -21,7 +21,7 @@ public interface ApiMapper {
     //TODO:게시글 상세 조회
     @Select("SELECT b.no AS no, " +
             "b.mbr_no AS mbr_no, " +
-            "m.name AS name, " +
+            "m.name AS mbr_nickname, " +
             "b.keyword AS keyword, " +
             "b.title AS title, " +
             "convert(b.contents USING UTF8) AS contents, " +
