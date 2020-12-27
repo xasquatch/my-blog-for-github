@@ -10,7 +10,7 @@ var oAuth = {
         verifyToken: function (token) {
 
             myAjax.submit('POST', '/oauth/google/token', function (data) {
-                if (data !== 'false') history.go(0);
+                if (data !== 'false') window.location.href = 'https://myblog.xasquatch.net';
 
             }, 'form', 'oauth-token=' + token);
         }
