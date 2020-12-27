@@ -2,7 +2,7 @@ var oAuth = {
     google: {
         signInAndUp: function () {
             myAjax.submit('GET', 'https://myblog.xasquatch.net/oauth/google/information', function (data) {
-                window.open('https://accounts.google.com/o/oauth2/v2/auth?' + data);
+                window.location.href('https://accounts.google.com/o/oauth2/v2/auth?' + data);
 
             });
         },
