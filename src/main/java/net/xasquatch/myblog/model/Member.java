@@ -5,6 +5,7 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Builder
 @Setter
@@ -12,7 +13,9 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Member {
+public class Member implements Serializable {
+
+    private static final long serialVersionUID = 6319981641880667305L;
 
     private Long no;
 

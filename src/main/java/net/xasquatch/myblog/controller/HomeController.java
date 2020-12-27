@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
-import java.util.Enumeration;
 import java.util.List;
 
 @Slf4j
@@ -37,7 +36,7 @@ public class HomeController {
 
     @GetMapping(value = "/")
     public String home(Model model) {
-        if (sessionMember.getNo() == null) return "forward:/login";
+        if (sessionMember.getNo() == null) return "redirect:/login";
         model.addAttribute("mainContents", "main");
 
         return "index";
