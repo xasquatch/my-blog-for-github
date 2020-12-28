@@ -120,9 +120,9 @@ var resources = {
     resourceViewSetting: function (element) {
         var prettyContents = null;
         try {
-            prettyContents = JSON.stringify(JSON.parse(element.querySelector('p').innerText), null, 2);
+            prettyContents = JSON.stringify(JSON.parse(element.querySelector('textarea').value), null, 2);
         } catch (e) {
-            prettyContents = element.querySelector('p').innerText;
+            prettyContents = element.querySelector('textarea').value;
         }
         var serialNumber = element.querySelector('label').innerText;
         var textarea = document.createElement('textarea');
