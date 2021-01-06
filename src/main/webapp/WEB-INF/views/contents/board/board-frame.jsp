@@ -64,42 +64,56 @@
                 </ul>
             </div>
 
-            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('bold');">
+            <button type="button" class="btn btn-default" tabindex="-1" onclick="document.execCommand('bold');">
                 <span class="glyphicon glyphicon-bold"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('Italic');">
+            <button type="button" class="btn btn-default" tabindex="-1" onclick="document.execCommand('Italic');">
                 <span class="glyphicon glyphicon-italic"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('indent');">
+            <button type="button" class="btn btn-default" tabindex="-1" onclick="document.execCommand('indent');">
                 <span class="glyphicon glyphicon-indent-left"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('outdent');">
+            <button type="button" class="btn btn-default" tabindex="-1" onclick="document.execCommand('outdent');">
                 <span class="glyphicon glyphicon-indent-right"></span>
             </button>
         </div>
 
         <div class="flex-row">
-            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('justifyLeft');">
+            <button type="button" class="btn btn-default" tabindex="-1" onclick="document.execCommand('justifyLeft');">
                 <span class="glyphicon glyphicon-align-left"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('justifyCenter')">
+            <button type="button" class="btn btn-default" tabindex="-1" onclick="document.execCommand('justifyCenter')">
                 <span class="glyphicon glyphicon-align-center"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('justifyRight')">
+            <button type="button" class="btn btn-default" tabindex="-1" onclick="document.execCommand('justifyRight')">
                 <span class="glyphicon glyphicon-align-right"></span>
             </button>
 
-            <button type="button" class="btn btn-default btn" tabindex="-1" onclick="document.execCommand('justifyFull')">
+            <button type="button" class="btn btn-default" tabindex="-1" onclick="document.execCommand('justifyFull')">
                 <span class="glyphicon glyphicon-align-justify"></span>
             </button>
         </div>
+        <div class="flex-row">
+            <div class="dropdown">
+                <button type="button" class="btn btn-default dot-key dropdown-toggle" id="board-html-management" data-toggle="dropdown" aria-expanded="true" tabindex="-1">
+                    HTML모드
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="board-html-management">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="convertHtml();">
+                        convert
+                    </a></li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-default dot-key" tabindex="-1" onclick="callLocalHistory()">
+                임시저장
+            </button>
+        </div>
     </div>
-
     <div id="board-contents-fake" class="form-control" contentEditable="true">
         ${board.contents}
     </div>
@@ -155,6 +169,26 @@
 </section>
 
 <script>
+
+    function convertHtml() {
+        var convertLang = document.querySelector('#board-html-management');
+        if (window.confirm(convertLang.innerText.trim() + '로 변경하시겠습니까?')) {
+            alert('변경할 랭귀지는 ' + convertLang.innerText.trim() + '입니다');
+        }
+
+    }
+
+    function callLocalHistory() {
+        var tempSavedBoard = JSON.parse(sessionStorage.getItem('tempSavedBoard'));
+        var boardListTag;
+        for (var key in tempSavedBoard) {
+            
+        }
+
+        modal.changeForm('임시 저장 목록',
+            ''
+        );
+    }
 
     function uploadImages() {
         modal.changeForm('Image Upload',
