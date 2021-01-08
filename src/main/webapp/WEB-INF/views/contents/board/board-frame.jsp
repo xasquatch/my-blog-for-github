@@ -110,7 +110,7 @@
                 </ul>
             </div>
             <button type="button" class="btn btn-default dot-key" tabindex="-1" onclick="callLocalHistory()">
-                임시저장
+                임시저장 목록
             </button>
         </div>
     </div>
@@ -170,6 +170,29 @@
 
 <script>
 
+    function temporarySave() {
+        var i = sessionStorage.getItem('tempSavedBoard');
+        var boardContents = document.querySelector('#board-contents-fake').innerHTML;
+        var boardTitle = document.querySelector('#board-title-fake').value;
+        var boardKeyword = document.querySelector('#board-keyword-fake').value;
+        var boardThumbnail = document.querySelector('#board-contents-thumbnail').innerHTML;
+        var currentDate = new Date().toLocaleString();
+        var parsedTempBoard = {};
+        if (i !== null) parsedTempBoard = JSON.parse(i);
+
+        parsedTempBoard[currentDate] = {
+            'title': boardTitle, 'contents': boardContents,
+            'keyword': boardKeyword, 'thumbnail': boardThumbnail
+        };
+        sessionStorage.setItem('tempSavedBoard', JSON.stringify(parsedTempBoard));
+
+    }
+
+    setInterval(function () {
+        temporarySave();
+    }, 1000 * 60 * 10);
+
+
     function convertHtml() {
         var convertLang = document.querySelector('#board-html-management');
         if (window.confirm(convertLang.innerText.trim() + '로 변경하시겠습니까?')) {
@@ -180,12 +203,13 @@
 
     function callLocalHistory() {
         var tempSavedBoard = JSON.parse(sessionStorage.getItem('tempSavedBoard'));
+
         var boardListTag;
         for (var key in tempSavedBoard) {
-            
+
         }
 
-        modal.changeForm('임시 저장 목록',
+        modal.changeForm('.임시 저장 목록',
             ''
         );
     }
