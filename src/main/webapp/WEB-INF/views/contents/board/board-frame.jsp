@@ -204,14 +204,19 @@
     function callLocalHistory() {
         var tempSavedBoard = JSON.parse(sessionStorage.getItem('tempSavedBoard'));
 
-        var boardListTag;
+        var boardListTagStart = '<table class="table table-hover table-condensed"><tbody>' +
+            '<thead style="text-align: center;"><tr><td>글제목</td><td>시간</td></tr></thead>';
         for (var key in tempSavedBoard) {
-
+            boardListTagStart += '<tr>' +
+                '<td>'+JSON.parse(JSON.stringify(tempSavedBoard[key]))['title']+'</td>' +
+                '<td style="width: 200px; font-size: 0.8em;">'+key+'</td>' +
+                '</tr>'
         }
-
-        modal.changeForm('.임시 저장 목록',
-            ''
+        boardListTagStart += '</tbody></table>';
+        modal.changeForm('임시 저장 목록',
+            boardListTagStart
         );
+        $('#myModal').modal('toggle');
     }
 
     function uploadImages() {
