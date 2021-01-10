@@ -178,8 +178,12 @@
         var boardThumbnail = document.querySelector('#board-contents-thumbnail').innerHTML;
         var currentDate = new Date().toLocaleString();
         var parsedTempBoard = {};
-        if (i !== null) parsedTempBoard = JSON.parse(i);
-
+        try{
+            if (i !== null) parsedTempBoard = JSON.parse(i);
+        }catch (e) {
+            console.log('call by sessionStorage: 해당 "tempSavedBoard 내용없음"');
+        }
+        if (boardTitle.trim() === '') boardTitle = '[EMPTY TITLE]';
         parsedTempBoard[currentDate] = {
             'title': boardTitle, 'contents': boardContents,
             'keyword': boardKeyword, 'thumbnail': boardThumbnail
@@ -202,21 +206,37 @@
     }
 
     function callLocalHistory() {
-        var tempSavedBoard = JSON.parse(sessionStorage.getItem('tempSavedBoard'));
+        var tempSavedBoard;
+        try {
+            tempSavedBoard = JSON.parse(sessionStorage.getItem('tempSavedBoard'));
 
-        var boardListTagStart = '<table class="table table-hover table-condensed"><tbody>' +
-            '<thead style="text-align: center;"><tr><td>글제목</td><td>시간</td></tr></thead>';
+        } catch (e) {
+            tempSavedBoard = {};
+        }
+
+        var boardListTagStart = '<div style="text-align: right">' +
+            '<button type="button" onclick="if (window.confirm(\'임시저장 목록을 초기화 하시겠습니까?\')){ sessionStorage.setItem(\'tempSavedBoard\',\'\'); callLocalHistory();}">목록 초기화</button>' +
+            '<button type="button" onclick="if (window.confirm(\'임시저장하시겠습니까?\')){temporarySave(); callLocalHistory();}">임시저장</button>' +
+            '</div><HR>' +
+            '<table class="table table-hover table-condensed">' +
+            '<thead style="text-align: center;">' +
+            '<tr><td>글제목</td><td>시간</td></tr>' +
+            '</thead>' +
+            '<tbody>';
         for (var key in tempSavedBoard) {
+            var targetObject = JSON.parse(JSON.stringify(tempSavedBoard[key]));
             boardListTagStart += '<tr>' +
-                '<td>'+JSON.parse(JSON.stringify(tempSavedBoard[key]))['title']+'</td>' +
-                '<td style="width: 200px; font-size: 0.8em;">'+key+'</td>' +
+                '<td><a href="javascript:window.alert(JSON.stringify(JSON.parse(sessionStorage.getItem(\'tempSavedBoard\'))[\'' + key + '\']))">' +
+                targetObject['title'] +
+                '</a></td>' +
+                '<td style="width: 200px; font-size: 0.8em;">' + key + '</td>' +
                 '</tr>'
         }
         boardListTagStart += '</tbody></table>';
         modal.changeForm('임시 저장 목록',
             boardListTagStart
         );
-        $('#myModal').modal('toggle');
+        $('#myModal').modal('show');
     }
 
     function uploadImages() {
