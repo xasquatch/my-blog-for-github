@@ -171,16 +171,16 @@
 <script>
 
     function temporarySave() {
-        var i = sessionStorage.getItem('tempSavedBoard');
+        var savedLocalTempBoard = localStorage.getItem('tempSavedBoard');
         var boardContents = document.querySelector('#board-contents-fake').innerHTML;
         var boardTitle = document.querySelector('#board-title-fake').value;
         var boardKeyword = document.querySelector('#board-keyword-fake').value;
         var boardThumbnail = document.querySelector('#board-contents-thumbnail').innerHTML;
         var currentDate = new Date().toLocaleString();
         var parsedTempBoard = {};
-        try{
-            if (i !== null) parsedTempBoard = JSON.parse(i);
-        }catch (e) {
+        try {
+            if (savedLocalTempBoard !== null) parsedTempBoard = JSON.parse(savedLocalTempBoard);
+        } catch (e) {
             console.log('call by sessionStorage: 해당 "tempSavedBoard 내용없음"');
         }
         if (boardTitle.trim() === '') boardTitle = '[EMPTY TITLE]';
@@ -188,7 +188,7 @@
             'title': boardTitle, 'contents': boardContents,
             'keyword': boardKeyword, 'thumbnail': boardThumbnail
         };
-        sessionStorage.setItem('tempSavedBoard', JSON.stringify(parsedTempBoard));
+        localStorage.setItem('tempSavedBoard', JSON.stringify(parsedTempBoard));
 
     }
 
@@ -205,17 +205,30 @@
 
     }
 
+    function overwriteByLocalHistory(object) {
+        if (window.confirm('현재 작성중인 내용을 초기화하고 해당 내용으로 덮어쓰시겠습니까?')) {
+            var targetObject = JSON.parse(localStorage.getItem('tempSavedBoard'))[object];
+
+            document.querySelector('#board-contents-fake').innerHTML = targetObject['contents'];
+            document.querySelector('#board-title-fake').value = targetObject['title'];
+            document.querySelector('#board-keyword-fake').value = targetObject['keyword'];
+            document.querySelector('#board-contents-thumbnail').innerHTML = targetObject['thumbnail'];
+
+            $('#myModal').modal('hide');
+        }
+    }
+
     function callLocalHistory() {
         var tempSavedBoard;
         try {
-            tempSavedBoard = JSON.parse(sessionStorage.getItem('tempSavedBoard'));
+            tempSavedBoard = JSON.parse(localStorage.getItem('tempSavedBoard'));
 
         } catch (e) {
             tempSavedBoard = {};
         }
 
         var boardListTagStart = '<div style="text-align: right">' +
-            '<button type="button" onclick="if (window.confirm(\'임시저장 목록을 초기화 하시겠습니까?\')){ sessionStorage.setItem(\'tempSavedBoard\',\'\'); callLocalHistory();}">목록 초기화</button>' +
+            '<button type="button" onclick="if (window.confirm(\'임시저장 목록을 초기화 하시겠습니까?\')){ localStorage.setItem(\'tempSavedBoard\',\'\'); callLocalHistory();}">목록 초기화</button>' +
             '<button type="button" onclick="if (window.confirm(\'임시저장하시겠습니까?\')){temporarySave(); callLocalHistory();}">임시저장</button>' +
             '</div><HR>' +
             '<table class="table table-hover table-condensed">' +
@@ -226,7 +239,7 @@
         for (var key in tempSavedBoard) {
             var targetObject = JSON.parse(JSON.stringify(tempSavedBoard[key]));
             boardListTagStart += '<tr>' +
-                '<td><a href="javascript:window.alert(JSON.stringify(JSON.parse(sessionStorage.getItem(\'tempSavedBoard\'))[\'' + key + '\']))">' +
+                '<td><a href="javascript:overwriteByLocalHistory(\'' + key + '\')">' +
                 targetObject['title'] +
                 '</a></td>' +
                 '<td style="width: 200px; font-size: 0.8em;">' + key + '</td>' +
