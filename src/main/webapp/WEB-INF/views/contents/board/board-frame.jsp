@@ -226,28 +226,34 @@
         } catch (e) {
             tempSavedBoard = {};
         }
-
-        var boardListTagStart = '<div style="text-align: right">' +
+        var boardListDivTag = document.createElement('div');
+        boardListDivTag.innerHTML = '<div style="text-align: right">' +
             '<button type="button" onclick="if (window.confirm(\'임시저장 목록을 초기화 하시겠습니까?\')){ localStorage.setItem(\'tempSavedBoard\',\'\'); callLocalHistory();}">목록 초기화</button>' +
             '<button type="button" onclick="if (window.confirm(\'임시저장하시겠습니까?\')){temporarySave(); callLocalHistory();}">임시저장</button>' +
-            '</div><HR>' +
-            '<table class="table table-hover table-condensed">' +
-            '<thead style="text-align: center;">' +
+            '</div><HR>';
+        var boardListTableTag = document.createElement('table');
+        boardListTableTag.className = 'table table-hover table-condensed';
+        var boardListTableHeadTag = '<thead style="text-align: center;">' +
             '<tr><td>글제목</td><td>시간</td></tr>' +
-            '</thead>' +
-            '<tbody>';
+            '</thead>';
+
+        boardListDivTag.appendChild(boardListTableTag)
+        boardListTableTag.innerHTML = boardListTableHeadTag;
+        var boardListTableBodyTag = document.createElement('tbody');
+        boardListTableTag.appendChild(boardListTableBodyTag);
+
         for (var key in tempSavedBoard) {
             var targetObject = JSON.parse(JSON.stringify(tempSavedBoard[key]));
-            boardListTagStart += '<tr>' +
-                '<td><a href="javascript:overwriteByLocalHistory(\'' + key + '\')">' +
+            var trTag = document.createElement('tr');
+            trTag.innerHTML = '<td><a href="javascript:overwriteByLocalHistory(\'' + key + '\')">' +
                 targetObject['title'] +
                 '</a></td>' +
-                '<td style="width: 200px; font-size: 0.8em;">' + key + '</td>' +
-                '</tr>'
+                '<td style="width: 200px; font-size: 0.8em;">' + key + '</td>';
+            boardListTableBodyTag.prepend(trTag) ;
         }
-        boardListTagStart += '</tbody></table>';
+
         modal.changeForm('임시 저장 목록',
-            boardListTagStart
+            boardListDivTag.innerHTML
         );
         $('#myModal').modal('show');
     }
