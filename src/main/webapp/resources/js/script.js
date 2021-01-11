@@ -2,7 +2,7 @@ var oAuth = {
     google: {
         signInAndUp: function () {
             myAjax.submit('GET', 'https://myblog.xasquatch.net/oauth/google/information', function (data) {
-                window.open('https://accounts.google.com/o/oauth2/v2/auth?' + data);
+                window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + data;
 
             });
         },
@@ -10,7 +10,7 @@ var oAuth = {
         verifyToken: function (token) {
 
             myAjax.submit('POST', '/oauth/google/token', function (data) {
-                if (data !== 'false') history.go(0);
+                if (data !== 'false') window.location.href = 'https://myblog.xasquatch.net';
 
             }, 'form', 'oauth-token=' + token);
         }
@@ -72,6 +72,12 @@ var board = {
         document.execCommand('fontName', false, fontName.value);
 
     },
+    changeFontSize: function (element) {
+        var fontName = document.querySelector('#board-font-size');
+        fontName.value = element.innerText;
+        document.execCommand('fontSize', false, fontName.value);
+
+    },
     reset: function () {
         if (confirm('작성 중인 내용을 초기화 하시겠습니까?')) {
             board.fakeKeyword.value = '';
@@ -114,9 +120,9 @@ var resources = {
     resourceViewSetting: function (element) {
         var prettyContents = null;
         try {
-            prettyContents = JSON.stringify(JSON.parse(element.querySelector('p').innerText), null, 2);
+            prettyContents = JSON.stringify(JSON.parse(element.querySelector('textarea').value), null, 2);
         } catch (e) {
-            prettyContents = element.querySelector('p').innerText;
+            prettyContents = element.querySelector('textarea').value;
         }
         var serialNumber = element.querySelector('label').innerText;
         var textarea = document.createElement('textarea');

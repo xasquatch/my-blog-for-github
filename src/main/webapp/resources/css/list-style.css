@@ -7,7 +7,7 @@
     margin: 0 !important;
 }
 
-#board-contents-fake {
+.board-contents-fake {
     height: 400px !important;
     font-family: auto;
     overflow: auto;

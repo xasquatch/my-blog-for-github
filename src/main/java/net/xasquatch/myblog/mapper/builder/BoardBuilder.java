@@ -8,7 +8,7 @@ public class BoardBuilder {
                                          Object searchTarget, Object searchValue) {
 
         return new SQL() {{
-            SELECT("*");
+            SELECT("m.img AS mbr_img_src, m.name AS mbr_nickname, b.*");
             if (memberNo.equals("all")) {
                 FROM("(" + selectAllBoardListSubQuery(searchTarget, searchValue) + ")b");
 

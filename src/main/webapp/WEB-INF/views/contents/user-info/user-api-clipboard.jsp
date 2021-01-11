@@ -44,7 +44,7 @@
                     container.innerHTML += '<div><label>title</label><BR>' + boardMap.title + '</div>';
                     container.innerHTML += '<div><label>keyword</label><BR>' + boardMap.keyword + '</div>';
                     container.innerHTML += '<div><label>mbr_no</label><BR>' + boardMap.mbr_no + '</div>';
-                    container.innerHTML += '<div><label>name</label><BR>' + boardMap.name + '</div>';
+                    container.innerHTML += '<div><label>nick name</label><BR>' + boardMap.mbr_nickname + '</div>';
                     container.innerHTML += '<div><label>created_date</label><BR>' + boardMap.created_date + '</div>';
                     container.innerHTML += '<div><label>created_ip</label><BR>' + boardMap.created_ip + '</div>';
                     container.innerHTML += '<div><label>contents</label><BR>' + boardMap.contents + '</div>';
@@ -82,7 +82,7 @@
                     container.innerHTML += '&lt;div&gt;&lt;label&gt;title&lt;/label&gt;&lt;BR&gt;' + boardMap.title + '&lt;/div&gt;';
                     container.innerHTML += '&lt;div&gt;&lt;label&gt;keyword&lt;/label&gt;&lt;BR&gt;' + boardMap.keyword + '&lt;/div&gt;';
                     container.innerHTML += '&lt;div&gt;&lt;label&gt;mbr_no&lt;/label&gt;&lt;BR&gt;' + boardMap.mbr_no + '&lt;/div&gt;';
-                    container.innerHTML += '&lt;div&gt;&lt;label&gt;name&lt;/label&gt;&lt;BR&gt;' + boardMap.name + '&lt;/div&gt;';
+                    container.innerHTML += '&lt;div&gt;&lt;label&gt;nick name&lt;/label&gt;&lt;BR&gt;' + boardMap.mbr_nickname + '&lt;/div&gt;';
                     container.innerHTML += '&lt;div&gt;&lt;label&gt;created_date&lt;/label&gt;&lt;BR&gt;' + boardMap.created_date + '&lt;/div&gt;';
                     container.innerHTML += '&lt;div&gt;&lt;label&gt;created_ip&lt;/label&gt;&lt;BR&gt;' + boardMap.created_ip + '&lt;/div&gt;';
                     container.innerHTML += '&lt;div&gt;&lt;label&gt;contents&lt;/label&gt;&lt;BR&gt;' + boardMap.contents + '&lt;/div&gt;';

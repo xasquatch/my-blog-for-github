@@ -25,7 +25,7 @@
             <div class="btn-link-red" data-toggle="modal" data-target="#myModal">
                 <label class="sr-only">${resource.no}</label>
                 <h3>${resource.title}</h3>
-                <p>${resource.contents}</p>
+                <textarea disabled style="width: 100%; height: 120px; resize: none;">${resource.contents}</textarea>
             </div>
         </c:forEach>
     </article>

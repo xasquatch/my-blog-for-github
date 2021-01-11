@@ -33,6 +33,9 @@
             <p>- title: 해당 게시글의 제목입니다.</p>
             <p>- thumbnail: 해당 게시글의 썸네일 이미지입니다.</p>
             <p>- created_date: 해당 게시글의 작성일자입니다.</p>
+            <p>- mbr_no: 해당 게시글의 작성자입니다.</p>
+            <p>- mbr_img_src: 해당 게시글의 작성자의 프로필 이미지 소스입니다.</p>
+            <p>- mbr_nickname: 해당 게시글의 작성자의 닉네임입니다.</p>
             <h5 class="dot-key">pageBlockList</h5>
             <p>- 페이지버튼 리스트입니다. </p>
             <p>- 페이지블록 단위는 5개로 고정입니다."</p>

@@ -106,6 +106,7 @@ public class MemberService {
         sessionMember.setName(null);
         sessionMember.setImg(null);
         sessionMember.setCheckSession(false);
+        sessionMember.setLoginOAuth(false);
     }
 
     public boolean saveForToken(Member member){
