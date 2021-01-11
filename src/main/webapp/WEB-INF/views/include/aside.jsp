@@ -22,12 +22,14 @@
                     새 저장소 만들기
                 </a>
             </li>
+            <%--
             <li role="presentation">
                 <a href="${path}/board/all/list">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/all-boards.png">
                     전체 글 목록
                 </a>
             </li>
+            --%>
         </ul>
         <h2 style="font-weight: bold;">
             마이 페이지
@@ -40,12 +42,14 @@
                     My API
                 </a>
             </li>
-            <li role="presentation">
-                <a href="${path}/members/${sessionMember.no}/information">
-                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/user.png">
-                    내 정보
-                </a>
-            </li>
+            <c:if test="${!sessionMember.name.equals('GUEST')}">
+                <li role="presentation">
+                    <a href="${path}/members/${sessionMember.no}/information">
+                        <img style="width: 30px; height: auto;" src="${path}/img/banner-black/user.png">
+                        내 정보
+                    </a>
+                </li>
+            </c:if>
             <li role="presentation">
                 <a href="${path}/board/${sessionMember.no}/list">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/boardList.png">
@@ -64,8 +68,6 @@
 
 
 <script>
-
-
 
 
 </script>

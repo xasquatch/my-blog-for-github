@@ -25,7 +25,9 @@ public class HomeController {
     private Member sessionMember;
 
     protected boolean isCheckSessionAndAuth(String inputSessionNumber) {
-        return (sessionMember.getNo() == Long.parseLong(inputSessionNumber) && !sessionMember.getRank().equals("temporary"));
+        return sessionMember.getName().equals("GUEST")  || (sessionMember.getNo() == Long.parseLong(inputSessionNumber)
+                && !sessionMember.getRank().equals("temporary")
+        );
 
     }
 
@@ -43,7 +45,7 @@ public class HomeController {
     }
 
     @GetMapping(value = "/login")
-    public String main(Model model){
+    public String main(Model model) {
         model.addAttribute("mainContents", "login");
 
         return "index";

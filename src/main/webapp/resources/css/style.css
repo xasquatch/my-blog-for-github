@@ -234,12 +234,6 @@
     transition: 0.5s all;
 }
 
-.login-banner {
-    background-size: auto 40vh;
-    height: 40vh;
-    background-image: url('/img/banner/11.gif');
-
-}
 
 .main-banner {
     background-size: auto 50vh;

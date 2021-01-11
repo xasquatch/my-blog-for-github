@@ -4,36 +4,54 @@
 <%@ taglib prefix="sForm" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<section class="banner login-banner dot-key">
-
-    <script>
-        var banner = document.querySelector('.banner');
-        banner.style.backgroundImage = 'url("${path}/img/banner/11.gif")';
-        /*
-                var bannerCount = 1;
-                setInterval(function () {
-                    var xhrBanner = new XMLHttpRequest();
-                    xhrBanner.onreadystatechange = function () {
-                        if (xhrBanner.readyState === xhrBanner.DONE) {
-                            if (xhrBanner.status === 200 || xhrBanner.status === 201) {
-
-                                banner.style.backgroundImage = 'url("${path}/img/banner/' + bannerCount + '.gif")';
-                        bannerCount++;
-                    } else {
-
-                        banner.style.backgroundImage = 'url("${path}/img/banner/1.gif")';
-                        bannerCount = 1;
-
-                    }
-                }
-            };
-            xhrBanner.open('GET', '${path}/img/banner/' + bannerCount + '.gif');
-            xhrBanner.send();
-
-        }, 3000)
-*/
-
-    </script>
+<section id="login-banner" class="banner dot-key" data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="${path}/img/banner/1.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/2.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/3.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/4.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/5.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/6.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/7.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/8.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/9.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/10.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/11.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/12.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/13.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/14.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+        <div class="item">
+            <img src="${path}/img/banner/15.gif" style="margin: 0 auto; height: 250px;">
+        </div>
+    </div>
 
 </section>
 <section class="wrap-min dot-key">
@@ -91,6 +109,10 @@
                 <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/google.png" width="32" height="32"><BR>
                 Google
             </button>
+            <button type="button" class="btn btn-link-red" style="width: 75px;" onclick="guestLogin();">
+                <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/guest.png" width="32" height="32"><BR>
+                Guest
+            </button>
             <button type="button" class="btn btn-link-red" style="width: 75px;"
                     data-toggle="modal" data-target="#myModal" onclick="singUp();">
                 <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/Xasquatch.png" width="32" height="32"><BR>
@@ -116,13 +138,25 @@
 
     if (authToken != null){
     %>
-    window.onload = function (){
+    window.onload = function () {
         oAuth.google.verifyToken('<%=authToken%>');
     }
     <%
     }
     %>
 
+    function guestLogin() {
+        myAjax.submit('POST', '${path}/members/login', function (data) {
+            if (data === 'false') {
+                window.alert('게스트계정 로그인에 실패하였습니다. 다시 시도해주세요');
+
+            } else {
+                window.location.replace('${path}/');
+
+            }
+
+        }, 'FORM', 'email=guest@test.com&pwd=11111111');
+    }
 
     function loginInput() {
         var loginEmail = document.querySelector('#home-login-email');

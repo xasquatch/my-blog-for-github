@@ -37,7 +37,7 @@
     </div>
     <div id="header-right">
         <c:if test="${mainContents != 'login' && mainContents != 'main' && sessionMember != null && !(mainContents.contains('check')||mainContents.contains('find'))}">
-            <button type="button" id="mobile-hamburger" class="dot-key btn btn-link-red" onclick="popUpAside();">
+            <button style="font-size: 20px;" type="button" id="mobile-hamburger" class="dot-key btn btn-link-red" onclick="popUpAside();">
                 <B>More</B>
             </button>
         </c:if>

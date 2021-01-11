@@ -5,10 +5,12 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <section class="banner main-banner dot-key">
     <section>
+<c:if test="${!sessionMember.name.equals('GUEST')}">
         <div onclick="itemFocus(this)">
             <img src="${path}/img/banner-white/user.png">
             <p>My Page</p>
         </div>
+</c:if>
         <div onclick="itemFocus(this)">
             <img src="${path}/img/banner-white/boardList.png">
             <p>My Blog</p>

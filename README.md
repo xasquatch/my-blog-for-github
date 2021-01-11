@@ -1,9 +1,9 @@
 # My Blog by xasquatch
 
 ## Develop tools
-- 마이바티스
+- MyBatis
 - SPRING WEB MVC
-- mariadb
+- mariaDB
 
 ## 기능(간략하게)
 - 본 프로젝트에서 제공되는 REST API를 이용하여 
@@ -28,6 +28,3 @@
 - 회원관리
 - 공지사항
 - 전체 회원 글목록 관리
-- 배너 관리
-0. 그 외
-- (보충) 에러페이지 구현(web.xml 대체재)
