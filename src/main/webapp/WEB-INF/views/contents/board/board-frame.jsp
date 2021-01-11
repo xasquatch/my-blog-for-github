@@ -100,12 +100,15 @@
         </div>
         <div class="flex-row">
             <div class="dropdown">
-                <button type="button" class="btn btn-default dot-key dropdown-toggle" id="board-html-management" data-toggle="dropdown" aria-expanded="true" tabindex="-1">
-                    HTML모드
+                <button type="button" class="btn btn-default dot-key dropdown-toggle" id="board-current-write-mode" data-toggle="dropdown" aria-expanded="true" myblog-write-mode="HTML" tabindex="-1">
+                    작성모드
                 </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="board-html-management">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="convertHtml();">
-                        convert
+                <ul class="dropdown-menu" role="menu" aria-labelledby="board-current-write-mode">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="convertWriteMode('HTML');">
+                        HTML모드로 변경
+                    </a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="convertWriteMode('게시글');">
+                        게시글모드로 변경
                     </a></li>
                 </ul>
             </div>
@@ -114,6 +117,8 @@
             </button>
         </div>
     </div>
+
+
     <div id="board-contents-fake" class="form-control" contentEditable="true">
         ${board.contents}
     </div>
@@ -169,7 +174,6 @@
 </section>
 
 <script>
-
     function temporarySave() {
         var savedLocalTempBoard = localStorage.getItem('tempSavedBoard');
         var boardContents = document.querySelector('#board-contents-fake').innerHTML;
@@ -178,10 +182,13 @@
         var boardThumbnail = document.querySelector('#board-contents-thumbnail').innerHTML;
         var currentDate = new Date().toLocaleString();
         var parsedTempBoard = {};
+
         try {
             if (savedLocalTempBoard !== null) parsedTempBoard = JSON.parse(savedLocalTempBoard);
+
         } catch (e) {
             console.log('call by sessionStorage: 해당 "tempSavedBoard 내용없음"');
+
         }
         if (boardTitle.trim() === '') boardTitle = '[EMPTY TITLE]';
         parsedTempBoard[currentDate] = {
@@ -196,11 +203,24 @@
         temporarySave();
     }, 1000 * 60 * 10);
 
+    function convertWriteMode(mode) {
+        var currentMode = document.querySelector('#board-current-write-mode');
+        if (currentMode.getAttribute('myblog-write-mode') !== mode
+            && window.confirm(mode + '모드로 변경하시겠습니까?')) {
 
-    function convertHtml() {
-        var convertLang = document.querySelector('#board-html-management');
-        if (window.confirm(convertLang.innerText.trim() + '로 변경하시겠습니까?')) {
-            alert('변경할 랭귀지는 ' + convertLang.innerText.trim() + '입니다');
+            var boardContents = document.querySelector('#board-contents-fake');
+
+            switch (mode) {
+                case 'HTML':
+                    alert('HTML');
+                    currentMode.setAttribute('myblog-write-mode','HTML');
+                    break;
+                default:
+                    alert('게시글');
+                    currentMode.setAttribute('myblog-write-mode','게시글');
+                    break;
+            }
+
         }
 
     }
@@ -249,13 +269,12 @@
                 targetObject['title'] +
                 '</a></td>' +
                 '<td style="width: 200px; font-size: 0.8em;">' + key + '</td>';
-            boardListTableBodyTag.prepend(trTag) ;
+            boardListTableBodyTag.prepend(trTag);
         }
 
-        modal.changeForm('임시 저장 목록',
-            boardListDivTag.innerHTML
-        );
+        modal.changeForm('임시 저장 목록', boardListDivTag.innerHTML);
         $('#myModal').modal('show');
+
     }
 
     function uploadImages() {
@@ -269,7 +288,6 @@
         );
         var confirmBtn = document.querySelector('#modal-confirm-btn');
         confirmBtn.setAttribute('onclick', 'confirmUploadFiles();');
-
 
     }
 
@@ -290,22 +308,22 @@
 
                 } else {
                     file = document.createElement('img');
-
                 }
+
                 file.src = 'https://myblog.xasquatch.net' + i.trim();
                 boardUploadTag.appendChild(file);
             }
 
         }, 'FORMFILE', imgFormData);
-
         element.value = '';
-    }
 
+    }
 
     function confirmUploadFiles() {
         document.querySelector('#board-contents-image').innerHTML += document.querySelector('#board-upload').innerHTML;
         document.querySelector('#modal-close-btn').click();
         SettingInsertFiles();
+
     }
 
     // --------------------------
@@ -330,27 +348,19 @@
                 var temporaryContainer = document.createElement('div');
                 temporaryContainer.appendChild(this.cloneNode());
                 document.execCommand('insertHTML', false, temporaryContainer.innerHTML);
-
             });
         }
-
     }
 
     function removeThumbnailImage() {
         var thumbnailImg = document.querySelector('#board-contents-thumbnail');
-
-        if (window.confirm('초기화 하시겠습니까?'))
-            thumbnailImg.innerHTML = '';
-
+        if (window.confirm('초기화 하시겠습니까?')) thumbnailImg.innerHTML = '';
 
     }
 
     function removeContentsImages() {
         var contentsImg = document.querySelector('#board-contents-image');
-
-        if (window.confirm('초기화 하시겠습니까?'))
-            contentsImg.innerHTML = '';
-
+        if (window.confirm('초기화 하시겠습니까?')) contentsImg.innerHTML = '';
 
     }
 
@@ -382,7 +392,6 @@
 
             }, 'FORMFILE', formData);
 
-
         } else if (url.isContainWordCurrentPath('/modify')) {
 
             myAjax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/modify', function (data) {
@@ -396,10 +405,7 @@
                 }
 
             }, 'FORMFILE', formData);
-
         }
-
-
     }
 
     function contentsCssResizeInit() {
@@ -420,7 +426,6 @@
             }
         });
     }
-
 
     function boardInit() {
         SettingInsertFiles();
