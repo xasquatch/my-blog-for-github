@@ -100,14 +100,14 @@
         </div>
         <div class="flex-row">
             <div class="dropdown">
-                <button type="button" class="btn btn-default dot-key dropdown-toggle" id="board-current-write-mode" data-toggle="dropdown" aria-expanded="true" myblog-write-mode="HTML" tabindex="-1">
+                <button type="button" class="btn btn-default dot-key dropdown-toggle" id="board-current-write-mode" data-toggle="dropdown" aria-expanded="true" myblog-write-mode="게시글" tabindex="-1">
                     작성모드
                 </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="board-current-write-mode">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="convertWriteMode('HTML');">
+                <ul class="dropdown-menu" id="board-current-write-mode-list" role="menu" aria-labelledby="board-current-write-mode">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#board-contents-fake-html" onclick="convertWriteMode(this, 'HTML');">
                         HTML모드로 변경
                     </a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="convertWriteMode('게시글');">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#board-contents-fake" onclick="convertWriteMode(this, '게시글');">
                         게시글모드로 변경
                     </a></li>
                 </ul>
@@ -118,11 +118,12 @@
         </div>
     </div>
 
-
-    <div id="board-contents-fake" class="form-control" contentEditable="true">
-        ${board.contents}
+    <div class="tab-content">
+        <div role="tabpanel" id="board-contents-fake" class="form-control board-contents-fake tab-pane active" contentEditable="true">
+            ${board.contents}
+        </div>
+        <textarea role="tabpanel" id="board-contents-fake-html" class="form-control board-contents-fake tab-pane"></textarea>
     </div>
-
 
     <div style="display: grid; grid-template-columns: 150px 1fr;">
         <div>
@@ -203,21 +204,27 @@
         temporarySave();
     }, 1000 * 60 * 10);
 
-    function convertWriteMode(mode) {
+    function convertWriteMode(element, mode) {
         var currentMode = document.querySelector('#board-current-write-mode');
         if (currentMode.getAttribute('myblog-write-mode') !== mode
             && window.confirm(mode + '모드로 변경하시겠습니까?')) {
 
             var boardContents = document.querySelector('#board-contents-fake');
+            var boardContentsForHTML = document.querySelector('#board-contents-fake-html');
 
             switch (mode) {
                 case 'HTML':
-                    alert('HTML');
-                    currentMode.setAttribute('myblog-write-mode','HTML');
+                    currentMode.setAttribute('myblog-write-mode', 'HTML');
+                    boardContentsForHTML.value = boardContents.innerHTML;
+                    $('#board-current-write-mode-list a:first').tab('show');
+                    element.parentNode.classList.remove('active');
                     break;
+
                 default:
-                    alert('게시글');
-                    currentMode.setAttribute('myblog-write-mode','게시글');
+                    currentMode.setAttribute('myblog-write-mode', '게시글');
+                    boardContents.innerHTML = boardContentsForHTML.value;
+                    $('#board-current-write-mode-list a:last').tab('show');
+                    element.parentNode.classList.remove('active');
                     break;
             }
 
