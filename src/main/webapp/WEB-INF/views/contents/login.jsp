@@ -91,6 +91,10 @@
                 <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/google.png" width="32" height="32"><BR>
                 Google
             </button>
+            <button type="button" class="btn btn-link-red" style="width: 75px;" onclick="guestLogin();">
+                <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/guest.png" width="32" height="32"><BR>
+                Guest
+            </button>
             <button type="button" class="btn btn-link-red" style="width: 75px;"
                     data-toggle="modal" data-target="#myModal" onclick="singUp();">
                 <img class="xasquatch-btn-logo" src="${path}/img/oauth-img/Xasquatch.png" width="32" height="32"><BR>
@@ -116,13 +120,25 @@
 
     if (authToken != null){
     %>
-    window.onload = function (){
+    window.onload = function () {
         oAuth.google.verifyToken('<%=authToken%>');
     }
     <%
     }
     %>
 
+    function guestLogin() {
+        myAjax.submit('POST', '${path}/members/login', function (data) {
+            if (data === 'false') {
+                window.alert('게스트계정 로그인에 실패하였습니다. 다시 시도해주세요');
+
+            } else {
+                window.location.replace('${path}/');
+
+            }
+
+        }, 'FORM', 'email=guest@test.com&pwd=11111111');
+    }
 
     function loginInput() {
         var loginEmail = document.querySelector('#home-login-email');
