@@ -40,6 +40,8 @@ public class BoardService {
         String keyword = board.getKeyword().replaceAll(" ", "");;
         String thumbnail = board.getThumbnail().replaceAll(" ", "");;
 
+        if (!thumbnail.contains("<img")) board.setThumbnail("<img style=\"max-width: 140px; max-height: 140px;\" src=\"https://myblog.xasquatch.net/img/no_image.png\">");
+
         Map<String, String> CheckTargetString = new HashMap<String, String>();
         CheckTargetString.put("Title",title);
         CheckTargetString.put("Contents",contents);
