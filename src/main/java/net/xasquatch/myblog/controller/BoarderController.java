@@ -8,6 +8,7 @@ import net.xasquatch.myblog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -47,10 +48,15 @@ public class BoarderController {
     //TODO: defaultBoard메서드로 생성하였던 빈 게시판에 업로드 마무리
     @PostMapping("/{memberNo}/upload/{boardNo}/{method}")
     @ResponseBody
-    public String upload(MultipartHttpServletRequest request, Board board, @PathVariable String method, @PathVariable String memberNo) {
+    public String upload(MultipartHttpServletRequest request, Board board,
+                         @PathVariable String method, @PathVariable String memberNo,
+                         BindingResult bindingResult) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             boolean result = false;
             board.setCreated_ip(accessorInfo.getIpAddress(request));
+
+            String checkResult = boardService.checkBoardFormData(board);
+            if (checkResult.contains("[script Error]")) return checkResult;
 
             if (method.equals("create")) {
                 result = boardService.createFinish(board);
@@ -61,6 +67,7 @@ public class BoarderController {
             }
 
             return String.valueOf(result);
+
         }
 
         return "false";
@@ -96,7 +103,7 @@ public class BoarderController {
             boardUnit = boardService.getBoardList("all", pageLimit, currentPageBlock, searchValue);
             model.addAttribute("mainContents", "board-view-list-all");
 
-        }else{
+        } else {
             boardUnit = boardService.getBoardList(memberNo, pageLimit, currentPageBlock, searchValue);
             model.addAttribute("mainContents", "board-view-list");
 
@@ -112,8 +119,8 @@ public class BoarderController {
             model.addAttribute("searchTarget", searchValue[0]);
             model.addAttribute("searchValue", searchValue[1].substring(1, searchValue[1].length() - 1));
 
-        }catch (NullPointerException e){
-            log.debug("viewList {}",e.getMessage());
+        } catch (NullPointerException e) {
+            log.debug("viewList {}", e.getMessage());
             model.addAttribute("searchTarget", "keyword");
         }
 
@@ -138,7 +145,7 @@ public class BoarderController {
     public String deleteBoard(@PathVariable String memberNo, @PathVariable String boardNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             if (boardService.delete(boardNo))
-            return "true";
+                return "true";
 
         }
         return "false";
