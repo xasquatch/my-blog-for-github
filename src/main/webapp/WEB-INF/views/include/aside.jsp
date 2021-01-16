@@ -58,6 +58,18 @@
                     새 저장소 만들기
                 </a>
             </li>
+            <li role="presentation">
+                <a href="${path}/board/${sessionMember.no}/list">
+                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/boardList.png">
+                    내 글 목록
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="${path}/resource/${sessionMember.no}/list">
+                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/resource.png">
+                    내 저장소 목록
+                </a>
+            </li>
         </ul>
         <h2 style="font-weight: bold;">
             마이 페이지
@@ -78,18 +90,6 @@
                     </a>
                 </li>
             </c:if>
-            <li role="presentation">
-                <a href="${path}/board/${sessionMember.no}/list">
-                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/boardList.png">
-                    내 글 목록
-                </a>
-            </li>
-            <li role="presentation">
-                <a href="${path}/resource/${sessionMember.no}/list">
-                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/resource.png">
-                    내 저장소 목록
-                </a>
-            </li>
         </ul>
     </c:if>
 </aside>
