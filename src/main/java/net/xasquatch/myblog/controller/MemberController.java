@@ -186,7 +186,7 @@ public class MemberController {
     }
 
     /*TODO: 로그아웃 처리 후 루트페이지로 리다이렉트*/
-    @RequestMapping(value = "/{memberNo}/log-out", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/log-out", method = {RequestMethod.GET, RequestMethod.POST})
     public String logOut(HttpServletRequest request, HttpServletResponse response) {
 
         request.getSession().removeAttribute("sessionMember");
