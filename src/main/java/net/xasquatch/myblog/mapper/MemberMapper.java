@@ -1,5 +1,6 @@
 package net.xasquatch.myblog.mapper;
 
+import net.xasquatch.myblog.mapper.builder.MemberBuilder;
 import net.xasquatch.myblog.model.Authorization;
 import net.xasquatch.myblog.model.Member;
 import org.apache.ibatis.annotations.*;
@@ -25,7 +26,6 @@ public interface MemberMapper {
     long selectOneNo(String email);
 
     /**
-     *
      * @param name
      * @return 이름 중복확인 후 해당 이름 반환 없으면 null
      */
@@ -33,8 +33,7 @@ public interface MemberMapper {
     String selectOneName(String name);
 
     /**
-     * @param member
-     * member객체를 DB에 주입 후 no값을 member객체에 주입
+     * @param member member객체를 DB에 주입 후 no값을 member객체에 주입
      */
     @Insert("INSERT INTO mbr(email, pwd, name) VALUES(#{email}, #{pwd}, #{name})")
     @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
@@ -48,8 +47,7 @@ public interface MemberMapper {
     int updateMbrImg(Member member);
 
     /**
-     * @param member
-     * 패스워드는 임의의 랜덤값으로 삽입
+     * @param member 패스워드는 임의의 랜덤값으로 삽입
      */
     @Insert("INSERT INTO mbr(email, pwd, name, img) VALUES(#{email}, #{pwd}, #{name}, #{img})")
     @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
@@ -64,7 +62,6 @@ public interface MemberMapper {
     int selectMbr(Object no, String pwdKey);
 
     /**
-     *
      * @param member
      * @return 멤버객체를 통해 이미지를 제외한 나머지 컬럼들 업로드 후 결과값 반환 성공시 1, 실패시 0
      */
@@ -72,7 +69,6 @@ public interface MemberMapper {
     int updateMbrDefault(Member member);
 
     /**
-     *
      * @param member
      * @return 회원탈퇴, 성공시 1, 실패시 0
      */
@@ -111,8 +107,13 @@ public interface MemberMapper {
      * @param email
      * @return 임시회원에서 일반회원으로 변경 후 결과값 반환 성공시 1, 실패시 0
      */
-    @Update("UPDATE mbr SET authorization_no = 2, email = #{arg1} WHERE no = #{arg0}")
+//    @Update("UPDATE mbr SET authorization_no = 2, email = #{arg1} WHERE no = #{arg0}")
+//    int updateRank(Long no, String email);
+    @UpdateProvider(type = MemberBuilder.class, method = "updateRank")
     int updateRank(Long no, String email);
+
+    @SelectProvider(type = MemberBuilder.class, method = "selectRank")
+    Map<String, Object> selectRank(Long no, String email);
 
     /**
      * @param name

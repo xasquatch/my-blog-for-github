@@ -47,7 +47,16 @@ public class MemberDao {
 
     public boolean updateRank(Long no, String email) {
         boolean result = false;
-        if (memberMapper.updateRank(no, email) == 1) result = true;
+        try {
+            Object memberRank = memberMapper.selectRank(no, email).get("rank");
+            if (memberRank.equals("temporary"))
+                if (memberMapper.updateRank(no, email) == 1) result = true;
+
+        } catch (NullPointerException e) {
+            log.warn(e.getMessage());
+
+        }
+
         return result;
     }
 
@@ -83,7 +92,7 @@ public class MemberDao {
         return result;
     }
 
-    public boolean insertMbrForToken(Member member){
+    public boolean insertMbrForToken(Member member) {
 
         member.setPwd(encryptPwd(member.getPwd()));
 
@@ -135,7 +144,7 @@ public class MemberDao {
         return memberMapper.selectOneMbrForToken(email);
     }
 
-    public String encryptPwd(String pwd){
+    public String encryptPwd(String pwd) {
 
         MessageDigest md = null;
         try {
