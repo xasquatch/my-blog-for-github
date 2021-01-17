@@ -6,6 +6,10 @@
 <section class="banner main-banner dot-key">
     <section>
         <div onclick="itemFocus(this)">
+            <img src="${path}/img/banner-white/light-bulb.png">
+            <p>Notice</p>
+        </div>
+        <div onclick="itemFocus(this)">
             <img src="${path}/img/banner-white/user.png">
             <p>My Page</p>
         </div>
@@ -15,7 +19,7 @@
         </div>
         <c:if test="${sessionMember.rank.contains('temp') && !sessionMember.name.equals('GUEST')}">
             <div onclick="itemFocus(this)">
-                <img src="${path}/img/banner-white/resource.png">
+                <img src="${path}/img/banner-white/email.png">
                 <p>Email Verification</p>
             </div>
         </c:if>
@@ -46,7 +50,10 @@
             document.querySelector('#main-footer>div').innerHTML = '';
 
             // element의 케이스에 맞춰 분기
-            if (inputData === 'My Page') {
+            if (inputData === 'Notice') {
+                itemFocusNotice();
+
+            } else if (inputData === 'My Page') {
                 itemFocusUserInfo();
 
             } else if (inputData === 'My Blog') {
@@ -59,6 +66,24 @@
                 itemFocusGuestInfo();
 
             }
+
+        }
+
+        function itemFocusNotice() {
+            var footerTarget = document.querySelector('#main-footer>div');
+
+            var contents1 = document.createElement('a');
+            contents1.setAttribute('href', '${path}/notice/list');
+            footerTarget.appendChild(contents1);
+            textScript.insertText('#main-footer>div>a:nth-child(1)',
+                '<img src="${path}/img/banner-white/info.png" style="max-height : 100px; max-width:100px;"><BR>공지사항<BR>여러분의 피드백으로<BR>개선된 점을 안내해드립니다.', 10);
+            var contentsLast = document.createElement('a');
+            contentsLast.setAttribute('href', '');
+            footerTarget.appendChild(contentsLast);
+            textScript.insertText('#main-footer>div>a:last-child',
+                '<img src="${path}/img/banner-white/paper-plane.png" style="max-height : 100px; max-width:100px;"><BR>피드백보내기<BR>불편한 점을 개선하기위해<BR> 여러분이 참여해주세요', 10);
+
+
         }
 
         function itemFocusUserInfo() {
@@ -70,11 +95,12 @@
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
                 '<img src="${path}/img/banner-white/user.png" style="max-height : 100px; max-width:100px;"><BR>내 정보<BR>정보확인과 함께<BR>이메일 및 패스워드를<BR>변경 하실 수 있습니다.', 10);
+
             </c:if>
 
-            var contents2 = document.createElement('a');
-            contents2.setAttribute('href', '${path}/members/${sessionMember.no}/api/clipboard');
-            footerTarget.appendChild(contents2);
+            var contentsLast = document.createElement('a');
+            contentsLast.setAttribute('href', '${path}/members/${sessionMember.no}/api/clipboard');
+            footerTarget.appendChild(contentsLast);
             textScript.insertText('#main-footer>div>a:last-child',
                 '<img src="${path}/img/banner-white/api.png" style="max-height : 100px; max-width:100px;"><BR>API<BR>나만의 글과 저장소를 다른 페이지로<BR>공유할 수 있는 API를 제공합니다.', 10);
 
@@ -105,7 +131,7 @@
             contentsLast.setAttribute('href', '${path}/members/${sessionMember.no}/check-email');
             footerTarget.appendChild(contentsLast);
             textScript.insertText('#main-footer>div>a:last-child',
-                '<img src="${path}/img/banner-white/email.png" style="max-height : 100px; max-width:100px;"><BR>이메일 인증<BR>서비스를 제공받기 위해<BR>인증을 해주세요', 10);
+                '<img src="${path}/img/banner-white/email.png" style="max-height : 100px; max-width:100px;"><BR>이메일 인증<BR>나만의 서비스를 제공받기 위해<BR>인증을 진행해주세요', 10);
             </c:if>
 
         }
