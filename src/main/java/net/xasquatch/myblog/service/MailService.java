@@ -110,5 +110,24 @@ public class MailService {
 
     }
 
+    public void sendFeedBack(Member member, String feedbackTitle, String feedbackMsg, String ipAddress) {
+
+        MimeMessage mail = mailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = null;
+
+        try {
+            messageHelper = new MimeMessageHelper(mail, true, "UTF-8");
+            messageHelper.setTo("bigfoot7774@gmail.com");
+            messageHelper.setText(ipAddress + "<BR>" + feedbackMsg, false);
+            messageHelper.setFrom(new InternetAddress("xasquatch.myblog@gmail.com", member.getName() + "[" + member.getEmail() + "."+member.getNo()+"]"));
+            messageHelper.setSubject(feedbackTitle);
+        } catch (MessagingException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        mailSender.send(mail);
+
+    }
+
 
 }

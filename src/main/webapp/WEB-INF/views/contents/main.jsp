@@ -29,8 +29,9 @@
             <div onclick="itemFocus(this)">
                 <p>Guest Account</p>
                 <p>1. 본 게스트용 페이지는 이용에 제한이 있을 수 있습니다.</p>
-                <p>2. 개인정보수집 및 사용안내의 기술한 내용에 의거</p>
-                <p>수집된 ip 및 개인정보를 법적조치에 활용될 수 있음을 안내드립니다.</p>
+                <p>2. 개인정보 수집 및 이용 안내의 기술한 내용에 의거</p>
+                <p>비매너행위 및 가이드 위반 시 수집된 ip 및 개인정보를 필요에 따라</p>
+                <p>법적조치에 활용될 수 있음을 안내드립니다.</p>
                 <p>(클릭시 전문보기 활성화)</p>
             </div>
         </section>
@@ -78,12 +79,35 @@
             textScript.insertText('#main-footer>div>a:nth-child(1)',
                 '<img src="${path}/img/banner-white/info.png" style="max-height : 100px; max-width:100px;"><BR>공지사항<BR>여러분의 피드백으로<BR>개선된 점을 안내해드립니다.', 10);
             var contentsLast = document.createElement('a');
-            contentsLast.setAttribute('href', '');
+            contentsLast.setAttribute('href', 'javascript:');
+            contentsLast.setAttribute('onclick', 'changeFeedbackForm()');
+            contentsLast.setAttribute('data-toggle', 'modal');
+            contentsLast.setAttribute('data-target', '#myModal');
+
             footerTarget.appendChild(contentsLast);
             textScript.insertText('#main-footer>div>a:last-child',
                 '<img src="${path}/img/banner-white/paper-plane.png" style="max-height : 100px; max-width:100px;"><BR>피드백보내기<BR>불편한 점을 개선하기위해<BR> 여러분이 참여해주세요', 10);
 
 
+        }
+
+        function changeFeedbackForm() {
+            modal.changeForm('피드백보내기',
+                '')
+
+            var confirmBtn = document.querySelector('#modal-confirm-btn');
+            confirmBtn.setAttribute('onclick', 'sendFeedback();');
+        }
+
+
+        function sendFeedback() {
+            if (window.confirm('작성한 피드백을 전송하시겠습니까?')) {
+                myAjax.submit('POST', '${path}/feedback/${sessionMember.no}', function (data) {
+                    console.log(data);
+                }, "FORM", 'feedbackTitle=1&feedbackContents=2')
+
+                $('#myModal').modal('hide');
+            }
         }
 
         function itemFocusUserInfo() {
@@ -102,7 +126,7 @@
             contentsLast.setAttribute('href', '${path}/members/${sessionMember.no}/api/clipboard');
             footerTarget.appendChild(contentsLast);
             textScript.insertText('#main-footer>div>a:last-child',
-                '<img src="${path}/img/banner-white/api.png" style="max-height : 100px; max-width:100px;"><BR>API<BR>나만의 글과 저장소를 다른 페이지로<BR>공유할 수 있는 API를 제공합니다.', 10);
+                '<img src="${path}/img/banner-white/api.png" style="max-height : 100px; max-width:100px;"><BR>API<BR>나만의 글과 저장소를<BR>다른 페이지로<BR> 공유할 수 있는<BR>API를 제공합니다.', 10);
 
         }
 
@@ -119,7 +143,7 @@
             contents2.setAttribute('href', '${path}/resource/${sessionMember.no}/list');
             footerTarget.appendChild(contents2);
             textScript.insertText('#main-footer>div>a:nth-child(2)',
-                '<img src="${path}/img/banner-white/all-resources.png" style="max-height : 100px; max-width:100px;"><BR>리소스 목록<BR>작성한 리소스 목록을 확인할 수 있습니다.', 10);
+                '<img src="${path}/img/banner-white/all-resources.png" style="max-height : 100px; max-width:100px;"><BR>리소스 목록<BR>작성한 리소스 목록을<BR>확인할 수 있습니다.', 10);
         }
 
 
