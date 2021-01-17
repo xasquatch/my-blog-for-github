@@ -5,42 +5,44 @@
 
 <aside id="main-aside" class="forward-to-top dot-key">
     <c:if test="${mainContents != 'login' && mainContents != 'main' && sessionMember != null && !(mainContents.contains('check')||mainContents.contains('find'))}">
-        <h2 style="font-weight: bold;">
-            Notice
-        </h2>
-        <hr>
-        <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
-        <li role="presentation">
-            <a href="${path}/board/${sessionMember.no}/create">
-                <img style="width: 30px; height: auto;" src="${path}/img/banner-black/light-bulb.png">
-                공지 사항
-            </a>
-        </li>
         <c:if test="${sessionMember.rank.contains('manager')}">
             <h2 style="font-weight: bold;">
                 Members Management
             </h2>
             <hr>
+            <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
+                <li role="presentation">
+                    <a href="${path}/board/${sessionMember.no}/create">
+                        <img style="width: 30px; height: auto;" src="${path}/img/banner-black/light-bulb.png">
+                        공지 사항 관리
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="${path}/board/${sessionMember.no}/create">
+                        <img style="width: 30px; height: auto;" src="${path}/img/banner-black/members.png">
+                        회원 목록
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="${path}/board/all/list">
+                        <img style="width: 30px; height: auto;" src="${path}/img/banner-black/all-boards.png">
+                        전체 글 목록
+                    </a>
+                </li>
+            </ul>
+        </c:if>
+        <h2 style="font-weight: bold;">
+            Notice
+        </h2>
+        <hr>
+        <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
                 <a href="${path}/board/${sessionMember.no}/create">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/light-bulb.png">
-                    공지 사항 관리
+                    공지 사항
                 </a>
             </li>
-            <li role="presentation">
-                <a href="${path}/board/${sessionMember.no}/create">
-                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/members.png">
-                    회원 목록
-                </a>
-            </li>
-            <li role="presentation">
-                <a href="${path}/board/all/list">
-                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/all-boards.png">
-                    전체 글 목록
-                </a>
-            </li>
-            </ul>
-        </c:if>
+        </ul>
         <h2 style="font-weight: bold;">
             블로그 관리
         </h2>
