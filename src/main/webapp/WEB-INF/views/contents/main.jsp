@@ -5,28 +5,32 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <section class="banner main-banner dot-key">
     <section>
-<c:if test="${!sessionMember.name.equals('GUEST')}">
         <div onclick="itemFocus(this)">
             <img src="${path}/img/banner-white/user.png">
             <p>My Page</p>
         </div>
-</c:if>
         <div onclick="itemFocus(this)">
             <img src="${path}/img/banner-white/boardList.png">
             <p>My Blog</p>
         </div>
+        <c:if test="${sessionMember.rank.contains('temp') && !sessionMember.name.equals('GUEST')}">
+            <div onclick="itemFocus(this)">
+                <img src="${path}/img/banner-white/resource.png">
+                <p>Email Verification</p>
+            </div>
+        </c:if>
     </section>
-    <section>
-        <div onclick="itemFocus(this)">
-            <img src="${path}/img/banner-white/resource.png">
-            <p>My Resource</p>
-        </div>
-        <div onclick="itemFocus(this)">
-            <img src="${path}/img/banner-white/api.png">
-            <p>API</p>
-        </div>
-    </section>
-
+    <c:if test="${sessionMember.name.equals('GUEST')}">
+        <section>
+            <div onclick="itemFocus(this)">
+                <p>Guest Account</p>
+                <p>1. 본 게스트용 페이지는 이용에 제한이 있을 수 있습니다.</p>
+                <p>2. 개인정보수집 및 사용안내의 기술한 내용에 의거</p>
+                <p>수집된 ip 및 개인정보를 법적조치에 활용될 수 있음을 안내드립니다.</p>
+                <p>(클릭시 전문보기 활성화)</p>
+            </div>
+        </section>
+    </c:if>
     <script>
         var mainBannerImgTags = document.querySelectorAll('.main-banner img');
         var mainBannerParagraphTags = document.querySelectorAll('.main-banner p');
@@ -46,13 +50,13 @@
                 itemFocusUserInfo();
 
             } else if (inputData === 'My Blog') {
-                itemFocusBoard();
+                itemFocusBlog();
 
-            } else if (inputData === 'My Resource') {
-                itemFocusResource();
+            } else if (inputData === 'Email Verification') {
+                itemFocusVerification();
 
-            } else if (inputData === 'API') {
-                itemFocusApi();
+            } else if (inputData === 'Guest Account') {
+                itemFocusGuestInfo();
 
             }
         }
@@ -60,59 +64,70 @@
         function itemFocusUserInfo() {
             var footerTarget = document.querySelector('#main-footer>div');
 
+            <c:if test="${!sessionMember.name.equals('GUEST')}">
             var contents1 = document.createElement('a');
             contents1.setAttribute('href', '${path}/members/${sessionMember.no}/information');
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
                 '<img src="${path}/img/banner-white/user.png" style="max-height : 100px; max-width:100px;"><BR>내 정보<BR>정보확인과 함께<BR>이메일 및 패스워드를<BR>변경 하실 수 있습니다.', 10);
-<c:if test="${sessionMember.rank.contains('temp')}">
+            </c:if>
+
             var contents2 = document.createElement('a');
-            contents2.setAttribute('href', '${path}/members/${sessionMember.no}/check-email');
+            contents2.setAttribute('href', '${path}/members/${sessionMember.no}/api/clipboard');
             footerTarget.appendChild(contents2);
-            textScript.insertText('#main-footer>div>a:nth-child(2)',
-                '<img src="${path}/img/banner-white/email.png" style="max-height : 100px; max-width:100px;"><BR>이메일 인증<BR>서비스를 제공받기 위해<BR>인증을 해주세요', 10);
-</c:if>
+            textScript.insertText('#main-footer>div>a:last-child',
+                '<img src="${path}/img/banner-white/api.png" style="max-height : 100px; max-width:100px;"><BR>API<BR>나만의 글과 저장소를 다른 페이지로<BR>공유할 수 있는 API를 제공합니다.', 10);
+
         }
 
-        function itemFocusBoard() {
+        function itemFocusBlog() {
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
-            var contents2 = document.createElement('a');
-            contents1.setAttribute('href', '${path}/board/${sessionMember.no}/create');
-            contents2.setAttribute('href', '${path}/board/${sessionMember.no}/list');
+            contents1.setAttribute('href', '${path}/board/${sessionMember.no}/list');
             footerTarget.appendChild(contents1);
-            footerTarget.appendChild(contents2);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
-                '<img src="${path}/img/banner-white/writeBoard.png" style="max-height : 100px; max-width:100px;"><BR>글 쓰기<BR>페이지에 꾸밀 게시판글을<BR>작성할 수 있습니다.', 10);
-            textScript.insertText('#main-footer>div>a:nth-child(2)',
                 '<img src="${path}/img/banner-white/boardList.png" style="max-height : 100px; max-width:100px;"><BR>글 목록<BR>작성한 글목록을<BR>확인할 수 있습니다.', 10);
 
-        }
-
-        function itemFocusResource() {
-            var footerTarget = document.querySelector('#main-footer>div');
-
-            var contents1 = document.createElement('a');
             var contents2 = document.createElement('a');
-            contents1.setAttribute('href', '${path}/resource/${sessionMember.no}/list');
-            contents2.setAttribute('href', '${path}/resource/${sessionMember.no}/create');
+            contents2.setAttribute('href', '${path}/resource/${sessionMember.no}/list');
             footerTarget.appendChild(contents2);
-            footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(2)',
-                '<img src="${path}/img/banner-white/resource.png" style="max-height : 100px; max-width:100px;"><BR>내 저장소<BR>JSON 형식으로<BR>나만의 저장소를 만들어<BR>사용 할 수 있습니다.', 10);
-            textScript.insertText('#main-footer>div>a:nth-child(1)',
-                '<img src="${path}/img/banner-white/add-resource.png" style="max-height : 100px; max-width:100px;"><BR>리소스 추가<BR>JSON 파일을 작성합니다.', 10);
+                '<img src="${path}/img/banner-white/all-resources.png" style="max-height : 100px; max-width:100px;"><BR>리소스 목록<BR>작성한 리소스 목록을 확인할 수 있습니다.', 10);
         }
 
-        function itemFocusApi() {
+
+        function itemFocusVerification() {
+            <c:if test="${sessionMember.rank.contains('temp')}">
+            var footerTarget = document.querySelector('#main-footer>div');
+
+            var contentsLast = document.createElement('a');
+            contentsLast.setAttribute('href', '${path}/members/${sessionMember.no}/check-email');
+            footerTarget.appendChild(contentsLast);
+            textScript.insertText('#main-footer>div>a:last-child',
+                '<img src="${path}/img/banner-white/email.png" style="max-height : 100px; max-width:100px;"><BR>이메일 인증<BR>서비스를 제공받기 위해<BR>인증을 해주세요', 10);
+            </c:if>
+
+        }
+
+        function itemFocusGuestInfo() {
+            <c:if test="${sessionMember.name.equals('GUEST')}">
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
-            contents1.setAttribute('href', '${path}/members/${sessionMember.no}/api/clipboard');
+            contents1.setAttribute('href', '${path}/html/sign-up/agreement.html');
+            contents1.setAttribute('target', '_blank');
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
-                '<img src="${path}/img/banner-white/api.png" style="max-height : 100px; max-width:100px;"><BR>API<BR>나만의 글과 저장소를 다른 페이지로<BR>공유할 수 있는 API를 제공합니다.', 10);
+                '<img src="${path}/img/banner-white/book.png" style="max-height : 100px; max-width:100px;"><BR>회원약관', 10);
+
+            var contents2 = document.createElement('a');
+            contents2.setAttribute('href', '${path}/html/sign-up/collection-and-use.html');
+            contents2.setAttribute('target', '_blank');
+            footerTarget.appendChild(contents2);
+            textScript.insertText('#main-footer>div>a:nth-child(2)',
+                '<img src="${path}/img/banner-white/book.png" style="max-height : 100px; max-width:100px;"><BR>개인정보 수집 및 이용 안내', 10);
+            </c:if>
         }
 
     </script>
