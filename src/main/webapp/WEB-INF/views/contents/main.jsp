@@ -81,8 +81,6 @@
             var contentsLast = document.createElement('a');
             contentsLast.setAttribute('href', 'javascript:');
             contentsLast.setAttribute('onclick', 'changeFeedbackForm()');
-            contentsLast.setAttribute('data-toggle', 'modal');
-            contentsLast.setAttribute('data-target', '#myModal');
 
             footerTarget.appendChild(contentsLast);
             textScript.insertText('#main-footer>div>a:last-child',
@@ -93,18 +91,43 @@
 
         function changeFeedbackForm() {
             modal.changeForm('피드백보내기',
-                '')
+                '<form id="feedback-form">' +
+                '<h5>제목</h5>' +
+                '<input class="form-control" type="text" name="feedbackTitle"' +
+                'placeholder="제목을 입력해주세요" value="Send Feedback">' +
+                '<h5>피드백 내용</h5>' +
+                '<textarea class="form-control" name="feedbackContents"' +
+                ' style="resize: none; min-height: 200px;"' +
+                'placeholder="상세한 내용을 작성해주세요:)"></textarea>' +
+                '</form>')
 
             var confirmBtn = document.querySelector('#modal-confirm-btn');
             confirmBtn.setAttribute('onclick', 'sendFeedback();');
+
+            $('#myModal').modal('show');
         }
 
 
         function sendFeedback() {
             if (window.confirm('작성한 피드백을 전송하시겠습니까?')) {
+                var feedbackForm = document.querySelector('#feedback-form');
+                var feedback = new FormData(feedbackForm);
                 myAjax.submit('POST', '${path}/feedback/${sessionMember.no}', function (data) {
-                    console.log(data);
-                }, "FORM", 'feedbackTitle=1&feedbackContents=2')
+
+                    if (data.includes('Failed')) {
+                        switch (data) {
+                            case 'Failed Check Session':
+                                window.alert('[' + data + ']\n' + '세션정보가 일치하지않습니다.\n다시 로그인 후 시도해주시기바랍니다.');
+                                break;
+                            case 'Failed feedback':
+                                window.alert('[' + data + ']\n' + '알 수 없는 원인으로 인해 전송에 실패하였습니다.\n 잠시 후 다시 시도해주세요');
+                                break;
+                        }
+                    } else {
+                        window.alert('[' + data + ']\n' + '피드백 전송이 완료되었습니다');
+
+                    }
+                }, "FORMFILE", feedback)
 
                 $('#myModal').modal('hide');
             }

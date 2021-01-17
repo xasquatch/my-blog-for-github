@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.Enumeration;
 import java.util.List;
 
 @Slf4j
@@ -62,19 +63,21 @@ public class HomeController {
 
     @PostMapping(value = "/feedback/{memberNo}")
     @ResponseBody
-    public String sendFeedback(Model model, HttpServletRequest request, @PathVariable String memberNo) {
-        boolean result = false;
+    public String sendFeedback(HttpServletRequest request, @PathVariable String memberNo) {
         if (!isCheckSession(memberNo)) return "Failed Check Session";
 
         String ipAddress = accessorInfo.getIpAddress(request);
-        String feedbackTitle = (String) model.getAttribute("feedbackTitle");
-        String feedbackContents = (String) model.getAttribute("feedbackContents");
+        String feedbackTitle = request.getParameter("feedbackTitle");
+        String feedbackContents = request.getParameter("feedbackContents");
 
-//        mailService.sendFeedBack(sessionMember, feedbackTitle, feedbackContents, ipAddress);
-        mailService.sendFeedBack(sessionMember, "1", "2", ipAddress);
+        try {
 
+        mailService.sendFeedBack(sessionMember, feedbackTitle, feedbackContents, ipAddress);
+        }catch (Exception e){
+            return "Failed feedback";
+        }
 
-        return String.valueOf(result);
+        return "success feedback";
     }
 
 
