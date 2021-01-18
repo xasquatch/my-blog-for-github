@@ -15,7 +15,7 @@ public class Board {
 
     private Long no;
     private Long mbr_no;
-    private String mbr_name;
+    private String mbr_nickname;
 
     @Size(max = 255)
     private String keyword;
