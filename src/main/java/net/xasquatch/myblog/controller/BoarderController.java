@@ -101,7 +101,7 @@ public class BoarderController {
 
         String[] searchValue = boardService.parsingSearchValue(keyword, title, contents, titleOrContents);
         Map<String, Object> boardUnit;
-        if (memberNo.equals("all") && checkSessionController.isCheckManager()) {
+        if (memberNo.equals("all") && checkSessionController.isCheckManager(memberNo)) {
             boardUnit = boardService.getBoardList("all", pageLimit, currentPageBlock, searchValue);
             model.addAttribute("mainContents", "management-boards");
 

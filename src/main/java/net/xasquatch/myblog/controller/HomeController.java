@@ -33,10 +33,9 @@ public class HomeController {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
-    protected boolean isCheckManager(){
-        return sessionMember.getRank().equals("manager");
+    protected boolean isCheckManager(String memberNo){
+        return sessionMember.getRank().equals("manager") && String.valueOf(sessionMember.getNo()).equals(memberNo);
     }
-
 
     protected boolean isCheckSessionAndAuth(String inputSessionNumber) {
         return sessionMember.getName().equals("GUEST") || (sessionMember.getNo() == Long.parseLong(inputSessionNumber)

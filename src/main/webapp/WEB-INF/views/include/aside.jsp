@@ -18,7 +18,7 @@
                     </a>
                 </li>
                 <li role="presentation">
-                    <a href="${path}/board/${sessionMember.no}/create">
+                    <a href="${path}/${sessionMember.no}/management/users">
                         <img style="width: 30px; height: auto;" src="${path}/img/banner-black/members.png">
                         회원 목록
                     </a>
