@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.Enumeration;
 import java.util.List;
 
 @Slf4j
@@ -33,6 +32,11 @@ public class HomeController {
 
     @Resource(name = "sessionMember")
     private Member sessionMember;
+
+    protected boolean isCheckManager(){
+        return sessionMember.getRank().equals("manager");
+    }
+
 
     protected boolean isCheckSessionAndAuth(String inputSessionNumber) {
         return sessionMember.getName().equals("GUEST") || (sessionMember.getNo() == Long.parseLong(inputSessionNumber)
