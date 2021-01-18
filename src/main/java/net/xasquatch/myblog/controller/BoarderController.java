@@ -41,8 +41,8 @@ public class BoarderController {
             model.addAttribute("boardNo", boardNo);
             model.addAttribute("mainContents", "board-create");
             return "index";
-        }
 
+        }
         return "redirect:/";
 
     }
@@ -101,9 +101,9 @@ public class BoarderController {
 
         String[] searchValue = boardService.parsingSearchValue(keyword, title, contents, titleOrContents);
         Map<String, Object> boardUnit;
-        if (memberNo.equals("all")) {
+        if (memberNo.equals("all") && checkSessionController.isCheckManager()) {
             boardUnit = boardService.getBoardList("all", pageLimit, currentPageBlock, searchValue);
-            model.addAttribute("mainContents", "board-view-list-all");
+            model.addAttribute("mainContents", "management-boards");
 
         } else {
             boardUnit = boardService.getBoardList(memberNo, pageLimit, currentPageBlock, searchValue);
