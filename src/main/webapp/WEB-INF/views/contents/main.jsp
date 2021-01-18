@@ -90,12 +90,12 @@
         }
 
         function changeFeedbackForm() {
-            modal.changeForm('피드백보내기',
+            modal.changeForm('<div class="dot-key">피드백보내기</div>',
                 '<form id="feedback-form">' +
-                '<h5>제목</h5>' +
+                '<h5 class="dot-key">제목</h5>' +
                 '<input class="form-control" type="text" name="feedbackTitle"' +
                 'placeholder="제목을 입력해주세요" value="Send Feedback">' +
-                '<h5>피드백 내용</h5>' +
+                '<h5 class="dot-key">피드백 내용</h5>' +
                 '<textarea class="form-control" name="feedbackContents"' +
                 ' style="resize: none; min-height: 200px;"' +
                 'placeholder="상세한 내용을 작성해주세요:)"></textarea>' +
