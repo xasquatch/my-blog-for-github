@@ -62,7 +62,7 @@
             <tr>
                 <td colspan="2" style="text-align: right;">
                     <button class="btn btn-link-red" type="button"
-                            onclick="window.location.href='${path}/notice/list?keyword=my-blog-notice'">
+                            onclick="window.location.href='${path}/notice/list'">
                         More
                     </button>
                 </td>
