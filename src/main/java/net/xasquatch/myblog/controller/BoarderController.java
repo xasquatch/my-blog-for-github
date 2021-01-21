@@ -83,7 +83,8 @@ public class BoarderController {
     //TODO: 작성글 수정페이지로 이동
     @RequestMapping(value = "/{memberNo}/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String modify(Model model, @PathVariable String boardNo, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
+                (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
             Map<String, Object> board = boardService.viewDetail(memberNo, boardNo);
             model.addAttribute("board", board);
             model.addAttribute("mainContents", "board-modify");
@@ -150,7 +151,8 @@ public class BoarderController {
     @DeleteMapping("/{memberNo}/delete/{boardNo}")
     @ResponseBody
     public String deleteBoard(@PathVariable String memberNo, @PathVariable String boardNo) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
+                (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
             if (boardService.delete(boardNo))
                 return "true";
 

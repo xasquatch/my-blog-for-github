@@ -33,20 +33,37 @@ public class HomeController {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
-    protected boolean isCheckManager(String memberNo){
+    protected boolean isCheckManager(String memberNo) {
         return sessionMember.getRank().equals("manager") && String.valueOf(sessionMember.getNo()).equals(memberNo);
     }
 
     protected boolean isCheckSessionAndAuth(String inputSessionNumber) {
-        return sessionMember.getName().equals("GUEST") || (sessionMember.getNo() == Long.parseLong(inputSessionNumber)
-                && !sessionMember.getRank().equals("temporary")
-        );
+        boolean guestResult = sessionMember.getName().equals("GUEST");
+        boolean sessionResult = false;
 
+        try {
+            sessionResult = sessionMember.getNo() == Long.parseLong(inputSessionNumber)
+                    && !sessionMember.getRank().equals("temporary");
+
+        } catch (Exception e) {
+            log.debug(e.getMessage());
+
+        }
+
+        return guestResult || sessionResult;
     }
 
     protected boolean isCheckSession(String inputSessionNumber) {
-        return sessionMember.getNo() == Long.parseLong(inputSessionNumber);
+        boolean sessionResult = false;
+        try {
+            sessionResult = sessionMember.getNo() == Long.parseLong(inputSessionNumber);
 
+        }catch (Exception e){
+            log.debug(e.getMessage());
+
+        }
+
+        return sessionResult;
     }
 
     @GetMapping(value = "/")
@@ -75,8 +92,8 @@ public class HomeController {
 
         try {
 
-        mailService.sendFeedBack(sessionMember, feedbackTitle, feedbackContents, ipAddress);
-        }catch (Exception e){
+            mailService.sendFeedBack(sessionMember, feedbackTitle, feedbackContents, ipAddress);
+        } catch (Exception e) {
             return "Failed feedback";
         }
 
