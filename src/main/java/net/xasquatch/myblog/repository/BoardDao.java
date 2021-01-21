@@ -27,6 +27,17 @@ public class BoardDao {
 
     }
 
+    public List<Map<String, Object>> selectNoticeList(Object rank, Object currentPage, Object pageLimit,
+                                                     Object searchTarget, Object searchValue) {
+
+        return boardMapper.selectNoticeList(rank, currentPage, pageLimit, searchTarget, searchValue);
+    }
+
+    public int selectNoticeCount(Object rank, String searchTarget, String searchValue) {
+        return boardMapper.selectNoticeCount(rank, searchTarget, searchValue);
+
+    }
+
     public void deleteUnfinishedBoard(Map<String, Object> memberMap) {
         boardMapper.deleteUnfinishedBoard(memberMap);
 

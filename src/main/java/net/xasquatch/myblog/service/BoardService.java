@@ -79,6 +79,32 @@ public class BoardService {
         return searchValue;
     }
 
+    public Map<String, Object> getNoticeList(Object rank, int pageLimit, int currentPageBlock, String[] searchValue) {
+
+        int currentPage = 0;
+        try {
+            currentPage = (currentPageBlock - 1) * pageLimit;
+
+        } catch (ArithmeticException e) {
+            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
+        }
+
+        List<Map<String, Object>> boardList
+                = boardDao.selectNoticeList(rank, currentPage, pageLimit, searchValue[0], searchValue[1]);
+
+        int totalCount = boardDao.selectNoticeCount(rank, searchValue[0], searchValue[1]);
+
+        List<String> pageBlockList = new Pagination().getNoticeList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("boardList", boardList);
+        data.put("pageBlockList", pageBlockList);
+
+        return data;
+    }
+
+
     public Map<String, Object> getBoardList(Object memberNo, int pageLimit, int currentPageBlock, String[] searchValue) {
 
         int currentPage = 0;
