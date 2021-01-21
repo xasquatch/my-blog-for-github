@@ -3,6 +3,7 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Board;
+import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.ApiService;
 import net.xasquatch.myblog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,9 @@ public class BoarderController {
 
     @Autowired
     private BoardService boardService;
+
+    @Resource(name = "sessionMember")
+    private Member sessionMember;
 
     @Lazy
     @Autowired
@@ -101,7 +106,7 @@ public class BoarderController {
 
         String[] searchValue = boardService.parsingSearchValue(keyword, title, contents, titleOrContents);
         Map<String, Object> boardUnit;
-        if (memberNo.equals("all") && checkSessionController.isCheckManager(memberNo)) {
+        if (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString())) {
             boardUnit = boardService.getBoardList("all", pageLimit, currentPageBlock, searchValue);
             model.addAttribute("mainContents", "management-boards");
 

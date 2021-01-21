@@ -39,7 +39,7 @@
                 <th>Title</th>
                 <th style="width: 200px;">Date</th>
                 <th style="width: 60px;">Update</th>
-                <th style="width: 60px;">Delte</th>
+                <th style="width: 60px;">Delete</th>
             </tr>
             </thead>
             <tbody id="myblog-api-board-list" class="dot-key">
