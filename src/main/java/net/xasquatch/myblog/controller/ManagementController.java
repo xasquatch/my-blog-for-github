@@ -1,13 +1,14 @@
 package net.xasquatch.myblog.controller;
 
+import net.xasquatch.myblog.model.Member;
+import net.xasquatch.myblog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 @Controller
 public class ManagementController {
@@ -16,13 +17,26 @@ public class ManagementController {
     @Autowired
     private HomeController checkSessionController;
 
+    @Autowired
+    private BoardService boardService;
+
+    @Resource(name = "sessionMember")
+    private Member sessionMember;
+
+
     @GetMapping(value = "/notice/list")
-    public String noticeList(Model model) {
+    public String noticeList(Model model,
+                             @RequestParam(value = "page-limit", required = false, defaultValue = "10") int pageLimit,
+                             @RequestParam(value = "current-page-block", required = false, defaultValue = "1") int currentPageBlock,
+                             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+
+        boardService.getBoardList(1, pageLimit,currentPageBlock, new String[]{"keyword", keyword});
 
         model.addAttribute("noticeList", "management-notice-list");
         model.addAttribute("mainContents", "management-notice-list");
 
         return "index";
+
     }
 
     @RequestMapping(value = "/{memberNo}/management/users", method = RequestMethod.GET)
