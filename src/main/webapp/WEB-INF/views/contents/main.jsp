@@ -74,14 +74,14 @@
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
-            contents1.setAttribute('href', '${path}/notice/list');
+            contents1.setAttribute('href', '${path}/notice/list?keyword=my-blog-notice');
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
                 '<img src="${path}/img/banner-white/info.png" style="max-height : 100px; max-width:100px;"><BR>공지사항<BR>여러분의 피드백으로<BR>개선된 점을 안내해드립니다.', 10);
+
             var contentsLast = document.createElement('a');
             contentsLast.setAttribute('href', 'javascript:');
             contentsLast.setAttribute('onclick', 'changeFeedbackForm()');
-
             footerTarget.appendChild(contentsLast);
             textScript.insertText('#main-footer>div>a:last-child',
                 '<img src="${path}/img/banner-white/paper-plane.png" style="max-height : 100px; max-width:100px;"><BR>피드백보내기<BR>불편한 점을 개선하기위해<BR> 여러분이 참여해주세요', 10);
