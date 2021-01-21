@@ -16,7 +16,7 @@
                 <option>50</option>
                 <option>100</option>
             </select>
-            <c:if test="sessionMember.rank.equals('manager')">
+            <c:if test="${sessionMember.rank.equals('manager')}">
                 <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/board/${sessionMember.no}/create'">
                     글쓰기
                 </button>
@@ -27,10 +27,9 @@
         <table class="table table-hover table-condensed">
             <thead>
             <tr>
-                <th style="width: 40px;">No</th>
                 <th>Title</th>
                 <th style="width: 200px;">Date</th>
-                <c:if test="sessionMember.rank.equals('manager')">
+                <c:if test="${sessionMember.rank.equals('manager')}">
                     <th style="width: 60px;">Update</th>
                     <th style="width: 60px;">Delete</th>
                 </c:if>
@@ -39,9 +38,6 @@
             <tbody id="myblog-api-board-list" class="dot-key">
             <c:forEach var="board" items="${boardList}">
                 <tr>
-                    <td style="vertical-align: middle;">
-                            ${board.row_number}
-                    </td>
                     <td>
                         <a href="${path}/board/${board.mbr_no}/read/${board.no}">
                             <span style="display: inline-block; width: 200px; overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
@@ -52,7 +48,7 @@
                     <td style="vertical-align: middle;">
                             ${board.created_date}
                     </td>
-                    <c:if test="sessionMember.rank.equals('manager')">
+                    <c:if test="${sessionMember.rank.equals('manager')}">
                         <td style="vertical-align: middle; text-align: center;">
                             <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no})">
                                 <span class="glyphicon glyphicon-pencil"></span>
