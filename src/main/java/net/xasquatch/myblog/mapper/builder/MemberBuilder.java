@@ -25,7 +25,7 @@ public class MemberBuilder {
 
     public static String selectRankFromMbrJoinAuthorization(){
         return new SQL(){{
-            SELECT("m.name AS mbr_name a.rank AS rank");
+            SELECT("m.*, a.rank AS rank");
             FROM("mbr m ");
             LEFT_OUTER_JOIN("authorization a ON m.authorization_no = a.no");
         }}.toString();
