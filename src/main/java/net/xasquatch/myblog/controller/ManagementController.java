@@ -1,5 +1,6 @@
 package net.xasquatch.myblog.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @Controller
 public class ManagementController {
 
@@ -28,15 +32,25 @@ public class ManagementController {
     public String noticeList(Model model,
                              @RequestParam(value = "page-limit", required = false, defaultValue = "10") int pageLimit,
                              @RequestParam(value = "current-page-block", required = false, defaultValue = "1") int currentPageBlock,
-                             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+                             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                             @RequestParam(value = "title", required = false, defaultValue = "") String title,
+                             @RequestParam(value = "contents", required = false, defaultValue = "") String contents,
+                             @RequestParam(value = "title-or-contents", required = false, defaultValue = "") String titleOrContents) {
 
-        boardService.getBoardList(1, pageLimit,currentPageBlock, new String[]{"keyword", keyword});
+        String[] searchValue = boardService.parsingSearchValue("", title, contents, titleOrContents);
+        Map<String, Object> boardUnit = boardService.getNoticeList("manager", pageLimit,currentPageBlock, searchValue);
 
         model.addAttribute("noticeList", "management-notice-list");
         model.addAttribute("mainContents", "management-notice-list");
 
-        return "index";
+        List<Map<String, Object>> boardList = (List<Map<String, Object>>) boardUnit.get("boardList");
+        Object pageBlockList = boardUnit.get("pageBlockList");
 
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("pageBlockList", pageBlockList);
+        model.addAttribute("pageLimit", pageLimit);
+
+        return "index";
     }
 
     @RequestMapping(value = "/{memberNo}/management/users", method = RequestMethod.GET)
