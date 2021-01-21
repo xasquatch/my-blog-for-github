@@ -21,6 +21,18 @@ public class BoardBuilder {
             ORDER_BY("b.created_date DESC", "b.row_number DESC");
         }}.toString();
     }
+public static String selectBoardListForManager(Object rank, Object currentPage, Object pageLimit,
+                                         Object searchTarget, Object searchValue) {
+
+        return new SQL() {{
+            SELECT("m.img AS mbr_img_src, m.name AS mbr_nickname, b.*");
+            FROM("(" + selectAllBoardListSubQuery(searchTarget, searchValue) + ")b");
+            LEFT_OUTER_JOIN("mbr m ON b.mbr_no = m.no");
+            LIMIT(currentPage + ", " + pageLimit);
+            ORDER_BY("b.created_date DESC", "b.row_number DESC");
+        }}.toString();
+    }
+
 
     public static String selectAllBoardListSubQuery(Object searchTarget, Object searchValue) {
 
@@ -89,6 +101,12 @@ public class BoardBuilder {
         }
 
     }
+    public static String selectBoardCountForManager(Object rank, String searchTarget, String searchValue) {
+
+            return selectAllBoardCount(searchTarget, searchValue);
+
+    }
+
 
     public static String selectMemberBoardCount(Object memberNo, String searchTarget, String searchValue) {
         return new SQL() {{

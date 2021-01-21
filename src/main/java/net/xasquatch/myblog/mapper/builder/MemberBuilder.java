@@ -17,8 +17,17 @@ public class MemberBuilder {
         return new SQL() {{
             SELECT("rank");
             FROM("MBR m ");
-            JOIN("authorization a ON m.authorization_no = a.no");
+            LEFT_OUTER_JOIN("authorization a ON m.authorization_no = a.no");
             WHERE("m.no=" + no + " AND m.email='" + email + "'");
+        }}.toString();
+    }
+
+
+    public static String selectRankFromMbrJoinAuthorization(){
+        return new SQL(){{
+            SELECT("m.name AS mbr_name a.rank AS rank");
+            FROM("mbr m ");
+            LEFT_OUTER_JOIN("authorization a ON m.authorization_no = a.no");
         }}.toString();
     }
 
