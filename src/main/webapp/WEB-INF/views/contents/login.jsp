@@ -73,10 +73,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>타이틀</td>
-                <td>시간</td>
-            </tr>
+            <c:forEach items="${noticeList}" var="notice">
+                <tr>
+                    <td>
+                        <a href="${path}/board/${notice.mbr_no}/read/${notice.no}">
+                            ${notice.title}
+                        </a>
+                    </td>
+                    <td>${notice.created_date}</td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

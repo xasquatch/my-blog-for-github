@@ -3,6 +3,7 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Member;
+import net.xasquatch.myblog.service.BoardService;
 import net.xasquatch.myblog.service.ImgService;
 import net.xasquatch.myblog.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -32,6 +34,10 @@ public class HomeController {
 
     @Resource(name = "sessionMember")
     private Member sessionMember;
+
+    @Autowired
+    private BoardService boardService;
+
 
     protected boolean isCheckManager(String memberNo) {
         return sessionMember.getRank().equals("manager") && String.valueOf(sessionMember.getNo()).equals(memberNo);
@@ -58,7 +64,7 @@ public class HomeController {
         try {
             sessionResult = sessionMember.getNo() == Long.parseLong(inputSessionNumber);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             log.debug(e.getMessage());
 
         }
@@ -76,6 +82,11 @@ public class HomeController {
 
     @GetMapping(value = "/login")
     public String main(Model model) {
+
+        Map<String, Object> noticeMap =
+                boardService.getNoticeList("manager", 5, 1, new String[]{"keyword", "my-blog-notice"});
+        List<Map<String, Object>> noticeList = (List<Map<String, Object>>) noticeMap.get("boardList");
+        model.addAttribute("noticeList", noticeList);
         model.addAttribute("mainContents", "login");
 
         return "index";
