@@ -3,14 +3,14 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <script>
-// ---header
+    // ---header
     window.addEventListener('DOMContentLoaded', function () {
 
         textScript.insertText('#main-header-logo', 'My Blog', 20);
 
     });
 
-// ---aside
+    // ---aside
     var mainAside = document.querySelector('#main-aside');
 
     function popUpAside() {
@@ -25,6 +25,20 @@
             mainAside.style.marginTop = window.pageYOffset;
         }
     });
+
+    var aTags = document.querySelectorAll('a');
+    for (var aTag of aTags) {
+        var href = aTag.href;
+        var target = aTag.target;
+
+        if (href != null && href.indexOf('javascript:') === -1 && href !== '#' && href !== 'undefined'
+            && target !== '_blank') {
+            aTag.addEventListener('click', function () {
+                footerEffect.addLoadingState();
+
+            });
+        }
+    }
 
 </script>
 
@@ -48,16 +62,6 @@
         </div>
     </div>
 </div>
-
-<c:if test="${requestScope.systemMsg != null}">
-    <script>
-        window.alert('${requestScope.systemMsg}');
-        <c:if test="${requestScope.locationPage != null}">
-        location.href='${path}${requestScope.locationPage}';
-        </c:if>
-    </script>
-</c:if>
-
 
 <div id="main-footer-proto">
     &nbsp;
