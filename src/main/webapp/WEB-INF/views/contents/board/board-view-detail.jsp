@@ -9,14 +9,16 @@
                 <th class="dot-key" colspan="2">
                     <section style="display: flex; justify-content: space-between;">
                         <h1>${board.title}</h1>
-                        <h3>
-                            <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no})">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                            </a>
-                            <a href="javascript:board.delete(${board.mbr_no}, ${board.no})">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </a>
-                        </h3>
+                        <c:if test="${sessionMember.rank eq 'manager' || sessionMember.no eq board.mbr_no}">
+                            <h3>
+                                <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no})">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                                <a href="javascript:board.delete(${board.mbr_no}, ${board.no})">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+                            </h3>
+                        </c:if>
                     </section>
                 </th>
             </tr>
