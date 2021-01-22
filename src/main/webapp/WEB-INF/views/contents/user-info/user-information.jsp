@@ -90,7 +90,7 @@
 
             } else {
                 window.alert('정보 수정이 완료되었습니다. 다시 로그인 해주세요');
-                window.location.href = "${path}/members/${sessionMember.no}/log-out"
+                window.location.href = "${path}/members/log-out"
 
             }
 

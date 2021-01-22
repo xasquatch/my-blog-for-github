@@ -40,6 +40,11 @@
         <c:when test="${mainContents.indexOf('document-')==0}">
             <jsp:include page="contents/document/${mainContents}.jsp"/>
         </c:when>
+
+        <c:when test="${mainContents.indexOf('management-')==0}">
+            <jsp:include page="contents/management/${mainContents}.jsp"/>
+        </c:when>
+
     </c:choose>
 
 </section>

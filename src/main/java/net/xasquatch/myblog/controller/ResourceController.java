@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Resource;
 import net.xasquatch.myblog.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequestMapping(value = "/resource", produces = "text/plain;charset=UTF-8")
 public class ResourceController {
 
+    @Lazy
     @Autowired
     private HomeController checkSessionController;
 

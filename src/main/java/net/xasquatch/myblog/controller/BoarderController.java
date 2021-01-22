@@ -3,15 +3,18 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Board;
+import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.ApiService;
 import net.xasquatch.myblog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,20 +30,27 @@ public class BoarderController {
     @Autowired
     private BoardService boardService;
 
+    @Resource(name = "sessionMember")
+    private Member sessionMember;
+
+    @Lazy
     @Autowired
     private HomeController checkSessionController;
 
 
     //TODO: 글작성 화면으로 이동
     @RequestMapping(value = "/{memberNo}/create", method = {RequestMethod.GET, RequestMethod.POST})
-    public String forwardCreate(Model model, @PathVariable String memberNo) {
+    public String forwardCreate(Model model, @PathVariable String memberNo,
+                                @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             long boardNo = (long) boardService.createDefaultBoard(memberNo);
+
+            model.addAttribute("boardKeyword", keyword);
             model.addAttribute("boardNo", boardNo);
             model.addAttribute("mainContents", "board-create");
             return "index";
-        }
 
+        }
         return "redirect:/";
 
     }
@@ -76,7 +86,8 @@ public class BoarderController {
     //TODO: 작성글 수정페이지로 이동
     @RequestMapping(value = "/{memberNo}/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
     public String modify(Model model, @PathVariable String boardNo, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
+                (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
             Map<String, Object> board = boardService.viewDetail(memberNo, boardNo);
             model.addAttribute("board", board);
             model.addAttribute("mainContents", "board-modify");
@@ -99,9 +110,9 @@ public class BoarderController {
 
         String[] searchValue = boardService.parsingSearchValue(keyword, title, contents, titleOrContents);
         Map<String, Object> boardUnit;
-        if (memberNo.equals("all")) {
+        if (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString())) {
             boardUnit = boardService.getBoardList("all", pageLimit, currentPageBlock, searchValue);
-            model.addAttribute("mainContents", "board-view-list-all");
+            model.addAttribute("mainContents", "management-boards");
 
         } else {
             boardUnit = boardService.getBoardList(memberNo, pageLimit, currentPageBlock, searchValue);
@@ -143,7 +154,8 @@ public class BoarderController {
     @DeleteMapping("/{memberNo}/delete/{boardNo}")
     @ResponseBody
     public String deleteBoard(@PathVariable String memberNo, @PathVariable String boardNo) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
+                (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
             if (boardService.delete(boardNo))
                 return "true";
 

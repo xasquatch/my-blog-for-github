@@ -9,6 +9,9 @@
     <meta charset="UTF-8">
     <meta name="keyword" content="github, blog">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="xasquatch">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
 
@@ -43,7 +46,7 @@
         </c:if>
         <c:if test="${sessionMember.no != null}">
             <button type="button" class="btn btn-link-red" style="font-size: 20px; color: black;"
-                    onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/members/${sessionMember.no}/log-out'">
+                    onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/members/log-out'">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </button>
         </c:if>
