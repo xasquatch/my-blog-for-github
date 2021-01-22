@@ -17,7 +17,7 @@
                 <option>100</option>
             </select>
             <c:if test="${sessionMember.rank.equals('manager')}">
-                <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/board/${sessionMember.no}/create'">
+                <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/board/${sessionMember.no}/create?keyword=my-blog-notice'">
                     글쓰기
                 </button>
             </c:if>

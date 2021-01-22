@@ -11,7 +11,18 @@
     </div>
     <div class="input-group">
         <div class="input-group-addon dot-key"><b>키워드</b></div>
-        <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc" value="${board.keyword}">
+        <c:choose>
+            <c:when test="${requestScope.boardKeyword != null && requestScope.boardKeyword ne ''}">
+            <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc"
+                   value="${requestScope.boardKeyword}">
+
+            </c:when>
+            <c:otherwise>
+            <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc"
+                   value="${board.keyword}">
+
+            </c:otherwise>
+        </c:choose>
     </div>
     <div id="board-bar" class="well">
 

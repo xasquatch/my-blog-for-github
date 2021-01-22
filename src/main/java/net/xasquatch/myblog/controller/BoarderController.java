@@ -40,9 +40,12 @@ public class BoarderController {
 
     //TODO: 글작성 화면으로 이동
     @RequestMapping(value = "/{memberNo}/create", method = {RequestMethod.GET, RequestMethod.POST})
-    public String forwardCreate(Model model, @PathVariable String memberNo) {
+    public String forwardCreate(Model model, @PathVariable String memberNo,
+                                @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             long boardNo = (long) boardService.createDefaultBoard(memberNo);
+
+            model.addAttribute("boardKeyword", keyword);
             model.addAttribute("boardNo", boardNo);
             model.addAttribute("mainContents", "board-create");
             return "index";
