@@ -29,7 +29,7 @@
         myAjax.submit('PATCH', '${path}/members/${sessionMember.no}/auth-email', function (data) {
             if (data === 'true') {
                 window.alert('인증에 성공하였습니다. 다시 로그인해주세요.');
-                window.location.href = '${path}/members/${sessionMember.no}/log-out';
+                window.location.href = '${path}/members/log-out';
 
             } else if (data === 'false') {
                 window.alert('[인증 실패] 새로 인증요청을 진행합니다. 다시 시도해주세요.');

@@ -36,6 +36,8 @@
                 <th>Title</th>
                 <th style="width: 200px;">Date</th>
                 <th style="width: 60px;">User Name</th>
+                <th style="width: 60px;">Update</th>
+                <th style="width: 60px;">Delete</th>
             </tr>
             </thead>
             <tbody id="myblog-api-board-list" class="dot-key">
@@ -56,7 +58,17 @@
                             ${board.created_date}
                     </td>
                     <td style="vertical-align: middle;">
-                            ${board.name}
+                            ${board.mbr_nickname}
+                    </td>
+                    <td style="vertical-align: middle; text-align: center;">
+                        <a href="javascript:board.GoModify('all', ${board.no})">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                    <td style="vertical-align: middle; text-align: center;">
+                        <a href="javascript:board.delete('all', ${board.no})">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
                     </td>
                 </tr>
             </c:forEach>

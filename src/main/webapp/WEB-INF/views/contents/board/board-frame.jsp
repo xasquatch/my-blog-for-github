@@ -7,11 +7,22 @@
     <h1 class="dot-key">게시글 쓰기</h1>
     <div class="input-group">
         <div class="input-group-addon dot-key"><b>글제목</b></div>
-        <input type="text" id="board-title-fake" class="form-control" placeholder="[Empty Title]" maxlength="50" value="${board.title}">
+        <input type="text" id="board-title-fake" class="form-control" placeholder="[Empty Title]" maxlength="200" value="${board.title}">
     </div>
     <div class="input-group">
         <div class="input-group-addon dot-key"><b>키워드</b></div>
-        <input type="text" class="form-control" id="board-keyword-fake" maxlength="25" placeholder="ex) Life, health....etc" value="${board.keyword}">
+        <c:choose>
+            <c:when test="${requestScope.boardKeyword != null && requestScope.boardKeyword ne ''}">
+            <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc"
+                   value="${requestScope.boardKeyword}">
+
+            </c:when>
+            <c:otherwise>
+            <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc"
+                   value="${board.keyword}">
+
+            </c:otherwise>
+        </c:choose>
     </div>
     <div id="board-bar" class="well">
 
@@ -391,9 +402,16 @@
                 if (data === 'false') {
                     window.alert('업로드에 실패하였습니다. 잠시 후 다시 시도해주세요.');
                     board.save();
+                    temporarySave();
+
+                }else if(data.includes('[script Error]')){
+                    window.alert(data);
+                    board.save();
+                    temporarySave();
 
                 } else if (data === 'true') {
                     window.location.href = '${path}/board/${sessionMember.no}/list';
+
 
                 }
 
@@ -404,6 +422,9 @@
             myAjax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/modify', function (data) {
                 if (data === 'false') {
                     window.alert('수정에 실패하였습니다. 잠시 후 다시 시도해주세요.');
+
+                }else if(data.includes('[script Error]')){
+                    window.alert(data);
 
                 } else if (data === 'true') {
                     window.alert('수정에 성공하였습니다.');

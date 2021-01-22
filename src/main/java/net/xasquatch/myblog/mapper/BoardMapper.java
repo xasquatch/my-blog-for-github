@@ -47,4 +47,13 @@ public interface BoardMapper {
 
     @SelectProvider(type = BoardBuilder.class, method = "selectBoardCount")
     int selectBoardCount(Object memberNo, String searchTarget, String searchValue);
+
+    @SelectProvider(type = BoardBuilder.class, method = "selectNoticeList")
+    List<Map<String, Object>> selectNoticeList(Object rank, Object currentPage, Object pageLimit,
+                                              Object searchTarget, Object searchValue);
+
+    @SelectProvider(type = BoardBuilder.class, method = "selectNoticeCount")
+    int selectNoticeCount(Object rank, String searchTarget, String searchValue);
+
+
 }

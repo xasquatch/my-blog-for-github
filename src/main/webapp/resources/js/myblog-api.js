@@ -148,7 +148,7 @@ var myBoard = {
             pageBlock.addEventListener('click', function (e) {
                 e.preventDefault();
                 var href = this.href.substr(this.href.indexOf('/api/members/'), this.href.length);
-                if (href !== null) {
+                if (href !== null && href !== '') {
                     myBoard.recursiveGetBoardList(memberNo, 'https://myblog.xasquatch.net' + href);
                 }
             });

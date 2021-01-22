@@ -32,6 +32,34 @@ public class BoardService {
     @Value("${files.save.contents.name.blog}")
     String ContentsName;
 
+    public String checkBoardFormData(Board board) {
+        String[] prohibitedWords = {"<script", "onload="};
+
+        String title = board.getTitle().replaceAll(" ", "");
+        String contents = board.getContents().replaceAll(" ", "");;
+        String keyword = board.getKeyword().replaceAll(" ", "");;
+        String thumbnail = board.getThumbnail().replaceAll(" ", "");;
+
+        if (!thumbnail.contains("<img")) board.setThumbnail("<img style=\"max-width: 140px; max-height: 140px;\" src=\"https://myblog.xasquatch.net/img/no_image.png\">");
+
+        Map<String, String> CheckTargetString = new HashMap<String, String>();
+        CheckTargetString.put("Title",title);
+        CheckTargetString.put("Contents",contents);
+        CheckTargetString.put("Keyword",keyword);
+        CheckTargetString.put("Thumbnail",thumbnail);
+        CheckTargetString.put("msg","");
+
+        CheckTargetString.forEach((key, value)->{
+            for (String word : prohibitedWords) {
+                if (!key.equals("msg") && value.contains(word)) {
+                    CheckTargetString.put("msg", "[script Error] \""+ key + "\"부분의 스크립트를 제거해주시기바랍니다.");
+                }
+            }
+        });
+
+        return CheckTargetString.get("msg");
+    }
+
     public String[] parsingSearchValue(String keyword, String title, String contents, String titleOrContents) {
         Map<String, String> map = new HashMap<String, String>();
         String[] searchValue = new String[2];
@@ -51,6 +79,32 @@ public class BoardService {
         return searchValue;
     }
 
+    public Map<String, Object> getNoticeList(Object rank, int pageLimit, int currentPageBlock, String[] searchValue) {
+
+        int currentPage = 0;
+        try {
+            currentPage = (currentPageBlock - 1) * pageLimit;
+
+        } catch (ArithmeticException e) {
+            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
+        }
+
+        List<Map<String, Object>> boardList
+                = boardDao.selectNoticeList(rank, currentPage, pageLimit, searchValue[0], searchValue[1]);
+
+        int totalCount = boardDao.selectNoticeCount(rank, searchValue[0], searchValue[1]);
+
+        List<String> pageBlockList = new Pagination().getNoticeList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("boardList", boardList);
+        data.put("pageBlockList", pageBlockList);
+
+        return data;
+    }
+
+
     public Map<String, Object> getBoardList(Object memberNo, int pageLimit, int currentPageBlock, String[] searchValue) {
 
         int currentPage = 0;
@@ -67,11 +121,11 @@ public class BoardService {
         int totalCount = boardDao.selectBoardCount(memberNo, searchValue[0], searchValue[1]);
 
         List<String> pageBlockList;
-        if (memberNo.equals("all")){
-            pageBlockList= new Pagination().getBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+        if (memberNo.equals("all")) {
+            pageBlockList = new Pagination().getBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
-        }else {
-            pageBlockList= new Pagination().getBlockList(memberNo, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+        } else {
+            pageBlockList = new Pagination().getBlockList(memberNo, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         }
 
@@ -100,7 +154,8 @@ public class BoardService {
 
     public boolean createFinish(Board board) {
         if (board.getTitle().equals("") || board.getTitle() == null) board.setTitle("[Empty Title]");
-        if (board.getThumbnail().trim().equals("")||board.getThumbnail() == null) board.setThumbnail("<img style=\"max-width: 140px; max-height: 140px;\" src=\"https://myblog.xasquatch.net/img/no_image.png\"/>");
+        if (board.getThumbnail().trim().equals("") || board.getThumbnail() == null)
+            board.setThumbnail("<img style=\"max-width: 140px; max-height: 140px;\" src=\"https://myblog.xasquatch.net/img/no_image.png\"/>");
         byte[] bytes = (board.getTitle() + System.lineSeparator() + board.getCreated_ip() + System.lineSeparator() + board.getContents()).getBytes();
 
         fileService.writeFile(bytes, File.separator + board.getMbr_no() + SaveDir + File.separator + board.getNo(), ContentsName + "-origin");
@@ -122,6 +177,7 @@ public class BoardService {
         return boardDao.selectOneBoard(memberNo, boardNo);
 
     }
+
     public boolean delete(Object boardKey) {
         boolean result = false;
         if (boardDao.deleteOneBoard(boardKey) == 1)

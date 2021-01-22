@@ -54,8 +54,41 @@
     </div>
 
 </section>
+<section>
+    <div style="margin: 0 auto; max-width: 800px; padding: 5px;" class="dot-key">
+        <h1 style="margin: 0; text-align: center">NOTICE</h1>
+        <table class="table table-hover table-condensed">
+            <thead>
+            <tr>
+                <td colspan="2" style="text-align: right;">
+                    <button class="btn btn-link-red" type="button"
+                            onclick="window.location.href='${path}/notice/list'">
+                        More
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <th style="text-align: center;">Title</th>
+                <th style="text-align: center;" width="200">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${noticeList}" var="notice">
+                <tr>
+                    <td>
+                        <a href="${path}/board/${notice.mbr_no}/read/${notice.no}">
+                            ${notice.title}
+                        </a>
+                    </td>
+                    <td>${notice.created_date}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</section>
 <section class="wrap-min dot-key">
-
+    <h1 style="text-align: center">Log In</h1>
 
     <form class="form-horizontal" id="home-login">
         <div class="form-group">

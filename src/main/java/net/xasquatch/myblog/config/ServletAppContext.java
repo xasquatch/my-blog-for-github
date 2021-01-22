@@ -36,7 +36,7 @@ public class ServletAppContext implements WebMvcConfigurer{
 		registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
 		registry.addResourceHandler("/**").addResourceLocations("/resources/");
 	}
-
+/*
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(controllerInterceptor)
@@ -44,5 +44,5 @@ public class ServletAppContext implements WebMvcConfigurer{
 //				.addPathPatterns("/**");
 //				.excludePathPatterns("/login");
 		WebMvcConfigurer.super.addInterceptors(registry);
-	}
+	}*/
 }
