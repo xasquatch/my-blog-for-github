@@ -31,10 +31,14 @@
         var href = aTag.href;
         var target = aTag.target;
 
-        if (href != null && href.indexOf('javascript:') === -1 && href !== '#' && href !== 'undefined'
+        if (href != null && href !== 'undefined'
+            && href.indexOf('javascript:') === -1 && href.indexOf('#') === -1
             && target !== '_blank') {
             aTag.addEventListener('click', function () {
                 footerEffect.addLoadingState();
+                setTimeout(function (event) {
+                    footerEffect.removeLoadingState();
+                },3000)
 
             });
         }

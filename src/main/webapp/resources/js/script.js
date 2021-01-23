@@ -399,6 +399,14 @@ var footerEffect = {
         loadingFooter.classList.add('padding-100vh-align-center');
         loadingFooter.classList.add('opacity-half');
         loadingImg.classList.add('visible');
+    },
+    removeLoadingState: function () {
+        var loadingFooter = document.querySelector('#main-footer');
+        var loadingImg = document.querySelector('#main-footer>img');
+
+        loadingFooter.classList.remove('padding-100vh-align-center');
+        loadingFooter.classList.remove('opacity-half');
+        loadingImg.classList.remove('visible');
     }
 
 
