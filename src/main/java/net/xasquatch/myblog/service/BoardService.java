@@ -94,7 +94,7 @@ public class BoardService {
 
         int totalCount = boardDao.selectNoticeCount(rank, searchValue[0], searchValue[1]);
 
-        List<String> pageBlockList = new Pagination().getNoticeList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+        List<String> pageBlockList = new Pagination().getNoticeBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
 
         Map<String, Object> data = new HashMap<String, Object>();
@@ -122,10 +122,10 @@ public class BoardService {
 
         List<String> pageBlockList;
         if (memberNo.equals("all")) {
-            pageBlockList = new Pagination().getBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+            pageBlockList = new Pagination().getBoardBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         } else {
-            pageBlockList = new Pagination().getBlockList(memberNo, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+            pageBlockList = new Pagination().getBoardBlockList(memberNo, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         }
 
