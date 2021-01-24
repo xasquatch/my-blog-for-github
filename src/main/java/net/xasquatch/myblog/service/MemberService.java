@@ -138,6 +138,8 @@ public class MemberService {
 
         }
 
+        imgParser.resetImgParser();
+
         if (!memberDao.updateMbrImg(member)) {
             fileService.removeFiles(path);
             delete(member);
@@ -167,6 +169,8 @@ public class MemberService {
             member.setImg(src);
 
         }
+
+        imgParser.resetImgParser();
 
         if (!memberDao.updateMbrImg(member)) {
             fileService.removeFiles(path);

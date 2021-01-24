@@ -36,6 +36,13 @@ public class ImgParser {
 
 //---------------------------------------------------------------------//
 
+    public void resetImgParser() {
+        imgParser = null;
+        contentsString = null;
+        imgSrcList = new ArrayList<String>();
+        imgExtensionList = new ArrayList<String>();
+    }
+
     public boolean isCuttableImgSrc() {
 
         if (!checkImgTag(this.contentsString)) return false;
