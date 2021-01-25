@@ -2,7 +2,7 @@ package net.xasquatch.myblog.mapper.builder;
 
 import org.apache.ibatis.jdbc.SQL;
 
-public class CommentBulider {
+public class CommentBuilder {
 
     public static String selectCommentList(Object boardNo, Object currentPage){
 
