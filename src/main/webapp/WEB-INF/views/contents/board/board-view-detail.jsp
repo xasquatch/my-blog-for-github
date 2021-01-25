@@ -85,10 +85,20 @@
                         <BR>
                         xasquatch masive
                     </a>
+                    <div style="font-size: 0.8em;">
+                        127.0.0.1
+                    </div>
+                    <div style="font-size: 0.8em;">
+                        2021.01.25 11:11:11
+                    </div>
                 </td>
                 <td style="vertical-align: middle;">dlfjskldjfklasjdfklasjdlfjaklsfjklsd</td>
                 <td width="50" style="vertical-align: middle;">답글</td>
                 <td width="50" style="vertical-align: middle;">삭제</td>
+
+<%--          TODO:foreach중 if문 분기
+      <td width="50" colspan="2" style="vertical-align: middle;">답글</td>--%>
+
             </tr>
             </tbody>
             <tfoot>
