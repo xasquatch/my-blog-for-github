@@ -53,4 +53,55 @@
     <article style="text-align: center; padding: 20px;">
         <button class="btn btn-link-red dot-key" onclick="window.history.back();">뒤로 가기</button>
     </article>
+    <article>
+        <table class="table table-hover table-condensed">
+            <thead>
+            <tr class="dot-key">
+                <td width="200" style="text-align: center;">
+                    <img style="max-width: 140px; max-height: 140px;" src="https://myblog.xasquatch.net/img/no_image.png">
+                    <BR>
+                    xasquatch masive
+                </td>
+                <td colspan="5">
+                    <form>
+                        <div style="display: grid; grid-template-columns: 1fr 100px; min-height: 200px;">
+                            <textarea class="form-control" style="height: 100%; width: 100%; resize: none;"></textarea>
+                            <button class="btn btn-link-red dot-key" type="button">댓글 등록</button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <BR><BR>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="200" style="text-align: center;">
+                    <a href="#">
+                        <img style="max-width: 140px; max-height: 140px;" src="https://myblog.xasquatch.net/img/no_image.png">
+                        <BR>
+                        xasquatch masive
+                    </a>
+                </td>
+                <td style="vertical-align: middle;">dlfjskldjfklasjdfklasjdlfjaklsfjklsd</td>
+                <td width="50" style="vertical-align: middle;">답글</td>
+                <td width="50" style="vertical-align: middle;">삭제</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5" style="text-align: center;">
+                    1
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </article>
+    <hr>
+    <article style="text-align: center; padding: 20px;">
+        <button class="btn btn-link-red dot-key" onclick="window.scroll(0,0);">맨 위로</button>
+    </article>
 </section>
