@@ -130,9 +130,7 @@
     </div>
 
     <div class="tab-content">
-        <div role="tabpanel" id="board-contents-fake" class="form-control board-contents-fake tab-pane active" contentEditable="true">
-            ${board.contents}
-        </div>
+        <div role="tabpanel" id="board-contents-fake" class="form-control board-contents-fake tab-pane active" contentEditable="true">${board.contents}</div>
         <textarea role="tabpanel" id="board-contents-fake-html" class="form-control board-contents-fake tab-pane"></textarea>
     </div>
 
@@ -393,6 +391,22 @@
         realTitle.value = board.fakeTitle.value;
         realContents.innerHTML = board.fakeContents.innerHTML;
         realThumbnail.innerHTML = board.fakeThumbnail.innerHTML;
+
+        if (realKeyword.value.length > 50){
+            window.alert('키워드는 200자 이내로 입력해주시기바랍니다.');
+            return;
+        }
+        if (realTitle.value.length < 2 || realTitle.value.length > 200){
+            window.alert('글 제목은 2~200자 사이로 입력해주시기바랍니다.');
+            return;
+        }
+        if (realContents.innerHTML.length < 20 || realContents.innerHTML.length > 7000){
+            window.alert('글 내용은 최소 20이상 7000미만으로 작성해주시기바랍니다.');
+            return;
+        }
+
+
+
 
         var formData = new FormData(boardFormTag);
 

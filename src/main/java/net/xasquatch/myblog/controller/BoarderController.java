@@ -3,8 +3,8 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Board;
+import net.xasquatch.myblog.model.Comment;
 import net.xasquatch.myblog.model.Member;
-import net.xasquatch.myblog.service.ApiService;
 import net.xasquatch.myblog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -58,14 +59,17 @@ public class BoarderController {
     //TODO: defaultBoard메서드로 생성하였던 빈 게시판에 업로드 마무리
     @PostMapping("/{memberNo}/upload/{boardNo}/{method}")
     @ResponseBody
-    public String upload(MultipartHttpServletRequest request, Board board,
+    public String upload(MultipartHttpServletRequest request, @Valid Board board,
                          @PathVariable String method, @PathVariable String memberNo,
                          BindingResult bindingResult) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             boolean result = false;
             board.setCreated_ip(accessorInfo.getIpAddress(request));
 
+            if (bindingResult.hasErrors()) return "false";
+
             String checkResult = boardService.checkBoardFormData(board);
+
             if (checkResult.contains("[script Error]")) return checkResult;
 
             if (method.equals("create")) {
@@ -75,7 +79,6 @@ public class BoarderController {
                 result = boardService.modify(board);
 
             }
-
             return String.valueOf(result);
 
         }
@@ -163,4 +166,17 @@ public class BoarderController {
         return "false";
     }
 
+    @PostMapping("/{memberNo}/read/{boardNo}/comment/create")
+    @ResponseBody
+    public String createComment(HttpServletRequest request, Comment comment, BindingResult bindingResult) {
+        String result = null;
+
+        if (bindingResult.hasErrors()) return "false";
+
+        comment.setCreated_ip(accessorInfo.getIpAddress(request));
+        result = boardService.createComment(comment);
+
+
+        return result;
+    }
 }

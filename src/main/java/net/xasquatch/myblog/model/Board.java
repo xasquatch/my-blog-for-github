@@ -3,6 +3,7 @@ package net.xasquatch.myblog.model;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -20,8 +21,10 @@ public class Board {
     @Size(max = 255)
     private String keyword;
 
-    @Size(max = 255)
+    @Size(min = 2, max = 255)
     private String title;
+
+    @Size(min = 20, max = 10000)
     private String contents;
     private String thumbnail;
     private String created_date;
