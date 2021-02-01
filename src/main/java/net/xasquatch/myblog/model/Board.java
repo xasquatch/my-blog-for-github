@@ -26,5 +26,5 @@ public class Board {
     private String thumbnail;
     private String created_date;
     private String created_ip;
-
+    private String pwd;
 }

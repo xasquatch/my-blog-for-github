@@ -19,6 +19,6 @@ public class Comment {
     private String contents;
     private String created_date;
     private String created_ip;
-
+    private String pwd;
 
 }
