@@ -12,7 +12,9 @@ import javax.validation.constraints.Size;
 public class Comment {
 
     private Long no;
+    private Long board_no;
     private Long mbr_no;
+
     private String mbr_nickname;
 
     @Size(max = 255)
