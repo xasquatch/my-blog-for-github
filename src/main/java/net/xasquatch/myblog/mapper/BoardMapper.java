@@ -2,6 +2,7 @@ package net.xasquatch.myblog.mapper;
 
 import net.xasquatch.myblog.mapper.builder.BoardBuilder;
 import net.xasquatch.myblog.model.Board;
+import net.xasquatch.myblog.model.Comment;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -50,10 +51,13 @@ public interface BoardMapper {
 
     @SelectProvider(type = BoardBuilder.class, method = "selectNoticeList")
     List<Map<String, Object>> selectNoticeList(Object rank, Object currentPage, Object pageLimit,
-                                              Object searchTarget, Object searchValue);
+                                               Object searchTarget, Object searchValue);
 
     @SelectProvider(type = BoardBuilder.class, method = "selectNoticeCount")
     int selectNoticeCount(Object rank, String searchTarget, String searchValue);
 
+    @Insert("INSERT INTO comment(board_no, mbr_no, contents, created_ip, pwd) VALUES(#{board_no}, #{mbr_no}, #{contents}, #{created_ip}, #{pwd})")
+    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
+    int insertOneComment(Comment comment);
 
 }
