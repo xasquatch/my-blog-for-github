@@ -56,26 +56,29 @@
     <article>
         <table class="table table-hover table-condensed">
             <thead>
-            <tr class="dot-key">
-                <td width="200" style="text-align: center;">
-                    <img style="max-width: 140px; max-height: 140px;" src="https://myblog.xasquatch.net/img/no_image.png">
-                    <BR>
-                    xasquatch masive
-                </td>
-                <td colspan="5">
-                    <form>
-                        <div style="display: grid; grid-template-columns: 1fr 100px; min-height: 200px;">
-                            <textarea class="form-control" style="height: 100%; width: 100%; resize: none;"></textarea>
-                            <button class="btn btn-link-red dot-key" type="button">댓글 등록</button>
-                        </div>
-                    </form>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="5">
-                    <BR><BR>
-                </td>
-            </tr>
+            <c:if test="${sessionMember ne null}">
+                <tr class="dot-key">
+                    <td width="200" style="text-align: center;">
+                        <img style="max-width: 140px; max-height: 140px;" src="https://myblog.xasquatch.net/img/no_image.png">
+                        <BR>
+                        xasquatch masive
+                    </td>
+                    <td colspan="5">
+                        <form action="${path}/board/${sessionMember.no}/read/${board.no}/comment/create"
+                              method="POST">
+                            <div style="display: grid; grid-template-columns: 1fr 100px; min-height: 200px;">
+                                <textarea class="form-control" name="contents" minlength="3" maxlength="220" style="height: 100%; width: 100%; resize: none;"></textarea>
+                                <button class="btn btn-link-red dot-key" type="submit">댓글 등록</button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <BR><BR>
+                    </td>
+                </tr>
+            </c:if>
             </thead>
             <tbody>
             <tr>
@@ -96,8 +99,8 @@
                 <td width="50" style="vertical-align: middle;">답글</td>
                 <td width="50" style="vertical-align: middle;">삭제</td>
 
-<%--          TODO:foreach중 if문 분기
-      <td width="50" colspan="2" style="vertical-align: middle;">답글</td>--%>
+                <%--          TODO:foreach중 if문 분기
+                      <td width="50" colspan="2" style="vertical-align: middle;">답글</td>--%>
 
             </tr>
             </tbody>
