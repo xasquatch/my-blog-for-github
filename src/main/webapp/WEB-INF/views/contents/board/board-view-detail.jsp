@@ -59,9 +59,9 @@
             <c:if test="${sessionMember ne null}">
                 <tr class="dot-key">
                     <td width="200" style="text-align: center;">
-                        <img style="max-width: 140px; max-height: 140px;" src="https://myblog.xasquatch.net/img/no_image.png">
+                        <img style="max-width: 140px; max-height: 140px;" src="${sessionMember.img}" onerror="this.src = '${path}/img/no_image.png';">
                         <BR>
-                        xasquatch masive
+                            ${sessionMember.name}
                     </td>
                     <td colspan="5">
                         <form id="comment-form">
