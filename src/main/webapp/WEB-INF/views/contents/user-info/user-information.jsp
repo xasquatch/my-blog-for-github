@@ -86,7 +86,7 @@
         myAjax.submit('PUT', '${path}/members/${sessionMember.no}/update', function (data) {
 
             if (data === 'false') {
-                window.alert('정보 수정에 실패하였습니다. 수정조건을 확인 후 다시 시도해주세요.');
+                window.alert('정보 수정에 실패하였습니다. 수정조건을 확인 후 다시 시도해주세요.\n\n예시) 비밀번호, 닉네임 (영문또는 숫자로 8~20자이내)');
 
             } else {
                 window.alert('정보 수정이 완료되었습니다. 다시 로그인 해주세요');
