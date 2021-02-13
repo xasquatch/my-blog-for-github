@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Comment {
 
     private Long no;
@@ -17,7 +18,7 @@ public class Comment {
 
     private String mbr_nickname;
 
-    @Size(max = 255)
+    @Size(min = 3, max = 255)
     private String contents;
     private String created_date;
     private String created_ip;
