@@ -168,14 +168,19 @@ public class BoarderController {
 
     @PostMapping("/{memberNo}/read/{boardNo}/comment/create")
     @ResponseBody
-    public String createComment(HttpServletRequest request, Comment comment, BindingResult bindingResult) {
-        String result = null;
-
+    public String createComment(HttpServletRequest request, Comment comment,
+                                @PathVariable String memberNo, @PathVariable long boardNo,
+                                BindingResult bindingResult) {
+        String result = "false";
         if (bindingResult.hasErrors()) return "false";
 
-        comment.setCreated_ip(accessorInfo.getIpAddress(request));
-        result = boardService.createComment(comment);
+        if (checkSessionController.isCheckSession(memberNo)) {
+            comment.setMbr_no(sessionMember.getNo());
+            comment.setBoard_no(boardNo);
+            comment.setCreated_ip(accessorInfo.getIpAddress(request));
+            result = String.valueOf(boardService.createComment(comment));
 
+        }
 
         return result;
     }

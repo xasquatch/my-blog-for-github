@@ -3,6 +3,7 @@ package net.xasquatch.myblog.repository;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.mapper.BoardMapper;
 import net.xasquatch.myblog.model.Board;
+import net.xasquatch.myblog.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -68,6 +69,10 @@ public class BoardDao {
 
     public Map<String, Object> selectOneBoard(Object memberNo, Object boardNo) {
         return boardMapper.selectOneBoard(memberNo, boardNo);
+    }
+
+    public int insertOneComment(Comment comment){
+        return boardMapper.insertOneComment(comment);
     }
 
 }
