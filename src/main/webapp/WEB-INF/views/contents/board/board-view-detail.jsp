@@ -64,11 +64,10 @@
                         xasquatch masive
                     </td>
                     <td colspan="5">
-                        <form action="${path}/board/${sessionMember.no}/read/${board.no}/comment/create"
-                              method="POST">
+                        <form id="comment-form">
                             <div style="display: grid; grid-template-columns: 1fr 100px; min-height: 200px;">
                                 <textarea class="form-control" name="contents" minlength="3" maxlength="220" style="height: 100%; width: 100%; resize: none;"></textarea>
-                                <button class="btn btn-link-red dot-key" type="submit">댓글 등록</button>
+                                <button class="btn btn-link-red dot-key" type="button" onclick="createBoardComment();">댓글 등록</button>
                             </div>
                         </form>
                     </td>
@@ -118,3 +117,17 @@
         <button class="btn btn-link-red dot-key" onclick="window.scroll(0,0);">맨 위로</button>
     </article>
 </section>
+
+<script>
+    function createBoardComment() {
+        var commentForm = document.querySelector('#comment-form');
+        var formData = new FormData(commentForm);
+        myAjax.submit('POST', "${path}/board/${sessionMember.no}/read/${board.no}/comment/create", function (data) {
+            alert(data);
+            commentForm.querySelector('textarea').value = '';
+
+        }, 'FORMFILE', formData);
+    }
+
+
+</script>
