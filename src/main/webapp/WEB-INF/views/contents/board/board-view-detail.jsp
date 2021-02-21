@@ -80,28 +80,7 @@
             </c:if>
             </thead>
             <tbody id="comment-list-table">
-            <tr>
-                <td width="200" style="text-align: center;">
-                    <a href="#">
-                        <img style="max-width: 140px; max-height: 140px;" src="https://myblog.xasquatch.net/img/no_image.png">
-                        <BR>
-                        xasquatch masive
-                    </a>
-                    <div style="font-size: 0.8em;">
-                        127.0.0.1
-                    </div>
-                    <div style="font-size: 0.8em;">
-                        2021.01.25 11:11:11
-                    </div>
-                </td>
-                <td style="vertical-align: middle;">dlfjskldjfklasjdfklasjdlfjaklsfjklsd</td>
-                <td width="50" style="vertical-align: middle;">답글</td>
-                <td width="50" style="vertical-align: middle;">삭제</td>
-
-                <%--          TODO:foreach중 if문 분기
-                      <td width="50" colspan="2" style="vertical-align: middle;">답글</td>--%>
-
-            </tr>
+            <%--댓글삽입--%>
             </tbody>
             <tfoot>
             <tr>
@@ -123,7 +102,17 @@
         var commentForm = document.querySelector('#comment-form');
         var formData = new FormData(commentForm);
         myAjax.submit('POST', "${path}/board/${board.no}/comments", function (data) {
-            commentForm.querySelector('textarea').value = '';
+            if ('${sessionMember.name}' === 'GUEST') {
+                var pwd = window.prompt('비밀번호를 설정해주세요.', '0000');
+                alert(pwd);
+            }
+            if (data === 'false') {
+                alert('댓글작성에 실패하였습니다.');
+
+            } else {
+                window.history.go(0);
+
+            }
 
         }, 'FORMFILE', formData);
     }
@@ -132,32 +121,30 @@
         myAjax.submit('GET', "${path}/api/members/${board.mbr_no}/boards/${board.no}/comments", function (data) {
             var dataList = JSON.parse(data);
             var commentListTable = document.querySelector('#comment-list-table');
- 
+
             for (var comment of dataList) {
                 var trTag = document.createElement('tr');
                 var tdProfileTag = document.createElement('td');
                 tdProfileTag.width = '200';
                 tdProfileTag.style.textAlign = 'center';
-                tdProfileTag.innerHTML = comment.mbr_no + '<BR>rownumber'
-                    + comment.row_number + '<BR>' + comment.created_ip
-                    + '<BR>' + comment.created_date;
+                tdProfileTag.innerHTML =
+                    '<img style="max-width: 140px; max-height: 140px;" src="' + comment.img + '"><BR>'
+                    + comment.mbr_name + '<BR>'
+                    + comment.created_ip + '<BR>' + comment.created_date;
 
                 var tdContentsTag = document.createElement('td');
                 tdContentsTag.style.verticalAlign = 'middle';
                 tdContentsTag.innerHTML = comment.contents;
 
-                var tdAnswerTag = document.createElement('td');
-                tdAnswerTag.width = '50';
-                tdAnswerTag.style.verticalAlign = 'middle';
-
                 var tdDeleteTag = document.createElement('td');
                 tdDeleteTag.width = '50';
                 tdDeleteTag.style.verticalAlign = 'middle';
 
+                if (${sessionMember.no} === comment.mbr_no)
+                    tdDeleteTag.innerHTML = '<a href="#">삭제</a>';
                 commentListTable.appendChild(trTag);
                 trTag.appendChild(tdProfileTag);
                 trTag.appendChild(tdContentsTag);
-                trTag.appendChild(tdAnswerTag);
                 trTag.appendChild(tdDeleteTag);
 
             }
