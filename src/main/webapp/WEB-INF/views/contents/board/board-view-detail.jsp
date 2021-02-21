@@ -132,7 +132,7 @@
         myAjax.submit('GET', "${path}/api/members/${board.mbr_no}/boards/${board.no}/comments", function (data) {
             var dataList = JSON.parse(data);
             var commentListTable = document.querySelector('#comment-list-table');
-
+ 
             for (var comment of dataList) {
                 var trTag = document.createElement('tr');
                 var tdProfileTag = document.createElement('td');
