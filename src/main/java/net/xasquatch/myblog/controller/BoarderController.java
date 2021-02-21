@@ -166,15 +166,14 @@ public class BoarderController {
         return "false";
     }
 
-    @PostMapping("/{memberNo}/read/{boardNo}/comment/create")
+    @PostMapping("/{boardNo}/comments")
     @ResponseBody
     public String createComment(HttpServletRequest request, Comment comment,
-                                @PathVariable String memberNo, @PathVariable long boardNo,
-                                BindingResult bindingResult) {
+                                @PathVariable long boardNo, BindingResult bindingResult) {
         String result = "false";
         if (bindingResult.hasErrors()) return "false";
 
-        if (checkSessionController.isCheckSession(memberNo)) {
+        if (checkSessionController.isCheckSession(String.valueOf(sessionMember.getNo()))) {
             comment.setMbr_no(sessionMember.getNo());
             comment.setBoard_no(boardNo);
             comment.setCreated_ip(accessorInfo.getIpAddress(request));
@@ -184,4 +183,5 @@ public class BoarderController {
 
         return result;
     }
+
 }

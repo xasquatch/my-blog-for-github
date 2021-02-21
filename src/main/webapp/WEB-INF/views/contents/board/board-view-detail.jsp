@@ -79,7 +79,7 @@
                 </tr>
             </c:if>
             </thead>
-            <tbody>
+            <tbody id="comment-list-table">
             <tr>
                 <td width="200" style="text-align: center;">
                     <a href="#">
@@ -122,12 +122,52 @@
     function createBoardComment() {
         var commentForm = document.querySelector('#comment-form');
         var formData = new FormData(commentForm);
-        myAjax.submit('POST', "${path}/board/${sessionMember.no}/read/${board.no}/comment/create", function (data) {
-            alert(data);
+        myAjax.submit('POST', "${path}/board/${board.no}/comments", function (data) {
             commentForm.querySelector('textarea').value = '';
 
         }, 'FORMFILE', formData);
     }
 
+    function getCommentList() {
+        myAjax.submit('GET', "${path}/api/members/${board.mbr_no}/boards/${board.no}/comments", function (data) {
+            var dataList = JSON.parse(data);
+            var commentListTable = document.querySelector('#comment-list-table');
 
+            for (var comment of dataList) {
+                var trTag = document.createElement('tr');
+                var tdProfileTag = document.createElement('td');
+                tdProfileTag.width = '200';
+                tdProfileTag.style.textAlign = 'center';
+                tdProfileTag.innerHTML = comment.mbr_no + '<BR>rownumber'
+                    + comment.row_number + '<BR>' + comment.created_ip
+                    + '<BR>' + comment.created_date;
+
+                var tdContentsTag = document.createElement('td');
+                tdContentsTag.style.verticalAlign = 'middle';
+                tdContentsTag.innerHTML = comment.contents;
+
+                var tdAnswerTag = document.createElement('td');
+                tdAnswerTag.width = '50';
+                tdAnswerTag.style.verticalAlign = 'middle';
+
+                var tdDeleteTag = document.createElement('td');
+                tdDeleteTag.width = '50';
+                tdDeleteTag.style.verticalAlign = 'middle';
+
+                commentListTable.appendChild(trTag);
+                trTag.appendChild(tdProfileTag);
+                trTag.appendChild(tdContentsTag);
+                trTag.appendChild(tdAnswerTag);
+                trTag.appendChild(tdDeleteTag);
+
+            }
+
+
+        });
+    }
+
+    window.onload = function () {
+
+        getCommentList();
+    }
 </script>

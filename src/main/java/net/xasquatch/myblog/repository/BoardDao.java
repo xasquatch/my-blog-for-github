@@ -17,6 +17,11 @@ public class BoardDao {
     @Autowired
     BoardMapper boardMapper;
 
+    public List<Map<String, Object>> selectCommentList(Object boardNo){
+
+        return boardMapper.selectCommentList(boardNo);
+    }
+
     public List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
                                                      Object searchTarget, Object searchValue) {
 

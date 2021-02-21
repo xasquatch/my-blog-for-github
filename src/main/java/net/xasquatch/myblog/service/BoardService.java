@@ -1,5 +1,8 @@
 package net.xasquatch.myblog.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Board;
 import net.xasquatch.myblog.model.Comment;
@@ -114,6 +117,21 @@ public class BoardService {
         return data;
     }
 
+    public String getCommentList(Object boardNo) {
+
+        String commentListForJson = null;
+        List<Map<String, Object>> commentList = boardDao.selectCommentList(boardNo);
+        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+
+        try {
+            commentListForJson = objectWriter.writeValueAsString(commentList);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+
+        return commentListForJson;
+    }
 
     public Map<String, Object> getBoardList(Object memberNo, int pageLimit, int currentPageBlock, String[] searchValue) {
 
