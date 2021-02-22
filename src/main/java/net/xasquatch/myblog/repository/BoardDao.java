@@ -17,9 +17,14 @@ public class BoardDao {
     @Autowired
     BoardMapper boardMapper;
 
-    public List<Map<String, Object>> selectCommentList(Object boardNo){
+    public List<Map<String, Object>> selectCommentList(Object boardNo) {
 
         return boardMapper.selectCommentList(boardNo);
+    }
+
+    public int deleteComment(Object commentNo, Object pwd) {
+
+        return boardMapper.deleteComment(commentNo, pwd);
     }
 
     public List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
@@ -34,7 +39,7 @@ public class BoardDao {
     }
 
     public List<Map<String, Object>> selectNoticeList(Object rank, Object currentPage, Object pageLimit,
-                                                     Object searchTarget, Object searchValue) {
+                                                      Object searchTarget, Object searchValue) {
 
         return boardMapper.selectNoticeList(rank, currentPage, pageLimit, searchTarget, searchValue);
     }
@@ -76,7 +81,7 @@ public class BoardDao {
         return boardMapper.selectOneBoard(memberNo, boardNo);
     }
 
-    public int insertOneComment(Comment comment){
+    public int insertOneComment(Comment comment) {
         return boardMapper.insertOneComment(comment);
     }
 

@@ -184,4 +184,16 @@ public class BoarderController {
         return result;
     }
 
+    @DeleteMapping("/{memberNo}/comments/{commentNo}")
+    @ResponseBody
+    public String deleteComment(@PathVariable String memberNo,
+                                @PathVariable String commentNo, String pwd) {
+        String result = "false";
+
+        if (checkSessionController.isCheckSession(memberNo))
+            result = String.valueOf(boardService.deleteComment(commentNo, pwd));
+
+        return result;
+
+    }
 }

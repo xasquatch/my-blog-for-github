@@ -220,4 +220,11 @@ public class BoardService {
 
         return result;
     }
+
+    public boolean deleteComment(String commentNo, String pwd){
+        boolean result = false;
+        if (boardDao.deleteComment(commentNo, pwd) == 1) result = true;
+
+        return result;
+    }
 }
