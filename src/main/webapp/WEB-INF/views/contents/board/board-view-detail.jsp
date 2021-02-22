@@ -140,8 +140,11 @@
                 tdDeleteTag.width = '50';
                 tdDeleteTag.style.verticalAlign = 'middle';
 
-                if (${sessionMember.no} === comment.mbr_no)
+                var sessionNo = ${sessionMember.no} + 0;
+                if (sessionNo === comment.mbr_no)
                     tdDeleteTag.innerHTML = '<a href="#">삭제</a>';
+
+
                 commentListTable.appendChild(trTag);
                 trTag.appendChild(tdProfileTag);
                 trTag.appendChild(tdContentsTag);
