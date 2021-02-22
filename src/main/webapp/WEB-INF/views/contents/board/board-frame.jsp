@@ -426,7 +426,6 @@
                 } else if (data === 'true') {
                     window.location.href = '${path}/board/${sessionMember.no}/list';
 
-
                 }
 
             }, 'FORMFILE', formData);

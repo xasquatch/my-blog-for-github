@@ -12,7 +12,6 @@ public class CommentBuilder {
                     "DATE_FORMAT(created_date, '%Y.%m.%d %H:%i:%s') AS created_date," +
                     "board_no, mbr_name, img");
             FROM("(" + selectCommentListSubQuery(boardNo) + ") c, (SELECT @ROWNUM := 0) TMP");
-
         }}.toString();
 
     }
