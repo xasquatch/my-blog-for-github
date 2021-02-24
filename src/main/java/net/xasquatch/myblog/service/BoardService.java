@@ -225,10 +225,17 @@ public class BoardService {
         return result;
     }
 
-    public boolean deleteComment(String commentNo, String pwd) {
-        boolean result = false;
-        if (boardDao.deleteComment(commentNo, pwd) == 1) result = true;
+    public String deleteComment(String commentNo, String pwd) {
+        int result = 0;
 
-        return result;
+        if (sessionMember.getName().equals("GUEST")) {
+            result = boardDao.deleteComment(commentNo, pwd);
+
+        } else {
+            result = boardDao.deleteComment(commentNo);
+        }
+
+        return result == 1 ? "true": "false";
     }
+
 }

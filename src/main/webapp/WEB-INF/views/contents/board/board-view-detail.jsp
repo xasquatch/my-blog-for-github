@@ -101,11 +101,14 @@
     function createBoardComment() {
         var commentForm = document.querySelector('#comment-form');
         var formData = new FormData(commentForm);
+
+        if ('${sessionMember.name}' === 'GUEST') {
+            var pwd = window.prompt('비밀번호를 설정해주세요.\n (기본값: 0000)', '0000');
+            formData.append("pwd", pwd);
+
+        }
+
         myAjax.submit('POST', "${path}/board/${board.no}/comments", function (data) {
-            if ('${sessionMember.name}' === 'GUEST') {
-                var pwd = window.prompt('비밀번호를 설정해주세요.\n (기본값: 0000)', '0000');
-                formData.append("pwd", pwd);
-            }
             if (data === 'false') {
                 alert('댓글작성에 실패하였습니다. 잠시 후 다시 시도해주시기바랍니다');
 
@@ -115,6 +118,26 @@
             }
 
         }, 'FORMFILE', formData);
+    }
+
+    function deleteBoardComment(url) {
+        var pwd = '0000';
+
+        if (!window.confirm('정말 삭제를 진행하시겠습니까?')) return;
+
+        if ('${sessionMember.name}' === 'GUEST')
+            pwd = window.prompt('GUEST: 설정하였던 비밀번호를 입력해주세요.', '0000');
+
+        myAjax.submit('DELETE', url + "?pwd=" + pwd, function (data) {
+            if (data === 'false') {
+                window.alert('삭제 실패: 틀린 비밀번호');
+
+            } else {
+                getCommentList();
+
+            }
+
+        });
     }
 
     function getCommentList() {
@@ -144,7 +167,7 @@
 
                 var sessionNo = ${sessionMember.no} +0;
                 if (sessionNo === comment.mbr_no)
-                    tdDeleteTag.innerHTML = '<a href="#">삭제</a>';
+                    tdDeleteTag.innerHTML = '<a href="javascript:deleteBoardComment(\'${path}\/board\/${board.no}\/members\/${sessionMember.no}\/comments\/' + comment.no + '\')">삭제</a>';
 
 
                 commentListTable.appendChild(trTag);

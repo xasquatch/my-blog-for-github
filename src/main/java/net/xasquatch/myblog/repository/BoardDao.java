@@ -24,7 +24,12 @@ public class BoardDao {
 
     public int deleteComment(Object commentNo, Object pwd) {
 
-        return boardMapper.deleteComment(commentNo, pwd);
+        return boardMapper.deleteCommentForGuest(commentNo, pwd);
+    }
+
+    public int deleteComment(Object commentNo) {
+
+        return boardMapper.deleteComment(commentNo);
     }
 
     public List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
