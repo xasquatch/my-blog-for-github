@@ -105,12 +105,13 @@
             if ('${sessionMember.name}' === 'GUEST') {
                 var pwd = window.prompt('비밀번호를 설정해주세요.', '0000');
                 alert(pwd);
+
             }
             if (data === 'false') {
-                alert('댓글작성에 실패하였습니다.');
+                alert('댓글작성에 실패하였습니다. 잠시 후 다시 시도해주시기바랍니다');
 
             } else {
-                window.history.go(0);
+                getCommentList();
 
             }
 
@@ -121,7 +122,8 @@
         myAjax.submit('GET', "${path}/api/members/${board.mbr_no}/boards/${board.no}/comments", function (data) {
             var dataList = JSON.parse(data);
             var commentListTable = document.querySelector('#comment-list-table');
-
+            commentListTable.innerHTML = '';
+            
             for (var comment of dataList) {
                 var trTag = document.createElement('tr');
                 var tdProfileTag = document.createElement('td');
