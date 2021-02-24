@@ -65,5 +65,8 @@ public interface BoardMapper {
     List<Map<String, Object>> selectCommentList(Object boardNo);
 
     @Delete("DELETE FROM comment WHERE no = #{arg0} AND pwd = #{arg1}")
-    int deleteComment(Object commentNo, Object pwd);
+    int deleteCommentForGuest(Object commentNo, Object pwd);
+
+    @Delete("DELETE FROM comment WHERE no = #{arg0}")
+    int deleteComment(Object commentNo);
 }
