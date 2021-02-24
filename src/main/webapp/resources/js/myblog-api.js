@@ -6,7 +6,6 @@ var myAjax = {
 
     setContentsType: function (inputContentsType) {
         var contentsType = 'text/plain';
-        var contentsType;
 
         if (inputContentsType.toUpperCase() === 'FORM') {
             contentsType = myAjax.form;
