@@ -5,18 +5,25 @@ var myAjax = {
     formFile: 'multipart/form-data',
 
     setContentsType: function (inputContentsType) {
-        var contentsType = 'text/plain';
+        var contentsType;
 
-        if (inputContentsType.toUpperCase() === 'FORM') {
+        if (inputContentsType !== null && inputContentsType !== undefined)
+            inputContentsType = inputContentsType.toUpperCase();
+
+        if (inputContentsType === 'FORM') {
             contentsType = myAjax.form;
 
-        } else if (inputContentsType.toUpperCase() === 'FORMFILE') {
+        } else if (inputContentsType === 'FORMFILE') {
             contentsType = myAjax.formFile;
 
-        } else if (inputContentsType.toUpperCase() === 'JSON') {
+        } else if (inputContentsType === 'JSON') {
             contentsType = myAjax.json;
 
+        } else {
+            contentsType = 'text/plain';
+
         }
+
         return contentsType;
     },
 
