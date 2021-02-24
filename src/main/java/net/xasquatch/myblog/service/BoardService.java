@@ -215,13 +215,17 @@ public class BoardService {
 
     public boolean createComment(Comment comment) {
         boolean result = false;
+        String pwd = comment.getPwd();
+        if (pwd == null || pwd.equals(""))
+            comment.setPwd("0000");
+
         comment.setMbr_no(sessionMember.getNo());
         if (boardDao.insertOneComment(comment) == 1) result = true;
 
         return result;
     }
 
-    public boolean deleteComment(String commentNo, String pwd){
+    public boolean deleteComment(String commentNo, String pwd) {
         boolean result = false;
         if (boardDao.deleteComment(commentNo, pwd) == 1) result = true;
 

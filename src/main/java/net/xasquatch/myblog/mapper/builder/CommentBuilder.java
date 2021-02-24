@@ -6,12 +6,13 @@ public class CommentBuilder {
 
     public static String selectCommentList(Object boardNo) {
         return new SQL() {{
-            SELECT("FORMAT(@ROWNUM := @ROWNUM + 1, 0) AS row_number, no, mbr_no, " +
+            SELECT("row_number, no, mbr_no, " +
                     "convert(contents USING UTF8) AS contents," +
                     "REPLACE(created_ip, RIGHT(created_ip, 4),'.***') AS created_ip," +
                     "DATE_FORMAT(created_date, '%Y.%m.%d %H:%i:%s') AS created_date," +
                     "board_no, mbr_name, img");
             FROM("(" + selectCommentListSubQuery(boardNo) + ") c, (SELECT @ROWNUM := 0) TMP");
+            ORDER_BY("length(row_number) DESC, row_number DESC");
         }}.toString();
 
     }
@@ -27,7 +28,8 @@ public class CommentBuilder {
 
     public static String selectCommentListSubQuery(Object boardNo) {
         return new SQL() {{
-            SELECT("c.no AS no, c.mbr_no AS mbr_no, " +
+            SELECT("FORMAT(@ROWNUM := @ROWNUM + 1, 0) AS row_number, " +
+                    "c.no AS no, c.mbr_no AS mbr_no, " +
                     "m.name AS mbr_name, m.img AS img, " +
                     "c.contents AS contents, c.created_ip AS created_ip, " +
                     "c.created_date AS created_date, " +
@@ -35,7 +37,6 @@ public class CommentBuilder {
             FROM("comment c");
             JOIN("mbr m ON c.mbr_no = m.no");
             WHERE("c.board_no = '" + boardNo + "'");
-            ORDER_BY("created_date DESC, no DESC");
         }}.toString();
 
     }

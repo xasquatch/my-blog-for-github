@@ -59,7 +59,7 @@
             <c:if test="${sessionMember ne null}">
                 <tr class="dot-key">
                     <td width="200" style="text-align: center;">
-                        <img style="max-width: 140px; max-height: 140px;" src="${sessionMember.img}" onerror="this.src = '${path}/img/no_image.png';">
+                        <img style="max-width: 140px; max-height: 140px;" src="${sessionMember.img}" onerror="this.src = '${path}/img/login/default-profile.png';">
                         <BR>
                             ${sessionMember.name}
                     </td>
@@ -103,9 +103,8 @@
         var formData = new FormData(commentForm);
         myAjax.submit('POST', "${path}/board/${board.no}/comments", function (data) {
             if ('${sessionMember.name}' === 'GUEST') {
-                var pwd = window.prompt('비밀번호를 설정해주세요.', '0000');
-                alert(pwd);
-
+                var pwd = window.prompt('비밀번호를 설정해주세요.\n (기본값: 0000)', '0000');
+                formData.append("pwd", pwd);
             }
             if (data === 'false') {
                 alert('댓글작성에 실패하였습니다. 잠시 후 다시 시도해주시기바랍니다');
@@ -123,14 +122,15 @@
             var dataList = JSON.parse(data);
             var commentListTable = document.querySelector('#comment-list-table');
             commentListTable.innerHTML = '';
-            
+
             for (var comment of dataList) {
                 var trTag = document.createElement('tr');
                 var tdProfileTag = document.createElement('td');
                 tdProfileTag.width = '200';
                 tdProfileTag.style.textAlign = 'center';
                 tdProfileTag.innerHTML =
-                    '<img style="max-width: 140px; max-height: 140px;" src="' + comment.img + '"><BR>'
+                    '<img style="max-width: 140px; max-height: 140px;" src="' + comment.img + '"' +
+                    'onerror="this.src = \'${path}/img/login/default-profile.png\';"><BR>'
                     + comment.mbr_name + '<BR>'
                     + comment.created_ip + '<BR>' + comment.created_date;
 
@@ -142,7 +142,7 @@
                 tdDeleteTag.width = '50';
                 tdDeleteTag.style.verticalAlign = 'middle';
 
-                var sessionNo = ${sessionMember.no} + 0;
+                var sessionNo = ${sessionMember.no} +0;
                 if (sessionNo === comment.mbr_no)
                     tdDeleteTag.innerHTML = '<a href="#">삭제</a>';
 
