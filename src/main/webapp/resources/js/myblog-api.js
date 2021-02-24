@@ -5,6 +5,7 @@ var myAjax = {
     formFile: 'multipart/form-data',
 
     setContentsType: function (inputContentsType) {
+        var contentsType = 'text/plain';
         var contentsType;
 
         if (inputContentsType.toUpperCase() === 'FORM') {
@@ -15,9 +16,6 @@ var myAjax = {
 
         } else if (inputContentsType.toUpperCase() === 'JSON') {
             contentsType = myAjax.json;
-
-        } else{
-            contentsType = 'text/plain';
 
         }
         return contentsType;
