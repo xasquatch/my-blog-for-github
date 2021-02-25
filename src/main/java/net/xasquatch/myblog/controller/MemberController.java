@@ -208,7 +208,7 @@ public class MemberController {
     /*TODO:로그인*/
     @PostMapping("/login")
     @ResponseBody
-    public String login(HttpSession session, Member member, BindingResult bindingResult) {
+    public String login(HttpSession session, @Valid Member member, BindingResult bindingResult) {
         String result = "false";
         member = Member.builder()
                 .email(member.getEmail())

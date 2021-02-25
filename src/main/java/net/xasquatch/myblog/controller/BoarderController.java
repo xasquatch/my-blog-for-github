@@ -168,7 +168,7 @@ public class BoarderController {
 
     @PostMapping("/{boardNo}/comments")
     @ResponseBody
-    public String createComment(HttpServletRequest request, Comment comment,
+    public String createComment(HttpServletRequest request, @Valid Comment comment,
                                 @PathVariable long boardNo, BindingResult bindingResult) {
         String result = "false";
         if (bindingResult.hasErrors()) return "false";
