@@ -3,6 +3,7 @@ package net.xasquatch.myblog.repository;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.mapper.BoardMapper;
 import net.xasquatch.myblog.model.Board;
+import net.xasquatch.myblog.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,21 @@ public class BoardDao {
     @Autowired
     BoardMapper boardMapper;
 
+    public List<Map<String, Object>> selectCommentList(Object boardNo) {
+
+        return boardMapper.selectCommentList(boardNo);
+    }
+
+    public int deleteComment(Object commentNo, Object pwd) {
+
+        return boardMapper.deleteCommentForGuest(commentNo, pwd);
+    }
+
+    public int deleteComment(Object commentNo) {
+
+        return boardMapper.deleteComment(commentNo);
+    }
+
     public List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
                                                      Object searchTarget, Object searchValue) {
 
@@ -28,7 +44,7 @@ public class BoardDao {
     }
 
     public List<Map<String, Object>> selectNoticeList(Object rank, Object currentPage, Object pageLimit,
-                                                     Object searchTarget, Object searchValue) {
+                                                      Object searchTarget, Object searchValue) {
 
         return boardMapper.selectNoticeList(rank, currentPage, pageLimit, searchTarget, searchValue);
     }
@@ -68,6 +84,10 @@ public class BoardDao {
 
     public Map<String, Object> selectOneBoard(Object memberNo, Object boardNo) {
         return boardMapper.selectOneBoard(memberNo, boardNo);
+    }
+
+    public int insertOneComment(Comment comment) {
+        return boardMapper.insertOneComment(comment);
     }
 
 }

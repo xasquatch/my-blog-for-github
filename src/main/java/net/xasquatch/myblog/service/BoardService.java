@@ -1,13 +1,19 @@
 package net.xasquatch.myblog.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Board;
+import net.xasquatch.myblog.model.Comment;
+import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.repository.BoardDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,6 +29,9 @@ public class BoardService {
     @Autowired
     private BoardDao boardDao;
 
+    @Resource(name = "sessionMember")
+    private Member sessionMember;
+
     @Autowired
     private FileService fileService;
 
@@ -36,23 +45,27 @@ public class BoardService {
         String[] prohibitedWords = {"<script", "onload="};
 
         String title = board.getTitle().replaceAll(" ", "");
-        String contents = board.getContents().replaceAll(" ", "");;
-        String keyword = board.getKeyword().replaceAll(" ", "");;
-        String thumbnail = board.getThumbnail().replaceAll(" ", "");;
+        String contents = board.getContents().replaceAll(" ", "");
+        ;
+        String keyword = board.getKeyword().replaceAll(" ", "");
+        ;
+        String thumbnail = board.getThumbnail().replaceAll(" ", "");
+        ;
 
-        if (!thumbnail.contains("<img")) board.setThumbnail("<img style=\"max-width: 140px; max-height: 140px;\" src=\"https://myblog.xasquatch.net/img/no_image.png\">");
+        if (!thumbnail.contains("<img"))
+            board.setThumbnail("<img style=\"max-width: 140px; max-height: 140px;\" src=\"https://myblog.xasquatch.net/img/no_image.png\">");
 
         Map<String, String> CheckTargetString = new HashMap<String, String>();
-        CheckTargetString.put("Title",title);
-        CheckTargetString.put("Contents",contents);
-        CheckTargetString.put("Keyword",keyword);
-        CheckTargetString.put("Thumbnail",thumbnail);
-        CheckTargetString.put("msg","");
+        CheckTargetString.put("Title", title);
+        CheckTargetString.put("Contents", contents);
+        CheckTargetString.put("Keyword", keyword);
+        CheckTargetString.put("Thumbnail", thumbnail);
+        CheckTargetString.put("msg", "");
 
-        CheckTargetString.forEach((key, value)->{
+        CheckTargetString.forEach((key, value) -> {
             for (String word : prohibitedWords) {
                 if (!key.equals("msg") && value.contains(word)) {
-                    CheckTargetString.put("msg", "[script Error] \""+ key + "\"부분의 스크립트를 제거해주시기바랍니다.");
+                    CheckTargetString.put("msg", "[script Error] \"" + key + "\"부분의 스크립트를 제거해주시기바랍니다.");
                 }
             }
         });
@@ -94,7 +107,7 @@ public class BoardService {
 
         int totalCount = boardDao.selectNoticeCount(rank, searchValue[0], searchValue[1]);
 
-        List<String> pageBlockList = new Pagination().getNoticeList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+        List<String> pageBlockList = new Pagination().getNoticeBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
 
         Map<String, Object> data = new HashMap<String, Object>();
@@ -104,6 +117,21 @@ public class BoardService {
         return data;
     }
 
+    public String getCommentList(Object boardNo) {
+
+        String commentListForJson = null;
+        List<Map<String, Object>> commentList = boardDao.selectCommentList(boardNo);
+        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+
+        try {
+            commentListForJson = objectWriter.writeValueAsString(commentList);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+
+        return commentListForJson;
+    }
 
     public Map<String, Object> getBoardList(Object memberNo, int pageLimit, int currentPageBlock, String[] searchValue) {
 
@@ -122,10 +150,10 @@ public class BoardService {
 
         List<String> pageBlockList;
         if (memberNo.equals("all")) {
-            pageBlockList = new Pagination().getBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+            pageBlockList = new Pagination().getBoardBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         } else {
-            pageBlockList = new Pagination().getBlockList(memberNo, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+            pageBlockList = new Pagination().getBoardBlockList(memberNo, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         }
 
@@ -183,6 +211,31 @@ public class BoardService {
         if (boardDao.deleteOneBoard(boardKey) == 1)
             result = true;
         return result;
+    }
+
+    public boolean createComment(Comment comment) {
+        boolean result = false;
+        String pwd = comment.getPwd();
+        if (pwd == null || pwd.equals("") || pwd.equals("null"))
+            comment.setPwd("0000");
+
+        comment.setMbr_no(sessionMember.getNo());
+        if (boardDao.insertOneComment(comment) == 1) result = true;
+
+        return result;
+    }
+
+    public String deleteComment(String commentNo, String pwd) {
+        int result = 0;
+
+        if (sessionMember.getName().equals("GUEST")) {
+            result = boardDao.deleteComment(commentNo, pwd);
+
+        } else {
+            result = boardDao.deleteComment(commentNo);
+        }
+
+        return result == 1 ? "true" : "false";
     }
 
 }

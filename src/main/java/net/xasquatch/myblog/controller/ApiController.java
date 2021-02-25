@@ -2,6 +2,7 @@ package net.xasquatch.myblog.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.service.ApiService;
+import net.xasquatch.myblog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,9 @@ public class ApiController {
 
     @Autowired
     private ApiService apiService;
+
+    @Autowired
+    private BoardService boardService;
 
     @GetMapping(value = "/members/{memberNo}/boards")
     public String viewBoardList(@PathVariable String memberNo,
@@ -38,7 +42,14 @@ public class ApiController {
     }
 
     @GetMapping(value = "/members/{memberNo}/resources/{resourceNo}")
-    public String viewResourceList(@PathVariable String memberNo, @PathVariable String resourceNo){
+    public String viewResourceList(@PathVariable String memberNo, @PathVariable String resourceNo) {
         return apiService.getResource(memberNo, resourceNo);
+    }
+
+
+    @GetMapping("/members/{memberNo}/boards/{boardNo}/comments")
+    public String viewCommentList(@PathVariable long boardNo) {
+
+        return boardService.getCommentList(boardNo);
     }
 }
