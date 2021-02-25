@@ -208,25 +208,14 @@ public class MemberController {
     /*TODO:로그인*/
     @PostMapping("/login")
     @ResponseBody
-    public String login(HttpSession session, @Valid Member member, BindingResult bindingResult) {
-        String result = "false";
-        member = Member.builder()
-                .email(member.getEmail())
-                .pwd(member.getPwd())
-                .name("empty")
-                .membersAgreement(false)
-                .collectionAndUse(false)
-                .build();
-
-        if (!bindingResult.hasErrors()) {
-            result = memberService.login(member);
+    public String login(HttpSession session, Member member) {
+        String result = memberService.login(member);
             if (!result.equals("false")) {
                 if (sessionMember.getRank().equals("temporary")) {
                     result = "/members/" + sessionMember.getNo() + "/check-email";
                 }
                 session.setAttribute("sessionMember", sessionMember);
             }
-        }
 
         return result;
 
