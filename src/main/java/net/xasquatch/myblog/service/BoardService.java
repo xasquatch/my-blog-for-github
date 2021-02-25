@@ -216,7 +216,7 @@ public class BoardService {
     public boolean createComment(Comment comment) {
         boolean result = false;
         String pwd = comment.getPwd();
-        if (pwd == null || pwd.equals(""))
+        if (pwd == null || pwd.equals("") || pwd.equals("null"))
             comment.setPwd("0000");
 
         comment.setMbr_no(sessionMember.getNo());
@@ -235,7 +235,7 @@ public class BoardService {
             result = boardDao.deleteComment(commentNo);
         }
 
-        return result == 1 ? "true": "false";
+        return result == 1 ? "true" : "false";
     }
 
 }
