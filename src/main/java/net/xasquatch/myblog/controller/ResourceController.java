@@ -33,7 +33,7 @@ public class ResourceController {
             model.addAttribute("resources", resources);
 
         }
-        return "index";
+        return "redirect:/";
 
     }
 
