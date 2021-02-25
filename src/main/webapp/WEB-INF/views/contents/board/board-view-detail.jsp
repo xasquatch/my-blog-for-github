@@ -100,6 +100,18 @@
 <script>
     function createBoardComment() {
         var commentForm = document.querySelector('#comment-form');
+
+        var writerExplainMessage = '작성에 실패하였습니다\n' +
+            ' 1. 3~255자 이내로 입력가능합니다\n' +
+            ' 2. html태그는 사용하실 수 없습니다.';
+
+        var commentContents = commentForm.querySelector('textarea[name="contents"]');
+        if (commentContents.value.length < 3 || commentContents.value.length > 255) {
+            window.alert(writerExplainMessage);
+            return;
+
+        }
+
         var formData = new FormData(commentForm);
 
         if ('${sessionMember.name}' === 'GUEST') {
@@ -113,6 +125,7 @@
                 alert('댓글작성에 실패하였습니다. 잠시 후 다시 시도해주시기바랍니다');
 
             } else {
+                commentContents.value = '';
                 getCommentList();
 
             }
