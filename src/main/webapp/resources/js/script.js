@@ -88,9 +88,15 @@ var board = {
         }
 
     },
-    delete: function (memberKey, boardKey) {
+    delete: function (memberKey, boardKey, sessionMemberName) {
         if (window.confirm("정말 삭제하시겠습니까?")) {
-            myAjax.submit('DELETE', 'https://myblog.xasquatch.net/board/' + memberKey + '/delete/' + boardKey, function (data) {
+            var pwd;
+            if (sessionMemberName === 'GUEST') {
+                pwd = window.prompt('비밀번호를 설정해주세요.\n (기본값: 0000)', '0000');
+                if (pwd === null) return;
+
+            }
+            myAjax.submit('DELETE', 'https://myblog.xasquatch.net/board/' + memberKey + '/delete/' + boardKey + '?pwd=' + pwd, function (data) {
                 if (data === 'false') {
                     console.log('잘못 된 요청입니다.');
 
@@ -107,9 +113,15 @@ var board = {
         }
 
     },
-    GoModify: function (memberKey, boardKey) {
+    GoModify: function (memberKey, boardKey, sessionMemberName) {
         if (window.confirm("수정 페이지로 이동하시겠습니까?")) {
-            location.href = '/board/' + memberKey + '/modify/' + boardKey;
+            var pwd;
+            if (sessionMemberName === 'GUEST') {
+                pwd = window.prompt('비밀번호를 설정해주세요.\n (기본값: 0000)', '0000');
+                if (pwd === null) return;
+
+            }
+            location.href = '/board/' + memberKey + '/modify/' + boardKey + '?pwd=' + pwd;
 
         }
     }

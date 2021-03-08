@@ -60,12 +60,12 @@
                             ${board.created_date}
                     </td>
                     <td style="vertical-align: middle; text-align: center;">
-                        <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no})">
+                        <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no},'${sessionMember.name}')">
                         <span class="glyphicon glyphicon-pencil"></span>
                         </a>
                     </td>
                     <td style="vertical-align: middle; text-align: center;">
-                        <a href="javascript:board.delete(${board.mbr_no}, ${board.no})">
+                        <a href="javascript:board.delete(${board.mbr_no}, ${board.no},'${sessionMember.name}')">
                         <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </td>

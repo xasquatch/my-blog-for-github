@@ -11,10 +11,10 @@
                         <h1>${board.title}</h1>
                         <c:if test="${sessionMember.rank eq 'manager' || sessionMember.no eq board.mbr_no}">
                             <h3>
-                                <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no})">
+                                <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no},'${sessionMember.name}')">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
-                                <a href="javascript:board.delete(${board.mbr_no}, ${board.no})">
+                                <a href="javascript:board.delete(${board.mbr_no}, ${board.no},'${sessionMember.name}')">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </h3>
