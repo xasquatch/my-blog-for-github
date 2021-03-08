@@ -72,7 +72,7 @@ public class HomeController {
         return sessionResult;
     }
 
-    @GetMapping(value = "/")
+    @GetMapping("/")
     public String home(Model model) {
         Map<String, Object> noticeMap =
                 boardService.getNoticeList("manager", 5, 1, new String[]{"keyword", "my-blog-notice"});
@@ -83,22 +83,15 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping(value = "/members")
+    @GetMapping("/members")
     public String signInAndUp(Model model) {
-        if (sessionMember.getNo() != null || !sessionMember.getEmail().equals("")) return "redirect:/";
+        if (sessionMember.getNo() != null) return "redirect:/";
         model.addAttribute("mainContents", "members");
 
         return "index";
     }
 
-    @PostMapping(value = "/members")
-    public String members(Model model) {
-        model.addAttribute("mainContents", "main");
-
-        return "index";
-    }
-
-    @PostMapping(value = "/feedback/{memberNo}")
+    @PostMapping("/feedback/{memberNo}")
     @ResponseBody
     public String sendFeedback(HttpServletRequest request, @PathVariable String memberNo) {
         if (!isCheckSession(memberNo)) return "Failed Check Session";
