@@ -33,7 +33,7 @@ public class ResourceController {
             model.addAttribute("resources", resources);
 
         }
-        return "redirect:/";
+        return "redirect:/members";
 
     }
 
@@ -56,7 +56,7 @@ public class ResourceController {
             model.addAttribute("mainContents", "resource-create");
             return "index";
         }
-        return "redirect:/";
+        return "redirect:/members";
     }
 
     @PostMapping("/{memberNo}/upload")

@@ -57,7 +57,7 @@ public class MemberController {
 
         }
 
-        return "redirect:/";
+        return "redirect:/members";
     }
 
     /*TODO: 회원 api QUICK GUIDE PAGE로 이동*/
@@ -69,7 +69,7 @@ public class MemberController {
 
         }
 
-        return "redirect:/";
+        return "redirect:/members";
     }
 
     /*TODO: information페이지 이동*/
@@ -86,7 +86,7 @@ public class MemberController {
             }
         }
 
-        return "redirect:/";
+        return "redirect:/members";
     }
 
     //TODO: 회원정보 변경
@@ -113,7 +113,7 @@ public class MemberController {
             return "index";
         }
 
-        return "redirect:/";
+        return "redirect:/members";
     }
 
     /*TODO: 회원 이메일 변경페이지로 이동*/
@@ -125,7 +125,7 @@ public class MemberController {
 
         }
 
-        return "redirect:/";
+        return "redirect:/members";
     }
 
     /*TODO: 회원 이메일 인증페이지로 이동*/
@@ -155,7 +155,7 @@ public class MemberController {
             return "index";
 
         }
-        return "redirect:/";
+        return "redirect:/members";
     }
 
     /*TODO: 회원 이메일 찾기*/
@@ -201,7 +201,7 @@ public class MemberController {
             }
         }
         memberService.reset(sessionMember);
-        return "redirect:/";
+        return "redirect:/members";
     }
 
 

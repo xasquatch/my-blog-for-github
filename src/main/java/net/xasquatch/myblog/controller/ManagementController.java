@@ -62,7 +62,7 @@ public class ManagementController {
             return "index";
 
         }
-        return "redirect:/";
+        return "redirect:/members";
 
     }
 

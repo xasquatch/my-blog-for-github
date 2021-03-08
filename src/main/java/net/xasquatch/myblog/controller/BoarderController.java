@@ -52,7 +52,7 @@ public class BoarderController {
             return "index";
 
         }
-        return "redirect:/";
+        return "redirect:/members";
 
     }
 
@@ -95,7 +95,7 @@ public class BoarderController {
         if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
                 (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
             if (sessionMember.getName().equals("GUEST") && !boardService.isConfirmBoardPwd(boardNo, pwd))
-                return "redirect:/";
+                return "redirect:/members";
             Map<String, Object> board = boardService.viewDetail(memberNo, boardNo);
             model.addAttribute("board", board);
             model.addAttribute("mainContents", "board-modify");
@@ -103,7 +103,7 @@ public class BoarderController {
             return "index";
         }
 
-        return "redirect:/";
+        return "redirect:/members";
     }
 
     //TODO: 게시판 리스트 조회 페이지
@@ -169,7 +169,7 @@ public class BoarderController {
         if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
                 (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
             if (sessionMember.getName().equals("GUEST") && !boardService.isConfirmBoardPwd(boardNo, pwd))
-                return "redirect:/";
+                return "redirect:/members";
             if (boardService.delete(boardNo))
                 return "true";
 
