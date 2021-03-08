@@ -88,7 +88,7 @@
     </div>
 </section>
 <section class="wrap-min dot-key">
-    <h1 style="text-align: center">Log In</h1>
+    <h1 style="text-align: center">Sign In</h1>
 
     <form class="form-horizontal" id="home-login">
         <div class="form-group">
@@ -184,8 +184,10 @@
                 window.alert('게스트계정 로그인에 실패하였습니다. 다시 시도해주세요');
 
             } else {
-                window.location.replace('${path}/');
-
+                <%--window.location.replace('${path}/');--%>
+                myAjax.submit('POST','${path}/members',function (data) {
+                    document.write(data);
+                },'FORM','members=true');
             }
 
         }, 'FORM', 'email=guest@test.com&pwd=11111111');
@@ -208,8 +210,10 @@
                     window.location.href = '${path}' + data;
 
                 } else {
-                    window.location.replace('${path}/');
-
+                    <%--window.location.replace('${path}/');--%>
+                    myAjax.submit('POST','${path}/members',function (data) {
+                        document.write(data);
+                    },'FORM','members=true');
                 }
 
             }, 'FORMFILE', formData);

@@ -212,7 +212,7 @@
 
 /*END: general setting---------------*/
 
-/*--------------------------login.jsp------------------*/
+/*--------------------------members.jsp------------------*/
 
 .input-character {
     background-color: rgba(37, 92, 194, 1);
@@ -322,7 +322,7 @@
 
 
 
-/*END: login.jsp------------------*/
+/*END: members.jsp------------------*/
 /*----------contents-aside-------*/
 .wrap-grid > section {
     display: block;

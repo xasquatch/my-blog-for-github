@@ -44,12 +44,20 @@
                 <B>More</B>
             </button>
         </c:if>
-        <c:if test="${sessionMember.no != null}">
-            <button type="button" class="btn btn-link-red" style="font-size: 20px; color: black;"
-                    onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/members/log-out'">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-            </button>
-        </c:if>
+        <c:choose>
+            <c:when test="${sessionMember.no != null}">
+                <button type="button" class="btn btn-link-red" style="font-size: 20px; color: black;"
+                        onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/members/log-out'">
+                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                </button>
+            </c:when>
+            <c:otherwise>
+                <button type="button" class="btn btn-link-red" style="font-size: 20px; color: black;"
+                        onclick="location.href='${path}/members'">
+                    Members
+                </button>
+            </c:otherwise>
+        </c:choose>
 
     </div>
 </header>
