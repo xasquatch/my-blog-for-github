@@ -92,6 +92,12 @@ public class BoardService {
         return searchValue;
     }
 
+    public boolean isConfirmBoardPwd(Object Boardno, String pwd){
+
+        return boardDao.selectOneBoardColumnPwd(Boardno, pwd);
+
+    }
+
     public Map<String, Object> getNoticeList(Object rank, int pageLimit, int currentPageBlock, String[] searchValue) {
 
         int currentPage = 0;

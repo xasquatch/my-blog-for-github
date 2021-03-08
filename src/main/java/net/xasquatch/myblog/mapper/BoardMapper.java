@@ -69,4 +69,7 @@ public interface BoardMapper {
 
     @Delete("DELETE FROM comment WHERE no = #{arg0}")
     int deleteComment(Object commentNo);
+
+    @Select("SELECT COUNT(no) FROM board WHERE no = #{arg0} AND pwd = #{arg1}")
+    int selectOneBoardColumnPwd(Object boardno, String pwd);
 }

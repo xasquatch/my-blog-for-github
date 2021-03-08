@@ -90,4 +90,10 @@ public class BoardDao {
         return boardMapper.insertOneComment(comment);
     }
 
+    public boolean selectOneBoardColumnPwd(Object boardno, String pwd) {
+        boolean result = false;
+        if (boardMapper.selectOneBoardColumnPwd(boardno, pwd) == 1) result = true;
+
+        return result;
+    }
 }

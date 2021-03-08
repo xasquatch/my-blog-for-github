@@ -38,10 +38,10 @@ public class BoarderController {
     @Autowired
     private HomeController checkSessionController;
 
-
     //TODO: 글작성 화면으로 이동
     @RequestMapping(value = "/{memberNo}/create", method = {RequestMethod.GET, RequestMethod.POST})
-    public String forwardCreate(Model model, @PathVariable String memberNo,
+    public String forwardCreate(Model model,
+                                @PathVariable String memberNo,
                                 @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             long boardNo = (long) boardService.createDefaultBoard(memberNo);
@@ -60,8 +60,9 @@ public class BoarderController {
     @PostMapping("/{memberNo}/upload/{boardNo}/{method}")
     @ResponseBody
     public String upload(MultipartHttpServletRequest request, @Valid Board board,
-                         @PathVariable String method, @PathVariable String memberNo,
-                         BindingResult bindingResult) {
+                         BindingResult bindingResult,
+                         @PathVariable String method,
+                         @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             boolean result = false;
             board.setCreated_ip(accessorInfo.getIpAddress(request));
@@ -87,10 +88,14 @@ public class BoarderController {
 
     //TODO: 작성글 수정페이지로 이동
     @GetMapping("/{memberNo}/modify/{boardNo}")
-    public String modify(Model model, @RequestParam String pwd, @PathVariable String boardNo, @PathVariable String memberNo) {
+    public String modify(Model model,
+                         @RequestParam String pwd,
+                         @PathVariable String boardNo,
+                         @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
                 (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
-            System.out.println(pwd);
+            if (sessionMember.getName().equals("GUEST") && !boardService.isConfirmBoardPwd(boardNo, pwd))
+                return "redirect:/";
             Map<String, Object> board = boardService.viewDetail(memberNo, boardNo);
             model.addAttribute("board", board);
             model.addAttribute("mainContents", "board-modify");
@@ -141,8 +146,10 @@ public class BoarderController {
         return "index";
     }
 
-    @RequestMapping(value = "/{memberNo}/read/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewDetail(Model model, @PathVariable String boardNo, @PathVariable String memberNo) {
+    @GetMapping("/{memberNo}/read/{boardNo}")
+    public String viewDetail(Model model,
+                             @PathVariable String boardNo,
+                             @PathVariable String memberNo) {
 
         Map<String, Object> board = boardService.viewDetail(memberNo, boardNo);
 
@@ -156,9 +163,13 @@ public class BoarderController {
 
     @DeleteMapping("/{memberNo}/delete/{boardNo}")
     @ResponseBody
-    public String deleteBoard(@PathVariable String memberNo, @PathVariable String boardNo) {
+    public String deleteBoard(@RequestParam String pwd,
+                              @PathVariable String memberNo,
+                              @PathVariable String boardNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
                 (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
+            if (sessionMember.getName().equals("GUEST") && !boardService.isConfirmBoardPwd(boardNo, pwd))
+                return "redirect:/";
             if (boardService.delete(boardNo))
                 return "true";
 
