@@ -6,12 +6,16 @@
 <jsp:include page="include/header.jsp"/>
 
 <c:choose>
+    <c:when test="${mainContents == 'home'}">
+        <jsp:include page="contents/${mainContents}.jsp"/>
+
+    </c:when>
     <c:when test="${mainContents == 'members'}">
-        <jsp:include page="contents/members.jsp"/>
+        <jsp:include page="contents/${mainContents}.jsp"/>
 
     </c:when>
     <c:when test="${mainContents == 'main'}">
-        <jsp:include page="contents/main.jsp"/>
+        <jsp:include page="contents/${mainContents}.jsp"/>
 
     </c:when>
 
