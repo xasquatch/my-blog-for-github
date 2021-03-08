@@ -405,10 +405,14 @@
             return;
         }
 
-
-
-
         var formData = new FormData(boardFormTag);
+
+        if ('${sessionMember.name}' === 'GUEST') {
+            var pwd = window.prompt('비밀번호를 설정해주세요.\n (기본값: 0000)', '0000');
+            if (pwd === null) return;
+            formData.append("pwd", pwd);
+
+        }
 
         if (url.isContainWordCurrentPath('/create')) {
 

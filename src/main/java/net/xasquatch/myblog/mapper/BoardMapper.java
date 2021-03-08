@@ -17,7 +17,7 @@ public interface BoardMapper {
     int insertDefaultBoard(Map<String, Object> memberMap);
 
     //TODO: 게시글 작성 1단계에서 확보한 selectKey를 통해 나머지 내역 업데이트, 글 작성완료  ----> 글 새로 작성, 글 수정에 쓰임
-    @Update("UPDATE board SET keyword = #{keyword}, title = #{title}, contents = #{contents}, thumbnail = #{thumbnail}, created_ip = #{created_ip}, completed = 'true' WHERE no = #{no}")
+    @Update("UPDATE board SET keyword = #{keyword}, title = #{title}, contents = #{contents}, thumbnail = #{thumbnail}, created_ip = #{created_ip}, pwd = #{pwd}, completed = 'true' WHERE no = #{no}")
     int updateBoard(Board board);
 
     //TODO: 게시글 작성 1단계에서 더 이상 작성되지 않고 새 글 작성시 그 전의 글 삭제

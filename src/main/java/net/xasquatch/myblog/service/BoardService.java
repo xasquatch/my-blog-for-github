@@ -184,6 +184,10 @@ public class BoardService {
         if (board.getTitle().equals("") || board.getTitle() == null) board.setTitle("[Empty Title]");
         if (board.getThumbnail().trim().equals("") || board.getThumbnail() == null)
             board.setThumbnail("<img style=\"max-width: 140px; max-height: 140px;\" src=\"https://myblog.xasquatch.net/img/no_image.png\"/>");
+        String pwd = board.getPwd();
+        if (pwd == null || pwd.equals("") || pwd.equals("null"))
+            board.setPwd("0000");
+
         byte[] bytes = (board.getTitle() + System.lineSeparator() + board.getCreated_ip() + System.lineSeparator() + board.getContents()).getBytes();
 
         fileService.writeFile(bytes, File.separator + board.getMbr_no() + SaveDir + File.separator + board.getNo(), ContentsName + "-origin");
@@ -193,6 +197,9 @@ public class BoardService {
 
     public boolean modify(Board board) {
         SimpleDateFormat format = new SimpleDateFormat("-yyyyMMddhhmmss");
+        String pwd = board.getPwd();
+        if (pwd == null || pwd.equals("") || pwd.equals("null"))
+            board.setPwd("0000");
 
         byte[] bytes = (board.getTitle() + System.lineSeparator() + board.getCreated_ip() + System.lineSeparator() + board.getContents()).getBytes();
 
