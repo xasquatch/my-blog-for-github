@@ -65,7 +65,6 @@ public class BoarderController {
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
             boolean result = false;
             board.setCreated_ip(accessorInfo.getIpAddress(request));
-
             if (bindingResult.hasErrors()) return "false";
 
             String checkResult = boardService.checkBoardFormData(board);
@@ -87,10 +86,11 @@ public class BoarderController {
     }
 
     //TODO: 작성글 수정페이지로 이동
-    @RequestMapping(value = "/{memberNo}/modify/{boardNo}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String modify(Model model, @PathVariable String boardNo, @PathVariable String memberNo) {
+    @GetMapping("/{memberNo}/modify/{boardNo}")
+    public String modify(Model model, @RequestParam String pwd, @PathVariable String boardNo, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
                 (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
+            System.out.println(pwd);
             Map<String, Object> board = boardService.viewDetail(memberNo, boardNo);
             model.addAttribute("board", board);
             model.addAttribute("mainContents", "board-modify");
