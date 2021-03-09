@@ -18,6 +18,7 @@
     <%--custom css --%>
     <link rel="stylesheet" href="${path}/css/style.css">
     <link rel="stylesheet" href="${path}/css/reset.css">
+    <link rel="stylesheet" href="${path}/css/home-style.css">
     <link rel="stylesheet" href="${path}/css/list-style.css">
     <%--END: custom css --%>
 

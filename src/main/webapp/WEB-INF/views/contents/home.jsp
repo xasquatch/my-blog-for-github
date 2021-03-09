@@ -3,7 +3,13 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sForm" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-
+<ul id="home-page-container">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+</ul>
 <section>
     <div style="margin: 0 auto; max-width: 800px; padding: 5px;" class="dot-key">
         <h1 style="margin: 0; text-align: center">NOTICE</h1>
