@@ -1,5 +1,34 @@
 @charset "UTF-8";
 
 #home-page-container{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+}
+#home-page-container>li{
+    width: 100%;
+    height: 100vh;
+
+}
+
+#home-page-container>li:nth-child(1){
+    background: yellow;
+
+}
+#home-page-container>li:nth-child(2){
+    background: #4d9be2;
+
+}
+#home-page-container>li:nth-child(3){
+    background: aliceblue;
+
+}
+#home-page-container>li:nth-child(4){
+    background: cornsilk;
+
+}
+#home-page-container>li:nth-child(5){
+    background: darkcyan;
 
 }
