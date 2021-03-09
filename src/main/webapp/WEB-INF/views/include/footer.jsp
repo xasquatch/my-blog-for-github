@@ -18,13 +18,13 @@
         mainAside.style.marginTop = 0;
     }
 
-    // css sticky 속성이 부모태그가 그리드인 상태에서는 적용되지가 않아서
-    // TOP padding값을 주는 것으로 sticky 구현
+/*
     window.addEventListener('scroll', function () {
         if (mainAside.classList.contains('forward-to-top')) {
             mainAside.style.marginTop = window.pageYOffset;
         }
     });
+*/
 
     var aTags = document.querySelectorAll('a');
     for (var aTag of aTags) {
