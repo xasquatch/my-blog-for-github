@@ -8,6 +8,9 @@
         <h1 class="dot-key"></h1>
     </li>
     <li>
+        3
+    </li>
+    <li>
         <section>
             <div style="margin: 0 auto; max-width: 800px; padding: 5px;" class="dot-key">
                 <h1 style="margin: 0; text-align: center">NOTICE</h1>
@@ -43,9 +46,6 @@
 
         </section>
     </li>
-    <li>2</li>
-    <li>4</li>
-    <li>5</li>
 </ul>
 <script>
     window.onload = function () {
