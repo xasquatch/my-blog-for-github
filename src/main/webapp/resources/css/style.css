@@ -129,9 +129,6 @@
         text-align: center;
     }
 
-    .forward-to-top {
-        bottom: -100%;
-    }
 
     #mobile-hamburger {
         display: block;
@@ -142,6 +139,10 @@
 /*END: header, footer, aside----------------*/
 
 /*----------------general setting---------------*/
+.hide{
+    display: none;
+}
+
 .opacity-0 {
     opacity: 0;
 }

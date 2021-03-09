@@ -14,17 +14,8 @@
     var mainAside = document.querySelector('#main-aside');
 
     function popUpAside() {
-        mainAside.classList.toggle('forward-to-top');
-        mainAside.style.marginTop = 0;
+        mainAside.classList.toggle('hide');
     }
-
-/*
-    window.addEventListener('scroll', function () {
-        if (mainAside.classList.contains('forward-to-top')) {
-            mainAside.style.marginTop = window.pageYOffset;
-        }
-    });
-*/
 
     var aTags = document.querySelectorAll('a');
     for (var aTag of aTags) {
