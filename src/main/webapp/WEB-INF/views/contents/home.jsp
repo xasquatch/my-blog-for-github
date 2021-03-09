@@ -5,8 +5,9 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <ul id="home-page-container">
     <li>
-
-
+        <h1 class="dot-key"></h1>
+    </li>
+    <li>
         <section>
             <div style="margin: 0 auto; max-width: 800px; padding: 5px;" class="dot-key">
                 <h1 style="margin: 0; text-align: center">NOTICE</h1>
@@ -39,10 +40,17 @@
                     </tbody>
                 </table>
             </div>
+
         </section>
     </li>
     <li>2</li>
-    <li>3</li>
     <li>4</li>
     <li>5</li>
 </ul>
+<script>
+    window.onload = function () {
+
+        textScript.insertText('#home-page-container>li:nth-child(1) h1', 'Welcome My Blog <BR>Develop By Xasquatch', 10);
+    }
+
+</script>
