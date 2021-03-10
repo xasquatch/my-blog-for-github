@@ -6,12 +6,18 @@
 <ul id="home-page-container">
     <li id="home-page-section-one">
         <h1 class="dot-key"></h1>
+        <div>
+            <h3 class="dot-key"></h3>
+            <a class="btn btn-link-red dot-key" href="#home-page-section-two">다음장</a>
+            &nbsp;
+            <a class="btn btn-link-red dot-key" href="#home-page-section-three">공지사항</a>
+        </div>
     </li>
     <li id="home-page-section-two">
 
     </li>
     <li id="home-page-section-three">
-        <section>
+        <section style="background: rgba(255,255,255,0.5);">
             <div style="margin: 0 auto; max-width: 800px; padding: 5px;" class="dot-key">
                 <h1 style="margin: 0; text-align: center">NOTICE</h1>
                 <table class="table table-hover table-condensed">
@@ -55,26 +61,53 @@
 
     function startPage1() {
         resetPage('#home-page-section-one h1');
+        resetPage('#home-page-section-one h3');
         textScript.insertText('#home-page-section-one h1', 'Welcome My Blog <BR>Develop By Xasquatch', 10);
+        textScript.insertText('#home-page-section-one h3', '바로가기<BR>', 10);
+    }
+
+    function forwardPageSection(pageTagId) {
+        if (!location.href.includes(pageTagId))
+            location.href = pageTagId;
     }
 
     function smoothScroll() {
-
         startPage1();
         var currentScrollY = window.scrollY;
-        var page1 = document.querySelector('#home-page-section-one');
+        // var page1 = document.querySelector('#home-page-section-one');
         var page2 = document.querySelector('#home-page-section-two');
-        var page3 = document.querySelector('#home-page-section-three');
+        // var page3 = document.querySelector('#home-page-section-three');
 
         window.addEventListener('scroll', function (e) {
             var scrollDirection = currentScrollY - window.scrollY;
             if (scrollDirection === 0) return;
 
+            // 아래로 스크롤 시
             if (scrollDirection < 0) {
-                console.log('아래로');
-                $('#home-page-container>li:nth-child(1)').animate()
+                // if (currentScrollY >= page1.offsetTop && currentScrollY <= (page1.offsetTop + page1.offsetHeight)) {
+                //     console.log('1페이지 아래로 스크롤');
+                //     forwardPageSection('#home-page-section-two');
+                //
+                // } else
+                if (currentScrollY >= page2.offsetTop && currentScrollY <= (page2.offsetTop + page2.offsetHeight)) {
+                    console.log('2페이지 아래로 스크롤');
+                    forwardPageSection('#home-page-section-three');
+
+                }
+
+                // 위로 스크롤 시
             } else if (scrollDirection > 0) {
-                console.log('위로');
+                if (currentScrollY >= page2.offsetTop && currentScrollY <= (page2.offsetTop + page2.offsetHeight)) {
+                    console.log('2페이지 위로 스크롤');
+                    forwardPageSection('#home-page-section-one');
+
+                }
+                // else if (currentScrollY >= page3.offsetTop && currentScrollY <= (page3.offsetTop + page3.offsetHeight)) {
+                //     console.log('3페이지 위로 스크롤');
+                //     forwardPageSection('#home-page-section-two');
+                //
+                // }
+
 
             }
 

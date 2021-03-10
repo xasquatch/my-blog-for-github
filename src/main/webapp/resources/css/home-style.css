@@ -14,7 +14,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    scroll-behavior: smooth;
 }
 
 #home-page-section-one {
@@ -22,10 +21,9 @@
     color: rgba(255, 255, 255, 0);
 }
 
-#home-page-section-one h1 {
+#home-page-section-one>* {
     text-align: center;
     min-height: 20vw;
-    font-size: 9vw;
     background-image: url("/img/banner/15.gif");
     background-repeat: no-repeat;
     background-position: center;
@@ -35,11 +33,21 @@
     color: rgba(255, 255, 255, 0);
 
 }
-
-#home-page-section-two {
+#home-page-section-one h1 {
+    font-size: 9vw;
 
 }
 
-#home-page-section-three {
+#home-page-section-two {
+    background-image: url("/img/banner/0.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
 
+#home-page-section-three {
+    background-image: url("/img/banner/11.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
