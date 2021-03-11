@@ -21,7 +21,7 @@
     color: rgba(255, 255, 255, 0);
 }
 
-#home-page-section-one>* {
+#home-page-section-one > * {
     text-align: center;
     min-height: 20vw;
     background-image: url("/img/banner/15.gif");
@@ -33,21 +33,29 @@
     color: rgba(255, 255, 255, 0);
 
 }
+
 #home-page-section-one h1 {
     font-size: 9vw;
 
 }
 
-#home-page-section-two {
-    background-image: url("/img/banner/0.gif");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+#home-page-section-two{
+    background: black;
+    color: white;
 }
 
 #home-page-section-three {
-    background-image: url("/img/banner/11.gif");
+    background: black url("/img/banner/8.gif");
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
+}
+
+@media (min-height: 800px) {
+    #home-page-section-two,
+    #home-page-section-three {
+        background-size: auto;
+
+    }
+
 }

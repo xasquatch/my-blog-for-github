@@ -6,15 +6,15 @@
 <ul id="home-page-container">
     <li id="home-page-section-one">
         <h1 class="dot-key"></h1>
-        <div>
+        <div style="color: white;">
             <h3 class="dot-key"></h3>
-            <a class="btn btn-link-red dot-key" href="#home-page-section-two">다음장</a>
+            <a class="dot-key btn btn-link-red" href="#home-page-section-two">다음장</a>
             &nbsp;
-            <a class="btn btn-link-red dot-key" href="#home-page-section-three">공지사항</a>
+            <a class="dot-key btn btn-link-red" href="#home-page-section-three">공지사항</a>
         </div>
     </li>
     <li id="home-page-section-two">
-
+        <div class="dot-key" style="font-size:2em; padding-left: 20px;"></div>
     </li>
     <li id="home-page-section-three">
         <section style="background: rgba(255,255,255,0.5);">
@@ -66,9 +66,24 @@
         textScript.insertText('#home-page-section-one h3', '바로가기<BR>', 10);
     }
 
-    function forwardPageSection(pageTagId) {
-        if (!location.href.includes(pageTagId))
-            location.href = pageTagId;
+    function startPage2() {
+        var pageTwoContents = document.querySelector('#home-page-section-two>div');
+        if (pageTwoContents.innerHTML !== '') return;
+
+        textScript.insertText('#home-page-section-two>div',
+            '<h1 class="opacity-0" style="font-size: 3em; transition: 1s all;"></h1><BR>' +
+            '1. 나만의 블로그를 만들 수 있습니다.<BR>' +
+            '2. 만든 나만의 블로그를 REST API를 이용하여 직접 코딩하고 공유할 수 있습니다.<BR>' +
+            '3. REST API를 이용하여 블로그 외 JSON형식 데이터를 만들고 사용 할 수 있습니다.<BR>' +
+            '<BR>' +
+            '테스트로 제공해드리는 GUEST계정을 통해 미리 경험해 보세요!<BR><BR>'
+            ,1,function (e) {
+                pageTwoContents.innerHTML += '<a class="dot-key btn btn-link-red" href="${path}/members">Members로 이동하기</a>';
+
+                var homePageSectionTwoTitle = pageTwoContents.querySelector('h1');
+                homePageSectionTwoTitle.innerHTML = 'My Blog By Xasquatch';
+                homePageSectionTwoTitle.style.opacity = '1';
+            });
     }
 
     function smoothScroll() {
@@ -88,21 +103,25 @@
                 //     console.log('1페이지 아래로 스크롤');
                 //     forwardPageSection('#home-page-section-two');
                 //
-                // } else
-                if (currentScrollY >= page2.offsetTop && currentScrollY <= (page2.offsetTop + page2.offsetHeight)) {
-                    console.log('2페이지 아래로 스크롤');
-                    forwardPageSection('#home-page-section-three');
+                // } else if (currentScrollY >= page2.offsetTop && currentScrollY <= (page2.offsetTop + page2.offsetHeight)) {
+                //     console.log('2페이지 아래로 스크롤');
+                //
+                // }
+                if (!(currentScrollY >= page2.offsetTop && currentScrollY <= (page2.offsetTop + page2.offsetHeight))) {
+                    startPage2();
 
                 }
 
                 // 위로 스크롤 시
             } else if (scrollDirection > 0) {
-                if (currentScrollY >= page2.offsetTop && currentScrollY <= (page2.offsetTop + page2.offsetHeight)) {
-                    console.log('2페이지 위로 스크롤');
-                    forwardPageSection('#home-page-section-one');
+                if (!(currentScrollY >= page2.offsetTop && currentScrollY <= (page2.offsetTop + page2.offsetHeight))) {
+                    startPage2();
 
                 }
-                // else if (currentScrollY >= page3.offsetTop && currentScrollY <= (page3.offsetTop + page3.offsetHeight)) {
+                // if (currentScrollY >= page2.offsetTop && currentScrollY <= (page2.offsetTop + page2.offsetHeight)) {
+                //     console.log('2페이지 위로 스크롤');
+                //
+                //} else if (currentScrollY >= page3.offsetTop && currentScrollY <= (page3.offsetTop + page3.offsetHeight)) {
                 //     console.log('3페이지 위로 스크롤');
                 //     forwardPageSection('#home-page-section-two');
                 //
