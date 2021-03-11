@@ -14,7 +14,7 @@
     var mainAside = document.querySelector('#main-aside');
 
     function popUpAside() {
-        mainAside.classList.toggle('hide');
+        mainAside.classList.toggle('aside-hide');
     }
 
     var aTags = document.querySelectorAll('a');

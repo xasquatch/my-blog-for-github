@@ -3,8 +3,8 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <c:set var="mainContents" value="${requestScope.mainContents}"/>
 
-<aside id="main-aside" class="hide dot-key">
-    <c:if test="${mainContents != 'members' && mainContents != 'main' && mainContents != 'home'
+<aside id="main-aside" class="aside-hide dot-key">
+    <c:if test="${mainContents != 'members'
         && sessionMember.no != null && sessionMember.no != ''
         && !(mainContents.contains('check')||mainContents.contains('find'))}">
         <c:if test="${sessionMember.rank.contains('manager')}">
@@ -35,7 +35,8 @@
         </c:if>
         <c:if test="${sessionMember.no ne '' && sessionMember.no ne null}">
             <hr>
-            <a class="dot-key btn btn-link-red" style="font-size: 5vw;" href="${path}/members/${sessionMember.no}">
+            <a class="dot-key btn btn-link-red" style="font-size: 20px"
+               href="${path}/members/${sessionMember.no}">
                 메인화면으로 이동<BR>
                 (Members: 회원전용)
             </a>
