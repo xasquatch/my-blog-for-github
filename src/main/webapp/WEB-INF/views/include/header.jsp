@@ -52,12 +52,12 @@
                     <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                 </button>
             </c:when>
-            <c:otherwise>
+            <c:when test="${mainContents != 'members' && sessionMember == null}">
                 <button type="button" class="btn btn-link-red" style="font-size: 20px; color: black;"
                         onclick="window.location.href = '${path}/members'">
                     Members
                 </button>
-            </c:otherwise>
+            </c:when>
         </c:choose>
 
     </div>
