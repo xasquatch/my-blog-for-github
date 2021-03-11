@@ -92,6 +92,11 @@
     margin: 0 auto;
 }
 
+#main-footer a > span > img {
+    width: 100px;
+    height: 100px;
+}
+
 #main-footer-proto {
     height: 1.4em;
 }
@@ -110,15 +115,17 @@
 #mobile-hamburger {
     display: none;
 }
-.aside-hide{
+
+.aside-hide {
     /*TODO:해야됨*/
 }
+
 @media (max-width: 1300px) {
     .header-menu-btn {
         display: none !important;
     }
 
-    .aside-hide{
+    .aside-hide {
         /*TODO:해야됨*/
     }
 
