@@ -419,6 +419,18 @@ var footerEffect = {
         loadingFooter.classList.remove('padding-100vh-align-center');
         loadingFooter.classList.remove('opacity-half');
         loadingImg.classList.remove('visible');
+    },
+    addFooterState: function () {
+        var loadingFooter = document.querySelector('#main-footer');
+
+        loadingFooter.classList.add('padding-100vh-align-center');
+        loadingFooter.classList.add('opacity-half');
+    },
+    removeFooterState: function () {
+        var loadingFooter = document.querySelector('#main-footer');
+
+        loadingFooter.classList.remove('padding-100vh-align-center');
+        loadingFooter.classList.remove('opacity-half');
     }
 
 
