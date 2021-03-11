@@ -11,6 +11,11 @@
             <a class="dot-key btn btn-link-red" href="#home-page-section-two">다음장</a>
             &nbsp;
             <a class="dot-key btn btn-link-red" href="#home-page-section-three">공지사항</a>
+            <BR>
+            <BR>
+            <c:if test="${sessionMember.no ne '' && sessionMember.no ne null}">
+                <a class="dot-key btn btn-link-red" href="${path}/members/${sessionMember.no}">회원 전용 Members페이지로 이동</a>
+            </c:if>
         </div>
     </li>
     <li id="home-page-section-two">
@@ -77,7 +82,7 @@
             '3. REST API를 이용하여 블로그 외 JSON형식 데이터를 만들고 사용 할 수 있습니다.<BR>' +
             '<BR>' +
             '테스트로 제공해드리는 GUEST계정을 통해 미리 경험해 보세요!<BR><BR>'
-            ,1,function (e) {
+            , 1, function (e) {
                 pageTwoContents.innerHTML += '<a class="dot-key btn btn-link-red" href="${path}/members">Members로 이동하기</a>';
 
                 var homePageSectionTwoTitle = pageTwoContents.querySelector('h1');
