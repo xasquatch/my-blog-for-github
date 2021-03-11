@@ -85,8 +85,14 @@ public class HomeController {
 
     @GetMapping("/members")
     public String signInAndUp(Model model) {
-        if (sessionMember.getNo() != null) return "redirect:/";
         model.addAttribute("mainContents", "members");
+
+        return "index";
+    }
+    @GetMapping("/members/{sessionNo}")
+    public String members(Model model , @PathVariable String sessionNo) {
+        if (!isCheckSession(sessionNo)) return "redirect:/members";
+        model.addAttribute("mainContents", "main");
 
         return "index";
     }

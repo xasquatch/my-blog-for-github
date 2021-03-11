@@ -151,7 +151,7 @@
                 window.alert('게스트계정 로그인에 실패하였습니다. 다시 시도해주세요');
 
             } else {
-                window.location.replace('${path}/members');
+                window.location.replace('${path}/members/' + data);
             }
 
         }, 'FORM', 'email=guest@test.com&pwd=11111111');
@@ -174,7 +174,8 @@
                     window.location.href = '${path}' + data;
 
                 } else {
-                    window.location.replace('${path}/members');
+                    window.location.replace('${path}/members/' + data);
+
                 }
 
             }, 'FORMFILE', formData);

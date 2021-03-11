@@ -211,9 +211,11 @@ public class MemberController {
     public String login(HttpSession session, Member member) {
         String result = memberService.login(member);
             if (!result.equals("false")) {
-                if (sessionMember.getRank().equals("temporary")) {
+                if (sessionMember.getRank().equals("temporary") && !sessionMember.getName().equals("GUEST")) {
                     result = "/members/" + sessionMember.getNo() + "/check-email";
+
                 }
+                result = String.valueOf(sessionMember.getNo());
                 session.setAttribute("sessionMember", sessionMember);
             }
 
