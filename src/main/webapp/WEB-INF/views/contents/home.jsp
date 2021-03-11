@@ -14,7 +14,7 @@
         </div>
     </li>
     <li id="home-page-section-two">
-        <div class="dot-key" style="font-size:2em; padding-left: 20px;"></div>
+        <div class="dot-key" style="font-size:1.5em; padding-left: 20px;"></div>
     </li>
     <li id="home-page-section-three">
         <section style="background: rgba(255,255,255,0.5);">
@@ -71,7 +71,7 @@
         if (pageTwoContents.innerHTML !== '') return;
 
         textScript.insertText('#home-page-section-two>div',
-            '<h1 class="opacity-0" style="font-size: 3em; transition: 1s all;"></h1><BR>' +
+            '<h1 class="opacity-0" style="font-size: 2em; transition: 1s all;"></h1><BR>' +
             '1. 나만의 블로그를 만들 수 있습니다.<BR>' +
             '2. 만든 나만의 블로그를 REST API를 이용하여 직접 코딩하고 공유할 수 있습니다.<BR>' +
             '3. REST API를 이용하여 블로그 외 JSON형식 데이터를 만들고 사용 할 수 있습니다.<BR>' +
