@@ -26,10 +26,6 @@
     position: sticky;
 }
 
-#header-center {
-
-}
-
 #header-left {
     display: flex;
     width: 200px;
@@ -126,11 +122,12 @@
     }
 
     .aside-hide {
-        z-index: -1;
+        z-index: -1 !important;
         opacity: 0;
     }
 
     #main-aside {
+        z-index: 1000;
         display: block;
         position: fixed;
         padding: 5px 5vw 250px 5vw;
