@@ -210,14 +210,16 @@ public class MemberController {
     @ResponseBody
     public String login(HttpSession session, Member member) {
         String result = memberService.login(member);
-            if (!result.equals("false")) {
-                if (sessionMember.getRank().equals("temporary") && !sessionMember.getName().equals("GUEST")) {
-                    result = "/members/" + sessionMember.getNo() + "/check-email";
+        if (!result.equals("false")) {
+            if (sessionMember.getRank().equals("temporary") && !sessionMember.getName().equals("GUEST")) {
+                result = "/members/" + sessionMember.getNo() + "/check-email";
 
-                }
+            } else {
                 result = String.valueOf(sessionMember.getNo());
-                session.setAttribute("sessionMember", sessionMember);
+
             }
+            session.setAttribute("sessionMember", sessionMember);
+        }
 
         return result;
 
@@ -249,6 +251,7 @@ public class MemberController {
         return String.valueOf(result);
     }
 
+    /*TODO:회원탈퇴*/
     @DeleteMapping("/{memberNo}/delete")
     @ResponseBody
     public String delete(@PathVariable String memberNo) {
