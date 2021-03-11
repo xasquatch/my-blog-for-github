@@ -40,13 +40,14 @@
 
     </div>
     <div id="header-right">
-        <c:if test="${mainContents != 'members' && sessionMember != null && !(mainContents.contains('check')||mainContents.contains('find'))}">
+        <c:if test="${mainContents != 'members' && sessionMember != null && sessionMember.no != ''
+            && !(mainContents.contains('check')||mainContents.contains('find'))}">
             <button style="font-size: 20px;" type="button" id="mobile-hamburger" class="dot-key btn btn-link-red" onclick="popUpAside();">
                 <B>More</B>
             </button>
         </c:if>
         <c:choose>
-            <c:when test="${sessionMember.no != null}">
+            <c:when test="${sessionMember.no != null && sessionMember.no != ''}">
                 <button type="button" class="btn btn-link-red" style="font-size: 20px; color: black;"
                         onclick="if(confirm('로그아웃하시겠습니까?') === true)window.location.href='${path}/members/log-out'">
                     <span class="glyphicon glyphicon-off" aria-hidden="true"></span>

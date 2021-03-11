@@ -25,9 +25,11 @@
     z-index: 1000;
     position: sticky;
 }
-#header-center{
+
+#header-center {
 
 }
+
 #header-left {
     display: flex;
     width: 200px;
@@ -104,13 +106,20 @@
     overflow-y: auto;
     max-height: 80vh;
 }
+
 #mobile-hamburger {
     display: none;
 }
-
+.aside-hide{
+    /*TODO:해야됨*/
+}
 @media (max-width: 1300px) {
     .header-menu-btn {
         display: none !important;
+    }
+
+    .aside-hide{
+        /*TODO:해야됨*/
     }
 
     #main-aside {
@@ -139,9 +148,6 @@
 /*END: header, footer, aside----------------*/
 
 /*----------------general setting---------------*/
-.hide{
-    display: none;
-}
 
 .opacity-0 {
     opacity: 0;
@@ -317,12 +323,10 @@
     width: 32px;
     height: 32px;
 }
+
 .google-buttonText {
     display: block;
 }
-
-
-
 
 
 /*END: members.jsp------------------*/
@@ -394,6 +398,7 @@
         width: 100%;
         flex-direction: row;
     }
+
     #resource-section textarea {
         width: 100%;
         height: 300px;
@@ -402,30 +407,35 @@
 
 /*END: resource page-----------*/
 /*api clipboard page-----------*/
-#api-clipboard-section{
+#api-clipboard-section {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
 
 
 }
-#api-clipboard-section>article{
+
+#api-clipboard-section > article {
     margin: 5px;
     padding: 5px;
 }
-#api-clipboard-section pre{
+
+#api-clipboard-section pre {
     word-break: break-all;
     white-space: pre-wrap;
     width: 100%;
 }
-.api-clipboard{
+
+.api-clipboard {
     border: 4px inset;
     padding: 10px;
     overflow: auto;
 
 }
-.api-clipboard>pre{
+
+.api-clipboard > pre {
     height: 400px;
     overflow: auto;
 }
+
 /*END: api clipboard page-----------*/

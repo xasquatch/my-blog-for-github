@@ -4,7 +4,9 @@
 <c:set var="mainContents" value="${requestScope.mainContents}"/>
 
 <aside id="main-aside" class="hide dot-key">
-    <c:if test="${mainContents != 'members' && sessionMember != null && !(mainContents.contains('check')||mainContents.contains('find'))}">
+    <c:if test="${mainContents != 'members' && mainContents != 'main' && mainContents != 'home'
+        && sessionMember.no != null && sessionMember.no != ''
+        && !(mainContents.contains('check')||mainContents.contains('find'))}">
         <c:if test="${sessionMember.rank.contains('manager')}">
             <h2 style="font-weight: bold;">
                 Members<BR>Management
@@ -30,6 +32,9 @@
                     </a>
                 </li>
             </ul>
+        </c:if>
+        <c:if test="${sessionMember.no ne '' && sessionMember.no ne null}">
+            메인화면으로 이동
         </c:if>
         <h2 style="font-weight: bold;">
             Notice
