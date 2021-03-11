@@ -34,7 +34,12 @@
             </ul>
         </c:if>
         <c:if test="${sessionMember.no ne '' && sessionMember.no ne null}">
-            메인화면으로 이동
+            <hr>
+            <a class="dot-key btn btn-link-red" style="font-size: 5vw;" href="${path}/members/${sessionMember.no}">
+                메인화면으로 이동<BR>
+                (Members: 회원전용)
+            </a>
+            <hr>
         </c:if>
         <h2 style="font-weight: bold;">
             Notice
