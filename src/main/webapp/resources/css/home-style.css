@@ -51,7 +51,7 @@
     background-size: contain;
 }
 
-@media (min-height: 800px) {
+@media (min-width: 700px) {
     #home-page-section-two,
     #home-page-section-three {
         background-size: auto;
