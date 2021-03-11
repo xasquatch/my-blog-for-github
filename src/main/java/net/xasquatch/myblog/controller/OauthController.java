@@ -96,7 +96,7 @@ public class OauthController {
         }
         model.addAttribute("result", result);
 
-        return "forward:/";
+        return "forward:/members/"+sessionMember.getNo();
     }
 
     @DeleteMapping("/google/token")
