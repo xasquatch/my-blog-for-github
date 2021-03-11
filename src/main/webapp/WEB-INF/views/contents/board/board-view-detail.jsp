@@ -54,19 +54,20 @@
         <button class="btn btn-link-red dot-key" onclick="window.history.back();">뒤로 가기</button>
     </article>
     <article>
-        <table class="table table-hover table-condensed">
+        <table id="comment-table" class="table table-hover table-condensed">
             <thead>
             <c:if test="${sessionMember ne null}">
                 <tr class="dot-key">
-                    <td width="200" style="text-align: center;">
-                        <img style="max-width: 140px; max-height: 140px;" src="${sessionMember.img}" onerror="this.src = '${path}/img/login/default-profile.png';">
+                    <td>
+                        <img src="${sessionMember.img}" onerror="this.src = '${path}/img/login/default-profile.png';">
                         <BR>
                             ${sessionMember.name}
                     </td>
                     <td colspan="5">
                         <form id="comment-form">
-                            <div style="display: grid; grid-template-columns: 1fr 100px; min-height: 200px;">
-                                <textarea class="form-control" name="contents" minlength="3" maxlength="220" style="height: 100%; width: 100%; resize: none;"></textarea>
+                            <div style="display: grid; grid-template-columns: 1fr 100px;">
+                                <textarea class="form-control" name="contents" minlength="3" maxlength="220"
+                                          style="min-height:100px; height: 100%; width: 100%; resize: none;"></textarea>
                                 <button class="btn btn-link-red dot-key" type="button" onclick="createBoardComment();">댓글 등록</button>
                             </div>
                         </form>
@@ -163,10 +164,9 @@
             for (var comment of dataList) {
                 var trTag = document.createElement('tr');
                 var tdProfileTag = document.createElement('td');
-                tdProfileTag.width = '200';
                 tdProfileTag.style.textAlign = 'center';
                 tdProfileTag.innerHTML =
-                    '<img style="max-width: 140px; max-height: 140px;" src="' + comment.img + '"' +
+                    '<img src="' + comment.img + '"' +
                     'onerror="this.src = \'${path}/img/login/default-profile.png\';"><BR>'
                     + comment.mbr_name + '<BR>'
                     + comment.created_ip + '<BR>' + comment.created_date;
