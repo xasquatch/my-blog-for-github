@@ -52,7 +52,7 @@ public class BoarderController {
             return "index";
 
         }
-        return "redirect:/members";
+        return checkSessionController.forwardingAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
 
     }
 
@@ -82,8 +82,8 @@ public class BoarderController {
             return String.valueOf(result);
 
         }
-
         return "false";
+
     }
 
     //TODO: 작성글 수정페이지로 이동
@@ -95,7 +95,7 @@ public class BoarderController {
         if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
                 (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
             if (sessionMember.getName().equals("GUEST") && !boardService.isConfirmBoardPwd(boardNo, pwd))
-                return "redirect:/members";
+                return checkSessionController.forwardingAndErrorMsg(model, "패스워드 오류<BR>비밀번호를 다시 확인해주세요.");
             Map<String, Object> board = boardService.viewDetail(memberNo, boardNo);
             model.addAttribute("board", board);
             model.addAttribute("mainContents", "board-modify");
@@ -103,7 +103,7 @@ public class BoarderController {
             return "index";
         }
 
-        return "redirect:/members";
+        return checkSessionController.forwardingAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     //TODO: 게시판 리스트 조회 페이지
@@ -169,7 +169,7 @@ public class BoarderController {
         if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
                 (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
             if (sessionMember.getName().equals("GUEST") && !boardService.isConfirmBoardPwd(boardNo, pwd))
-                return "redirect:/members";
+                return "false";
             if (boardService.delete(boardNo))
                 return "true";
 

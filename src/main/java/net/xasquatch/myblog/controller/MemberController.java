@@ -57,7 +57,7 @@ public class MemberController {
 
         }
 
-        return "redirect:/members";
+        return checkSessionController.forwardingAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     /*TODO: 회원 api QUICK GUIDE PAGE로 이동*/
@@ -69,7 +69,7 @@ public class MemberController {
 
         }
 
-        return "redirect:/members";
+        return checkSessionController.forwardingAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     /*TODO: information페이지 이동*/
@@ -86,7 +86,7 @@ public class MemberController {
             }
         }
 
-        return "redirect:/members";
+        return checkSessionController.forwardingAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     //TODO: 회원정보 변경
@@ -113,7 +113,7 @@ public class MemberController {
             return "index";
         }
 
-        return "redirect:/members";
+        return checkSessionController.forwardingAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     /*TODO: 회원 이메일 변경페이지로 이동*/
@@ -125,7 +125,7 @@ public class MemberController {
 
         }
 
-        return "redirect:/members";
+        return checkSessionController.forwardingAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     /*TODO: 회원 이메일 인증페이지로 이동*/
@@ -155,7 +155,7 @@ public class MemberController {
             return "index";
 
         }
-        return "redirect:/members";
+        return checkSessionController.forwardingAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     /*TODO: 회원 이메일 찾기*/
