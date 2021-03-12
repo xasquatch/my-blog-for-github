@@ -40,14 +40,25 @@ public class HomeController {
 
 
     protected boolean isCheckManager(String memberNo) {
-        return sessionMember.getRank().equals("manager") && String.valueOf(sessionMember.getNo()).equals(memberNo);
+        boolean managerResult = false;
+        boolean sessionResult = false;
+        try {
+            managerResult = sessionMember.getRank().equals("manager");
+            sessionResult = String.valueOf(sessionMember.getNo()).equals(memberNo);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+        }
+
+
+        return managerResult && sessionResult;
     }
 
     protected boolean isCheckSessionAndAuth(String inputSessionNumber) {
-        boolean guestResult = sessionMember.getName().equals("GUEST");
+        boolean guestResult = false;
         boolean sessionResult = false;
 
         try {
+            guestResult = sessionMember.getName().equals("GUEST");
             sessionResult = sessionMember.getNo() == Long.parseLong(inputSessionNumber)
                     && !sessionMember.getRank().equals("temporary");
 
@@ -85,12 +96,15 @@ public class HomeController {
 
     @GetMapping("/members")
     public String signInAndUp(Model model) {
+        if (sessionMember.getNo() != null && !isCheckSession(String.valueOf(sessionMember.getNo())))
+            return "redirect:/members/" + sessionMember.getNo();
         model.addAttribute("mainContents", "members");
 
         return "index";
     }
+
     @GetMapping("/members/{sessionNo}")
-    public String members(Model model , @PathVariable String sessionNo) {
+    public String members(Model model, @PathVariable String sessionNo) {
         if (!isCheckSession(sessionNo)) return "redirect:/members";
         model.addAttribute("mainContents", "main");
 
