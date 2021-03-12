@@ -31,6 +31,7 @@ public class ResourceController {
             resources = resourceService.viewList(0, searchValue);
             model.addAttribute("mainContents", "resource-list");
             model.addAttribute("resources", resources);
+            return "index";
 
         }
         return "redirect:/members";
