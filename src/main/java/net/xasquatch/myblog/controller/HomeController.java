@@ -83,6 +83,12 @@ public class HomeController {
         return sessionResult;
     }
 
+    protected String forwardingAndErrorMsg(Model model, String msg){
+        model.addAttribute("errorMsg", msg);
+        return "forward:/members";
+
+    }
+
     @GetMapping("/")
     public String home(Model model) {
         Map<String, Object> noticeMap =
@@ -105,7 +111,10 @@ public class HomeController {
 
     @GetMapping("/members/{sessionNo}")
     public String members(Model model, @PathVariable String sessionNo) {
-        if (!isCheckSession(sessionNo)) return "redirect:/members";
+        if (!isCheckSession(sessionNo)){
+            model.addAttribute("errorMsg", "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
+            return "forward:/members";
+        }
         model.addAttribute("mainContents", "main");
 
         return "index";
