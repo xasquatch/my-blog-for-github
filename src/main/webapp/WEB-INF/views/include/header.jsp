@@ -40,7 +40,7 @@
 
     </div>
     <div id="header-right">
-        <c:if test="${mainContents != 'members' && sessionMember.no != null && sessionMember.no != ''
+        <c:if test="${mainContents != 'members' && mainContents != 'main' && sessionMember.no != null && sessionMember.no != ''
             && !(mainContents.contains('check')||mainContents.contains('find'))}">
             <button style="font-size: 20px;" type="button" id="mobile-hamburger" class="dot-key btn btn-link-red" onclick="popUpAside();">
                 <B>More</B>
@@ -53,7 +53,7 @@
                     <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                 </button>
             </c:when>
-            <c:when test="${mainContents != 'members' && sessionMember.no == null && sessionMember.no != ''}">
+            <c:when test="${mainContents != 'members' && (sessionMember.no == null || sessionMember.no == '')}">
                 <button type="button" class="btn btn-link-red" style="font-size: 20px; color: black;"
                         onclick="window.location.href = '${path}/members'">
                     Members
