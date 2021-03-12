@@ -29,7 +29,7 @@
                 footerEffect.addLoadingState();
                 setTimeout(function (event) {
                     footerEffect.removeLoadingState();
-                },3000)
+                }, 3000)
 
             });
         }
@@ -64,7 +64,20 @@
 <footer id="main-footer" class="dot-key">
     <img src="${path}/img/loading.gif">
     Develop by Xasquatch, https://xasquatch.net
-    <div></div>
+    <div>
+        <c:if test="${requestScope.errorMsg ne null && requestScope.errorMsg ne ''}">
+            <script>
+                window.onload = function () {
+                    window.history.replaceState(null, null, '${path}/members');
+                    footerEffect.addFooterState();
+                }
+            </script>
+            <div>
+                    ${requestScope.errorMsg}<BR>
+                <a class="dot-key btn btn-link-red" href="javascript:footerEffect.removeFooterState();">Close</a>
+            </div>
+        </c:if>
+    </div>
 </footer>
 
 <%--custom script--%>
