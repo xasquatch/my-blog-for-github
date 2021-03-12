@@ -62,7 +62,7 @@ public class ManagementController {
             return "index";
 
         }
-        return checkSessionController.forwardingAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
+        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
 
     }
 

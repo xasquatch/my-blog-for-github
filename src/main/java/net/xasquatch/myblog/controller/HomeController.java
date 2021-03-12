@@ -83,7 +83,7 @@ public class HomeController {
         return sessionResult;
     }
 
-    protected String forwardingAndErrorMsg(Model model, String msg){
+    protected String forwardingMembersPageAndErrorMsg(Model model, String msg){
         model.addAttribute("errorMsg", msg);
         return "forward:/members";
 
