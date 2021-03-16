@@ -1,11 +1,8 @@
 package net.xasquatch.myblog.model;
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Builder
 @Setter
