@@ -18,7 +18,6 @@ public class Like {
     private long board_no;
     private long comment_no;
     private boolean good;
-    private boolean bad;
 
 
 }
