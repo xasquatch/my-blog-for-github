@@ -13,13 +13,19 @@ public class LikeBuilder {
 
     }
 
-    public static String insertOneLike() {
-        return new SQL(){{
+    public static String insertOneLike(String likeTarget, String targetNo, String memberNo, String goodValue) {
+        return new SQL() {{
             INSERT_INTO("lke");
-            /*TODO:분기점*/
-            VALUES("");
+            if (likeTarget.toUpperCase().equals("BOARD")) {
+                INTO_COLUMNS("mbr_no", "board_no", "good");
+
+            } else if (likeTarget.toUpperCase().equals("COMMENT")) {
+                INTO_COLUMNS("mbr_no", "comment_no", "good");
+
+            }
+            INTO_VALUES(memberNo, targetNo, goodValue);
         }}.toString();
     }
 
-
 }
+
