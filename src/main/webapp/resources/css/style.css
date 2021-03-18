@@ -444,40 +444,33 @@
 
 /*END: api clipboard page-----------*/
 /*comment*/
-#comment-table > thead > tr:first-child > td:first-child {
+#comment-table > thead > tr:first-child > td:first-child,
+#comment-list-table > tr > td:first-child {
     text-align: center;
     vertical-align: middle;
     width: 200px;
 }
 
-#comment-table > thead > tr:first-child > td:first-child img {
+#comment-table > thead > tr:first-child > td:first-child img,
+#comment-list-table > tr > td:first-child img {
     max-width: 140px;
     max-height: 140px;
 
 }
 
 @media (max-width: 1300px) {
-    #comment-table > thead > tr:first-child > td:first-child {
-        width: 50px;
-
+    #comment-table > thead > tr:first-child > td:first-child,
+    #comment-list-table > tr > td:first-child {
+        width: 70px;
+        font-size: 0.7em;
     }
 
-    #comment-table > thead > tr:first-child > td:first-child img {
-        max-width: 30px;
-        max-height: 30px;
+    #comment-table > thead > tr:first-child > td:first-child img,
+    #comment-list-table > tr > td:first-child img {
+        max-width: 50px;
+        max-height: 50px;
 
     }
-
-    #comment-list-table>tr>td:first-child{
-        width: 50px;
-
-    }
-    #comment-list-table>tr>td:first-child img{
-        max-width: 30px;
-        max-height: 30px;
-
-    }
-
 
 
 }

@@ -74,5 +74,8 @@ select, input, button{
     color: inherit;
     word-break: break-all;
 }
+thead>tr>th{
+    text-align: center;
+}
 
 
