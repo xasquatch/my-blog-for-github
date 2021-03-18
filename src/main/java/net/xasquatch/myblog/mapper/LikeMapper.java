@@ -29,7 +29,7 @@ public interface LikeMapper {
     List<Like> selectMemberLikeList(Object memberNo);
 
     @SelectProvider(method = "selectOneLike", type = LikeBuilder.class)
-    Like selectOneLike(Object likeNo, Object memberNo);
+    Like selectOneLike(String likeTarget, Object likeNo);
 
     /**
      *
