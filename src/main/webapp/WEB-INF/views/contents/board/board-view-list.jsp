@@ -45,8 +45,9 @@
             <tbody id="myblog-api-board-list" class="dot-key">
             <c:forEach var="board" items="${boardList}">
                 <tr>
-                    <td style="vertical-align: middle;">
-                            ${board.row_number}
+                    <td style="text-align:center; vertical-align: middle;">
+                            ${board.row_number}<BR><BR>
+                            ❤${board.like}
                     </td>
                     <td>
                         <a href="${path}/board/${board.mbr_no}/read/${board.no}">
@@ -61,12 +62,12 @@
                     </td>
                     <td style="vertical-align: middle; text-align: center;">
                         <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no},'${sessionMember.name}')">
-                        <span class="glyphicon glyphicon-pencil"></span>
+                            <span class="glyphicon glyphicon-pencil"></span>
                         </a>
                     </td>
                     <td style="vertical-align: middle; text-align: center;">
                         <a href="javascript:board.delete(${board.mbr_no}, ${board.no},'${sessionMember.name}')">
-                        <span class="glyphicon glyphicon-trash"></span>
+                            <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </td>
                 </tr>

@@ -8,7 +8,13 @@ public class BoardBuilder {
                                          Object searchTarget, Object searchValue) {
 
         return new SQL() {{
-            SELECT("m.img AS mbr_img_src, m.name AS mbr_nickname, b.*");
+            SELECT("m.img AS mbr_img_src, m.name AS mbr_nickname, " +
+                    // 서브쿼리 메서드 부분
+                    "b.row_number AS row_number, " +
+                    "b.no AS no, b.title AS title, b.mbr_no AS mbr_no, " +
+                    "b.created_date AS created_date, " +
+                    "b.thumbnail AS thumbnail, " +
+                    "SUM(b.good) AS 'like'");
             if (memberNo.equals("all")) {
                 FROM("(" + selectAllBoardListSubQuery(searchTarget, searchValue) + ")b");
 
@@ -39,9 +45,10 @@ public class BoardBuilder {
         return new SQL() {{
             SELECT("b.no", "b.title", "b.mbr_no",
                     "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
-                    "b.thumbnail");
+                    "b.thumbnail, IFNULL(l.good,0) AS good");
             FROM("board b");
             LEFT_OUTER_JOIN("(" + MemberBuilder.selectRankFromMbrJoinAuthorization() + ") m ON b.mbr_no = m.no");
+            LEFT_OUTER_JOIN("lke l ON b.no = l.board_no");
             if (searchTarget == null) {
                 WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true'");
 
@@ -67,19 +74,19 @@ public class BoardBuilder {
             SELECT("FORMAT(@ROWNUM := @ROWNUM + 1, 0) AS row_number",
                     "b.no", "b.title", "b.mbr_no",
                     "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
-                    "b.thumbnail");
-            FROM("board b", "(SELECT @ROWNUM := 0 ) TMP");
-
+                    "b.thumbnail, IFNULL(l.good,0) AS good");
+            FROM("board b");
+            JOIN("lke l ON b.no = l.board_no, (SELECT @ROWNUM := 0 ) TMP");
             if (searchTarget == null) {
-                WHERE("completed = 'true'");
+                WHERE("b.completed = 'true'");
 
             } else if (searchTarget.equals("title-or-contents")) {
-                WHERE("completed = 'true'"
+                WHERE("b.completed = 'true'"
                         + " AND (b.title LIKE '" + searchValue + "'"
                         + " OR b.contents LIKE '" + searchValue + "')");
 
             } else {
-                WHERE("completed = 'true'"
+                WHERE("b.completed = 'true'"
                         + " AND " + searchTarget + " LIKE '" + searchValue + "'");
 
             }
@@ -94,21 +101,21 @@ public class BoardBuilder {
             SELECT("FORMAT(@ROWNUM := @ROWNUM + 1, 0) AS row_number",
                     "b.no", "b.title", "b.mbr_no",
                     "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
-                    "b.thumbnail");
-            FROM("board b", "(SELECT @ROWNUM := 0 ) TMP");
-
+                    "b.thumbnail, IFNULL(l.good,0) AS good");
+            FROM("board b");
+            JOIN("lke l ON b.no = l.board_no, (SELECT @ROWNUM := 0 ) TMP");
             if (searchTarget == null) {
-                WHERE("mbr_no = " + memberNo + " AND completed = 'true'");
+                WHERE("b.mbr_no = " + memberNo + " AND completed = 'true'");
 
             } else if (searchTarget.equals("title-or-contents")) {
-                WHERE("mbr_no = " + memberNo
-                        + " AND completed = 'true'"
+                WHERE("b.mbr_no = " + memberNo
+                        + " AND b.completed = 'true'"
                         + " AND (b.title LIKE '" + searchValue + "'"
                         + " OR b.contents LIKE '" + searchValue + "')");
 
             } else {
-                WHERE("mbr_no = " + memberNo
-                        + " AND completed = 'true'"
+                WHERE("b.mbr_no = " + memberNo
+                        + " AND b.completed = 'true'"
                         + " AND " + searchTarget + " LIKE '" + searchValue + "'");
 
             }
