@@ -80,7 +80,7 @@ public class LikeBuilder {
         return '(' + new SQL() {{
             SELECT("no", "mbr_no", "comment_no", "board_no", "SUM(good) AS good");
             FROM("lke");
-
+            GROUP_BY("board_no", " comment_no");
         }}.toString() + ')';
 
     }
