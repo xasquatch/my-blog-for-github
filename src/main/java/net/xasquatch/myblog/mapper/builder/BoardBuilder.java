@@ -10,7 +10,7 @@ public class BoardBuilder {
                     "b.keyword AS keyword", "b.title AS title",
                     "convert(b.contents USING UTF8) AS contents",
                     "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
-                    "b.thumbnail AS thumbnail", "l.good AS 'like'",
+                    "b.thumbnail AS thumbnail", "IFNULL(l.good, 0) AS 'like'",
                     "REPLACE(b.created_ip, RIGHT(b.created_ip, 4),'.***') AS created_ip");
             FROM("board b");
             LEFT_OUTER_JOIN("mbr m ON b.mbr_no = m.no");
