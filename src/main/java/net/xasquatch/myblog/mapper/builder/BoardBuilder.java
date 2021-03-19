@@ -14,7 +14,7 @@ public class BoardBuilder {
                     "b.no AS no, b.title AS title, b.mbr_no AS mbr_no, " +
                     "b.created_date AS created_date, " +
                     "b.thumbnail AS thumbnail, " +
-                    "SUM(b.good) AS 'like'");
+                    "b.good AS 'like'");
             if (memberNo.equals("all")) {
                 FROM("(" + selectAllBoardListSubQuery(searchTarget, searchValue) + ")b");
 
@@ -48,7 +48,7 @@ public class BoardBuilder {
                     "b.thumbnail, IFNULL(l.good,0) AS good");
             FROM("board b");
             LEFT_OUTER_JOIN("(" + MemberBuilder.selectRankFromMbrJoinAuthorization() + ") m ON b.mbr_no = m.no");
-            LEFT_OUTER_JOIN("lke l ON b.no = l.board_no");
+            LEFT_OUTER_JOIN(selectSumLke() + " l ON b.no = l.board_no");
             if (searchTarget == null) {
                 WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true'");
 
@@ -76,7 +76,7 @@ public class BoardBuilder {
                     "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
                     "b.thumbnail, IFNULL(l.good,0) AS good");
             FROM("board b");
-            JOIN("lke l ON b.no = l.board_no, (SELECT @ROWNUM := 0 ) TMP");
+            LEFT_OUTER_JOIN(selectSumLke() + " l ON b.no = l.board_no, (SELECT @ROWNUM := 0 ) TMP");
             if (searchTarget == null) {
                 WHERE("b.completed = 'true'");
 
@@ -103,7 +103,7 @@ public class BoardBuilder {
                     "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
                     "b.thumbnail, IFNULL(l.good,0) AS good");
             FROM("board b");
-            JOIN("lke l ON b.no = l.board_no, (SELECT @ROWNUM := 0 ) TMP");
+            LEFT_OUTER_JOIN(selectSumLke() + " l ON b.no = l.board_no, (SELECT @ROWNUM := 0 ) TMP");
             if (searchTarget == null) {
                 WHERE("b.mbr_no = " + memberNo + " AND completed = 'true'");
 
@@ -124,6 +124,16 @@ public class BoardBuilder {
         }}.toString();
 
     }
+
+    public static String selectSumLke() {
+        return '(' + new SQL() {{
+            SELECT("no", "mbr_no", "comment_no", "board_no", "SUM(good) AS good");
+            FROM("lke");
+
+        }}.toString() + ')';
+
+    }
+
 
     public static String selectBoardCount(Object memberNo, String searchTarget, String searchValue) {
         if (memberNo.equals("all")) {
