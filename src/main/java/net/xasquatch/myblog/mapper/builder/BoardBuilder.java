@@ -4,9 +4,23 @@ import org.apache.ibatis.jdbc.SQL;
 
 public class BoardBuilder {
 
+    public static String selectOneBoard(Object mbr_no, Object board_no) {
+        return new SQL() {{
+            SELECT("b.no AS no", "b.mbr_no AS mbr_no", "m.name AS name",
+                    "b.keyword AS keyword", "b.title AS title",
+                    "convert(b.contents USING UTF8) AS contents",
+                    "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
+                    "b.thumbnail AS thumbnail", "l.good AS 'like'",
+                    "REPLACE(b.created_ip, RIGHT(b.created_ip, 4),'.***') AS created_ip");
+            FROM("board b");
+            LEFT_OUTER_JOIN("mbr m ON b.mbr_no = m.no");
+            LEFT_OUTER_JOIN(LikeBuilder.selectSumLke() + " l ON l.board_no = b.no");
+            WHERE("b.mbr_no = " + mbr_no + " AND b.no = " + board_no);
+        }}.toString();
+    }
+
     public static String selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
                                          Object searchTarget, Object searchValue) {
-
         return new SQL() {{
             SELECT("m.img AS mbr_img_src, m.name AS mbr_nickname, " +
                     // 서브쿼리 메서드 부분
@@ -48,7 +62,7 @@ public class BoardBuilder {
                     "b.thumbnail, IFNULL(l.good,0) AS good");
             FROM("board b");
             LEFT_OUTER_JOIN("(" + MemberBuilder.selectRankFromMbrJoinAuthorization() + ") m ON b.mbr_no = m.no");
-            LEFT_OUTER_JOIN(selectSumLke() + " l ON b.no = l.board_no");
+            LEFT_OUTER_JOIN(LikeBuilder.selectSumLke() + " l ON b.no = l.board_no");
             if (searchTarget == null) {
                 WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true'");
 
@@ -76,7 +90,7 @@ public class BoardBuilder {
                     "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
                     "b.thumbnail, IFNULL(l.good,0) AS good");
             FROM("board b");
-            LEFT_OUTER_JOIN(selectSumLke() + " l ON b.no = l.board_no, (SELECT @ROWNUM := 0 ) TMP");
+            LEFT_OUTER_JOIN(LikeBuilder.selectSumLke() + " l ON b.no = l.board_no, (SELECT @ROWNUM := 0 ) TMP");
             if (searchTarget == null) {
                 WHERE("b.completed = 'true'");
 
@@ -103,7 +117,7 @@ public class BoardBuilder {
                     "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date",
                     "b.thumbnail, IFNULL(l.good,0) AS good");
             FROM("board b");
-            LEFT_OUTER_JOIN(selectSumLke() + " l ON b.no = l.board_no, (SELECT @ROWNUM := 0 ) TMP");
+            LEFT_OUTER_JOIN(LikeBuilder.selectSumLke() + " l ON b.no = l.board_no, (SELECT @ROWNUM := 0 ) TMP");
             if (searchTarget == null) {
                 WHERE("b.mbr_no = " + memberNo + " AND completed = 'true'");
 
@@ -124,16 +138,6 @@ public class BoardBuilder {
         }}.toString();
 
     }
-
-    public static String selectSumLke() {
-        return '(' + new SQL() {{
-            SELECT("no", "mbr_no", "comment_no", "board_no", "SUM(good) AS good");
-            FROM("lke");
-
-        }}.toString() + ')';
-
-    }
-
 
     public static String selectBoardCount(Object memberNo, String searchTarget, String searchValue) {
         if (memberNo.equals("all")) {

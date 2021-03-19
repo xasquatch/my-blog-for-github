@@ -29,18 +29,19 @@ public interface BoardMapper {
     int deleteOneBoard(Object boardKey);
 
     //TODO: 게시글 상세보기
-    @Select("SELECT b.no AS no,  " +
-            "b.mbr_no AS mbr_no,  " +
-            "m.name AS name,  " +
-            "b.keyword AS keyword,  " +
-            "b.title AS title,  " +
-            "convert(b.contents USING UTF8) AS contents,  " +
-            "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date,  " +
-            "b.thumbnail AS thumbnail,  " +
-            "REPLACE(b.created_ip, RIGHT(b.created_ip, 4),'.***') AS created_ip  " +
-            "FROM board b LEFT OUTER JOIN mbr m  " +
-            "ON b.mbr_no = m.no  " +
-            "WHERE b.mbr_no = #{arg0} AND b.no = #{arg1}")
+//    @Select("SELECT b.no AS no,  " +
+//            "b.mbr_no AS mbr_no,  " +
+//            "m.name AS name,  " +
+//            "b.keyword AS keyword,  " +
+//            "b.title AS title,  " +
+//            "convert(b.contents USING UTF8) AS contents,  " +
+//            "DATE_FORMAT(b.created_date, '%Y.%m.%d %H:%i:%s') AS created_date,  " +
+//            "b.thumbnail AS thumbnail,  " +
+//            "REPLACE(b.created_ip, RIGHT(b.created_ip, 4),'.***') AS created_ip  " +
+//            "FROM board b LEFT OUTER JOIN mbr m  " +
+//            "ON b.mbr_no = m.no  " +
+//            "WHERE b.mbr_no = #{arg0} AND b.no = #{arg1}")
+    @SelectProvider(type = BoardBuilder.class, method = "selectOneBoard")
     Map<String, Object> selectOneBoard(Object mbr_no, Object board_no);
 
     @SelectProvider(type = BoardBuilder.class, method = "selectBoardList")
