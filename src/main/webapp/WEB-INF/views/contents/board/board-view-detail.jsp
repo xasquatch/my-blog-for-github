@@ -53,7 +53,12 @@
     <article style="text-align: center; padding: 20px;">
         <section style="text-align: center;">
             <h2>
-                <a href="javascript:">
+                <a href="javascript:myAjax.submit('POST','${path}/like',function(data) {
+                alert(data);
+
+
+
+                },'FORM','method=UP&likeTarget=board&targetNo=${board.no}');">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
                 <span>
