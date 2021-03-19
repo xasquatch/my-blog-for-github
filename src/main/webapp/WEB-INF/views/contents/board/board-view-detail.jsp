@@ -51,6 +51,23 @@
         ${board.contents}
     </article>
     <article style="text-align: center; padding: 20px;">
+        <section style="text-align: center;">
+            <h2>
+                <a href="javascript:">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <span>
+                ❤:&nbsp;
+                </span>
+                <span>
+                    ${board.like}
+                </span>
+                <a href="javascript:">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </h2>
+        </section>
+        <BR>
         <button class="btn btn-link-red dot-key" onclick="window.history.back();">뒤로 가기</button>
     </article>
     <article>
@@ -176,12 +193,24 @@
                 tdContentsTag.innerHTML = comment.contents;
 
                 var tdDeleteTag = document.createElement('td');
-                tdDeleteTag.width = '50';
+                tdDeleteTag.width = '70';
                 tdDeleteTag.style.verticalAlign = 'middle';
+                tdDeleteTag.style.textAlign = 'center';
 
                 var sessionNo = ${sessionMember.no} +0;
                 if (sessionNo === comment.mbr_no)
-                    tdDeleteTag.innerHTML = '<a href="javascript:deleteBoardComment(\'${path}\/board\/${board.no}\/members\/${sessionMember.no}\/comments\/' + comment.no + '\')">삭제</a>';
+                    tdDeleteTag.innerHTML = '<a href="javascript:">' +
+                        // TODO: <
+                        '<span class="glyphicon glyphicon-chevron-left"></span>' +
+                        '</a>' +
+                        '0' +
+                        '<a href="javascript:">' +
+                        // TODO: >
+                        '<span class="glyphicon glyphicon-chevron-right"></span>' +
+                        '</a>' +
+                        '<BR>' +
+                        '<BR>' +
+                        '<a href="javascript:deleteBoardComment(\'${path}\/board\/${board.no}\/members\/${sessionMember.no}\/comments\/' + comment.no + '\')">삭제</a>';
 
 
                 commentListTable.appendChild(trTag);
