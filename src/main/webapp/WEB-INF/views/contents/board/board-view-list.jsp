@@ -26,7 +26,7 @@
                 <option>50</option>
                 <option>100</option>
             </select>
-            <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/board/${sessionMember.no}/create'">
+            <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/boards/${sessionMember.no}/create'">
                 새 글 작성
             </button>
         </div>
@@ -50,7 +50,7 @@
                             ❤${board.like}
                     </td>
                     <td>
-                        <a href="${path}/board/${board.mbr_no}/read/${board.no}">
+                        <a href="${path}/boards/${board.mbr_no}/read/${board.no}">
                                 ${board.thumbnail}
                             <span style="display: inline-block; width: 200px; overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
                                     ${board.title}
@@ -98,7 +98,7 @@
         var searchValue = document.querySelector('#myblog-search-value');
         var pageLimit = document.querySelector('#myblog-board-page-limit');
 
-        window.location.href = '${path}/board/all/list?page-limit=' + pageLimit.value + '&' + searchTarget.value + '=' + searchValue.value;
+        window.location.href = '${path}/boards/all/list?page-limit=' + pageLimit.value + '&' + searchTarget.value + '=' + searchValue.value;
     }
 
 

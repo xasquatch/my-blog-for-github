@@ -17,7 +17,7 @@
                 <option>100</option>
             </select>
             <c:if test="${sessionMember.rank.equals('manager')}">
-                <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/board/${sessionMember.no}/create?keyword=my-blog-notice'">
+                <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/boards/${sessionMember.no}/create?keyword=my-blog-notice'">
                     글쓰기
                 </button>
             </c:if>
@@ -39,7 +39,7 @@
             <c:forEach var="board" items="${boardList}">
                 <tr>
                     <td>
-                        <a href="${path}/board/${board.mbr_no}/read/${board.no}">
+                        <a href="${path}/boards/${board.mbr_no}/read/${board.no}">
                             <span style="display: inline-block; width: 200px; overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
                                     ${board.title}
                             </span>
@@ -88,7 +88,7 @@
         var searchValue = document.querySelector('#myblog-search-value');
         var pageLimit = document.querySelector('#myblog-board-page-limit');
 
-        window.location.href = '${path}/board/all/list?page-limit=' + pageLimit.value + '&' + searchTarget.value + '=' + searchValue.value;
+        window.location.href = '${path}/boards/all/list?page-limit=' + pageLimit.value + '&' + searchTarget.value + '=' + searchValue.value;
     }
 
 

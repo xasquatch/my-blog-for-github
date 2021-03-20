@@ -165,7 +165,7 @@
 
     </script>
 
-    <form action="${path}/board/${sessionMember.no}/upload/${requestScope.boardNo}" method="POST" enctype="multipart/form-data" id="board-form-tag" style="text-align: center;">
+    <form action="${path}/boards/${sessionMember.no}/upload/${requestScope.boardNo}" method="POST" enctype="multipart/form-data" id="board-form-tag" style="text-align: center;">
         <input type="text" id="board-no" name="no" class="hidden" value="${requestScope.boardNo}">
         <input type="text" id="board-no-mbr" name="mbr_no" class="hidden" value="${sessionMember.no}">
         <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
@@ -312,7 +312,7 @@
         var boardUploadTag = document.querySelector('#board-upload');
         var imgFormData = new FormData(boardUploadImageForm);
 
-        myAjax.submit('POST', '${path}/img/${sessionMember.no}/board/${requestScope.boardNo}/upload', function (data) {
+        myAjax.submit('POST', '${path}/img/${sessionMember.no}/boards/${requestScope.boardNo}/upload', function (data) {
             var requestData = data.slice(1, data.length - 1);
             var imgArray = requestData.split(',');
             for (var i of imgArray) {
@@ -416,7 +416,7 @@
 
         if (url.isContainWordCurrentPath('/create')) {
 
-            myAjax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/create', function (data) {
+            myAjax.submit('POST', '${path}/boards/${sessionMember.no}/upload/' + board.boardNo.value + '/create', function (data) {
                 if (data === 'false') {
                     window.alert('업로드에 실패하였습니다. 잠시 후 다시 시도해주세요.');
                     board.save();
@@ -428,7 +428,7 @@
                     temporarySave();
 
                 } else if (data === 'true') {
-                    window.location.href = '${path}/board/${sessionMember.no}/list';
+                    window.location.href = '${path}/boards/${sessionMember.no}/list';
 
                 }
 
@@ -436,7 +436,7 @@
 
         } else if (url.isContainWordCurrentPath('/modify')) {
 
-            myAjax.submit('POST', '${path}/board/${sessionMember.no}/upload/' + board.boardNo.value + '/modify', function (data) {
+            myAjax.submit('POST', '${path}/boards/${sessionMember.no}/upload/' + board.boardNo.value + '/modify', function (data) {
                 if (data === 'false') {
                     window.alert('수정에 실패하였습니다. 잠시 후 다시 시도해주세요.');
 
@@ -445,7 +445,7 @@
 
                 } else if (data === 'true') {
                     window.alert('수정에 성공하였습니다.');
-                    window.location.href = '${path}/board/${sessionMember.no}/list';
+                    window.location.href = '${path}/boards/${sessionMember.no}/list';
 
                 }
 

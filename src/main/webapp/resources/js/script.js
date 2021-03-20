@@ -96,7 +96,7 @@ var board = {
                 if (pwd === null) return;
 
             }
-            myAjax.submit('DELETE', 'https://myblog.xasquatch.net/board/' + memberKey + '/delete/' + boardKey + '?pwd=' + pwd, function (data) {
+            myAjax.submit('DELETE', 'https://myblog.xasquatch.net/boards/' + memberKey + '/delete/' + boardKey + '?pwd=' + pwd, function (data) {
                 if (data === 'false') {
                     console.log('잘못 된 요청입니다.');
 
@@ -121,7 +121,7 @@ var board = {
                 if (pwd === null) return;
 
             }
-            location.href = '/board/' + memberKey + '/modify/' + boardKey + '?pwd=' + pwd;
+            location.href = '/boards/' + memberKey + '/modify/' + boardKey + '?pwd=' + pwd;
 
         }
     }
@@ -479,13 +479,13 @@ var boardListScript = {
         for (var map of jsonData.boardList) {
             var trTag = document.createElement('tr');
             var titleInput = document.createElement('td');
-            titleInput.innerHTML = '<a href="/board/' + uniform + '/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
+            titleInput.innerHTML = '<a href="/boards/' + uniform + '/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
             var rowNoInput = document.createElement('td');
             rowNoInput.innerText = map.rowno;
             var dateInput = document.createElement('td');
             dateInput.innerText = boardListScript.getFormatDate(map.created_date);
             var modifyInput = document.createElement('td');
-            modifyInput.innerHTML = '<span class="glyphicon glyphicon-cog" style="cursor:pointer;" onclick="location.href=\'/board/' + uniform + '/modify/' + map.no + '\'"></span>';
+            modifyInput.innerHTML = '<span class="glyphicon glyphicon-cog" style="cursor:pointer;" onclick="location.href=\'/boards/' + uniform + '/modify/' + map.no + '\'"></span>';
             var deleteInput = document.createElement('td');
             deleteInput.innerHTML = '<span class="glyphicon glyphicon-trash" style="cursor:pointer;" onclick="boardListScript.deleteBoard(' + map.no + ');"></span>';
 
@@ -505,7 +505,7 @@ var boardListScript = {
         for (var map of jsonData.boardList) {
             var trTag = document.createElement('tr');
             var titleInput = document.createElement('td');
-            titleInput.innerHTML = '<a href="/board/' + uniform + '/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
+            titleInput.innerHTML = '<a href="/boards/' + uniform + '/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
             var rowNoInput = document.createElement('td');
             rowNoInput.innerText = map.rowno;
             var dateInput = document.createElement('td');
@@ -523,9 +523,9 @@ var boardListScript = {
     },
     changeAllBoardList: function (count) {
         var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
-        var uniform = url.getUniform('/board/', '/list');
+        var uniform = url.getUniform('/boards/', '/list');
 
-        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/boards/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
             document.querySelector('#board-list-count').innerHTML = count;
             var jsonData = JSON.parse(data);
             boardListScript.getAllBoardList(jsonData, uniform);
@@ -537,9 +537,9 @@ var boardListScript = {
 
     changeBoardList: function (count) {
         var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
-        var uniform = url.getUniform('/board/', '/list');
+        var uniform = url.getUniform('/boards/', '/list');
 
-        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/boards/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
             document.querySelector('#board-list-count').innerHTML = count;
             var jsonData = JSON.parse(data);
             boardListScript.getBoardList(jsonData, uniform);
@@ -564,11 +564,11 @@ var boardListScript = {
     },
     ChangeMoveToThisPage: function (currentPageBlock) {
         var limitCount = document.querySelector('#board-list-count').innerText;
-        var uniform = url.getUniform('/board/', '/list');
+        var uniform = url.getUniform('/boards/', '/list');
         var searchRange = document.querySelector('#search-range').value;
         var searchValue = document.querySelector('#search-value').value;
 
-        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock + '&' + searchRange + '=' + searchValue,
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/boards/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock + '&' + searchRange + '=' + searchValue,
             function (data) {
                 var jsonData = JSON.parse(data);
                 boardListScript.getBoardList(jsonData, uniform);

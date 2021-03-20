@@ -140,7 +140,7 @@ public class HomeController {
     }
 
 
-    @PostMapping("/img/{memberNo}/board/{boardNo}/upload")
+    @PostMapping("/img/{memberNo}/boards/{boardNo}/upload")
     @ResponseBody
     public String boardImgUpload(MultipartHttpServletRequest request, @PathVariable String memberNo, @PathVariable String boardNo) {
         try {

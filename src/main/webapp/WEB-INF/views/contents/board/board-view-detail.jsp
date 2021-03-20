@@ -53,12 +53,12 @@
     <article style="text-align: center; padding: 20px;">
         <section style="text-align: center;">
             <h2>
-                <a href="javascript:myAjax.submit('POST','${path}/like',function(data) {
+                <a href="javascript:myAjax.submit('POST','${path}/boards/${board.no}/like/up',function(data) {
                 alert(data);
 
 
 
-                },'FORM','method=UP&likeTarget=board&targetNo=${board.no}');">
+                },'FORM',null);">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
                 <span>
@@ -144,7 +144,7 @@
 
         }
 
-        myAjax.submit('POST', "${path}/board/${board.no}/comments", function (data) {
+        myAjax.submit('POST', "${path}/boards/${board.no}/comments", function (data) {
             if (data === 'false') {
                 alert('댓글작성에 실패하였습니다. 잠시 후 다시 시도해주시기바랍니다');
 

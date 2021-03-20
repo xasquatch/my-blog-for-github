@@ -6,6 +6,7 @@ import net.xasquatch.myblog.model.Board;
 import net.xasquatch.myblog.model.Comment;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.BoardService;
+import net.xasquatch.myblog.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ import java.util.Map;
 
 @Slf4j
 @Controller
-@RequestMapping(value = "/board", produces = "text/plain;charset=UTF-8")
+@RequestMapping(value = "/boards", produces = "text/plain;charset=UTF-8")
 public class BoarderController {
 
     @Autowired
@@ -31,12 +32,33 @@ public class BoarderController {
     @Autowired
     private BoardService boardService;
 
+    @Autowired
+    private LikeService likeService;
+
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
     @Lazy
     @Autowired
     private HomeController checkSessionController;
+
+
+    @PostMapping("/{likeTarget}/{targetNo}/like/{method}")
+    public String increaseLike(@PathVariable String method,
+                               @PathVariable String likeTarget,
+                               @PathVariable String targetNo) {
+        String result = "false";
+        if (method == null) return result;
+        if (method.toUpperCase().equals("UP")) {
+            result = likeService.increaseLike(likeTarget, targetNo, sessionMember.getNo());
+
+        } else if (method.toUpperCase().equals("DOWN")) {
+            result = likeService.increaseLike(likeTarget, targetNo, sessionMember.getNo());
+
+        }
+
+        return result;
+    }
 
     //TODO: 글작성 화면으로 이동
     @RequestMapping(value = "/{memberNo}/create", method = {RequestMethod.GET, RequestMethod.POST})
