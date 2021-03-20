@@ -57,13 +57,18 @@
                     <a href="javascript:myAjax.submit('POST','${path}/boards/${board.no}/like/down',function(data) {
                 alert(data);
 
+                myAjax.submit('GET','${path}/boards/${board.no}/like',function(ddata) {
+                  document.querySelector('#like-board-count').innerHTML = ddata;
+
+                });
+
 
 
                 },'FORM',null);">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
                     <span id="like-board-symbol">
-                ❤
+                🖤🤍
                 </span>
                     <span id="like-board-count">
                             ${board.like}
