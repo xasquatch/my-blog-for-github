@@ -4,7 +4,7 @@
 <c:set var="mainContents" value="${requestScope.mainContents}"/>
 
 <aside id="main-aside" class="aside-hide dot-key">
-    <c:if test="${mainContents != 'members' && mainContents != 'main'
+    <c:if test="${mainContents != 'members' && mainContents != 'main' && mainContents != 'home'
         && sessionMember.no != null && sessionMember.no != ''
         && !(mainContents.contains('check')||mainContents.contains('find'))}">
         <c:if test="${sessionMember.rank.contains('manager')}">
