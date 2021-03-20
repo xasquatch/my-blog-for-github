@@ -45,7 +45,7 @@ public class HomeController {
         try {
             managerResult = sessionMember.getRank().equals("manager");
             sessionResult = String.valueOf(sessionMember.getNo()).equals(memberNo);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.debug(e.getMessage());
         }
 
@@ -70,6 +70,23 @@ public class HomeController {
         return guestResult || sessionResult;
     }
 
+    protected boolean isCheckSessionWithOutGuest(String inputSessionNumber) {
+        boolean guestResult = false;
+        boolean sessionResult = false;
+
+        try {
+            guestResult = !sessionMember.getName().equals("GUEST");
+            sessionResult = sessionMember.getNo() == Long.parseLong(inputSessionNumber)
+                    && !sessionMember.getRank().equals("temporary");
+
+        } catch (Exception e) {
+            log.debug(e.getMessage());
+
+        }
+
+        return guestResult && sessionResult;
+    }
+
     protected boolean isCheckSession(String inputSessionNumber) {
         boolean sessionResult = false;
         try {
@@ -83,7 +100,7 @@ public class HomeController {
         return sessionResult;
     }
 
-    protected String forwardingMembersPageAndErrorMsg(Model model, String msg){
+    protected String forwardingMembersPageAndErrorMsg(Model model, String msg) {
         model.addAttribute("errorMsg", msg);
         return "forward:/members";
 
@@ -111,7 +128,7 @@ public class HomeController {
 
     @GetMapping("/members/{sessionNo}")
     public String members(Model model, @PathVariable String sessionNo) {
-        if (!isCheckSession(sessionNo)){
+        if (!isCheckSession(sessionNo)) {
             model.addAttribute("errorMsg", "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
             return "forward:/members";
         }
