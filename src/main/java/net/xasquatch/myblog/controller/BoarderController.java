@@ -43,17 +43,17 @@ public class BoarderController {
     private HomeController checkSessionController;
 
 
-    @PostMapping("/{likeTarget}/{targetNo}/like/{method}")
+    @PostMapping("/{targetNo}/like/{method}")
+    @ResponseBody
     public String increaseLike(@PathVariable String method,
-                               @PathVariable String likeTarget,
                                @PathVariable String targetNo) {
         String result = "false";
         if (method == null) return result;
         if (method.toUpperCase().equals("UP")) {
-            result = likeService.increaseLike(likeTarget, targetNo, sessionMember.getNo());
+            result = likeService.increaseLike("boards", targetNo, sessionMember.getNo());
 
         } else if (method.toUpperCase().equals("DOWN")) {
-            result = likeService.increaseLike(likeTarget, targetNo, sessionMember.getNo());
+            result = likeService.decreaseLike("boards", targetNo, sessionMember.getNo());
 
         }
 

@@ -53,7 +53,7 @@
     <article style="text-align: center; padding: 20px;">
         <section style="text-align: center;">
             <h2>
-                <a href="javascript:myAjax.submit('POST','${path}/boards/${board.no}/like/up',function(data) {
+                <a href="javascript:myAjax.submit('POST','${path}/boards/${board.no}/like/down',function(data) {
                 alert(data);
 
 
@@ -61,13 +61,18 @@
                 },'FORM',null);">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
-                <span>
-                ❤:&nbsp;
+                <span id="like-board-symbol">
+                ❤
                 </span>
-                <span>
+                <span id="like-board-count">
                     ${board.like}
                 </span>
-                <a href="javascript:">
+                <a href="javascript:myAjax.submit('POST','${path}/boards/${board.no}/like/up',function(data) {
+                alert(data);
+
+
+
+                },'FORM',null);">
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
             </h2>

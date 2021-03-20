@@ -27,4 +27,22 @@ public class LikeService {
 
         return result;
     }
+
+    public String decreaseLike(String likeTarget, String targetNo, Long memberNo) {
+
+        String result = "false";
+        String historyResult = likeDao.selectOneLkeNo(likeTarget, targetNo, memberNo);
+        if (historyResult != null) {
+            likeDao.deleteLke(historyResult);
+            result = "succeed cancel Like";
+
+        } else {
+            likeDao.insertLke(likeTarget, targetNo, String.valueOf(memberNo),"-1");
+            result = "succeed decrease Like";
+
+        }
+
+        return result;
+
+    }
 }
