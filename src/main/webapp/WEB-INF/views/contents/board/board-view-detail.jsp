@@ -54,34 +54,14 @@
         <section style="text-align: center;">
             <h2>
                 <c:if test="${sessionMember ne null}">
-                    <a href="javascript:myAjax.submit('POST','${path}/boards/${board.no}/like/down',function(data) {
-                alert(data);
-
-                myAjax.submit('GET','${path}/boards/${board.no}/like',function(ddata) {
-                  document.querySelector('#like-board-count').innerHTML = ddata;
-
-                });
-
-
-
-                },'FORM',null);">
+                    <a href="javascript:like.downToBoard(${board.no})">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
-                    <span id="like-board-symbol">
-                🖤🤍
-                </span>
+                    <span id="like-board-symbol">❤</span>
                     <span id="like-board-count">
                             ${board.like}
                     </span>
-                    <a href="javascript:myAjax.submit('POST','${path}/boards/${board.no}/like/up',function(data) {
-                alert(data);
-
-                myAjax.submit('GET','${path}/boards/${board.no}/like',function(ddata) {
-                  document.querySelector('#like-board-count').innerHTML = ddata;
-
-                });
-
-                },'FORM',null);">
+                    <a href="javascript:like.upToBoard(${board.no})">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
                 </c:if>

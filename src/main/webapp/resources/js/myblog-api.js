@@ -97,6 +97,26 @@ var uri = {
     }
 }
 
+var like = {
+    upToBoard: function (boardNo) {
+        myAjax.submit('POST', 'https://myblog.xasquatch.net/boards/' + boardNo + '/like/up', function (data) {
+            like.readToBoard(boardNo);
+
+        }, 'FORM', null);
+    },
+    downToBoard: function (boardNo) {
+        myAjax.submit('POST', 'https://myblog.xasquatch.net/boards/' + boardNo + '/like/down', function (data) {
+            like.readToBoard(boardNo);
+
+        }, 'FORM', null);
+    },
+    readToBoard: function (boardNo) {
+        myAjax.submit('GET', 'https://myblog.xasquatch.net/boards/' + boardNo + '/like', function (ddata) {
+            document.querySelector('#like-board-count').innerHTML = ddata;
+
+        });
+    }
+}
 
 var myBoard = {
 
