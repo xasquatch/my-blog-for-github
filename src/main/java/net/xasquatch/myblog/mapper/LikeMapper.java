@@ -42,4 +42,6 @@ public interface LikeMapper {
     @InsertProvider(method = "insertOneLke", type = LikeBuilder.class)
     int insertOneLke(String likeTarget, String targetNo, String memberNo, String goodValue);
 
+    @SelectProvider(method = "selectOneLkeCount",type = LikeBuilder.class)
+    String selectOneLkeCount(String likeTarget, String targetNo);
 }

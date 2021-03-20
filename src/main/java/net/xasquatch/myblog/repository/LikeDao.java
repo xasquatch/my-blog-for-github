@@ -22,4 +22,8 @@ public class LikeDao {
     public void insertLke(String likeTarget, String targetNo, String memberNo, String likeValue) {
         likeMapper.insertOneLke(likeTarget, targetNo, memberNo, likeValue);
     }
+
+    public String selectOneLkeCount(String likeTarget, String targetNo) {
+        return likeMapper.selectOneLkeCount(likeTarget,targetNo);
+    }
 }

@@ -20,7 +20,7 @@ public class LikeService {
             result = "succeed cancel Like";
 
         } else {
-            likeDao.insertLke(likeTarget, targetNo, String.valueOf(memberNo),"1");
+            likeDao.insertLke(likeTarget, targetNo, String.valueOf(memberNo), "1");
             result = "succeed increase Like";
 
         }
@@ -37,12 +37,19 @@ public class LikeService {
             result = "succeed cancel Like";
 
         } else {
-            likeDao.insertLke(likeTarget, targetNo, String.valueOf(memberNo),"-1");
+            likeDao.insertLke(likeTarget, targetNo, String.valueOf(memberNo), "-1");
             result = "succeed decrease Like";
 
         }
 
         return result;
+
+    }
+
+    public String readLikeCount(String likeTarget, String targetNo) {
+        String result = likeDao.selectOneLkeCount(likeTarget, targetNo);
+
+        return result == null ? "0" : result;
 
     }
 }

@@ -53,28 +53,33 @@
     <article style="text-align: center; padding: 20px;">
         <section style="text-align: center;">
             <h2>
-                <a href="javascript:myAjax.submit('POST','${path}/boards/${board.no}/like/down',function(data) {
+                <c:if test="${sessionMember ne null}">
+                    <a href="javascript:myAjax.submit('POST','${path}/boards/${board.no}/like/down',function(data) {
                 alert(data);
 
 
 
                 },'FORM',null);">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-                <span id="like-board-symbol">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <span id="like-board-symbol">
                 ❤
                 </span>
-                <span id="like-board-count">
-                    ${board.like}
-                </span>
-                <a href="javascript:myAjax.submit('POST','${path}/boards/${board.no}/like/up',function(data) {
+                    <span id="like-board-count">
+                            ${board.like}
+                    </span>
+                    <a href="javascript:myAjax.submit('POST','${path}/boards/${board.no}/like/up',function(data) {
                 alert(data);
 
+                myAjax.submit('GET','${path}/boards/${board.no}/like',function(ddata) {
+                  document.querySelector('#like-board-count').innerHTML = ddata;
 
+                });
 
                 },'FORM',null);">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                </a>
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </c:if>
             </h2>
         </section>
         <BR>

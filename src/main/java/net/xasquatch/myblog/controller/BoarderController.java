@@ -48,16 +48,33 @@ public class BoarderController {
     public String increaseLike(@PathVariable String method,
                                @PathVariable String targetNo) {
         String result = "false";
-        if (method == null) return result;
-        if (method.toUpperCase().equals("UP")) {
-            result = likeService.increaseLike("boards", targetNo, sessionMember.getNo());
+        Long memberNo = sessionMember.getNo();
 
-        } else if (method.toUpperCase().equals("DOWN")) {
-            result = likeService.decreaseLike("boards", targetNo, sessionMember.getNo());
+        if (!checkSessionController.isCheckSessionWithOutGuest(String.valueOf(memberNo))
+                && method == null)
+            return result;
 
+        switch (method.toUpperCase()) {
+            case "UP":
+                result = likeService.increaseLike("boards", targetNo, memberNo);
+                break;
+
+            case "DOWN":
+                result = likeService.decreaseLike("boards", targetNo, memberNo);
+                break;
+
+            default:
+                result = "false";
         }
-
         return result;
+
+    }
+
+    @GetMapping("/{targetNo}/like")
+    @ResponseBody
+    public String increaseLike(@PathVariable String targetNo) {
+        return likeService.readLikeCount("boards", targetNo);
+
     }
 
     //TODO: 글작성 화면으로 이동

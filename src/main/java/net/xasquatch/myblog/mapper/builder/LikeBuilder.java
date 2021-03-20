@@ -85,5 +85,28 @@ public class LikeBuilder {
 
     }
 
+    public static String selectOneLkeCount(String likeTarget, String targetNo) {
+        String queryWhere = null;
+        if (likeTarget.toUpperCase().equals("BOARDS")) {
+            queryWhere = "l.board_no = " + targetNo;
+
+        } else if (likeTarget.toUpperCase().equals("COMMENTS")) {
+            queryWhere = "l.comment_no = " + targetNo;
+
+        }else{
+            return null;
+
+        }
+
+        String finalQueryWhere = queryWhere;
+
+        return new SQL() {{
+            SELECT("good AS 'like'");
+            FROM(selectSumLke()+" l");
+            WHERE(finalQueryWhere);
+        }}.toString();
+
+    }
+
 }
 
