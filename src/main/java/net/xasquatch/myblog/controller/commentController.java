@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/comments", produces = "text/plain;charset=UTF-8")
+@RequestMapping(value = "/comments", produces = "text/plain;charset=UTF-8",
+        method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
 public class commentController {
 
     @Autowired
@@ -30,12 +31,7 @@ public class commentController {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
-    @GetMapping("/")
-    public String viewCommentList(@RequestParam long boardNo) {
-        return commentService.getCommentList(boardNo);
-    }
-
-    @PostMapping("/")
+    @PostMapping("")
     public String createComment(HttpServletRequest request, @Valid Comment comment,
                                 @RequestParam long boardNo, BindingResult bindingResult) {
         String result = "false";
