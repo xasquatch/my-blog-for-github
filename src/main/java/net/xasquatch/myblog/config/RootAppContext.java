@@ -3,6 +3,7 @@ package net.xasquatch.myblog.config;
 import net.xasquatch.myblog.mapper.*;
 import net.xasquatch.myblog.model.Member;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperFactoryBean;
@@ -83,6 +84,14 @@ public class RootAppContext {
     }
 
     @Bean
+    public MapperFactoryBean<CommentMapper> getCommentMapper(SqlSessionFactory factory) {
+        MapperFactoryBean<CommentMapper> factoryBean = new MapperFactoryBean<CommentMapper>(CommentMapper.class);
+        factoryBean.setSqlSessionFactory(factory);
+        return factoryBean;
+
+    }
+
+    @Bean
     public MapperFactoryBean<ResourceMapper> getResourceMapper(SqlSessionFactory factory) {
         MapperFactoryBean<ResourceMapper> factoryBean = new MapperFactoryBean<ResourceMapper>(ResourceMapper.class);
         factoryBean.setSqlSessionFactory(factory);
@@ -90,7 +99,13 @@ public class RootAppContext {
 
     }
 
+    @Bean
+    public MapperFactoryBean<LikeMapper> getLikeMapper(SqlSessionFactory factory) {
+        MapperFactoryBean<LikeMapper> factoryBean = new MapperFactoryBean<LikeMapper>(LikeMapper.class);
+        factoryBean.setSqlSessionFactory(factory);
+        return factoryBean;
 
+    }
     @Bean
     public MapperFactoryBean<ApiMapper> getApiMapper(SqlSessionFactory factory) {
         MapperFactoryBean<ApiMapper> factoryBean = new MapperFactoryBean<ApiMapper>(ApiMapper.class);

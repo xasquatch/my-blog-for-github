@@ -17,7 +17,7 @@
                 <option>100</option>
             </select>
             <c:if test="${sessionMember.rank.equals('manager')}">
-                <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/board/${sessionMember.no}/create?keyword=my-blog-notice'">
+                <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/boards/${sessionMember.no}/create?keyword=my-blog-notice'">
                     글쓰기
                 </button>
             </c:if>
@@ -39,7 +39,7 @@
             <c:forEach var="board" items="${boardList}">
                 <tr>
                     <td>
-                        <a href="${path}/board/${board.mbr_no}/read/${board.no}">
+                        <a href="${path}/boards/${board.no}?memberNo=${board.mbr_no}">
                             <span style="display: inline-block; width: 200px; overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
                                     ${board.title}
                             </span>
@@ -50,12 +50,12 @@
                     </td>
                     <c:if test="${sessionMember.rank.equals('manager')}">
                         <td style="vertical-align: middle; text-align: center;">
-                            <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no})">
+                            <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no},'${sessionMember.name}')">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </a>
                         </td>
                         <td style="vertical-align: middle; text-align: center;">
-                            <a href="javascript:board.delete(${board.mbr_no}, ${board.no})">
+                            <a href="javascript:board.delete(${board.mbr_no}, ${board.no},'${sessionMember.name}')">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         </td>
@@ -88,7 +88,7 @@
         var searchValue = document.querySelector('#myblog-search-value');
         var pageLimit = document.querySelector('#myblog-board-page-limit');
 
-        window.location.href = '${path}/board/all/list?page-limit=' + pageLimit.value + '&' + searchTarget.value + '=' + searchValue.value;
+        window.location.href = '${path}/boards/all/list?page-limit=' + pageLimit.value + '&' + searchTarget.value + '=' + searchValue.value;
     }
 
 

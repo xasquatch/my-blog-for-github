@@ -25,9 +25,7 @@
     z-index: 1000;
     position: sticky;
 }
-#header-center{
 
-}
 #header-left {
     display: flex;
     width: 200px;
@@ -90,20 +88,32 @@
     margin: 0 auto;
 }
 
+#main-footer a > span > img {
+    width: 100px;
+    height: 100px;
+}
+
 #main-footer-proto {
-    height: 5em;
+    height: 1.4em;
 }
 
 #main-aside {
-    padding: 5px 0;
+    position: sticky;
+    top: 74px;
+    padding: 0;
     width: 250px;
     font-size: 2rem;
     font-weight: bold;
     overflow-y: auto;
     max-height: 80vh;
 }
+
 #mobile-hamburger {
     display: none;
+}
+
+.aside-hide {
+    opacity: 1;
 }
 
 @media (max-width: 1300px) {
@@ -111,10 +121,16 @@
         display: none !important;
     }
 
+    .aside-hide {
+        z-index: -1 !important;
+        opacity: 0;
+    }
+
     #main-aside {
+        z-index: 1000;
         display: block;
         position: fixed;
-        padding: 5px 5vw 5px 5vw;
+        padding: 5px 5vw 250px 5vw;
         width: 100%;
         height: 100%;
         box-sizing: border-box;
@@ -122,14 +138,10 @@
         color: white;
         overflow-x: hidden;
         overflow-y: auto;
-        z-index: 1000;
         left: 0;
         text-align: center;
     }
 
-    .forward-to-top {
-        bottom: -100%;
-    }
 
     #mobile-hamburger {
         display: block;
@@ -140,6 +152,7 @@
 /*END: header, footer, aside----------------*/
 
 /*----------------general setting---------------*/
+
 .opacity-0 {
     opacity: 0;
 }
@@ -175,7 +188,7 @@
 .wrap-grid {
     max-width: 1300px;
     display: grid;
-    padding: 10px;
+    padding: 0 10px;
     grid-template-columns: 250px 1fr;
     box-sizing: border-box;
     margin: 0 auto;
@@ -212,7 +225,7 @@
 
 /*END: general setting---------------*/
 
-/*--------------------------login.jsp------------------*/
+/*--------------------------members.jsp------------------*/
 
 .input-character {
     background-color: rgba(37, 92, 194, 1);
@@ -314,15 +327,13 @@
     width: 32px;
     height: 32px;
 }
+
 .google-buttonText {
     display: block;
 }
 
 
-
-
-
-/*END: login.jsp------------------*/
+/*END: members.jsp------------------*/
 /*----------contents-aside-------*/
 .wrap-grid > section {
     display: block;
@@ -391,6 +402,7 @@
         width: 100%;
         flex-direction: row;
     }
+
     #resource-section textarea {
         width: 100%;
         height: 300px;
@@ -399,30 +411,66 @@
 
 /*END: resource page-----------*/
 /*api clipboard page-----------*/
-#api-clipboard-section{
+#api-clipboard-section {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
 
 
 }
-#api-clipboard-section>article{
+
+#api-clipboard-section > article {
     margin: 5px;
     padding: 5px;
 }
-#api-clipboard-section pre{
+
+#api-clipboard-section pre {
     word-break: break-all;
     white-space: pre-wrap;
     width: 100%;
 }
-.api-clipboard{
+
+.api-clipboard {
     border: 4px inset;
     padding: 10px;
     overflow: auto;
 
 }
-.api-clipboard>pre{
+
+.api-clipboard > pre {
     height: 400px;
     overflow: auto;
 }
+
 /*END: api clipboard page-----------*/
+/*comment*/
+#comment-table > thead > tr:first-child > td:first-child,
+#comment-list-table > tr > td:first-child {
+    text-align: center;
+    vertical-align: middle;
+    width: 200px;
+}
+
+#comment-table > thead > tr:first-child > td:first-child img,
+#comment-list-table > tr > td:first-child img {
+    max-width: 140px;
+    max-height: 140px;
+
+}
+
+@media (max-width: 1300px) {
+    #comment-table > thead > tr:first-child > td:first-child,
+    #comment-list-table > tr > td:first-child {
+        width: 70px;
+        font-size: 0.7em;
+    }
+
+    #comment-table > thead > tr:first-child > td:first-child img,
+    #comment-list-table > tr > td:first-child img {
+        max-width: 50px;
+        max-height: 50px;
+
+    }
+
+
+}

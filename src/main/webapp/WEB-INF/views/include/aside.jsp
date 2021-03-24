@@ -3,8 +3,10 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <c:set var="mainContents" value="${requestScope.mainContents}"/>
 
-<aside id="main-aside" class="forward-to-top dot-key">
-    <c:if test="${mainContents != 'login' && mainContents != 'main' && sessionMember != null && !(mainContents.contains('check')||mainContents.contains('find'))}">
+<aside id="main-aside" class="aside-hide dot-key">
+    <c:if test="${mainContents != 'members' && mainContents != 'main' && mainContents != 'home'
+        && sessionMember.no != null && sessionMember.no != ''
+        && !(mainContents.contains('check')||mainContents.contains('find'))}">
         <c:if test="${sessionMember.rank.contains('manager')}">
             <h2 style="font-weight: bold;">
                 Members<BR>Management
@@ -24,12 +26,21 @@
                     </a>
                 </li>
                 <li role="presentation">
-                    <a href="${path}/board/all/list">
+                    <a href="${path}/boards/all/list">
                         <img style="width: 30px; height: auto;" src="${path}/img/banner-black/all-boards.png">
                         전체 글 목록
                     </a>
                 </li>
             </ul>
+        </c:if>
+        <c:if test="${sessionMember.no ne '' && sessionMember.no ne null}">
+            <hr>
+            <a class="dot-key btn btn-link-red" style="font-size: 20px"
+               href="${path}/members/${sessionMember.no}">
+                메인화면으로 이동<BR>
+                (Members: 회원전용)
+            </a>
+            <hr>
         </c:if>
         <h2 style="font-weight: bold;">
             Notice
@@ -55,7 +66,7 @@
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/board/${sessionMember.no}/create">
+                <a href="${path}/boards/new?method=create">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/writeBoard.png">
                     새 글 쓰기
                 </a>
@@ -67,7 +78,7 @@
                 </a>
             </li>
             <li role="presentation">
-                <a href="${path}/board/${sessionMember.no}/list">
+                <a href="${path}/boards?memberNo=${sessionMember.no}">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/boardList.png">
                     내 글 목록
                 </a>

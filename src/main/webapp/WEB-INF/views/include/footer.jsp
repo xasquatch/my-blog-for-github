@@ -1,3 +1,4 @@
+<%@ page import="net.xasquatch.myblog.model.Member" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
@@ -14,17 +15,8 @@
     var mainAside = document.querySelector('#main-aside');
 
     function popUpAside() {
-        mainAside.classList.toggle('forward-to-top');
-        mainAside.style.marginTop = 0;
+        mainAside.classList.toggle('aside-hide');
     }
-
-    // css sticky 속성이 부모태그가 그리드인 상태에서는 적용되지가 않아서
-    // TOP padding값을 주는 것으로 sticky 구현
-    window.addEventListener('scroll', function () {
-        if (mainAside.classList.contains('forward-to-top')) {
-            mainAside.style.marginTop = window.pageYOffset;
-        }
-    });
 
     var aTags = document.querySelectorAll('a');
     for (var aTag of aTags) {
@@ -38,7 +30,7 @@
                 footerEffect.addLoadingState();
                 setTimeout(function (event) {
                     footerEffect.removeLoadingState();
-                },3000)
+                }, 3000)
 
             });
         }
@@ -73,7 +65,29 @@
 <footer id="main-footer" class="dot-key">
     <img src="${path}/img/loading.gif">
     Develop by Xasquatch, https://xasquatch.net
-    <div></div>
+    <div>
+        <c:if test="${requestScope.errorMsg ne null && requestScope.errorMsg ne ''}">
+            <script>
+                window.onload = function () {
+                    <c:choose>
+                    <c:when test="${sessionMember.no eq null}">
+                    window.history.replaceState(null, null, '${path}/members');
+
+                    </c:when>
+                    <c:otherwise>
+                    window.history.replaceState(null, null, '${path}/members/${sessionNo}');
+
+                    </c:otherwise>
+                    </c:choose>
+                    footerEffect.addFooterState();
+                }
+            </script>
+            <div>
+                    ${requestScope.errorMsg}<BR>
+                <a class="dot-key btn btn-link-red" href="javascript:footerEffect.removeFooterState();">Close</a>
+            </div>
+        </c:if>
+    </div>
 </footer>
 
 <%--custom script--%>

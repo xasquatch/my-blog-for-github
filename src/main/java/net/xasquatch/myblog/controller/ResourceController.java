@@ -31,9 +31,10 @@ public class ResourceController {
             resources = resourceService.viewList(0, searchValue);
             model.addAttribute("mainContents", "resource-list");
             model.addAttribute("resources", resources);
+            return "index";
 
         }
-        return "index";
+        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
 
     }
 
@@ -56,7 +57,7 @@ public class ResourceController {
             model.addAttribute("mainContents", "resource-create");
             return "index";
         }
-        return "redirect:/";
+        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     @PostMapping("/{memberNo}/upload")

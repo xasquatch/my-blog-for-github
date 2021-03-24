@@ -97,6 +97,44 @@ var uri = {
     }
 }
 
+var like = {
+    upToBoard: function (boardNo) {
+        myAjax.submit('POST', 'https://myblog.xasquatch.net/boards/' + boardNo + '/like/up', function (data) {
+            like.readToBoard(boardNo);
+
+        }, 'FORM', null);
+    },
+    downToBoard: function (boardNo) {
+        myAjax.submit('POST', 'https://myblog.xasquatch.net/boards/' + boardNo + '/like/down', function (data) {
+            like.readToBoard(boardNo);
+
+        }, 'FORM', null);
+    },
+    readToBoard: function (boardNo) {
+        myAjax.submit('GET', 'https://myblog.xasquatch.net/boards/' + boardNo + '/like', function (data) {
+            document.querySelector('#like-board-count').innerHTML = data;
+
+        });
+    },
+    upToComment: function (commentNo) {
+        myAjax.submit('POST', 'https://myblog.xasquatch.net/comments/' + commentNo + '/like/up', function (data) {
+            like.readToComment(commentNo);
+
+        }, 'FORM', null);
+    },
+    downToComment: function (commentNo) {
+        myAjax.submit('POST', 'https://myblog.xasquatch.net/comments/' + commentNo + '/like/down', function (data) {
+            like.readToComment(commentNo);
+
+        }, 'FORM', null);
+    },
+    readToComment: function (commentNo) {
+        myAjax.submit('GET', 'https://myblog.xasquatch.net/comments/' + commentNo + '/like', function (data) {
+            document.querySelector('#myblog-like-comment-' + commentNo + '-count').innerHTML = data;
+
+        });
+    }
+}
 
 var myBoard = {
 

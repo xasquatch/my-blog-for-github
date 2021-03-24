@@ -1,4 +1,7 @@
 @charset "UTF-8";
+html{
+    scroll-behavior: smooth;
+}
 a{
     color: inherit !important;
     text-decoration: none !important;
@@ -70,6 +73,9 @@ select, input, button{
     line-height: 1.1;
     color: inherit;
     word-break: break-all;
+}
+thead>tr>th{
+    text-align: center;
 }
 
 

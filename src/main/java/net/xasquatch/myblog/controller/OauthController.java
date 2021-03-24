@@ -69,7 +69,7 @@ public class OauthController {
             ResponseEntity<String> responseEntity = googleOAuthService.requestAccessToken(authCode);
             Map<String, Object> accessTokenMap = googleOAuthService.getAccessToken(responseEntity);
 
-            if (googleOAuthService.verifyToken((String) accessTokenMap.get("JWT")) == null) return "redirect:/";
+            if (googleOAuthService.verifyToken((String) accessTokenMap.get("JWT")) == null) return "redirect:/members";
 
             Member convertedMember = googleOAuthService.convertModelToMember(accessTokenMap);
             if (!memberService.isExistedEmail(convertedMember.getEmail())) {
@@ -96,7 +96,7 @@ public class OauthController {
         }
         model.addAttribute("result", result);
 
-        return "forward:/";
+        return "forward:/members/"+sessionMember.getNo();
     }
 
     @DeleteMapping("/google/token")

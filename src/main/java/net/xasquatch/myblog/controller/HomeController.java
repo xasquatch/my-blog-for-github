@@ -40,14 +40,25 @@ public class HomeController {
 
 
     protected boolean isCheckManager(String memberNo) {
-        return sessionMember.getRank().equals("manager") && String.valueOf(sessionMember.getNo()).equals(memberNo);
+        boolean managerResult = false;
+        boolean sessionResult = false;
+        try {
+            managerResult = sessionMember.getRank().equals("manager");
+            sessionResult = String.valueOf(sessionMember.getNo()).equals(memberNo);
+        } catch (Exception e) {
+            log.debug(e.getMessage());
+        }
+
+
+        return managerResult && sessionResult;
     }
 
     protected boolean isCheckSessionAndAuth(String inputSessionNumber) {
-        boolean guestResult = sessionMember.getName().equals("GUEST");
+        boolean guestResult = false;
         boolean sessionResult = false;
 
         try {
+            guestResult = sessionMember.getName().equals("GUEST");
             sessionResult = sessionMember.getNo() == Long.parseLong(inputSessionNumber)
                     && !sessionMember.getRank().equals("temporary");
 
@@ -57,6 +68,23 @@ public class HomeController {
         }
 
         return guestResult || sessionResult;
+    }
+
+    protected boolean isCheckSessionWithOutGuest(String inputSessionNumber) {
+        boolean guestResult = false;
+        boolean sessionResult = false;
+
+        try {
+            guestResult = !sessionMember.getName().equals("GUEST");
+            sessionResult = sessionMember.getNo() == Long.parseLong(inputSessionNumber)
+                    && !sessionMember.getRank().equals("temporary");
+
+        } catch (Exception e) {
+            log.debug(e.getMessage());
+
+        }
+
+        return guestResult && sessionResult;
     }
 
     protected boolean isCheckSession(String inputSessionNumber) {
@@ -72,27 +100,44 @@ public class HomeController {
         return sessionResult;
     }
 
-    @GetMapping(value = "/")
+    protected String forwardingMembersPageAndErrorMsg(Model model, String msg) {
+        model.addAttribute("errorMsg", msg);
+        return "forward:/members/" + sessionMember.getNo();
+
+    }
+
+    @GetMapping("/")
     public String home(Model model) {
-        if (sessionMember.getNo() == null || sessionMember.getEmail().equals("")) return "redirect:/login";
+        Map<String, Object> noticeMap =
+                boardService.getNoticeList("manager", 5, 1, new String[]{"keyword", "my-blog-notice"});
+        List<Map<String, Object>> noticeList = (List<Map<String, Object>>) noticeMap.get("boardList");
+        model.addAttribute("noticeList", noticeList);
+        model.addAttribute("mainContents", "home");
+
+        return "index";
+    }
+
+    @GetMapping("/members")
+    public String signInAndUp(Model model) {
+        if (sessionMember.getNo() != null && !isCheckSession(String.valueOf(sessionMember.getNo())))
+            return "redirect:/members/" + sessionMember.getNo();
+        model.addAttribute("mainContents", "members");
+
+        return "index";
+    }
+
+    @GetMapping("/members/{sessionNo}")
+    public String members(Model model, @PathVariable String sessionNo) {
+        if (!isCheckSession(sessionNo)) {
+            model.addAttribute("errorMsg", "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
+            return "forward:/members";
+        }
         model.addAttribute("mainContents", "main");
 
         return "index";
     }
 
-    @GetMapping(value = "/login")
-    public String main(Model model) {
-
-        Map<String, Object> noticeMap =
-                boardService.getNoticeList("manager", 5, 1, new String[]{"keyword", "my-blog-notice"});
-        List<Map<String, Object>> noticeList = (List<Map<String, Object>>) noticeMap.get("boardList");
-        model.addAttribute("noticeList", noticeList);
-        model.addAttribute("mainContents", "login");
-
-        return "index";
-    }
-
-    @PostMapping(value = "/feedback/{memberNo}")
+    @PostMapping("/feedback/{memberNo}")
     @ResponseBody
     public String sendFeedback(HttpServletRequest request, @PathVariable String memberNo) {
         if (!isCheckSession(memberNo)) return "Failed Check Session";
@@ -112,7 +157,7 @@ public class HomeController {
     }
 
 
-    @PostMapping("/img/{memberNo}/board/{boardNo}/upload")
+    @PostMapping("/img/{memberNo}/boards/{boardNo}/upload")
     @ResponseBody
     public String boardImgUpload(MultipartHttpServletRequest request, @PathVariable String memberNo, @PathVariable String boardNo) {
         try {

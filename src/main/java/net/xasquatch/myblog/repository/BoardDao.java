@@ -17,21 +17,6 @@ public class BoardDao {
     @Autowired
     BoardMapper boardMapper;
 
-    public List<Map<String, Object>> selectCommentList(Object boardNo) {
-
-        return boardMapper.selectCommentList(boardNo);
-    }
-
-    public int deleteComment(Object commentNo, Object pwd) {
-
-        return boardMapper.deleteCommentForGuest(commentNo, pwd);
-    }
-
-    public int deleteComment(Object commentNo) {
-
-        return boardMapper.deleteComment(commentNo);
-    }
-
     public List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
                                                      Object searchTarget, Object searchValue) {
 
@@ -82,12 +67,14 @@ public class BoardDao {
 
     }
 
-    public Map<String, Object> selectOneBoard(Object memberNo, Object boardNo) {
-        return boardMapper.selectOneBoard(memberNo, boardNo);
+    public Map<String, Object> selectOneBoard(Object boardNo) {
+        return boardMapper.selectOneBoard(boardNo);
     }
 
-    public int insertOneComment(Comment comment) {
-        return boardMapper.insertOneComment(comment);
-    }
+    public boolean selectOneBoardColumnPwd(Object boardno, String pwd) {
+        boolean result = false;
+        if (boardMapper.selectOneBoardColumnPwd(boardno, pwd) == 1) result = true;
 
+        return result;
+    }
 }

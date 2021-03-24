@@ -18,6 +18,7 @@
     <%--custom css --%>
     <link rel="stylesheet" href="${path}/css/style.css">
     <link rel="stylesheet" href="${path}/css/reset.css">
+    <link rel="stylesheet" href="${path}/css/home-style.css">
     <link rel="stylesheet" href="${path}/css/list-style.css">
     <%--END: custom css --%>
 
@@ -39,17 +40,26 @@
 
     </div>
     <div id="header-right">
-        <c:if test="${mainContents != 'login' && mainContents != 'main' && sessionMember != null && !(mainContents.contains('check')||mainContents.contains('find'))}">
+        <c:if test="${mainContents != 'members' && mainContents != 'main' && sessionMember.no != null && sessionMember.no != ''
+            && !(mainContents.contains('check')||mainContents.contains('find'))}">
             <button style="font-size: 20px;" type="button" id="mobile-hamburger" class="dot-key btn btn-link-red" onclick="popUpAside();">
                 <B>More</B>
             </button>
         </c:if>
-        <c:if test="${sessionMember.no != null}">
-            <button type="button" class="btn btn-link-red" style="font-size: 20px; color: black;"
-                    onclick="if(confirm('로그아웃하시겠습니까?') === true)location.href='${path}/members/log-out'">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-            </button>
-        </c:if>
+        <c:choose>
+            <c:when test="${sessionMember.no != null && sessionMember.no != ''}">
+                <button type="button" class="btn btn-link-red" style="font-size: 20px; color: black;"
+                        onclick="if(confirm('로그아웃하시겠습니까?') === true)window.location.href='${path}/members/log-out'">
+                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                </button>
+            </c:when>
+            <c:when test="${mainContents != 'members' && (sessionMember.no == null || sessionMember.no == '')}">
+                <button type="button" class="btn btn-link-red" style="font-size: 20px; color: black;"
+                        onclick="window.location.href = '${path}/members'">
+                    Members
+                </button>
+            </c:when>
+        </c:choose>
 
     </div>
 </header>

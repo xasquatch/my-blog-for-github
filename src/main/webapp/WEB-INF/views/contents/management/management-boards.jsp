@@ -47,7 +47,7 @@
                             ${board.row_number}
                     </td>
                     <td>
-                        <a href="${path}/board/${board.mbr_no}/read/${board.no}">
+                        <a href="${path}/boards/${board.mbr_no}/read/${board.no}">
                                 ${board.thumbnail}
                             <span style="display: inline-block; width: 200px; overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
                                     ${board.title}
@@ -61,12 +61,12 @@
                             ${board.mbr_nickname}
                     </td>
                     <td style="vertical-align: middle; text-align: center;">
-                        <a href="javascript:board.GoModify('all', ${board.no})">
+                        <a href="javascript:board.GoModify('all', ${board.no},'${sessionMember.name}')">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </a>
                     </td>
                     <td style="vertical-align: middle; text-align: center;">
-                        <a href="javascript:board.delete('all', ${board.no})">
+                        <a href="javascript:board.delete('all', ${board.no},'${sessionMember.name}')">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </td>
@@ -98,7 +98,7 @@
         var searchValue = document.querySelector('#myblog-search-value');
         var pageLimit = document.querySelector('#myblog-board-page-limit');
 
-        window.location.href = '${path}/board/all/list?page-limit=' + pageLimit.value + '&' + searchTarget.value + '=' + searchValue.value;
+        window.location.href = '${path}/boards/all/list?page-limit=' + pageLimit.value + '&' + searchTarget.value + '=' + searchValue.value;
     }
 
 

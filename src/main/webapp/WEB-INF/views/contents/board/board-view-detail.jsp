@@ -11,10 +11,10 @@
                         <h1>${board.title}</h1>
                         <c:if test="${sessionMember.rank eq 'manager' || sessionMember.no eq board.mbr_no}">
                             <h3>
-                                <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no})">
+                                <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no},'${sessionMember.name}')">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
-                                <a href="javascript:board.delete(${board.mbr_no}, ${board.no})">
+                                <a href="javascript:board.delete(${board.mbr_no}, ${board.no},'${sessionMember.name}')">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </h3>
@@ -51,22 +51,40 @@
         ${board.contents}
     </article>
     <article style="text-align: center; padding: 20px;">
+        <section style="text-align: center;">
+            <h2>
+                <c:if test="${sessionMember ne null}">
+                    <a href="javascript:like.downToBoard(${board.no})">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <span id="like-board-symbol">❤</span>
+                    <span id="like-board-count">
+                            ${board.like}
+                    </span>
+                    <a href="javascript:like.upToBoard(${board.no})">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </c:if>
+            </h2>
+        </section>
+        <BR>
         <button class="btn btn-link-red dot-key" onclick="window.history.back();">뒤로 가기</button>
     </article>
     <article>
-        <table class="table table-hover table-condensed">
+        <table id="comment-table" class="table table-hover table-condensed">
             <thead>
             <c:if test="${sessionMember ne null}">
                 <tr class="dot-key">
-                    <td width="200" style="text-align: center;">
-                        <img style="max-width: 140px; max-height: 140px;" src="${sessionMember.img}" onerror="this.src = '${path}/img/login/default-profile.png';">
+                    <td>
+                        <img src="${sessionMember.img}" onerror="this.src = '${path}/img/login/default-profile.png';">
                         <BR>
                             ${sessionMember.name}
                     </td>
                     <td colspan="5">
                         <form id="comment-form">
-                            <div style="display: grid; grid-template-columns: 1fr 100px; min-height: 200px;">
-                                <textarea class="form-control" name="contents" minlength="3" maxlength="220" style="height: 100%; width: 100%; resize: none;"></textarea>
+                            <div style="display: grid; grid-template-columns: 1fr 100px;">
+                                <textarea class="form-control" name="contents" minlength="3" maxlength="220"
+                                          style="min-height:100px; height: 100%; width: 100%; resize: none;"></textarea>
                                 <button class="btn btn-link-red dot-key" type="button" onclick="createBoardComment();">댓글 등록</button>
                             </div>
                         </form>
@@ -121,7 +139,9 @@
 
         }
 
-        myAjax.submit('POST', "${path}/board/${board.no}/comments", function (data) {
+        formData.append("boardNo", '${board.no}');
+
+        myAjax.submit('POST', "${path}/comments", function (data) {
             if (data === 'false') {
                 alert('댓글작성에 실패하였습니다. 잠시 후 다시 시도해주시기바랍니다');
 
@@ -142,7 +162,7 @@
         if ('${sessionMember.name}' === 'GUEST')
             pwd = window.prompt('GUEST: 설정하였던 비밀번호를 입력해주세요.', '0000');
 
-        myAjax.submit('DELETE', url + "?pwd=" + pwd, function (data) {
+        myAjax.submit('DELETE', url + "?memberNo=${sessionMember.no}&pwd=" + pwd, function (data) {
             if (data === 'false') {
                 window.alert('삭제 실패: 틀린 비밀번호');
 
@@ -155,18 +175,16 @@
     }
 
     function getCommentList() {
-        myAjax.submit('GET', "${path}/api/members/${board.mbr_no}/boards/${board.no}/comments", function (data) {
+        myAjax.submit('GET', '${path}/boards/${board.no}/comments', function (data) {
             var dataList = JSON.parse(data);
             var commentListTable = document.querySelector('#comment-list-table');
             commentListTable.innerHTML = '';
-
             for (var comment of dataList) {
                 var trTag = document.createElement('tr');
                 var tdProfileTag = document.createElement('td');
-                tdProfileTag.width = '200';
                 tdProfileTag.style.textAlign = 'center';
                 tdProfileTag.innerHTML =
-                    '<img style="max-width: 140px; max-height: 140px;" src="' + comment.img + '"' +
+                    '<img src="' + comment.img + '"' +
                     'onerror="this.src = \'${path}/img/login/default-profile.png\';"><BR>'
                     + comment.mbr_name + '<BR>'
                     + comment.created_ip + '<BR>' + comment.created_date;
@@ -176,12 +194,27 @@
                 tdContentsTag.innerHTML = comment.contents;
 
                 var tdDeleteTag = document.createElement('td');
-                tdDeleteTag.width = '50';
+                tdDeleteTag.width = '70';
                 tdDeleteTag.style.verticalAlign = 'middle';
+                tdDeleteTag.style.textAlign = 'center';
 
                 var sessionNo = ${sessionMember.no} +0;
                 if (sessionNo === comment.mbr_no)
-                    tdDeleteTag.innerHTML = '<a href="javascript:deleteBoardComment(\'${path}\/board\/${board.no}\/members\/${sessionMember.no}\/comments\/' + comment.no + '\')">삭제</a>';
+                    tdDeleteTag.innerHTML = '<a href="javascript:like.downToComment(' + comment.no + ')">' +
+                        // TODO: <
+                        '<div>❤</div>' +
+                        '<span class="glyphicon glyphicon-chevron-left"></span>' +
+                        '</a>' +
+                        '<span id="myblog-like-comment-' + comment.no + '-count">' +
+                        comment.like +
+                        '</span>' +
+                        '<a href="javascript:like.upToComment(' + comment.no + ')">' +
+                        // TODO: >
+                        '<span class="glyphicon glyphicon-chevron-right"></span>' +
+                        '</a>' +
+                        '<BR>' +
+                        '<BR>' +
+                        '<a href="javascript:deleteBoardComment(\'${path}\/comments\/' + comment.no + '\')">삭제</a>';
 
 
                 commentListTable.appendChild(trTag);

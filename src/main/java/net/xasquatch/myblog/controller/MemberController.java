@@ -57,7 +57,7 @@ public class MemberController {
 
         }
 
-        return "redirect:/";
+        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     /*TODO: 회원 api QUICK GUIDE PAGE로 이동*/
@@ -69,7 +69,7 @@ public class MemberController {
 
         }
 
-        return "redirect:/";
+        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     /*TODO: information페이지 이동*/
@@ -86,7 +86,7 @@ public class MemberController {
             }
         }
 
-        return "redirect:/";
+        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     //TODO: 회원정보 변경
@@ -113,7 +113,7 @@ public class MemberController {
             return "index";
         }
 
-        return "redirect:/";
+        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     /*TODO: 회원 이메일 변경페이지로 이동*/
@@ -125,7 +125,7 @@ public class MemberController {
 
         }
 
-        return "redirect:/";
+        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     /*TODO: 회원 이메일 인증페이지로 이동*/
@@ -155,7 +155,7 @@ public class MemberController {
             return "index";
 
         }
-        return "redirect:/";
+        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     /*TODO: 회원 이메일 찾기*/
@@ -201,31 +201,24 @@ public class MemberController {
             }
         }
         memberService.reset(sessionMember);
-        return "redirect:/";
+        return "redirect:/members";
     }
 
 
     /*TODO:로그인*/
     @PostMapping("/login")
     @ResponseBody
-    public String login(HttpSession session, @Valid Member member, BindingResult bindingResult) {
-        String result = "false";
-        member = Member.builder()
-                .email(member.getEmail())
-                .pwd(member.getPwd())
-                .name("empty")
-                .membersAgreement(false)
-                .collectionAndUse(false)
-                .build();
+    public String login(HttpSession session, Member member) {
+        String result = memberService.login(member);
+        if (!result.equals("false")) {
+            if (sessionMember.getRank().equals("temporary") && !sessionMember.getName().equals("GUEST")) {
+                result = "/members/" + sessionMember.getNo() + "/check-email";
 
-        if (!bindingResult.hasErrors()) {
-            result = memberService.login(member);
-            if (!result.equals("false")) {
-                if (sessionMember.getRank().equals("temporary")) {
-                    result = "/members/" + sessionMember.getNo() + "/check-email";
-                }
-                session.setAttribute("sessionMember", sessionMember);
+            } else {
+                result = String.valueOf(sessionMember.getNo());
+
             }
+            session.setAttribute("sessionMember", sessionMember);
         }
 
         return result;
@@ -258,6 +251,7 @@ public class MemberController {
         return String.valueOf(result);
     }
 
+    /*TODO:회원탈퇴*/
     @DeleteMapping("/{memberNo}/delete")
     @ResponseBody
     public String delete(@PathVariable String memberNo) {

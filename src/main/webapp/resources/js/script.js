@@ -37,7 +37,7 @@ var board = {
     boardMbrNo: document.querySelector('#board-no-mbr'),
     fakeKeyword: document.querySelector('#board-keyword-fake'),
     fakeTitle: document.querySelector('#board-title-fake'),
-    fakeContents: document.querySelector('#board-contents-fake'),
+    fakeContents: document.querySelector('#board-contents'),
     fakeThumbnail: document.querySelector('#board-contents-thumbnail'),
     fakeImages: document.querySelector('#board-contents-image'),
 
@@ -61,7 +61,7 @@ var board = {
             board.boardMbrNo.value = sessionStorage.getItem('sessionBoardMbrNoData');
             document.querySelector('#board-keyword-fake').value = sessionStorage.getItem('sessionKeywordData');
             document.querySelector('#board-title-fake').value = sessionStorage.getItem('sessionTitleData');
-            document.querySelector('#board-contents-fake').innerHTML = sessionStorage.getItem('sessionContentsData');
+            document.querySelector('#board-contents').innerHTML = sessionStorage.getItem('sessionContentsData');
             document.querySelector('#board-contents-thumbnail').innerHTML = sessionStorage.getItem('sessionThumbnailData');
             document.querySelector('#board-contents-image').innerHTML = sessionStorage.getItem('sessionContentsImgData');
         }
@@ -88,28 +88,36 @@ var board = {
         }
 
     },
-    delete: function (memberKey, boardKey) {
+    delete: function (memberKey, boardKey, sessionMemberName) {
         if (window.confirm("정말 삭제하시겠습니까?")) {
-            myAjax.submit('DELETE', 'https://myblog.xasquatch.net/board/' + memberKey + '/delete/' + boardKey, function (data) {
+            var pwd;
+            if (sessionMemberName === 'GUEST') {
+                pwd = window.prompt('비밀번호를 설정해주세요.\n (기본값: 0000)', '0000');
+                if (pwd === null) return;
+
+            }
+            myAjax.submit('DELETE', 'https://myblog.xasquatch.net/boards/' + boardKey + '?memberNo=' + memberKey + '&pwd=' + pwd, function (data) {
                 if (data === 'false') {
                     console.log('잘못 된 요청입니다.');
 
-                } else if (data === 'true' && uri.isContainWord(location.href, '/list')) {
+                } else if (data === 'true') {
                     console.log('삭제가 완료되었습니다.');
                     window.history.go(0);
-
-                } else if (data === 'true' && uri.isContainWord(location.href, '/list')) {
-                    console.log('삭제가 완료되었습니다.');
-                    window.history.back();
 
                 }
             }, '', '');
         }
 
     },
-    GoModify: function (memberKey, boardKey) {
+    GoModify: function (memberKey, boardKey, sessionMemberName) {
         if (window.confirm("수정 페이지로 이동하시겠습니까?")) {
-            location.href = '/board/' + memberKey + '/modify/' + boardKey;
+            var pwd;
+            if (sessionMemberName === 'GUEST') {
+                pwd = window.prompt('비밀번호를 설정해주세요.\n (기본값: 0000)', '0000');
+                if (pwd === null) return;
+
+            }
+            location.href = '/boards/blob/' + boardKey + '?pwd=' + pwd + '&memberNo=' + memberKey + '&method=modify';
 
         }
     }
@@ -407,6 +415,18 @@ var footerEffect = {
         loadingFooter.classList.remove('padding-100vh-align-center');
         loadingFooter.classList.remove('opacity-half');
         loadingImg.classList.remove('visible');
+    },
+    addFooterState: function () {
+        var loadingFooter = document.querySelector('#main-footer');
+
+        loadingFooter.classList.add('padding-100vh-align-center');
+        loadingFooter.classList.add('opacity-half');
+    },
+    removeFooterState: function () {
+        var loadingFooter = document.querySelector('#main-footer');
+
+        loadingFooter.classList.remove('padding-100vh-align-center');
+        loadingFooter.classList.remove('opacity-half');
     }
 
 
@@ -455,13 +475,13 @@ var boardListScript = {
         for (var map of jsonData.boardList) {
             var trTag = document.createElement('tr');
             var titleInput = document.createElement('td');
-            titleInput.innerHTML = '<a href="/board/' + uniform + '/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
+            titleInput.innerHTML = '<a href="/boards/' + uniform + '/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
             var rowNoInput = document.createElement('td');
             rowNoInput.innerText = map.rowno;
             var dateInput = document.createElement('td');
             dateInput.innerText = boardListScript.getFormatDate(map.created_date);
             var modifyInput = document.createElement('td');
-            modifyInput.innerHTML = '<span class="glyphicon glyphicon-cog" style="cursor:pointer;" onclick="location.href=\'/board/' + uniform + '/modify/' + map.no + '\'"></span>';
+            modifyInput.innerHTML = '<span class="glyphicon glyphicon-cog" style="cursor:pointer;" onclick="location.href=\'/boards/' + uniform + '/modify/' + map.no + '\'"></span>';
             var deleteInput = document.createElement('td');
             deleteInput.innerHTML = '<span class="glyphicon glyphicon-trash" style="cursor:pointer;" onclick="boardListScript.deleteBoard(' + map.no + ');"></span>';
 
@@ -481,7 +501,7 @@ var boardListScript = {
         for (var map of jsonData.boardList) {
             var trTag = document.createElement('tr');
             var titleInput = document.createElement('td');
-            titleInput.innerHTML = '<a href="/board/' + uniform + '/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
+            titleInput.innerHTML = '<a href="/boards/' + uniform + '/detail/' + map.no + '">' + map.thumbnail + map.title + '</a>';
             var rowNoInput = document.createElement('td');
             rowNoInput.innerText = map.rowno;
             var dateInput = document.createElement('td');
@@ -499,9 +519,9 @@ var boardListScript = {
     },
     changeAllBoardList: function (count) {
         var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
-        var uniform = url.getUniform('/board/', '/list');
+        var uniform = url.getUniform('/boards/', '/list');
 
-        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/boards/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
             document.querySelector('#board-list-count').innerHTML = count;
             var jsonData = JSON.parse(data);
             boardListScript.getAllBoardList(jsonData, uniform);
@@ -513,9 +533,9 @@ var boardListScript = {
 
     changeBoardList: function (count) {
         var currentPageBlock = document.querySelector('#board-list-toolbar .active').innerText;
-        var uniform = url.getUniform('/board/', '/list');
+        var uniform = url.getUniform('/boards/', '/list');
 
-        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/boards/list?pageLimit=' + count + '&currentPageBlock=' + currentPageBlock, function (data) {
             document.querySelector('#board-list-count').innerHTML = count;
             var jsonData = JSON.parse(data);
             boardListScript.getBoardList(jsonData, uniform);
@@ -540,11 +560,11 @@ var boardListScript = {
     },
     ChangeMoveToThisPage: function (currentPageBlock) {
         var limitCount = document.querySelector('#board-list-count').innerText;
-        var uniform = url.getUniform('/board/', '/list');
+        var uniform = url.getUniform('/boards/', '/list');
         var searchRange = document.querySelector('#search-range').value;
         var searchValue = document.querySelector('#search-value').value;
 
-        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/board/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock + '&' + searchRange + '=' + searchValue,
+        boardListScript.forwardUrl('/my-blog/members/' + uniform + '/boards/list?pageLimit=' + limitCount + '&currentPageBlock=' + currentPageBlock + '&' + searchRange + '=' + searchValue,
             function (data) {
                 var jsonData = JSON.parse(data);
                 boardListScript.getBoardList(jsonData, uniform);
