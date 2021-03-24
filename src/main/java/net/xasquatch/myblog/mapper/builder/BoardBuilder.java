@@ -4,7 +4,7 @@ import org.apache.ibatis.jdbc.SQL;
 
 public class BoardBuilder {
 
-    public static String selectOneBoard(Object mbr_no, Object board_no) {
+    public static String selectOneBoard(Object board_no) {
         return new SQL() {{
             SELECT("b.no AS no", "b.mbr_no AS mbr_no", "m.name AS name",
                     "b.keyword AS keyword", "b.title AS title",
@@ -15,7 +15,7 @@ public class BoardBuilder {
             FROM("board b");
             LEFT_OUTER_JOIN("mbr m ON b.mbr_no = m.no");
             LEFT_OUTER_JOIN(LikeBuilder.selectSumLke() + " l ON l.board_no = b.no");
-            WHERE("b.mbr_no = " + mbr_no + " AND b.no = " + board_no);
+            WHERE("b.no = " + board_no);
         }}.toString();
     }
 

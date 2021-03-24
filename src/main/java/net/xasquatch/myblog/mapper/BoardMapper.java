@@ -42,7 +42,7 @@ public interface BoardMapper {
 //            "ON b.mbr_no = m.no  " +
 //            "WHERE b.mbr_no = #{arg0} AND b.no = #{arg1}")
     @SelectProvider(type = BoardBuilder.class, method = "selectOneBoard")
-    Map<String, Object> selectOneBoard(Object mbr_no, Object board_no);
+    Map<String, Object> selectOneBoard(Object board_no);
 
     @SelectProvider(type = BoardBuilder.class, method = "selectBoardList")
     List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,

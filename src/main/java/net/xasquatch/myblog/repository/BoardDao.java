@@ -67,8 +67,8 @@ public class BoardDao {
 
     }
 
-    public Map<String, Object> selectOneBoard(Object memberNo, Object boardNo) {
-        return boardMapper.selectOneBoard(memberNo, boardNo);
+    public Map<String, Object> selectOneBoard(Object boardNo) {
+        return boardMapper.selectOneBoard(boardNo);
     }
 
     public boolean selectOneBoardColumnPwd(Object boardno, String pwd) {

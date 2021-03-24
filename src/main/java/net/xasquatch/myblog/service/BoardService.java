@@ -194,8 +194,8 @@ public class BoardService {
 
     }
 
-    public Map<String, Object> viewDetail(Object memberNo, Object boardNo) {
-        return boardDao.selectOneBoard(memberNo, boardNo);
+    public Map<String, Object> viewDetail(Object boardNo) {
+        return boardDao.selectOneBoard(boardNo);
 
     }
 
