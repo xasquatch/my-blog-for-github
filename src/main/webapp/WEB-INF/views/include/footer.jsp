@@ -1,3 +1,4 @@
+<%@ page import="net.xasquatch.myblog.model.Member" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
@@ -68,7 +69,16 @@
         <c:if test="${requestScope.errorMsg ne null && requestScope.errorMsg ne ''}">
             <script>
                 window.onload = function () {
+                    <c:choose>
+                    <c:when test="${sessionMember.no eq null}">
                     window.history.replaceState(null, null, '${path}/members');
+
+                    </c:when>
+                    <c:otherwise>
+                    window.history.replaceState(null, null, '${path}/members/${sessionNo}');
+
+                    </c:otherwise>
+                    </c:choose>
                     footerEffect.addFooterState();
                 }
             </script>
