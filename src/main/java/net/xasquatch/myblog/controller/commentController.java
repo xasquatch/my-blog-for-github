@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/comments", produces = "text/plain;charset=UTF-8",
-        method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
+@RequestMapping(path = "/comments", produces = "text/plain;charset=UTF-8")
 public class commentController {
 
     @Autowired
