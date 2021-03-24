@@ -37,7 +37,7 @@ var board = {
     boardMbrNo: document.querySelector('#board-no-mbr'),
     fakeKeyword: document.querySelector('#board-keyword-fake'),
     fakeTitle: document.querySelector('#board-title-fake'),
-    fakeContents: document.querySelector('#board-contents-fake'),
+    fakeContents: document.querySelector('#board-contents'),
     fakeThumbnail: document.querySelector('#board-contents-thumbnail'),
     fakeImages: document.querySelector('#board-contents-image'),
 
@@ -61,7 +61,7 @@ var board = {
             board.boardMbrNo.value = sessionStorage.getItem('sessionBoardMbrNoData');
             document.querySelector('#board-keyword-fake').value = sessionStorage.getItem('sessionKeywordData');
             document.querySelector('#board-title-fake').value = sessionStorage.getItem('sessionTitleData');
-            document.querySelector('#board-contents-fake').innerHTML = sessionStorage.getItem('sessionContentsData');
+            document.querySelector('#board-contents').innerHTML = sessionStorage.getItem('sessionContentsData');
             document.querySelector('#board-contents-thumbnail').innerHTML = sessionStorage.getItem('sessionThumbnailData');
             document.querySelector('#board-contents-image').innerHTML = sessionStorage.getItem('sessionContentsImgData');
         }
@@ -96,17 +96,13 @@ var board = {
                 if (pwd === null) return;
 
             }
-            myAjax.submit('DELETE', 'https://myblog.xasquatch.net/boards/' + memberKey + '/delete/' + boardKey + '?pwd=' + pwd, function (data) {
+            myAjax.submit('DELETE', 'https://myblog.xasquatch.net/boards/' + boardKey + '?memberNo=' + memberKey + '&pwd=' + pwd, function (data) {
                 if (data === 'false') {
                     console.log('잘못 된 요청입니다.');
 
-                } else if (data === 'true' && uri.isContainWord(location.href, '/list')) {
+                } else if (data === 'true') {
                     console.log('삭제가 완료되었습니다.');
                     window.history.go(0);
-
-                } else if (data === 'true' && uri.isContainWord(location.href, '/list')) {
-                    console.log('삭제가 완료되었습니다.');
-                    window.history.back();
 
                 }
             }, '', '');
@@ -121,7 +117,7 @@ var board = {
                 if (pwd === null) return;
 
             }
-            location.href = '/boards/' + memberKey + '/modify/' + boardKey + '?pwd=' + pwd;
+            location.href = '/boards/blob/' + boardKey + '?pwd=' + pwd + '&memberNo=' + memberKey + '&method=modify';
 
         }
     }

@@ -5,6 +5,7 @@ import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Board;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.BoardService;
+import net.xasquatch.myblog.service.CommentService;
 import net.xasquatch.myblog.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 @Slf4j
 @Controller
-@RequestMapping(value = "/boards", produces = "text/plain;charset=UTF-8")
+@RequestMapping(path = "/boards", produces = "text/plain;charset=UTF-8")
 public class BoarderController {
 
     @Autowired
@@ -40,112 +41,12 @@ public class BoarderController {
     @Autowired
     private HomeController checkSessionController;
 
-
-    @PostMapping("/{targetNo}/like/{method}")
-    @ResponseBody
-    public String increaseLike(@PathVariable String method,
-                               @PathVariable String targetNo) {
-        String result = "false";
-        Long memberNo = sessionMember.getNo();
-
-        if (!checkSessionController.isCheckSessionWithOutGuest(String.valueOf(memberNo))
-                && method == null)
-            return result;
-
-        switch (method.toUpperCase()) {
-            case "UP":
-                result = likeService.increaseLike("boards", targetNo, memberNo);
-                break;
-
-            case "DOWN":
-                result = likeService.decreaseLike("boards", targetNo, memberNo);
-                break;
-
-            default:
-                result = "false";
-        }
-        return result;
-
-    }
-
-    @GetMapping("/{targetNo}/like")
-    @ResponseBody
-    public String increaseLike(@PathVariable String targetNo) {
-        return likeService.readLikeCount("boards", targetNo);
-
-    }
-
-    //TODO: 글작성 화면으로 이동
-    @RequestMapping(value = "/{memberNo}/create", method = {RequestMethod.GET, RequestMethod.POST})
-    public String forwardCreate(Model model,
-                                @PathVariable String memberNo,
-                                @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            long boardNo = (long) boardService.createDefaultBoard(memberNo);
-
-            model.addAttribute("boardKeyword", keyword);
-            model.addAttribute("boardNo", boardNo);
-            model.addAttribute("mainContents", "board-create");
-            return "index";
-
-        }
-        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
-
-    }
-
-    //TODO: defaultBoard메서드로 생성하였던 빈 게시판에 업로드 마무리
-    @PostMapping("/{memberNo}/upload/{boardNo}/{method}")
-    @ResponseBody
-    public String upload(MultipartHttpServletRequest request, @Valid Board board,
-                         BindingResult bindingResult,
-                         @PathVariable String method,
-                         @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
-            boolean result = false;
-            board.setCreated_ip(accessorInfo.getIpAddress(request));
-            if (bindingResult.hasErrors()) return "false";
-
-            String checkResult = boardService.checkBoardFormData(board);
-
-            if (checkResult.contains("[script Error]")) return checkResult;
-
-            if (method.equals("create")) {
-                result = boardService.createFinish(board);
-
-            } else if (method.equals("modify")) {
-                result = boardService.modify(board);
-
-            }
-            return String.valueOf(result);
-
-        }
-        return "false";
-
-    }
-
-    //TODO: 작성글 수정페이지로 이동
-    @GetMapping("/{memberNo}/modify/{boardNo}")
-    public String modify(Model model,
-                         @RequestParam String pwd,
-                         @PathVariable String boardNo,
-                         @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
-                (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
-            if (sessionMember.getName().equals("GUEST") && !boardService.isConfirmBoardPwd(boardNo, pwd))
-                return checkSessionController.forwardingMembersPageAndErrorMsg(model, "패스워드 오류<BR>비밀번호를 다시 확인해주세요.");
-            Map<String, Object> board = boardService.viewDetail(memberNo, boardNo);
-            model.addAttribute("board", board);
-            model.addAttribute("mainContents", "board-modify");
-
-            return "index";
-        }
-
-        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
-    }
+    @Autowired
+    private CommentService commentService;
 
     //TODO: 게시판 리스트 조회 페이지
-    @RequestMapping(value = "/{memberNo}/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewList(Model model, @PathVariable String memberNo,
+    @GetMapping
+    public String viewList(Model model, @RequestParam String memberNo,
                            @RequestParam(value = "page-limit", required = false, defaultValue = "10") int pageLimit,
                            @RequestParam(value = "current-page-block", required = false, defaultValue = "1") int currentPageBlock,
                            @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
@@ -183,25 +84,132 @@ public class BoarderController {
         return "index";
     }
 
-    @GetMapping("/{memberNo}/read/{boardNo}")
-    public String viewDetail(Model model,
-                             @PathVariable String boardNo,
-                             @PathVariable String memberNo) {
+    @GetMapping("/{boardNo}/comments")
+    @ResponseBody
+    public String viewCommentList(@PathVariable long boardNo) {
+        return commentService.getCommentList(boardNo);
+    }
 
-        Map<String, Object> board = boardService.viewDetail(memberNo, boardNo);
+    @PostMapping("/{targetNo}/like/{method}")
+    @ResponseBody
+    public String increaseLike(@PathVariable String method,
+                               @PathVariable String targetNo) {
+        String result = "false";
+        Long memberNo = sessionMember.getNo();
+
+        if (!checkSessionController.isCheckSessionWithOutGuest(String.valueOf(memberNo))
+                && method == null)
+            return result;
+
+        switch (method.toUpperCase()) {
+            case "UP":
+                result = likeService.increaseLike("boards", targetNo, memberNo);
+                break;
+
+            case "DOWN":
+                result = likeService.decreaseLike("boards", targetNo, memberNo);
+                break;
+
+            default:
+                result = "false";
+        }
+        return result;
+
+    }
+
+    @GetMapping("/{targetNo}/like")
+    @ResponseBody
+    public String increaseLike(@PathVariable String targetNo) {
+        return likeService.readLikeCount("boards", targetNo);
+
+    }
+
+    //TODO: 글작성 화면으로 이동
+    @GetMapping("/new")
+    public String forwardCreate(Model model,
+                                @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+        String memberNo = String.valueOf(sessionMember.getNo());
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+            long boardNo = (long) boardService.createDefaultBoard(memberNo);
+
+            model.addAttribute("boardKeyword", keyword);
+            model.addAttribute("boardNo", boardNo);
+            model.addAttribute("mainContents", "board-create");
+            return "index";
+
+        }
+        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
+
+    }
+
+    //TODO: defaultBoard메서드로 생성하였던 빈 게시판에 업로드 마무리
+    @PostMapping("/{boardNo}/finish")
+    @ResponseBody
+    public String upload(MultipartHttpServletRequest request, @Valid Board board,
+                         BindingResult bindingResult,
+                         @RequestParam String method,
+                         @RequestParam String memberNo) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+            boolean result = false;
+            board.setCreated_ip(accessorInfo.getIpAddress(request));
+            if (bindingResult.hasErrors()) return "false";
+
+            String checkResult = boardService.checkBoardFormData(board);
+
+            if (checkResult.contains("[script Error]")) return checkResult;
+
+            if (method.equals("create")) {
+                result = boardService.createFinish(board);
+
+            } else if (method.equals("modify")) {
+                result = boardService.modify(board);
+
+            }
+            return String.valueOf(result);
+
+        }
+        return "false";
+
+    }
+
+    //TODO: 작성글 수정페이지로 이동
+    @GetMapping("/blob/{boardNo}")
+    public String modify(Model model,
+                         @PathVariable String boardNo,
+                         @RequestParam String pwd,
+                         @RequestParam String memberNo) {
+        if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
+                (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
+            if (sessionMember.getName().equals("GUEST") && !boardService.isConfirmBoardPwd(boardNo, pwd))
+                return checkSessionController.forwardingMembersPageAndErrorMsg(model, "패스워드 오류<BR>비밀번호를 다시 확인해주세요.");
+            Map<String, Object> board = boardService.viewDetail(boardNo);
+            model.addAttribute("board", board);
+            model.addAttribute("mainContents", "board-modify");
+
+            return "index";
+        }
+
+        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
+    }
+
+
+    @GetMapping(path = "/{boardNo}")
+    public String viewDetail(Model model,
+                             @PathVariable String boardNo) {
+
+        Map<String, Object> board = boardService.viewDetail(boardNo);
 
         model.addAttribute("board", board);
         model.addAttribute("boardNo", boardNo);
-        model.addAttribute("memberNo", memberNo);
         model.addAttribute("mainContents", "board-view-detail");
 
         return "index";
     }
 
-    @DeleteMapping("/{memberNo}/delete/{boardNo}")
     @ResponseBody
+    @DeleteMapping(path = "/{boardNo}")
     public String deleteBoard(@RequestParam String pwd,
-                              @PathVariable String memberNo,
+                              @RequestParam String memberNo,
                               @PathVariable String boardNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
                 (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {

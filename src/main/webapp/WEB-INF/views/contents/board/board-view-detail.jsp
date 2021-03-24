@@ -139,7 +139,7 @@
 
         }
 
-        formData.append("boardNo",${board.no});
+        formData.append("boardNo", '${board.no}');
 
         myAjax.submit('POST', "${path}/comments", function (data) {
             if (data === 'false') {
@@ -175,7 +175,7 @@
     }
 
     function getCommentList() {
-        myAjax.submit('GET', "${path}/comments?boardNo=" +${board.no}, function (data) {
+        myAjax.submit('GET', '${path}/boards/${board.no}/comments', function (data) {
             var dataList = JSON.parse(data);
             var commentListTable = document.querySelector('#comment-list-table');
             commentListTable.innerHTML = '';

@@ -13,13 +13,13 @@
         <div class="input-group-addon dot-key"><b>키워드</b></div>
         <c:choose>
             <c:when test="${requestScope.boardKeyword != null && requestScope.boardKeyword ne ''}">
-            <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc"
-                   value="${requestScope.boardKeyword}">
+                <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc"
+                       value="${requestScope.boardKeyword}">
 
             </c:when>
             <c:otherwise>
-            <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc"
-                   value="${board.keyword}">
+                <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc"
+                       value="${board.keyword}">
 
             </c:otherwise>
         </c:choose>
@@ -115,23 +115,23 @@
                     작성모드
                 </button>
                 <ul class="dropdown-menu" id="board-current-write-mode-list" role="menu" aria-labelledby="board-current-write-mode">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#board-contents-fake-html" onclick="convertWriteMode(this, 'HTML');">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#board-contents-html" onclick="convertWriteMode(this, 'HTML');">
                         HTML모드로 변경
                     </a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#board-contents-fake" onclick="convertWriteMode(this, '게시글');">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#board-contents" onclick="convertWriteMode(this, '게시글');">
                         게시글모드로 변경
                     </a></li>
                 </ul>
             </div>
-            <button type="button" class="btn btn-default dot-key" tabindex="-1" onclick="callLocalHistory()">
+            <button type="button" class="btn btn-default dot-key" tabindex="-1" onclick="callLocalHistory();">
                 임시저장 목록
             </button>
         </div>
     </div>
 
     <div class="tab-content">
-        <div role="tabpanel" id="board-contents-fake" class="form-control board-contents-fake tab-pane active" contentEditable="true">${board.contents}</div>
-        <textarea role="tabpanel" id="board-contents-fake-html" class="form-control board-contents-fake tab-pane"></textarea>
+        <div role="tabpanel" id="board-contents" class="form-control board-contents tab-pane active" contentEditable="true">${board.contents}</div>
+        <textarea role="tabpanel" id="board-contents-html" class="form-control board-contents tab-pane"></textarea>
     </div>
 
     <div style="display: grid; grid-template-columns: 150px 1fr;">
@@ -156,7 +156,7 @@
     </div>
 
     <script>
-        document.querySelector('#board-contents-fake').onkeypress = function (e) {
+        document.querySelector('#board-contents').onkeypress = function (e) {
             if (e.keyCode === 13) {
                 e.preventDefault();
                 document.execCommand('insertLineBreak');
@@ -165,7 +165,7 @@
 
     </script>
 
-    <form action="${path}/boards/${sessionMember.no}/upload/${requestScope.boardNo}" method="POST" enctype="multipart/form-data" id="board-form-tag" style="text-align: center;">
+    <form method="POST" enctype="multipart/form-data" id="board-form-tag" style="text-align: center;">
         <input type="text" id="board-no" name="no" class="hidden" value="${requestScope.boardNo}">
         <input type="text" id="board-no-mbr" name="mbr_no" class="hidden" value="${sessionMember.no}">
         <input type="text" id="board-keyword-real" name="keyword" class="hidden" maxlength="25">
@@ -186,7 +186,7 @@
 <script>
     function temporarySave() {
         var savedLocalTempBoard = localStorage.getItem('tempSavedBoard');
-        var boardContents = document.querySelector('#board-contents-fake').innerHTML;
+        var boardContents = document.querySelector('#board-contents').innerHTML;
         var boardTitle = document.querySelector('#board-title-fake').value;
         var boardKeyword = document.querySelector('#board-keyword-fake').value;
         var boardThumbnail = document.querySelector('#board-contents-thumbnail').innerHTML;
@@ -218,8 +218,8 @@
         if (currentMode.getAttribute('myblog-write-mode') !== mode
             && window.confirm(mode + '모드로 변경하시겠습니까?')) {
 
-            var boardContents = document.querySelector('#board-contents-fake');
-            var boardContentsForHTML = document.querySelector('#board-contents-fake-html');
+            var boardContents = document.querySelector('#board-contents');
+            var boardContentsForHTML = document.querySelector('#board-contents-html');
 
             switch (mode) {
                 case 'HTML':
@@ -245,7 +245,7 @@
         if (window.confirm('현재 작성중인 내용을 초기화하고 해당 내용으로 덮어쓰시겠습니까?')) {
             var targetObject = JSON.parse(localStorage.getItem('tempSavedBoard'))[object];
 
-            document.querySelector('#board-contents-fake').innerHTML = targetObject['contents'];
+            document.querySelector('#board-contents').innerHTML = targetObject['contents'];
             document.querySelector('#board-title-fake').value = targetObject['title'];
             document.querySelector('#board-keyword-fake').value = targetObject['keyword'];
             document.querySelector('#board-contents-thumbnail').innerHTML = targetObject['thumbnail'];
@@ -392,15 +392,15 @@
         realContents.innerHTML = board.fakeContents.innerHTML;
         realThumbnail.innerHTML = board.fakeThumbnail.innerHTML;
 
-        if (realKeyword.value.length > 50){
+        if (realKeyword.value.length > 50) {
             window.alert('키워드는 200자 이내로 입력해주시기바랍니다.');
             return;
         }
-        if (realTitle.value.length < 2 || realTitle.value.length > 200){
+        if (realTitle.value.length < 2 || realTitle.value.length > 200) {
             window.alert('글 제목은 2~200자 사이로 입력해주시기바랍니다.');
             return;
         }
-        if (realContents.innerHTML.length < 20 || realContents.innerHTML.length > 7000){
+        if (realContents.innerHTML.length < 20 || realContents.innerHTML.length > 7000) {
             window.alert('글 내용은 최소 20이상 7000미만으로 작성해주시기바랍니다.');
             return;
         }
@@ -414,38 +414,44 @@
 
         }
 
-        if (url.isContainWordCurrentPath('/create')) {
+        if (url.isContainWordCurrentPath('method=create')) {
 
-            myAjax.submit('POST', '${path}/boards/${sessionMember.no}/upload/' + board.boardNo.value + '/create', function (data) {
+            formData.append('memberNo', '${sessionMember.no}');
+            formData.append('method', 'create');
+
+            myAjax.submit('POST', '${path}/boards/' + board.boardNo.value + '/finish', function (data) {
                 if (data === 'false') {
                     window.alert('업로드에 실패하였습니다. 잠시 후 다시 시도해주세요.');
                     board.save();
                     temporarySave();
 
-                }else if(data.includes('[script Error]')){
+                } else if (data.includes('[script Error]')) {
                     window.alert(data);
                     board.save();
                     temporarySave();
 
                 } else if (data === 'true') {
-                    window.location.href = '${path}/boards/${sessionMember.no}/list';
+                    window.location.href = '${path}/boards?memberNo=${sessionMember.no}';
 
                 }
 
             }, 'FORMFILE', formData);
 
-        } else if (url.isContainWordCurrentPath('/modify')) {
+        } else if (url.isContainWordCurrentPath('method=modify')) {
 
-            myAjax.submit('POST', '${path}/boards/${sessionMember.no}/upload/' + board.boardNo.value + '/modify', function (data) {
+            formData.append('memberNo', '${sessionMember.no}');
+            formData.append('method', 'modify');
+
+            myAjax.submit('POST', '${path}/boards/' + board.boardNo.value + '/finish', function (data) {
                 if (data === 'false') {
                     window.alert('수정에 실패하였습니다. 잠시 후 다시 시도해주세요.');
 
-                }else if(data.includes('[script Error]')){
+                } else if (data.includes('[script Error]')) {
                     window.alert(data);
 
                 } else if (data === 'true') {
                     window.alert('수정에 성공하였습니다.');
-                    window.location.href = '${path}/boards/${sessionMember.no}/list';
+                    window.location.href = '${path}/boards?memberNo=${sessionMember.no}';
 
                 }
 
@@ -454,7 +460,7 @@
     }
 
     function contentsCssResizeInit() {
-        document.querySelector('#board-contents-fake').addEventListener('click', function (e) {
+        document.querySelector('#board-contents').addEventListener('click', function (e) {
             var target = e.target
             if (target.localName === 'img' || target.localName === 'video') {
                 var originTargetWidth = target.width;

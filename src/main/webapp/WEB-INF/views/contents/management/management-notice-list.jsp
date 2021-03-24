@@ -39,7 +39,7 @@
             <c:forEach var="board" items="${boardList}">
                 <tr>
                     <td>
-                        <a href="${path}/boards/${board.mbr_no}/read/${board.no}">
+                        <a href="${path}/boards/${board.no}?memberNo=${board.mbr_no}">
                             <span style="display: inline-block; width: 200px; overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
                                     ${board.title}
                             </span>

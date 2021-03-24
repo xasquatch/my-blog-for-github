@@ -26,7 +26,7 @@
                 <option>50</option>
                 <option>100</option>
             </select>
-            <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/boards/${sessionMember.no}/create'">
+            <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/boards/new?method=create'">
                 새 글 작성
             </button>
         </div>
@@ -50,7 +50,7 @@
                             ❤${board.like}
                     </td>
                     <td>
-                        <a href="${path}/boards/${board.mbr_no}/read/${board.no}">
+                        <a href="${path}/boards/${board.no}">
                                 ${board.thumbnail}
                             <span style="display: inline-block; width: 200px; overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
                                     ${board.title}
@@ -61,12 +61,12 @@
                             ${board.created_date}
                     </td>
                     <td style="vertical-align: middle; text-align: center;">
-                        <a href="javascript:board.GoModify(${board.mbr_no}, ${board.no},'${sessionMember.name}')">
+                        <a href="javascript:board.GoModify('${board.mbr_no}', '${board.no}','${sessionMember.name}')">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </a>
                     </td>
                     <td style="vertical-align: middle; text-align: center;">
-                        <a href="javascript:board.delete(${board.mbr_no}, ${board.no},'${sessionMember.name}')">
+                        <a href="javascript:board.delete('${board.mbr_no}', '${board.no}','${sessionMember.name}')">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </td>

@@ -66,7 +66,7 @@
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/boards/${sessionMember.no}/create">
+                <a href="${path}/boards/new?method=create">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/writeBoard.png">
                     새 글 쓰기
                 </a>
@@ -78,7 +78,7 @@
                 </a>
             </li>
             <li role="presentation">
-                <a href="${path}/boards/${sessionMember.no}/list">
+                <a href="${path}/boards?memberNo=${sessionMember.no}">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/boardList.png">
                     내 글 목록
                 </a>
