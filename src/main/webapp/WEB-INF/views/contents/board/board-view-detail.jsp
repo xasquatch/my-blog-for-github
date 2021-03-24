@@ -179,7 +179,6 @@
             var dataList = JSON.parse(data);
             var commentListTable = document.querySelector('#comment-list-table');
             commentListTable.innerHTML = '';
-            console.log(dataList);
             for (var comment of dataList) {
                 var trTag = document.createElement('tr');
                 var tdProfileTag = document.createElement('td');
