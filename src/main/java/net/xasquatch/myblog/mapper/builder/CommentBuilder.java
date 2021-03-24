@@ -9,7 +9,7 @@ public class CommentBuilder {
             SELECT("no, mbr_no, convert(contents USING UTF8) AS contents," +
                     "REPLACE(created_ip, RIGHT(created_ip, 4),'.***') AS created_ip," +
                     "DATE_FORMAT(created_date, '%Y.%m.%d %H:%i:%s') AS created_date," +
-                    "board_no, mbr_name, img");
+                    "board_no, mbr_name, img, IFNULL(good, 0) AS 'like'");
             FROM("(" + selectCommentListSubQuery(boardNo) + ") c");
             ORDER_BY("no DESC");
         }}.toString();
@@ -31,9 +31,11 @@ public class CommentBuilder {
                     "m.name AS mbr_name, m.img AS img, " +
                     "c.contents AS contents, c.created_ip AS created_ip, " +
                     "c.created_date AS created_date, " +
-                    "c.board_no AS board_no");
+                    "c.board_no AS board_no, " +
+                    "l.good AS good");
             FROM("comment c");
-            JOIN("mbr m ON c.mbr_no = m.no");
+            LEFT_OUTER_JOIN("mbr m ON c.mbr_no = m.no");
+            LEFT_OUTER_JOIN(LikeBuilder.selectSumLke() + " l ON c.no = l.comment_no");
             WHERE("c.board_no = '" + boardNo + "'");
         }}.toString();
 

@@ -6,7 +6,6 @@ import net.xasquatch.myblog.model.Board;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.BoardService;
 import net.xasquatch.myblog.service.CommentService;
-import net.xasquatch.myblog.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -30,9 +29,6 @@ public class BoarderController {
 
     @Autowired
     private BoardService boardService;
-
-    @Autowired
-    private LikeService likeService;
 
     @Resource(name = "sessionMember")
     private Member sessionMember;
@@ -82,46 +78,6 @@ public class BoarderController {
         }
 
         return "index";
-    }
-
-    @GetMapping("/{boardNo}/comments")
-    @ResponseBody
-    public String viewCommentList(@PathVariable long boardNo) {
-        return commentService.getCommentList(boardNo);
-    }
-
-    @PostMapping("/{targetNo}/like/{method}")
-    @ResponseBody
-    public String increaseLike(@PathVariable String method,
-                               @PathVariable String targetNo) {
-        String result = "false";
-        Long memberNo = sessionMember.getNo();
-
-        if (!checkSessionController.isCheckSessionWithOutGuest(String.valueOf(memberNo))
-                && method == null)
-            return result;
-
-        switch (method.toUpperCase()) {
-            case "UP":
-                result = likeService.increaseLike("boards", targetNo, memberNo);
-                break;
-
-            case "DOWN":
-                result = likeService.decreaseLike("boards", targetNo, memberNo);
-                break;
-
-            default:
-                result = "false";
-        }
-        return result;
-
-    }
-
-    @GetMapping("/{targetNo}/like")
-    @ResponseBody
-    public String increaseLike(@PathVariable String targetNo) {
-        return likeService.readLikeCount("boards", targetNo);
-
     }
 
     //TODO: 글작성 화면으로 이동
@@ -192,7 +148,7 @@ public class BoarderController {
         return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
-
+    // TODO: 게시판 상세조회로 페이지이동
     @GetMapping(path = "/{boardNo}")
     public String viewDetail(Model model,
                              @PathVariable String boardNo) {
@@ -206,6 +162,7 @@ public class BoarderController {
         return "index";
     }
 
+    // TODO: 게시판삭제 REST
     @ResponseBody
     @DeleteMapping(path = "/{boardNo}")
     public String deleteBoard(@RequestParam String pwd,
@@ -220,6 +177,13 @@ public class BoarderController {
 
         }
         return "false";
+    }
+
+    // TODO: 해당 게시판의 코멘트 초회
+    @GetMapping("/{boardNo}/comments")
+    @ResponseBody
+    public String viewCommentList(@PathVariable long boardNo) {
+        return commentService.getCommentList(boardNo);
     }
 
 }
