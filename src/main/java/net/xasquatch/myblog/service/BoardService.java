@@ -1,11 +1,7 @@
 package net.xasquatch.myblog.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Board;
-import net.xasquatch.myblog.model.Comment;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.repository.BoardDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,22 +119,6 @@ public class BoardService {
         return data;
     }
 
-    public String getCommentList(Object boardNo) {
-
-        String commentListForJson = null;
-        List<Map<String, Object>> commentList = boardDao.selectCommentList(boardNo);
-        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
-
-        try {
-            commentListForJson = objectWriter.writeValueAsString(commentList);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-
-        return commentListForJson;
-    }
-
     public Map<String, Object> getBoardList(Object memberNo, int pageLimit, int currentPageBlock, String[] searchValue) {
 
         int currentPage = 0;
@@ -224,31 +204,6 @@ public class BoardService {
         if (boardDao.deleteOneBoard(boardKey) == 1)
             result = true;
         return result;
-    }
-
-    public boolean createComment(Comment comment) {
-        boolean result = false;
-        String pwd = comment.getPwd();
-        if (pwd == null || pwd.equals("") || pwd.equals("null"))
-            comment.setPwd("0000");
-
-        comment.setMbr_no(sessionMember.getNo());
-        if (boardDao.insertOneComment(comment) == 1) result = true;
-
-        return result;
-    }
-
-    public String deleteComment(String commentNo, String pwd) {
-        int result = 0;
-
-        if (sessionMember.getName().equals("GUEST")) {
-            result = boardDao.deleteComment(commentNo, pwd);
-
-        } else {
-            result = boardDao.deleteComment(commentNo);
-        }
-
-        return result == 1 ? "true" : "false";
     }
 
 }

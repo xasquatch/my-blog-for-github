@@ -58,19 +58,6 @@ public interface BoardMapper {
     @SelectProvider(type = BoardBuilder.class, method = "selectNoticeCount")
     int selectNoticeCount(Object rank, String searchTarget, String searchValue);
 
-    @Insert("INSERT INTO comment(board_no, mbr_no, contents, created_ip, pwd) VALUES(#{board_no}, #{mbr_no}, #{contents}, #{created_ip}, #{pwd})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "no", before = false, resultType = long.class)
-    int insertOneComment(Comment comment);
-
-    @SelectProvider(type = CommentBuilder.class, method = "selectCommentList")
-    List<Map<String, Object>> selectCommentList(Object boardNo);
-
-    @Delete("DELETE FROM comment WHERE no = #{arg0} AND pwd = #{arg1}")
-    int deleteCommentForGuest(Object commentNo, Object pwd);
-
-    @Delete("DELETE FROM comment WHERE no = #{arg0}")
-    int deleteComment(Object commentNo);
-
     @Select("SELECT COUNT(no) FROM board WHERE no = #{arg0} AND pwd = #{arg1}")
     int selectOneBoardColumnPwd(Object boardno, String pwd);
 }

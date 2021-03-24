@@ -46,8 +46,4 @@ public class ApiController {
         return apiService.getResource(memberNo, resourceNo);
     }
 
-    @GetMapping("/members/{memberNo}/boards/{boardNo}/comments")
-    public String viewCommentList(@PathVariable long boardNo) {
-        return boardService.getCommentList(boardNo);
-    }
 }

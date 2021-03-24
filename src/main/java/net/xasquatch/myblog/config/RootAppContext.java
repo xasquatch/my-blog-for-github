@@ -84,6 +84,14 @@ public class RootAppContext {
     }
 
     @Bean
+    public MapperFactoryBean<CommentMapper> getCommentMapper(SqlSessionFactory factory) {
+        MapperFactoryBean<CommentMapper> factoryBean = new MapperFactoryBean<CommentMapper>(CommentMapper.class);
+        factoryBean.setSqlSessionFactory(factory);
+        return factoryBean;
+
+    }
+
+    @Bean
     public MapperFactoryBean<ResourceMapper> getResourceMapper(SqlSessionFactory factory) {
         MapperFactoryBean<ResourceMapper> factoryBean = new MapperFactoryBean<ResourceMapper>(ResourceMapper.class);
         factoryBean.setSqlSessionFactory(factory);

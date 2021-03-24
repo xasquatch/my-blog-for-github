@@ -3,7 +3,6 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.interceptor.parts.AccessorInfo;
 import net.xasquatch.myblog.model.Board;
-import net.xasquatch.myblog.model.Comment;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.BoardService;
 import net.xasquatch.myblog.service.LikeService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -216,34 +214,4 @@ public class BoarderController {
         return "false";
     }
 
-    @PostMapping("/{boardNo}/comments")
-    @ResponseBody
-    public String createComment(HttpServletRequest request, @Valid Comment comment,
-                                @PathVariable long boardNo, BindingResult bindingResult) {
-        String result = "false";
-        if (bindingResult.hasErrors()) return "false";
-
-        if (checkSessionController.isCheckSession(String.valueOf(sessionMember.getNo()))) {
-            comment.setMbr_no(sessionMember.getNo());
-            comment.setBoard_no(boardNo);
-            comment.setCreated_ip(accessorInfo.getIpAddress(request));
-            result = String.valueOf(boardService.createComment(comment));
-
-        }
-
-        return result;
-    }
-
-    @DeleteMapping("/{boardNo}/members/{memberNo}/comments/{commentNo}")
-    @ResponseBody
-    public String deleteComment(@PathVariable String memberNo,
-                                @PathVariable String commentNo, String pwd) {
-        String result = "false";
-
-        if (checkSessionController.isCheckSession(memberNo))
-            result = boardService.deleteComment(commentNo, pwd);
-
-        return result;
-
-    }
 }

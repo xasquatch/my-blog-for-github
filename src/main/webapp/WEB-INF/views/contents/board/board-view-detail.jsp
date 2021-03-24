@@ -139,7 +139,9 @@
 
         }
 
-        myAjax.submit('POST', "${path}/boards/${board.no}/comments", function (data) {
+        formData.append("boardNo",${board.no});
+
+        myAjax.submit('POST', "${path}/comments", function (data) {
             if (data === 'false') {
                 alert('댓글작성에 실패하였습니다. 잠시 후 다시 시도해주시기바랍니다');
 
@@ -160,7 +162,7 @@
         if ('${sessionMember.name}' === 'GUEST')
             pwd = window.prompt('GUEST: 설정하였던 비밀번호를 입력해주세요.', '0000');
 
-        myAjax.submit('DELETE', url + "?pwd=" + pwd, function (data) {
+        myAjax.submit('DELETE', url + "?memberNo=${sessionMember.no}&pwd=" + pwd, function (data) {
             if (data === 'false') {
                 window.alert('삭제 실패: 틀린 비밀번호');
 
@@ -173,7 +175,7 @@
     }
 
     function getCommentList() {
-        myAjax.submit('GET', "${path}/api/members/${board.mbr_no}/boards/${board.no}/comments", function (data) {
+        myAjax.submit('GET', "${path}/comments?boardNo=" +${board.no}, function (data) {
             var dataList = JSON.parse(data);
             var commentListTable = document.querySelector('#comment-list-table');
             commentListTable.innerHTML = '';
@@ -210,7 +212,7 @@
                         '</a>' +
                         '<BR>' +
                         '<BR>' +
-                        '<a href="javascript:deleteBoardComment(\'${path}\/board\/${board.no}\/members\/${sessionMember.no}\/comments\/' + comment.no + '\')">삭제</a>';
+                        '<a href="javascript:deleteBoardComment(\'${path}\/comments\/' + comment.no + '\')">삭제</a>';
 
 
                 commentListTable.appendChild(trTag);
