@@ -1,11 +1,15 @@
 package net.xasquatch.myblog.config;
 
-import net.xasquatch.myblog.interceptor.ControllerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 // Spring MVC 프로젝트에 관련된 설정을 하는 클래스
 @Configuration
@@ -17,7 +21,11 @@ import org.springframework.web.servlet.config.annotation.*;
 @ComponentScan("net.xasquatch.myblog.service")
 @ComponentScan("net.xasquatch.myblog.repository")
 @ComponentScan("net.xasquatch.myblog.interceptor")
+@PropertySource("/WEB-INF/properties/file-manager.properties")
 public class ServletAppContext implements WebMvcConfigurer{
+
+	@Value("${files.context.path}")
+	private String filesContextPath;
 
 	@Autowired
 	private HandlerInterceptor controllerInterceptor;
@@ -34,7 +42,7 @@ public class ServletAppContext implements WebMvcConfigurer{
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		WebMvcConfigurer.super.addResourceHandlers(registry);
 		registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
-		registry.addResourceHandler("/**").addResourceLocations("/resources/");
+		registry.addResourceHandler("/**").addResourceLocations(filesContextPath);
 	}
 /*
 	@Override
