@@ -12,11 +12,10 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @ControllerAdvice(annotations = Controller.class)
 public class ExceptionController {
 
-    //  TODO:에러 처리 임시
     @ExceptionHandler(value = {Exception.class, NoHandlerFoundException.class})
     public String requestHandlingNoHandlerFound(Model model, Exception e) {
         log.debug("Exception: {}", e.getMessage());
-        model.addAttribute("error", e.getMessage());
+
         return "error";
     }
 
