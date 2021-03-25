@@ -14,7 +14,7 @@
             <hr>
             <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
                 <li role="presentation">
-                    <a href="${path}/notice/list">
+                    <a href="${path}/notice">
                         <img style="width: 30px; height: auto;" src="${path}/img/banner-black/light-bulb.png">
                         공지 사항 관리
                     </a>
@@ -48,7 +48,7 @@
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/notice/list">
+                <a href="${path}/notice">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/light-bulb.png">
                     공지 사항
                 </a>

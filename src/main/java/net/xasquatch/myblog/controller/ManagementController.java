@@ -27,8 +27,7 @@ public class ManagementController {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
-
-    @GetMapping(value = "/notice/list")
+    @GetMapping("/notice")
     public String noticeList(Model model,
                              @RequestParam(value = "page-limit", required = false, defaultValue = "10") int pageLimit,
                              @RequestParam(value = "current-page-block", required = false, defaultValue = "1") int currentPageBlock,
@@ -53,7 +52,7 @@ public class ManagementController {
         return "index";
     }
 
-    @RequestMapping(value = "/{memberNo}/management/users", method = RequestMethod.GET)
+    @GetMapping("/{memberNo}/management/users")
     public String userList(Model model, @PathVariable String memberNo) {
 
         if (checkSessionController.isCheckManager(memberNo)) {

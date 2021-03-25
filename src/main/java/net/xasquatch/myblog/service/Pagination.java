@@ -201,19 +201,19 @@ public class Pagination {
                     blockList.add("<a class='myblog-page-block current-page'>" + i + "</a>");
 
                 } else if (i == prevPageBlock) {
-                    blockList.add("<a class='myblog-page-block' href='/notice/list?"
+                    blockList.add("<a class='myblog-page-block' href='/notice?"
                             + "page-limit=" + pageLimit + "&"
                             + "current-page-block=" + i + "&"
                             + searchTarget + "=" + searchValue + "'>prev</a>");
 
                 } else if (i == nextPageBlock && i != endPageBlock) {
-                    blockList.add("<a class='myblog-page-block' href='/notice/list?"
+                    blockList.add("<a class='myblog-page-block' href='/notice?"
                             + "page-limit=" + pageLimit + "&"
                             + "current-page-block=" + i + "&"
                             + searchTarget + "=" + searchValue + "'>next</a>");
 
                 } else {
-                    blockList.add("<a class='myblog-page-block' href='/notice/list?"
+                    blockList.add("<a class='myblog-page-block' href='/notice?"
                             + "page-limit=" + pageLimit + "&"
                             + "current-page-block=" + i + "&"
                             + searchTarget + "=" + searchValue + "'>" + i + "</a>");

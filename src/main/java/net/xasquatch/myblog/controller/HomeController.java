@@ -45,12 +45,13 @@ public class HomeController {
         try {
             managerResult = sessionMember.getRank().equals("manager");
             sessionResult = String.valueOf(sessionMember.getNo()).equals(memberNo);
+
         } catch (Exception e) {
             log.debug(e.getMessage());
         }
 
-
         return managerResult && sessionResult;
+
     }
 
     protected boolean isCheckSessionAndAuth(String inputSessionNumber) {
