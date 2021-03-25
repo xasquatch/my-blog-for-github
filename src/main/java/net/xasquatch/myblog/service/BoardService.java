@@ -136,7 +136,7 @@ public class BoardService {
 
         List<String> pageBlockList;
         if (memberNo.equals("all")) {
-            pageBlockList = new Pagination().getBoardBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+            pageBlockList = new Pagination().getBoardBlockList("all", pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         } else {
             pageBlockList = new Pagination().getBoardBlockList(memberNo, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);

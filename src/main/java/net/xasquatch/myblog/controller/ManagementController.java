@@ -36,8 +36,8 @@ public class ManagementController {
                              @RequestParam(value = "contents", required = false, defaultValue = "") String contents,
                              @RequestParam(value = "title-or-contents", required = false, defaultValue = "") String titleOrContents) {
 
-        String[] searchValue = boardService.parsingSearchValue("", title, contents, titleOrContents);
-        Map<String, Object> boardUnit = boardService.getNoticeList("manager", pageLimit,currentPageBlock, searchValue);
+        Map<String, Object> boardUnit =
+                boardService.getNoticeList("manager", pageLimit, currentPageBlock, new String[]{"keyword", "my-blog-notice"});
 
         model.addAttribute("noticeList", "management-notice-list");
         model.addAttribute("mainContents", "management-notice-list");
