@@ -52,7 +52,7 @@ public class ManagementController {
         return "index";
     }
 
-    @GetMapping("/{memberNo}/management/users")
+    @GetMapping("/management/users")
     public String userList(Model model, @PathVariable String memberNo) {
 
         if (checkSessionController.isCheckManager(memberNo)) {

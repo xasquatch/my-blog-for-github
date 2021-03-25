@@ -20,13 +20,13 @@
                     </a>
                 </li>
                 <li role="presentation">
-                    <a href="${path}/${sessionMember.no}/management/users">
+                    <a href="${path}/management/users">
                         <img style="width: 30px; height: auto;" src="${path}/img/banner-black/members.png">
                         회원 목록
                     </a>
                 </li>
                 <li role="presentation">
-                    <a href="${path}/boards/all/list">
+                    <a href="${path}/management/boards">
                         <img style="width: 30px; height: auto;" src="${path}/img/banner-black/all-boards.png">
                         전체 글 목록
                     </a>
