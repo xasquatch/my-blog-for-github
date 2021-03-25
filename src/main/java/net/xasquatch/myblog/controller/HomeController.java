@@ -38,6 +38,9 @@ public class HomeController {
     @Autowired
     private BoardService boardService;
 
+    protected boolean isCheckManager(){
+        return isCheckManager(String.valueOf(sessionMember.getNo()));
+    }
 
     protected boolean isCheckManager(String memberNo) {
         boolean managerResult = false;
@@ -54,6 +57,9 @@ public class HomeController {
 
     }
 
+    protected boolean isCheckSessionAndAuth(){
+        return isCheckSessionAndAuth(String.valueOf(sessionMember.getNo()));
+    }
     protected boolean isCheckSessionAndAuth(String inputSessionNumber) {
         boolean guestResult = false;
         boolean sessionResult = false;
@@ -71,6 +77,10 @@ public class HomeController {
         return guestResult || sessionResult;
     }
 
+    protected boolean isCheckSessionWithOutGuest(){
+        return isCheckSessionWithOutGuest(String.valueOf(sessionMember.getNo()));
+    }
+
     protected boolean isCheckSessionWithOutGuest(String inputSessionNumber) {
         boolean guestResult = false;
         boolean sessionResult = false;
@@ -86,6 +96,10 @@ public class HomeController {
         }
 
         return guestResult && sessionResult;
+    }
+
+    protected boolean isCheckSession(){
+        return isCheckSession(String.valueOf(sessionMember.getNo()));
     }
 
     protected boolean isCheckSession(String inputSessionNumber) {
@@ -120,7 +134,7 @@ public class HomeController {
 
     @GetMapping("/members")
     public String signInAndUp(Model model) {
-        if (sessionMember.getNo() != null && !isCheckSession(String.valueOf(sessionMember.getNo())))
+        if (sessionMember.getNo() != null && !isCheckSession())
             return "redirect:/members/" + sessionMember.getNo();
         model.addAttribute("mainContents", "members");
 
@@ -158,7 +172,7 @@ public class HomeController {
     }
 
 
-    @PostMapping("/img/{memberNo}/boards/{boardNo}/upload")
+    @PostMapping("/members/{memberNo}/boards/{boardNo}/images")
     @ResponseBody
     public String boardImgUpload(MultipartHttpServletRequest request, @PathVariable String memberNo, @PathVariable String boardNo) {
         try {

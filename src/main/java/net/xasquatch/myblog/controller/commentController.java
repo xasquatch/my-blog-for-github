@@ -36,7 +36,7 @@ public class commentController {
         String result = "false";
         if (bindingResult.hasErrors()) return result;
 
-        if (checkSessionController.isCheckSession(String.valueOf(sessionMember.getNo()))) {
+        if (checkSessionController.isCheckSession()) {
             comment.setMbr_no(sessionMember.getNo());
             comment.setBoard_no(boardNo);
             comment.setCreated_ip(accessorInfo.getIpAddress(request));

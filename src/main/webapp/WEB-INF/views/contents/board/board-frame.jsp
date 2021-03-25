@@ -312,7 +312,7 @@
         var boardUploadTag = document.querySelector('#board-upload');
         var imgFormData = new FormData(boardUploadImageForm);
 
-        myAjax.submit('POST', '${path}/img/${sessionMember.no}/boards/${requestScope.boardNo}/upload', function (data) {
+        myAjax.submit('POST', '${path}/members/${sessionMember.no}/boards/${requestScope.boardNo}/images', function (data) {
             var requestData = data.slice(1, data.length - 1);
             var imgArray = requestData.split(',');
             for (var i of imgArray) {

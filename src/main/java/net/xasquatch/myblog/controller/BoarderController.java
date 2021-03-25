@@ -52,7 +52,7 @@ public class BoarderController {
 
         String[] searchValue = boardService.parsingSearchValue(keyword, title, contents, titleOrContents);
         Map<String, Object> boardUnit;
-        if (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString())) {
+        if (memberNo.equals("all") && checkSessionController.isCheckManager()) {
             boardUnit = boardService.getBoardList("all", pageLimit, currentPageBlock, searchValue);
             model.addAttribute("mainContents", "management-boards");
 
@@ -135,7 +135,7 @@ public class BoarderController {
                          @RequestParam String pwd,
                          @RequestParam String memberNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
-                (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
+                (memberNo.equals("all") && checkSessionController.isCheckManager())) {
             if (sessionMember.getName().equals("GUEST") && !boardService.isConfirmBoardPwd(boardNo, pwd))
                 return checkSessionController.forwardingMembersPageAndErrorMsg(model, "패스워드 오류<BR>비밀번호를 다시 확인해주세요.");
             Map<String, Object> board = boardService.viewDetail(boardNo);
@@ -169,7 +169,7 @@ public class BoarderController {
                               @RequestParam String memberNo,
                               @PathVariable String boardNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
-                (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
+                (memberNo.equals("all") && checkSessionController.isCheckManager())) {
             if (sessionMember.getName().equals("GUEST") && !boardService.isConfirmBoardPwd(boardNo, pwd))
                 return "false";
             if (boardService.delete(boardNo))
