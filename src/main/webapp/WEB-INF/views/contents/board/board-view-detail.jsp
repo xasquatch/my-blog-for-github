@@ -199,22 +199,22 @@
                 tdDeleteTag.style.textAlign = 'center';
 
                 var sessionNo = ${sessionMember.no} +0;
+                tdDeleteTag.innerHTML = '<a href="javascript:like.downToComment(' + comment.no + ')">' +
+                    // TODO: <
+                    '<div>❤</div>' +
+                    '<span class="glyphicon glyphicon-chevron-left"></span>' +
+                    '</a>' +
+                    '<span id="myblog-like-comment-' + comment.no + '-count">' +
+                    comment.like +
+                    '</span>' +
+                    '<a href="javascript:like.upToComment(' + comment.no + ')">' +
+                    // TODO: >
+                    '<span class="glyphicon glyphicon-chevron-right"></span>' +
+                    '</a>' +
+                    '<BR>' +
+                    '<BR>';
                 if (sessionNo === comment.mbr_no)
-                    tdDeleteTag.innerHTML = '<a href="javascript:like.downToComment(' + comment.no + ')">' +
-                        // TODO: <
-                        '<div>❤</div>' +
-                        '<span class="glyphicon glyphicon-chevron-left"></span>' +
-                        '</a>' +
-                        '<span id="myblog-like-comment-' + comment.no + '-count">' +
-                        comment.like +
-                        '</span>' +
-                        '<a href="javascript:like.upToComment(' + comment.no + ')">' +
-                        // TODO: >
-                        '<span class="glyphicon glyphicon-chevron-right"></span>' +
-                        '</a>' +
-                        '<BR>' +
-                        '<BR>' +
-                        '<a href="javascript:deleteBoardComment(\'${path}\/comments\/' + comment.no + '\')">삭제</a>';
+                    tdDeleteTag.innerHTML += '<a href="javascript:deleteBoardComment(\'${path}\/comments\/' + comment.no + '\')">삭제</a>';
 
 
                 commentListTable.appendChild(trTag);
