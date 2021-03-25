@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping(value = "/resource", produces = "text/plain;charset=UTF-8")
+@RequestMapping(path = "/resources", produces = "text/plain;charset=UTF-8")
 public class ResourceController {
 
     @Lazy
@@ -23,8 +23,8 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
-    @GetMapping("/{memberNo}/list")
-    public String viewList(Model model, @PathVariable String memberNo,
+    @GetMapping
+    public String viewList(Model model, @RequestParam String memberNo,
                            @RequestParam(name = "search", required = false, defaultValue = "") String searchValue) {
         List<Resource> resources;
         if (checkSessionController.isCheckSessionAndAuth(memberNo)) {

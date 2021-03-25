@@ -207,8 +207,8 @@ var resources = {
 
         var formData = new FormData(targetForm);
 
-        var uniform = url.getUniform('/resource/', '/list');
-        myAjax.submit('PUT', '/resource/' + uniform + '/modify', function (data) {
+        var uniform = url.getUniform('/resources/', '/list');
+        myAjax.submit('PUT', '/resources/' + uniform + '/modify', function (data) {
             console.log(data);
             if (data === 'false') {
                 window.alert('수정에 실패하였습니다. 잠시 후 다시시도해주세요')
@@ -233,9 +233,9 @@ var resources = {
             contents.value = document.querySelector('#resource-contents').value;
 
             var formData = new FormData(targetForm);
-            var uniform = url.getUniform('/resource/', '/list');
+            var uniform = url.getUniform('/resources/', '/list');
 
-            myAjax.submit('DELETE', '/resource/' + uniform + '/delete', function (data) {
+            myAjax.submit('DELETE', '/resources/' + uniform + '/delete', function (data) {
                 if (data === 'false') {
                     window.alert('삭제에 실패하였습니다. 잠시 후 다시시도해주세요')
 
@@ -273,7 +273,7 @@ var resources = {
         if (lastNumber === undefined) lastNumber = Number.MAX_SAFE_INTEGER;
 
 
-        myAjax.submit('GET', '/resource/' + memberNo + '/AdditionalList?last-number=' + lastNumber + '&search=' + searchValue, function (data) {
+        myAjax.submit('GET', '/resources/' + memberNo + '/AdditionalList?last-number=' + lastNumber + '&search=' + searchValue, function (data) {
             if (data === 'false') {
                 window.alert('리소스 가져오기에 실패하였습니다. 잠시 후 다시 시도해주세요.')
 

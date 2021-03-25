@@ -119,7 +119,7 @@
                 '<img src="${path}/img/banner-white/boardList.png" style="max-height : 100px; max-width:100px;"><BR>글 목록<BR>작성한 글목록을<BR>확인할 수 있습니다.', 10);
 
             var contents2 = document.createElement('a');
-            contents2.setAttribute('href', '${path}/resource/${sessionMember.no}/list');
+            contents2.setAttribute('href', '${path}/resources?memberNo=${sessionMember.no}');
             footerTarget.appendChild(contents2);
             textScript.insertText('#main-footer>div>a:nth-child(2)',
                 '<img src="${path}/img/banner-white/all-resources.png" style="max-height : 100px; max-width:100px;"><BR>리소스 목록<BR>작성한 리소스 목록을<BR>확인할 수 있습니다.', 10);

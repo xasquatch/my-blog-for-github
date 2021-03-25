@@ -63,13 +63,13 @@
             var resourceForm = document.querySelector('#resource-form');
             var formData = new FormData(resourceForm);
 
-            myAjax.submit('post', '${path}/resource/${sessionMember.no}/upload', function (data) {
+            myAjax.submit('post', '${path}/resources/${sessionMember.no}/upload', function (data) {
 
                 if (data === 'false') {
                     window.alert('리소스 업로드에 실패하였습니다. 다시 시도해주세요.');
 
                 } else if (data === 'true') {
-                    window.location.href = '${path}/resource/${sessionMember.no}/list'
+                    window.location.href = '${path}/resources?memberNo=${sessionMember.no}';
 
                 }
 
