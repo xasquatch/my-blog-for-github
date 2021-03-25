@@ -57,10 +57,12 @@
                     <a href="javascript:like.downToBoard(${board.no})">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
+                </c:if>
                     <span id="like-board-symbol">❤</span>
                     <span id="like-board-count">
                             ${board.like}
                     </span>
+                <c:if test="${sessionMember ne null}">
                     <a href="javascript:like.upToBoard(${board.no})">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
@@ -213,7 +215,7 @@
                     '</a>' +
                     '<BR>' +
                     '<BR>';
-                if (sessionNo === comment.mbr_no)
+                if (sessionNo !== 0 && sessionNo === comment.mbr_no)
                     tdDeleteTag.innerHTML += '<a href="javascript:deleteBoardComment(\'${path}\/comments\/' + comment.no + '\')">삭제</a>';
 
 
