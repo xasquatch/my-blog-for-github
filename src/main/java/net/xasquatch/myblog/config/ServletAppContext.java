@@ -21,11 +21,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan("net.xasquatch.myblog.service")
 @ComponentScan("net.xasquatch.myblog.repository")
 @ComponentScan("net.xasquatch.myblog.interceptor")
-@PropertySource("/WEB-INF/properties/file-manager.properties")
 public class ServletAppContext implements WebMvcConfigurer{
-
-	@Value("${files.context.path}")
-	private String filesContextPath;
 
 	@Autowired
 	private HandlerInterceptor controllerInterceptor;
@@ -42,7 +38,7 @@ public class ServletAppContext implements WebMvcConfigurer{
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		WebMvcConfigurer.super.addResourceHandlers(registry);
 		registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
-		registry.addResourceHandler("/**").addResourceLocations(filesContextPath);
+		registry.addResourceHandler("/**").addResourceLocations("/resources/");
 	}
 /*
 	@Override
