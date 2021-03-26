@@ -6,8 +6,8 @@
 <section class="banner main-banner dot-key">
     <section>
         <div onclick="itemFocus(this)">
-            <img src="${path}/img/banner-white/light-bulb.png">
-            <p>Notice</p>
+            <img src="${path}/img/banner-white/star.png">
+            <p>★</p>
         </div>
         <div onclick="itemFocus(this)">
             <img src="${path}/img/banner-white/user.png">
@@ -51,8 +51,8 @@
             document.querySelector('#main-footer>div').innerHTML = '';
 
             // element의 케이스에 맞춰 분기
-            if (inputData === 'Notice') {
-                itemFocusNotice();
+            if (inputData === '★') {
+                itemFocusStar();
 
             } else if (inputData === 'My Page') {
                 itemFocusUserInfo();
@@ -70,7 +70,7 @@
 
         }
 
-        function itemFocusNotice() {
+        function itemFocusStar() {
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
@@ -78,6 +78,11 @@
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
                 '<img src="${path}/img/banner-white/info.png" style="max-height : 100px; max-width:100px;"><BR>공지사항<BR>여러분의 피드백으로<BR>개선된 점을 안내해드립니다.', 10);
+            var contents2 = document.createElement('a');
+            contents2.setAttribute('href', '${path}/community');
+            footerTarget.appendChild(contents2);
+            textScript.insertText('#main-footer>div>a:nth-child(2)',
+                '<img src="${path}/img/banner-white/talk.png" style="max-height : 100px; max-width:100px;"><BR>커뮤니티<BR>여러 유저분들이 <BR>작성한 게시글을 구경해보세요', 10);
 
             var contentsLast = document.createElement('a');
             contentsLast.setAttribute('href', 'javascript:');

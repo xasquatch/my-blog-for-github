@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="${path}/css/reset.css">
     <link rel="stylesheet" href="${path}/css/home-style.css">
     <link rel="stylesheet" href="${path}/css/list-style.css">
+    <link rel="stylesheet" href="${path}/css/community-style.css">
     <%--END: custom css --%>
 
     <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">

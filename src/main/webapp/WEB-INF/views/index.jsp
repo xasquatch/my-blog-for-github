@@ -33,6 +33,10 @@
             <jsp:include page="contents/board/${mainContents}.jsp"/>
         </c:when>
 
+        <c:when test="${mainContents.indexOf('community-')==0}">
+            <jsp:include page="contents/community/${mainContents}.jsp"/>
+        </c:when>
+
         <c:when test="${mainContents.indexOf('user-')==0}">
             <jsp:include page="contents/user-info/${mainContents}.jsp"/>
         </c:when>

@@ -43,7 +43,7 @@
             <hr>
         </c:if>
         <h2 style="font-weight: bold;">
-            Notice
+            <img src="${path}/img/banner-white/star.png" style="width: 1em; height: 1em;">
         </h2>
         <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
@@ -51,6 +51,12 @@
                 <a href="${path}/notice">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/light-bulb.png">
                     공지 사항
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="${path}/community">
+                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/talk.png">
+                    커뮤니티
                 </a>
             </li>
             <li role="presentation">
