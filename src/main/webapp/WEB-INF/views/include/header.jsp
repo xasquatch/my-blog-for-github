@@ -40,7 +40,8 @@
 
     </div>
     <div id="header-right">
-        <c:if test="${mainContents != 'members' && mainContents != 'main' && sessionMember.no != null && sessionMember.no != ''
+        <c:if test="${mainContents != 'members' && mainContents != 'main' && mainContents != 'home'
+            && sessionMember.no != null && sessionMember.no != ''
             && !(mainContents.contains('check')||mainContents.contains('find'))}">
             <button style="font-size: 20px;" type="button" id="mobile-hamburger" class="dot-key btn btn-link-red" onclick="popUpAside();">
                 <B>More</B>
