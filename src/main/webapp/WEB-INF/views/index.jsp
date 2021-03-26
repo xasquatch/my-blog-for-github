@@ -38,7 +38,7 @@
         </c:when>
 
         <c:when test="${mainContents.indexOf('resource-')==0}">
-            <jsp:include page="contents/resources/${mainContents}.jsp"/>
+            <jsp:include page="contents/resource/${mainContents}.jsp"/>
         </c:when>
 
         <c:when test="${mainContents.indexOf('document-')==0}">
