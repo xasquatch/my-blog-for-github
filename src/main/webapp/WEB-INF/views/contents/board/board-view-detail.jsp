@@ -53,16 +53,16 @@
     <article style="text-align: center; padding: 20px;">
         <section style="text-align: center;">
             <h2>
-                <c:if test="${sessionMember ne null}">
+                <c:if test="${sessionMember ne null && sessionMember.name ne 'GUEST'}">
                     <a href="javascript:like.downToBoard(${board.no})">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
                 </c:if>
-                    <span id="like-board-symbol">❤</span>
-                    <span id="like-board-count">
-                            ${board.like}
-                    </span>
-                <c:if test="${sessionMember ne null}">
+                <span id="like-board-symbol">❤</span>
+                <span id="like-board-count">
+                    ${board.like}
+                </span>
+                <c:if test="${sessionMember ne null && sessionMember.name ne 'GUEST'}">
                     <a href="javascript:like.upToBoard(${board.no})">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
@@ -201,23 +201,27 @@
                 tdDeleteTag.style.textAlign = 'center';
 
                 var sessionNo = ${sessionMember.no} +0;
-                tdDeleteTag.innerHTML = '<a href="javascript:like.downToComment(' + comment.no + ')">' +
+                tdDeleteTag.innerHTML =
                     // TODO: <
+                    <c:if test="${sessionMember ne null && sessionMember.name ne 'GUEST'}">
+                    '<a href="javascript:like.downToComment(' + comment.no + ')">' +
                     '<div>❤</div>' +
                     '<span class="glyphicon glyphicon-chevron-left"></span>' +
                     '</a>' +
+                    </c:if>
                     '<span id="myblog-like-comment-' + comment.no + '-count">' +
                     comment.like +
                     '</span>' +
-                    '<a href="javascript:like.upToComment(' + comment.no + ')">' +
                     // TODO: >
+                    <c:if test="${sessionMember ne null && sessionMember.name ne 'GUEST'}">
+                    '<a href="javascript:like.upToComment(' + comment.no + ')">' +
                     '<span class="glyphicon glyphicon-chevron-right"></span>' +
                     '</a>' +
+                    </c:if>
                     '<BR>' +
                     '<BR>';
                 if (sessionNo !== 0 && sessionNo === comment.mbr_no)
                     tdDeleteTag.innerHTML += '<a href="javascript:deleteBoardComment(\'${path}\/comments\/' + comment.no + '\')">삭제</a>';
-
 
                 commentListTable.appendChild(trTag);
                 trTag.appendChild(tdProfileTag);
@@ -234,4 +238,5 @@
 
         getCommentList();
     }
+
 </script>

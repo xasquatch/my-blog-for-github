@@ -22,11 +22,12 @@ public class LikeController {
     private HomeController checkSessionController;
 
     public String manipulationLike(String target, String method, String targetNo) {
+
+
         String result = "false";
         Long memberNo = sessionMember.getNo();
 
-        if (!checkSessionController.isCheckSessionWithOutGuest(String.valueOf(memberNo))
-                && method == null)
+        if (!checkSessionController.isCheckSessionWithOutGuest() || method == null)
             return result;
 
         switch (method.toUpperCase()) {
