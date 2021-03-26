@@ -46,7 +46,6 @@ public class ResourceController {
         if (checkSessionController.isCheckSessionAndAuth(memberNo))
             return resourceService.AdditionalViewList(lastNumber, searchValue);
 
-
         return "false";
 
     }
