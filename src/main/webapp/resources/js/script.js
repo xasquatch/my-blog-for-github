@@ -273,7 +273,7 @@ var resources = {
         if (lastNumber === undefined) lastNumber = Number.MAX_SAFE_INTEGER;
 
 
-        myAjax.submit('GET', '/resources/' + memberNo + '/AdditionalList?last-number=' + lastNumber + '&search=' + searchValue, function (data) {
+        myAjax.submit('GET', '/resources/more?last-number=' + lastNumber + '&search=' + searchValue, function (data) {
             if (data === 'false') {
                 window.alert('리소스 가져오기에 실패하였습니다. 잠시 후 다시 시도해주세요.')
 

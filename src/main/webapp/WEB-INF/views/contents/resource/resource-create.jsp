@@ -63,7 +63,7 @@
             var resourceForm = document.querySelector('#resource-form');
             var formData = new FormData(resourceForm);
 
-            myAjax.submit('post', '${path}/resources/${sessionMember.no}/upload', function (data) {
+            myAjax.submit('post', '${path}/resources/upload', function (data) {
 
                 if (data === 'false') {
                     window.alert('리소스 업로드에 실패하였습니다. 다시 시도해주세요.');

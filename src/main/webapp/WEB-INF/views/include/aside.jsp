@@ -72,7 +72,7 @@
                 </a>
             </li>
             <li role="presentation">
-                <a href="${path}/resources/${sessionMember.no}/create">
+                <a href="${path}/resources/new">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/add-resource.png">
                     새 저장소 만들기
                 </a>

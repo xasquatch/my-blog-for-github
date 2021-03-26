@@ -14,7 +14,7 @@
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
                 <button type="button" class="btn btn-link-red dot-key" style="font-size: 15px;"
-                        onclick="location.href='${path}/resources/${sessionMember.no}/create'">
+                        onclick="location.href='${path}/resources/new'">
                     New
                 </button>
             </div>
