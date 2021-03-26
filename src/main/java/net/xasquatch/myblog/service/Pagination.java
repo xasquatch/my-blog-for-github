@@ -57,7 +57,7 @@ public class Pagination {
                             + "current-page-block=" + i + "'>prev</a>");
 
                 } else if (i == nextPageBlock && i != endPageBlock) {
-                    blockList.add("<a class='myblog-page-block' href='/boards/" + boardNo + "/comments"
+                    blockList.add("<a class='myblog-page-block' href='/boards/" + boardNo + "/comments?"
                             + "page-limit=" + pageLimit + "&"
                             + "current-page-block=" + i + "'>next</a>");
 

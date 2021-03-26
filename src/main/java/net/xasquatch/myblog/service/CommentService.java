@@ -3,6 +3,7 @@ package net.xasquatch.myblog.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Comment;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.repository.CommentDao;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class CommentService {
 
@@ -49,12 +51,21 @@ public class CommentService {
     }
 
 
-    public String getCommentList(long boardNo, String currentPage, String pageLimit) {
+    public String getCommentList(long boardNo, String currentPageBlock, String pageLimit) {
+
+        int currentPage = 0;
+        int castedCurrentPageBlock =Integer.parseInt(currentPageBlock);
+        try {
+            currentPage = (castedCurrentPageBlock - 1) * Integer.parseInt(pageLimit);
+
+        } catch (ArithmeticException e) {
+            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
+        }
 
         String commentListForJson = null;
 
         int totalCount = commentDao.selectCountComment(boardNo);
-        List<String> pageBlockList = new Pagination().getCommentsBlockListOfBoard(boardNo, 5, Integer.parseInt(currentPage), totalCount);
+        List<String> pageBlockList = new Pagination().getCommentsBlockListOfBoard(boardNo, 5, castedCurrentPageBlock, totalCount);
         List<Map<String, Object>> commentList = commentDao.selectCommentList(boardNo, currentPage);
 
         HashMap<String, Object> resultMap = new HashMap<>();

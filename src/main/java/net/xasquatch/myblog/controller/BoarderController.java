@@ -184,8 +184,8 @@ public class BoarderController {
     @ResponseBody
     public String viewCommentList(@PathVariable long boardNo,
                                   @RequestParam(value = "page-limit", required = false, defaultValue = "5") String pageLimit,
-                                  @RequestParam(value = "current-page-block", required = false, defaultValue = "1") String currentPage) {
-        return commentService.getCommentList(boardNo, currentPage, pageLimit);
+                                  @RequestParam(value = "current-page-block", required = false, defaultValue = "1") String currentPageBlock) {
+        return commentService.getCommentList(boardNo, currentPageBlock, pageLimit);
     }
 
 }

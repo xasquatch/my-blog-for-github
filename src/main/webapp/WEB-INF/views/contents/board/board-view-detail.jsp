@@ -104,8 +104,8 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="5" style="text-align: center;">
-                    1
+                <td id="comment-list-block" colspan="5" style="text-align: center;">
+
                 </td>
             </tr>
             </tfoot>
@@ -176,12 +176,25 @@
         });
     }
 
-    function getCommentList() {
-        myAjax.submit('GET', '${path}/boards/${board.no}/comments', function (data) {
-            var dataList = JSON.parse(data);
+    function getCommentList(url, pageLimit, currentPageBlock) {
+
+        if (pageLimit === null || pageLimit === '' || pageLimit === undefined)
+            pageLimit = 5;
+        if (currentPageBlock === null || currentPageBlock === '' || currentPageBlock === undefined)
+            currentPageBlock = 1;
+        if (url === null || url === '' || url === undefined)
+            url = '${path}/boards/${board.no}/comments?page-limit=' + pageLimit + '&current-page-block=' + currentPageBlock;
+
+        myAjax.submit('GET', url, function (data) {
+            var parsedData = JSON.parse(data);
+            var commentList = parsedData['commentList'];
+            var pageBlockList = parsedData['pageBlockList'];
+
             var commentListTable = document.querySelector('#comment-list-table');
+            var commentListBlock = document.querySelector('#comment-list-block');
             commentListTable.innerHTML = '';
-            for (var comment of dataList) {
+            commentListBlock.innerHTML = '';
+            for (var comment of commentList) {
                 var trTag = document.createElement('tr');
                 var tdProfileTag = document.createElement('td');
                 tdProfileTag.style.textAlign = 'center';
@@ -202,10 +215,10 @@
 
                 var sessionNo = ${sessionMember.no} +0;
                 tdDeleteTag.innerHTML =
+                    '<div>❤</div>' +
                     // TODO: <
                     <c:if test="${sessionMember ne null && sessionMember.name ne 'GUEST'}">
                     '<a href="javascript:like.downToComment(' + comment.no + ')">' +
-                    '<div>❤</div>' +
                     '<span class="glyphicon glyphicon-chevron-left"></span>' +
                     '</a>' +
                     </c:if>
@@ -230,6 +243,20 @@
 
             }
 
+            for (var block of pageBlockList) {
+                commentListBlock.innerHTML += block;
+
+            }
+
+            var blockList = commentListBlock.querySelectorAll('a');
+            for (var pageBlock of blockList) {
+                pageBlock.classList.add('btn');
+                pageBlock.classList.add('btn-link-red');
+                pageBlock.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    getCommentList(event.target.href);
+                })
+            }
 
         });
     }
