@@ -85,6 +85,6 @@ public class ResourceController {
             return String.valueOf(resourceService.delete(resource));
         }
         return "false";
-    }
+    }   
 
 }
