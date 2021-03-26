@@ -17,7 +17,10 @@ public interface CommentMapper {
     int insertOneComment(Comment comment);
 
     @SelectProvider(type = CommentBuilder.class, method = "selectCommentList")
-    List<Map<String, Object>> selectCommentList(Object boardNo);
+    List<Map<String, Object>> selectCommentList(Object boardNo, Object currentPage);
+
+    @SelectProvider(type = CommentBuilder.class, method = "selectCountComment")
+    int selectCountComment(Object boardNo);
 
     @Delete("DELETE FROM comment WHERE no = #{arg0} AND pwd = #{arg1}")
     int deleteCommentForGuest(Object commentNo, Object pwd);

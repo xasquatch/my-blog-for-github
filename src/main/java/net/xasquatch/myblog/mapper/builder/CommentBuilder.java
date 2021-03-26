@@ -4,23 +4,24 @@ import org.apache.ibatis.jdbc.SQL;
 
 public class CommentBuilder {
 
-    public static String selectCommentList(Object boardNo) {
+    public static String selectCommentList(Object boardNo, Object currentPage) {
         return new SQL() {{
             SELECT("no, mbr_no, convert(contents USING UTF8) AS contents," +
                     "REPLACE(created_ip, RIGHT(created_ip, 4),'.***') AS created_ip," +
                     "DATE_FORMAT(created_date, '%Y.%m.%d %H:%i:%s') AS created_date," +
                     "board_no, mbr_name, img, IFNULL(good, 0) AS 'like'");
             FROM("(" + selectCommentListSubQuery(boardNo) + ") c");
+            LIMIT(currentPage + ", 5");
             ORDER_BY("no DESC");
         }}.toString();
 
     }
 
-    public static String selectCountComment(Object boardNo, Object currentPage) {
+    public static String selectCountComment(Object boardNo) {
         return new SQL() {{
             SELECT("COUNT(*) AS total_count");
-            FROM("COMMENT c, (SELECT @ROWNUM := 0) TMP");
-            WHERE("boardNo = " + boardNo);
+            FROM("COMMENT");
+            WHERE("board_no = " + boardNo);
         }}.toString();
 
     }

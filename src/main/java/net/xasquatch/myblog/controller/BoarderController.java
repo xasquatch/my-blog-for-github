@@ -182,8 +182,10 @@ public class BoarderController {
     // TODO: 해당 게시판의 코멘트 초회
     @GetMapping("/{boardNo}/comments")
     @ResponseBody
-    public String viewCommentList(@PathVariable long boardNo) {
-        return commentService.getCommentList(boardNo);
+    public String viewCommentList(@PathVariable long boardNo,
+                                  @RequestParam(value = "page-limit", required = false, defaultValue = "5") String pageLimit,
+                                  @RequestParam(value = "current-page-block", required = false, defaultValue = "1") String currentPage) {
+        return commentService.getCommentList(boardNo, currentPage, pageLimit);
     }
 
 }

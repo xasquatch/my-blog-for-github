@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,18 +49,25 @@ public class CommentService {
     }
 
 
-    public String getCommentList(Object boardNo) {
+    public String getCommentList(long boardNo, String currentPage, String pageLimit) {
 
         String commentListForJson = null;
-        List<Map<String, Object>> commentList = commentDao.selectCommentList(boardNo);
+
+        int totalCount = commentDao.selectCountComment(boardNo);
+        List<String> pageBlockList = new Pagination().getCommentsBlockListOfBoard(boardNo, 5, Integer.parseInt(currentPage), totalCount);
+        List<Map<String, Object>> commentList = commentDao.selectCommentList(boardNo, currentPage);
+
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("commentList", commentList);
+        resultMap.put("pageBlockList", pageBlockList);
+
         ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
 
         try {
-            commentListForJson = objectWriter.writeValueAsString(commentList);
+            commentListForJson = objectWriter.writeValueAsString(resultMap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
 
         return commentListForJson;
     }
