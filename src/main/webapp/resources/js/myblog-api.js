@@ -117,14 +117,17 @@ var like = {
         });
     },
     upToComment: function (commentNo) {
+
         myAjax.submit('POST', 'https://myblog.xasquatch.net/comments/' + commentNo + '/like/up', function (data) {
             like.readToComment(commentNo);
+            alert(data);
 
         }, 'FORM', null);
     },
     downToComment: function (commentNo) {
         myAjax.submit('POST', 'https://myblog.xasquatch.net/comments/' + commentNo + '/like/down', function (data) {
             like.readToComment(commentNo);
+            alert(data);
 
         }, 'FORM', null);
     },
