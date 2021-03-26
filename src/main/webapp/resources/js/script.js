@@ -431,8 +431,20 @@ var footerEffect = {
 
         loadingFooter.classList.remove('padding-100vh-align-center');
         loadingFooter.classList.remove('opacity-half');
-    }
+    },
 
+    alert: function (massage) {
+        var tmpTag = document.createElement('h1');
+        footerEffect.addFooterState();
+        tmpTag.innerHTML = massage;
+        document.querySelector('#main-footer').append(tmpTag);
+
+        setTimeout(function(){
+            document.querySelector('#main-footer').removeChild(tmpTag);
+            footerEffect.removeFooterState();
+        },1000);
+
+    }
 
 }
 var boardListScript = {
