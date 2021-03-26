@@ -30,7 +30,7 @@ public class commentController {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
-    @PostMapping("")
+    @PostMapping("/new")
     public String createComment(HttpServletRequest request, @Valid Comment comment,
                                 @RequestParam long boardNo, BindingResult bindingResult) {
         String result = "false";

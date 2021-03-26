@@ -143,7 +143,7 @@
 
         formData.append("boardNo", '${board.no}');
 
-        myAjax.submit('POST', "${path}/comments", function (data) {
+        myAjax.submit('POST', "${path}/comments/new", function (data) {
             if (data === 'false') {
                 alert('댓글작성에 실패하였습니다. 잠시 후 다시 시도해주시기바랍니다');
 
