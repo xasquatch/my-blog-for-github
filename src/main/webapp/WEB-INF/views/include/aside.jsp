@@ -11,7 +11,6 @@
             <h2 style="font-weight: bold;">
                 Members<BR>Management
             </h2>
-            <hr>
             <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
                 <li role="presentation">
                     <a href="${path}/notice">
@@ -32,20 +31,19 @@
                     </a>
                 </li>
             </ul>
+            <hr>
         </c:if>
         <c:if test="${sessionMember.no ne '' && sessionMember.no ne null}">
-            <hr>
-            <a class="dot-key btn btn-link-red" style="font-size: 20px"
+            <a class="dot-key btn btn-link-red" style="margin: 0 auto; display:block; font-size: 20px"
                href="${path}/members/${sessionMember.no}">
                 메인화면으로 이동<BR>
                 (Members: 회원전용)
             </a>
-            <hr>
         </c:if>
-        <h2 style="font-weight: bold;">
+        <HR>
+        <h2 style="font-weight: bold; text-align: center; background: black; margin: 0; padding: 10px;">
             <img src="${path}/img/banner-white/star.png" style="width: 1em; height: 1em;">
         </h2>
-        <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
                 <a href="${path}/notice">
@@ -66,10 +64,10 @@
                 </a>
             </li>
         </ul>
+        <hr>
         <h2 style="font-weight: bold;">
             블로그 관리
         </h2>
-        <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
                 <a href="${path}/boards/new?method=create">
@@ -96,10 +94,10 @@
                 </a>
             </li>
         </ul>
+        <hr>
         <h2 style="font-weight: bold;">
             마이 페이지
         </h2>
-        <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
                 <a href="${path}/members/${sessionMember.no}/api/clipboard">
