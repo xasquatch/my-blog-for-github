@@ -88,7 +88,7 @@ public class BoardService {
         return searchValue;
     }
 
-    public boolean isConfirmBoardPwd(Object Boardno, String pwd){
+    public boolean isConfirmBoardPwd(Object Boardno, String pwd) {
 
         return boardDao.selectOneBoardColumnPwd(Boardno, pwd);
 
@@ -111,6 +111,30 @@ public class BoardService {
 
         List<String> pageBlockList = new Pagination().getNoticeBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("boardList", boardList);
+        data.put("pageBlockList", pageBlockList);
+
+        return data;
+    }
+
+    public Map<String, Object> getCommunityList(int pageLimit, int currentPageBlock, String keyword) {
+
+        int currentPage = 0;
+        try {
+            currentPage = (currentPageBlock - 1) * pageLimit;
+
+        } catch (ArithmeticException e) {
+            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
+        }
+
+        List<Map<String, Object>> boardList
+                = boardDao.selectBoardList("all", currentPage, pageLimit, "keyword", keyword);
+
+        int totalCount = boardDao.selectBoardCount("all", "keyword", keyword);
+
+        List<String> pageBlockList = new Pagination().getCommunityBlockList(pageLimit, currentPageBlock, totalCount, keyword);
 
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("boardList", boardList);
