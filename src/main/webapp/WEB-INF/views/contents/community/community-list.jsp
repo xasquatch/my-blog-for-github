@@ -5,15 +5,16 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <section id="myblog-main-section">
     <article class="community-keyword-container">
-        <a><span>#</span>springframework</a>
-        <a><span>#</span>DispatcherServlet</a>
-        <a><span>#</span>SimpleUrlHandlerMapping</a>
-        <a><span>#</span>ResourceHttpRequestHandler</a>
-        <a><span>#</span>Tomcat</a>
-        <a><span>#</span>JetBrains</a>
-        <a><span>#</span>CATALINA_BASE</a>
-        <a><span>#</span>parameters</a>
-        <a><span>#</span>CATALINA_HOME</a>
+        <a><span class="link-tag-color">#</span><span class="link-tag-color">ALL</span></a>
+        <a><span class="link-tag-color">#</span><span>springframework</span></a>
+        <a><span class="link-tag-color">#</span><span>DispatcherServlet</span></a>
+        <a><span class="link-tag-color">#</span><span>SimpleUrlHandlerMapping</span></a>
+        <a><span class="link-tag-color">#</span><span>ResourceHttpRequestHandler</span></a>
+        <a><span class="link-tag-color">#</span><span>Tomcat</span></a>
+        <a><span class="link-tag-color">#</span><span>JetBrains</span></a>
+        <a><span class="link-tag-color">#</span><span>CATALINA_BASE</span></a>
+        <a><span class="link-tag-color">#</span><span>parameters</span></a>
+        <a><span class="link-tag-color">#</span><span>CATALINA_HOME</span></a>
     </article>
     <article id="myblog-board-list-contents" class="dot-key table-responsive">
         <table class="table table-hover table-condensed">

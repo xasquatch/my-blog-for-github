@@ -152,6 +152,10 @@
 /*END: header, footer, aside----------------*/
 
 /*----------------general setting---------------*/
+.link-tag-color {
+    color: #337ab7;
+
+}
 
 .opacity-0 {
     opacity: 0;
