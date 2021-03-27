@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/comments", produces = "text/plain;charset=UTF-8")
-public class commentController {
+public class CommentController {
 
     @Autowired
     private AccessorInfo accessorInfo;
