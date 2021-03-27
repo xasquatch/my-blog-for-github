@@ -67,8 +67,7 @@
     for (var aTag of aTags) {
         var href = aTag.href;
         var target = aTag.target;
-
-        if (href != null && href !== 'undefined'
+        if (href !== '' && href != null && href !== 'undefined'
             && href.indexOf('javascript:') === -1 && href.indexOf('#') === -1
             && target !== '_blank') {
             aTag.addEventListener('click', function () {
