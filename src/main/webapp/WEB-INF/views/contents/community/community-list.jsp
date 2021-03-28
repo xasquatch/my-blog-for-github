@@ -22,6 +22,7 @@
             <tr>
                 <th style="width: 40px;">No</th>
                 <th>Title</th>
+                <th style="width: 200px;">nick name</th>
                 <th style="width: 200px;">Date</th>
             </tr>
             </thead>
@@ -39,6 +40,9 @@
                                     ${board.title}
                             </span>
                         </a>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        ${board.mbr_nickname}
                     </td>
                     <td style="vertical-align: middle;">
                             ${board.created_date}
