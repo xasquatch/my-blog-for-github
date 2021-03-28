@@ -387,7 +387,12 @@
         var realContents = document.querySelector('#board-contents-real');
         var realThumbnail = document.querySelector('#board-thumbnail-real');
 
-        realKeyword.value = board.fakeKeyword.value;
+
+        var inputKeyword = board.fakeKeyword.value.trim();
+        if (inputKeyword === '' || (inputKeyword.length > 0 && inputKeyword.indexOf('public') === -1))
+            inputKeyword += ' public ';
+
+        realKeyword.value = inputKeyword;
         realTitle.value = board.fakeTitle.value;
         realContents.innerHTML = board.fakeContents.innerHTML;
         realThumbnail.innerHTML = board.fakeThumbnail.innerHTML;
@@ -451,8 +456,8 @@
 
                 } else if (data === 'true') {
                     window.alert('수정에 성공하였습니다.');
-                    window.location.href = '${path}/boards?memberNo=${sessionMember.no}';
-
+                    <%--window.location.href = '${path}/boards?memberNo=${sessionMember.no}';--%>
+                    window.history.back();
                 }
 
             }, 'FORMFILE', formData);
