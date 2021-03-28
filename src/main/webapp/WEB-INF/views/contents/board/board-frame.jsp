@@ -14,12 +14,12 @@
         <c:choose>
             <c:when test="${requestScope.boardKeyword != null && requestScope.boardKeyword ne ''}">
                 <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc"
-                       value="${requestScope.boardKeyword}">
+                       value="public, ${requestScope.boardKeyword}">
 
             </c:when>
             <c:otherwise>
                 <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc"
-                       value="${board.keyword}">
+                       value="public, ${board.keyword}">
 
             </c:otherwise>
         </c:choose>
@@ -389,9 +389,7 @@
 
 
         var inputKeyword = board.fakeKeyword.value.trim();
-        if (inputKeyword === '' || (inputKeyword.length > 0 && inputKeyword.indexOf('public') === -1))
-            inputKeyword += ' public ';
-
+        //TODO:inputKeyword 키워드구분하는 스크립트 구현필요
         realKeyword.value = inputKeyword;
         realTitle.value = board.fakeTitle.value;
         realContents.innerHTML = board.fakeContents.innerHTML;
