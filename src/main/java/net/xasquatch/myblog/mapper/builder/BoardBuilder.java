@@ -4,6 +4,16 @@ import org.apache.ibatis.jdbc.SQL;
 
 public class BoardBuilder {
 
+    public static String selectKeywordOfBoardMostLikeTop10(){
+        return new SQL(){{
+            SELECT("b.keyword AS keyword, IFNULL(l.good,0) AS 'like'");
+            FROM("board b");
+            LEFT_OUTER_JOIN(LikeBuilder.selectSumLke()+" l on b.no = l.board_no");
+            GROUP_BY("b.keyword");
+        }}.toString();
+
+    }
+
     public static String selectOneBoard(Object board_no) {
         return new SQL() {{
             SELECT("b.no AS no", "b.mbr_no AS mbr_no", "m.name AS name",
@@ -68,12 +78,12 @@ public class BoardBuilder {
 
             } else if (searchTarget.equals("title-or-contents")) {
                 WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true'"
-                        + " AND (b.title LIKE '" + searchValue + "'"
-                        + " OR b.contents LIKE '" + searchValue + "')");
+                        + " AND (b.title LIKE '%" + searchValue + "%'"
+                        + " OR b.contents LIKE '%" + searchValue + "%')");
 
             } else {
                 WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true'"
-                        + " AND " + searchTarget + " LIKE '" + searchValue + "'");
+                        + " AND " + searchTarget + " LIKE '%" + searchValue + "%'");
 
             }
 
@@ -96,12 +106,12 @@ public class BoardBuilder {
 
             } else if (searchTarget.equals("title-or-contents")) {
                 WHERE("b.completed = 'true'"
-                        + " AND (b.title LIKE '" + searchValue + "'"
-                        + " OR b.contents LIKE '" + searchValue + "')");
+                        + " AND (b.title LIKE '%" + searchValue + "%'"
+                        + " OR b.contents LIKE '%" + searchValue + "%')");
 
             } else {
                 WHERE("b.completed = 'true'"
-                        + " AND " + searchTarget + " LIKE '" + searchValue + "'");
+                        + " AND " + searchTarget + " LIKE '%" + searchValue + "%'");
 
             }
 
@@ -124,13 +134,13 @@ public class BoardBuilder {
             } else if (searchTarget.equals("title-or-contents")) {
                 WHERE("b.mbr_no = " + memberNo
                         + " AND b.completed = 'true'"
-                        + " AND (b.title LIKE '" + searchValue + "'"
-                        + " OR b.contents LIKE '" + searchValue + "')");
+                        + " AND (b.title LIKE '%" + searchValue + "%'"
+                        + " OR b.contents LIKE '%" + searchValue + "%')");
 
             } else {
                 WHERE("b.mbr_no = " + memberNo
                         + " AND b.completed = 'true'"
-                        + " AND " + searchTarget + " LIKE '" + searchValue + "'");
+                        + " AND " + searchTarget + " LIKE '%" + searchValue + "%'");
 
             }
 
@@ -159,10 +169,10 @@ public class BoardBuilder {
                 WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true'");
 
             } else if (searchTarget.equals("title-or-contents")) {
-                WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true' AND (title LIKE '" + searchValue + "' OR contents LIKE '" + searchValue + "')");
+                WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true' AND (title LIKE '%" + searchValue + "%' OR contents LIKE '%" + searchValue + "%')");
 
             } else {
-                WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true' AND " + searchTarget + " LIKE '" + searchValue + "'");
+                WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true' AND " + searchTarget + " LIKE '%" + searchValue + "%'");
 
             }
         }}.toString();
@@ -178,10 +188,10 @@ public class BoardBuilder {
                 WHERE("mbr_no = " + memberNo + " AND completed = 'true'");
 
             } else if (searchTarget.equals("title-or-contents")) {
-                WHERE("mbr_no = " + memberNo + " AND completed = 'true' AND (title LIKE '" + searchValue + "' OR contents LIKE '" + searchValue + "')");
+                WHERE("mbr_no = " + memberNo + " AND completed = 'true' AND (title LIKE '%" + searchValue + "%' OR contents LIKE '%" + searchValue + "%')");
 
             } else {
-                WHERE("mbr_no = " + memberNo + " AND completed = 'true' AND " + searchTarget + " LIKE '" + searchValue + "'");
+                WHERE("mbr_no = " + memberNo + " AND completed = 'true' AND " + searchTarget + " LIKE '%" + searchValue + "%'");
 
             }
         }}.toString();
@@ -196,10 +206,10 @@ public class BoardBuilder {
                 WHERE("completed = 'true'");
 
             } else if (searchTarget.equals("title-or-contents")) {
-                WHERE("completed = 'true' AND (title LIKE '" + searchValue + "' OR contents LIKE '" + searchValue + "')");
+                WHERE("completed = 'true' AND (title LIKE '%" + searchValue + "%' OR contents LIKE '%" + searchValue + "%')");
 
             } else {
-                WHERE("completed = 'true' AND " + searchTarget + " LIKE '" + searchValue + "'");
+                WHERE("completed = 'true' AND " + searchTarget + " LIKE '%" + searchValue + "%'");
 
             }
         }}.toString();
