@@ -48,7 +48,7 @@
         }
     }
 
-<c:choose>
+    <c:choose>
     <c:when test="${sessionMember.no ne null && sessionMember.no ne ''}">
     // ---header
     window.addEventListener('DOMContentLoaded', function () {
@@ -94,6 +94,11 @@
             });
         }
     }
+
+    //툴팁 초기화
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 
 </script>
 
