@@ -48,13 +48,28 @@
         }
     }
 
+<c:choose>
+    <c:when test="${sessionMember.no ne null && sessionMember.no ne ''}">
+    // ---header
+    window.addEventListener('DOMContentLoaded', function () {
 
+        textScript.insertText('#main-header-logo', 'My Blog', 20);
+        textScript.insertText('#main-header-member-name', 'With ${sessionMember.name}', 20);
+
+    });
+
+    </c:when>
+    <c:otherwise>
     // ---header
     window.addEventListener('DOMContentLoaded', function () {
 
         textScript.insertText('#main-header-logo', 'My Blog', 20);
 
     });
+
+    </c:otherwise>
+
+    </c:choose>
 
     // ---aside
     var mainAside = document.querySelector('#main-aside');
