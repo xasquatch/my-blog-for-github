@@ -12,7 +12,7 @@
     <div class="input-group">
         <div class="input-group-addon dot-key"><b>키워드</b></div>
         <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc"
-               data-toggle="tooltip" data-placement="bottom" title="' _ , '의 특수문자, 한글, 영어를 제외한 특수문자와 공백은 입력할 수 없습니다.(스페이스바 클릭시 자동으로 구분자 생성)"
+               data-toggle="tooltip" data-placement="bottom" title="' _ , '의 특수문자, 숫자, 한글, 영어를 제외한 특수문자와 공백은 입력할 수 없습니다.(스페이스바 클릭시 자동으로 구분자 생성)"
         <c:choose>
         <c:when test="${requestScope.boardKeyword != null && requestScope.boardKeyword ne ''}">
                value="public, ${requestScope.boardKeyword}">
@@ -461,10 +461,11 @@
             }, 'FORMFILE', formData);
         }
     }
+
     function keywordInputSpaceBarEvent() {
         var keywordInput = document.querySelector('#board-keyword-fake');
         keywordInput.addEventListener('keypress', function (e) {
-            if (e.keyCode === 32){
+            if (e.keyCode === 32) {
                 e.preventDefault();
                 keywordInput.value += ', ';
             }
