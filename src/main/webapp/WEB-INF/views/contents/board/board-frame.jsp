@@ -12,14 +12,18 @@
     <div class="input-group">
         <div class="input-group-addon dot-key"><b>키워드</b></div>
         <input type="text" class="form-control" id="board-keyword-fake" maxlength="200" placeholder="ex) Life, health....etc"
-               data-toggle="tooltip" data-placement="bottom" title="' _ , '의 특수문자와 문자 그리고 숫자를 제외한 특수문자와 공백은 입력할 수 없습니다.(스페이스바 클릭시 자동으로 구분자 생성)"
+               data-toggle="tooltip" data-placement="bottom" title="'_' 특수문자와 문자 그리고 숫자를 제외한 모든 키는 입력할 수 없습니다.(스페이스바 클릭시 구분자 ',' 자동생성)"
         <c:choose>
         <c:when test="${requestScope.boardKeyword != null && requestScope.boardKeyword ne ''}">
                value="public, ${requestScope.boardKeyword}">
 
         </c:when>
+        <c:when test="${board.keyword != null && board.keyword ne ''}">
+            value="${board.keyword}">
+
+        </c:when>
         <c:otherwise>
-            value="public, ${board.keyword}">
+            value="public">
 
         </c:otherwise>
         </c:choose>
@@ -390,24 +394,23 @@
 
         var inputKeyword = board.fakeKeyword.value.trim();
         //TODO:inputKeyword 키워드구분하는 스크립트 구현필요
-        var keywordArrays = inputKeyword.split(', ');
+        var keywordArrays = inputKeyword.split(',');
+        var confirmedKeywordList = [];
         for (var keyword of keywordArrays) {
-            if (keyword.search(/^[0-9a-zA-Z가-힣][0-9a-zA-Z가-힣_]+/gm) === -1) {
-                window.alert('키워드 에러:' + keyword + '\n수정 후 다시 업로드 해주시기바랍니다.');
+            if (keyword.trim().search(/^[0-9a-zA-Z가-힣][0-9a-zA-Z가-힣_]*/gm) === -1 || keyword === '') {
+                window.alert('키워드 에러:' + keyword.trim() + '\n수정 후 다시 업로드 해주시기바랍니다.');
                 return;
+            } else {
+                confirmedKeywordList.push(keyword.trim());
             }
         }
 
         // if (window.confirm(""))
-        realKeyword.value = inputKeyword;
+        realKeyword.value = confirmedKeywordList;
         realTitle.value = board.fakeTitle.value;
         realContents.innerHTML = board.fakeContents.innerHTML;
         realThumbnail.innerHTML = board.fakeThumbnail.innerHTML;
 
-        if (realKeyword.value.length > 50) {
-            window.alert('키워드는 200자 이내로 입력해주시기바랍니다.');
-            return;
-        }
         if (realTitle.value.length < 2 || realTitle.value.length > 200) {
             window.alert('글 제목은 2~200자 사이로 입력해주시기바랍니다.');
             return;
@@ -478,6 +481,9 @@
                 e.preventDefault();
                 keywordInput.value += ', ';
             }
+
+            if (keywordInput.value.length > 200) keywordInput.value = keywordInput.value.substr(0, 200);
+
         });
     }
 
