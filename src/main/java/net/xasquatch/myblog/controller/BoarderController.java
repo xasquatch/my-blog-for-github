@@ -129,7 +129,7 @@ public class BoarderController {
     }
 
     //TODO: 작성글 수정페이지로 이동
-    @GetMapping("/blob/{boardNo}")
+    @GetMapping("/{boardNo}/blob")
     public String modify(Model model,
                          @PathVariable String boardNo,
                          @RequestParam String pwd,

@@ -117,7 +117,7 @@ var board = {
                 if (pwd === null) return;
 
             }
-            location.href = '/boards/blob/' + boardKey + '?pwd=' + pwd + '&memberNo=' + memberKey + '&method=modify';
+            location.href = '/boards/' + boardKey + '/blob?pwd=' + pwd + '&memberNo=' + memberKey + '&method=modify';
 
         }
     }
