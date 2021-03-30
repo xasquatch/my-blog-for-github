@@ -5,7 +5,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <section id="myblog-main-section">
     <article class="community-keyword-container">
-        <a><span class="link-tag-color">#</span><span class="link-tag-color">ALL</span></a>
+        <a><span class="link-tag-color">#</span><span class="link-tag-color">public</span></a>
         <a><span class="link-tag-color">#</span><span>springframework</span></a>
         <a><span class="link-tag-color">#</span><span>DispatcherServlet</span></a>
         <a><span class="link-tag-color">#</span><span>SimpleUrlHandlerMapping</span></a>
