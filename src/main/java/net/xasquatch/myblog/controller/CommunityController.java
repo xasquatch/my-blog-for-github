@@ -28,9 +28,11 @@ public class CommunityController {
 
         List<Map<String, Object>> boardList = (List<Map<String, Object>>) boardUnit.get("boardList");
         Object pageBlockList = boardUnit.get("pageBlockList");
+        Object topKeywordList = boardUnit.get("topKeywordList");
 
         model.addAttribute("boardList", boardList);
         model.addAttribute("pageBlockList", pageBlockList);
+        model.addAttribute("topKeywordList", topKeywordList);
         model.addAttribute("pageLimit", pageLimit);
         model.addAttribute("keyword", keyword);
         model.addAttribute("mainContents", "community-list");

@@ -139,8 +139,27 @@ public class BoardService {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("boardList", boardList);
         data.put("pageBlockList", pageBlockList);
+//        data.put("topKeywordList", getTopKeywordList);
 
         return data;
+    }
+
+    private List<String> getTopKeywordList(){
+
+        String TopKeywordListString = boardDao.selectAllKeywordList();
+        //TODO:문자열을 배열로 나누어 등급으로 정렬하여 1-개만 추리는 논리연산식 구현예정
+
+        List<String> topKeywordList = null;
+
+        return topKeywordList;
+    }
+
+    public static void main(String[] args) {
+
+        String a = "ac,va,ha,aw,aa,ar,ae,sa,af,ad,da";
+        String b = "ac,va,ha,aw,aa,ar,ae,sa,af,ad,da";
+//        System.out.println(a.concat());
+
     }
 
     public Map<String, Object> getBoardList(Object memberNo, int pageLimit, int currentPageBlock, String[] searchValue) {

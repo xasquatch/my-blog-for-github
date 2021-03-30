@@ -63,4 +63,7 @@ public interface BoardMapper {
 
     @Select("SELECT COUNT(no) FROM board WHERE no = #{arg0} AND pwd = #{arg1}")
     int selectOneBoardColumnPwd(Object boardno, String pwd);
+
+    @SelectProvider(type = BoardBuilder.class, method = "selectAllKeywordList")
+    String selectAllKeywordList();
 }

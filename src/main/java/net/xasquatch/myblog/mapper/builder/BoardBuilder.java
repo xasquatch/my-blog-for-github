@@ -29,6 +29,13 @@ public class BoardBuilder {
         }}.toString();
     }
 
+    public static String selectAllKeywordList(){
+        return new SQL(){{
+
+
+        }}.toString();
+    }
+
     public static String selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
                                          Object searchTarget, Object searchValue) {
         return new SQL() {{
