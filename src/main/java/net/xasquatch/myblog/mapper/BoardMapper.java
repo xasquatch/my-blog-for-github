@@ -44,9 +44,6 @@ public interface BoardMapper {
     @SelectProvider(type = BoardBuilder.class, method = "selectOneBoard")
     Map<String, Object> selectOneBoard(Object board_no);
 
-    @SelectProvider(type = BoardBuilder.class, method = "selectKeywordOfBoardMostLikeTop10")
-    List<Map<String, Object>> selectKeywordOfBoardMostLikeTop10();
-
     @SelectProvider(type = BoardBuilder.class, method = "selectBoardList")
     List<Map<String, Object>> selectBoardList(Object memberNo, Object currentPage, Object pageLimit,
                                               Object searchTarget, Object searchValue);
@@ -64,6 +61,6 @@ public interface BoardMapper {
     @Select("SELECT COUNT(no) FROM board WHERE no = #{arg0} AND pwd = #{arg1}")
     int selectOneBoardColumnPwd(Object boardno, String pwd);
 
-    @SelectProvider(type = BoardBuilder.class, method = "selectAllKeywordList")
-    String selectAllKeywordList();
+    @Select("SELECT keyword FROM board ORDER BY keyword ASC")
+    List<String> selectAllKeywordList();
 }

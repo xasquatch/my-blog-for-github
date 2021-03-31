@@ -4,16 +4,6 @@ import org.apache.ibatis.jdbc.SQL;
 
 public class BoardBuilder {
 
-    public static String selectKeywordOfBoardMostLikeTop10(){
-        return new SQL(){{
-            SELECT("b.keyword AS keyword, IFNULL(l.good,0) AS 'like'");
-            FROM("board b");
-            LEFT_OUTER_JOIN(LikeBuilder.selectSumLke()+" l on b.no = l.board_no");
-            GROUP_BY("b.keyword");
-        }}.toString();
-
-    }
-
     public static String selectOneBoard(Object board_no) {
         return new SQL() {{
             SELECT("b.no AS no", "b.mbr_no AS mbr_no", "m.name AS name",
@@ -26,13 +16,6 @@ public class BoardBuilder {
             LEFT_OUTER_JOIN("mbr m ON b.mbr_no = m.no");
             LEFT_OUTER_JOIN(LikeBuilder.selectSumLke() + " l ON l.board_no = b.no");
             WHERE("b.no = " + board_no);
-        }}.toString();
-    }
-
-    public static String selectAllKeywordList(){
-        return new SQL(){{
-
-
         }}.toString();
     }
 

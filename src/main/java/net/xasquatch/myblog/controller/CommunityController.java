@@ -22,13 +22,13 @@ public class CommunityController {
     public String getList(Model model,
                           @RequestParam(value = "page-limit", required = false, defaultValue = "10") int pageLimit,
                           @RequestParam(value = "current-page-block", required = false, defaultValue = "1") int currentPageBlock,
-                          @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+                          @RequestParam(value = "keyword", required = true, defaultValue = "public") String keyword) {
 
         Map<String, Object> boardUnit = boardService.getCommunityList(pageLimit, currentPageBlock, keyword);
 
         List<Map<String, Object>> boardList = (List<Map<String, Object>>) boardUnit.get("boardList");
         Object pageBlockList = boardUnit.get("pageBlockList");
-        Object topKeywordList = boardUnit.get("topKeywordList");
+        Map<String, Integer> topKeywordList = (Map<String, Integer>) boardUnit.get("topKeywordList");
 
         model.addAttribute("boardList", boardList);
         model.addAttribute("pageBlockList", pageBlockList);

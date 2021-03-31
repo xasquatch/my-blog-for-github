@@ -15,6 +15,14 @@
         <a><span class="link-tag-color">#</span><span>CATALINA_BASE</span></a>
         <a><span class="link-tag-color">#</span><span>parameters</span></a>
         <a><span class="link-tag-color">#</span><span>CATALINA_HOME</span></a>
+        <c:forEach var="keyword" items="${topKeywordList}">
+<%--            ${topKeywordList}<HR>--%>
+            ${keyword.key}
+            ${keyword.value}
+            <BR>
+
+        </c:forEach>
+
     </article>
     <article id="myblog-board-list-contents" class="dot-key table-responsive">
         <table class="table table-hover table-condensed">

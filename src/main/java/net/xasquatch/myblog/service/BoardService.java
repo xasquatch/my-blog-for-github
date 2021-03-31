@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -139,27 +136,53 @@ public class BoardService {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("boardList", boardList);
         data.put("pageBlockList", pageBlockList);
-//        data.put("topKeywordList", getTopKeywordList);
+        data.put("topKeywordList", getTopKeywordList());
 
         return data;
     }
 
-    private List<String> getTopKeywordList(){
+    private Map<String, Integer> getTopKeywordList() {
 
-        String TopKeywordListString = boardDao.selectAllKeywordList();
-        //TODO:문자열을 배열로 나누어 등급으로 정렬하여 1-개만 추리는 논리연산식 구현예정
+        List<String> topKeywordListString = boardDao.selectAllKeywordList();
+        StringBuilder parsedKeywordString = new StringBuilder();
+        for (String keywords : topKeywordListString) {
+            if (parsedKeywordString.toString().equals("")) {
+                parsedKeywordString.append(keywords);
+            } else {
+                parsedKeywordString.append(",").append(keywords);
+            }
+        }
 
-        List<String> topKeywordList = null;
+        Map<String, Integer> topKeywordMap = new HashMap<String, Integer>();
+        String[] keywordArray = parsedKeywordString.toString().split(",");
+        for (String keyword : keywordArray) {
+            try {
+                Integer population = topKeywordMap.get(keyword);
+                population += 1;
+                topKeywordMap.put(keyword, population);
+            } catch (NullPointerException e) {
+                topKeywordMap.put(keyword, 1);
+            }
+        }
 
-        return topKeywordList;
-    }
+        List<Map.Entry<String, Integer>> listEntries = new ArrayList<Map.Entry<String, Integer>>(topKeywordMap.entrySet());
 
-    public static void main(String[] args) {
+        listEntries.sort(new Comparator<Map.Entry<String, Integer>>() {
+            public int compare(Map.Entry<String, Integer> obj1, Map.Entry<String, Integer> obj2) {
+                return obj2.getValue().compareTo(obj1.getValue());
+            }
+        });
 
-        String a = "ac,va,ha,aw,aa,ar,ae,sa,af,ad,da";
-        String b = "ac,va,ha,aw,aa,ar,ae,sa,af,ad,da";
-//        System.out.println(a.concat());
+        int count = 0;
+        Map<String, Integer> top10KeywordList = new HashMap<String, Integer>();
+        for (Map.Entry<String, Integer> entry : listEntries) {
+            if (count >= 10) break;
+            count++;
+            top10KeywordList.put(entry.getKey(), entry.getValue());
 
+        }
+
+        return top10KeywordList;
     }
 
     public Map<String, Object> getBoardList(Object memberNo, int pageLimit, int currentPageBlock, String[] searchValue) {
