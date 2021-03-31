@@ -47,7 +47,7 @@
                             ${board.row_number}
                     </td>
                     <td>
-                        <a href="${path}/boards/${board.mbr_no}/read/${board.no}">
+                        <a href="${path}/boards/${board.no}">
                                 ${board.thumbnail}
                             <span style="display: inline-block; width: 200px; overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
                                     ${board.title}
