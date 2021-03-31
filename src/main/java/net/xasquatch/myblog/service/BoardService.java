@@ -177,8 +177,16 @@ public class BoardService {
         Map<String, Integer> top10KeywordList = new HashMap<String, Integer>();
         for (Map.Entry<String, Integer> entry : listEntries) {
             if (count >= 10) break;
+
             count++;
-            top10KeywordList.put(entry.getKey(), entry.getValue());
+
+            if (entry.getKey().equals("null")) {
+                count--;
+
+            } else {
+                top10KeywordList.put(entry.getKey(), entry.getValue());
+
+            }
 
         }
 

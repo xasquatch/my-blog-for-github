@@ -10,13 +10,19 @@
                 <c:when test="${requestScope.keyword eq keywordBox.key}">
                     <a>
                         <span class="link-tag-color">#${keywordBox.key}</span><BR>
-                        <span style="font-size: 0.7em">❤(${keywordBox.value})</span>
+                        <span style="font-size: 0.7em">
+                            <span class="glyphicon glyphicon-bookmark"></span>
+                            (${keywordBox.value})
+                        </span>
                     </a>
                 </c:when>
                 <c:otherwise>
                     <a href="${path}/community?keyword=${keywordBox.key}">
                         <span>#${keywordBox.key}</span><BR>
-                        <span style="font-size: 0.7em">❤(${keywordBox.value})</span>
+                        <span style="font-size: 0.7em">
+                            <span class="glyphicon glyphicon-bookmark"></span>
+                            (${keywordBox.value})
+                        </span>
                     </a>
                 </c:otherwise>
             </c:choose>

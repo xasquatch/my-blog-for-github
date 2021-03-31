@@ -446,7 +446,8 @@
                     temporarySave();
 
                 } else if (data === 'true') {
-                    window.location.href = '${path}/boards?memberNo=${sessionMember.no}';
+                    window.location.href = '${path}/boards/' + board.boardNo.value;
+                    window.history.replaceState(null, null, '${path}/boards/' + board.boardNo.value);
 
                 }
 
@@ -466,8 +467,8 @@
 
                 } else if (data === 'true') {
                     window.alert('수정에 성공하였습니다.');
-                    <%--window.location.href = '${path}/boards?memberNo=${sessionMember.no}';--%>
-                    window.history.back();
+                    window.location.href = '${path}/boards/' + board.boardNo.value;
+                    window.history.replaceState(null, null, '${path}/boards/' + board.boardNo.value);
                 }
 
             }, 'FORMFILE', formData);
