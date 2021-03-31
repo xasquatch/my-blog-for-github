@@ -7,7 +7,7 @@
     <section>
         <div onclick="itemFocus(this)">
             <img src="${path}/img/banner-white/star.png">
-            <p>★</p>
+            <p>고객지원</p>
         </div>
         <div onclick="itemFocus(this)">
             <img src="${path}/img/banner-white/user.png">
@@ -51,7 +51,7 @@
             document.querySelector('#main-footer>div').innerHTML = '';
 
             // element의 케이스에 맞춰 분기
-            if (inputData === '★') {
+            if (inputData === '고객지원') {
                 itemFocusStar();
 
             } else if (inputData === 'My Page') {
@@ -74,7 +74,7 @@
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
-            contents1.setAttribute('href', '${path}/notice');
+            contents1.setAttribute('href', '${path}/management/notice');
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
                 '<img src="${path}/img/banner-white/info.png" style="max-height : 100px; max-width:100px;"><BR>공지사항<BR>여러분의 피드백으로<BR>개선된 점을 안내해드립니다.', 10);

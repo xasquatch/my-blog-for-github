@@ -64,15 +64,15 @@ public class BoardBuilder {
             LEFT_OUTER_JOIN("(" + MemberBuilder.selectRankFromMbrJoinAuthorization() + ") m ON b.mbr_no = m.no");
             LEFT_OUTER_JOIN(LikeBuilder.selectSumLke() + " l ON b.no = l.board_no");
             if (searchTarget == null) {
-                WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true'");
+                WHERE("m.rank = '" + rank + "' AND keyword like '%myblog_notice%' AND completed = 'true'");
 
             } else if (searchTarget.equals("title-or-contents")) {
-                WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true'"
+                WHERE("m.rank = '" + rank + "' AND keyword like '%myblog_notice%' AND completed = 'true'"
                         + " AND (b.title LIKE '%" + searchValue + "%'"
                         + " OR b.contents LIKE '%" + searchValue + "%')");
 
             } else {
-                WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true'"
+                WHERE("m.rank = '" + rank + "' AND keyword like '%myblog_notice%' AND completed = 'true'"
                         + " AND " + searchTarget + " LIKE '%" + searchValue + "%'");
 
             }
@@ -156,13 +156,13 @@ public class BoardBuilder {
             FROM("board b");
             LEFT_OUTER_JOIN("(" + MemberBuilder.selectRankFromMbrJoinAuthorization() + ") m ON b.mbr_no = m.no");
             if (searchTarget == null) {
-                WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true'");
+                WHERE("m.rank = '" + rank + "' AND keyword like '%myblog_notice%' AND completed = 'true'");
 
             } else if (searchTarget.equals("title-or-contents")) {
-                WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true' AND (title LIKE '%" + searchValue + "%' OR contents LIKE '%" + searchValue + "%')");
+                WHERE("m.rank = '" + rank + "' AND keyword like '%myblog_notice%' AND completed = 'true' AND (title LIKE '%" + searchValue + "%' OR contents LIKE '%" + searchValue + "%')");
 
             } else {
-                WHERE("m.rank = '" + rank + "' AND keyword = 'my-blog-notice' AND completed = 'true' AND " + searchTarget + " LIKE '%" + searchValue + "%'");
+                WHERE("m.rank = '" + rank + "' AND keyword like '%myblog_notice%' AND completed = 'true' AND " + searchTarget + " LIKE '%" + searchValue + "%'");
 
             }
         }}.toString();

@@ -124,7 +124,7 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         Map<String, Object> noticeMap =
-                boardService.getNoticeList("manager", 5, 1, new String[]{"keyword", "my-blog-notice"});
+                boardService.getNoticeList("manager", 5, 1, new String[]{"keyword", "myblog_notice"});
         List<Map<String, Object>> noticeList = (List<Map<String, Object>>) noticeMap.get("boardList");
         model.addAttribute("noticeList", noticeList);
         model.addAttribute("mainContents", "home");

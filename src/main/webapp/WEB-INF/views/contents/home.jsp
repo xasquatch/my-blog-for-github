@@ -30,7 +30,7 @@
                     <tr>
                         <td colspan="2" style="text-align: right;">
                             <button class="btn btn-link-red" type="button"
-                                    onclick="window.location.href='${path}/notice'">
+                                    onclick="window.location.href='${path}/management/notice'">
                                 More
                             </button>
                         </td>

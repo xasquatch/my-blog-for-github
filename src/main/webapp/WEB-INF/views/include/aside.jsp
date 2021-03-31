@@ -13,7 +13,7 @@
             </h2>
             <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
                 <li role="presentation">
-                    <a href="${path}/notice">
+                    <a href="${path}/management/notice">
                         <img style="width: 30px; height: auto;" src="${path}/img/banner-black/light-bulb.png">
                         공지 사항 관리
                     </a>
@@ -41,12 +41,12 @@
             </a>
         </c:if>
         <HR>
-        <h2 style="font-weight: bold; text-align: center; background: black; margin: 0; padding: 10px;">
-            <img src="${path}/img/banner-white/star.png" style="width: 1em; height: 1em;">
+        <h2 style="font-weight: bold;">
+            고객지원
         </h2>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/notice">
+                <a href="${path}/management/notice">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/light-bulb.png">
                     공지 사항
                 </a>

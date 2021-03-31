@@ -17,7 +17,7 @@
                 <option>100</option>
             </select>
             <c:if test="${sessionMember.rank.equals('manager')}">
-                <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/boards/${sessionMember.no}/create?keyword=my-blog-notice'">
+                <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/boards/new?method=create&keyword=myblog_notice'">
                     글쓰기
                 </button>
             </c:if>
@@ -39,7 +39,7 @@
             <c:forEach var="board" items="${boardList}">
                 <tr>
                     <td>
-                        <a href="${path}/boards/${board.no}?memberNo=${board.mbr_no}">
+                        <a href="${path}/boards/${board.no}">
                             <span style="display: inline-block; width: 200px; overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
                                     ${board.title}
                             </span>
