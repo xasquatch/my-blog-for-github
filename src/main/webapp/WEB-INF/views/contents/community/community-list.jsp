@@ -5,22 +5,21 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <section id="myblog-main-section">
     <article class="community-keyword-container">
-        <a><span class="link-tag-color">#</span><span class="link-tag-color">public</span></a>
-        <a><span class="link-tag-color">#</span><span>springframework</span></a>
-        <a><span class="link-tag-color">#</span><span>DispatcherServlet</span></a>
-        <a><span class="link-tag-color">#</span><span>SimpleUrlHandlerMapping</span></a>
-        <a><span class="link-tag-color">#</span><span>ResourceHttpRequestHandler</span></a>
-        <a><span class="link-tag-color">#</span><span>Tomcat</span></a>
-        <a><span class="link-tag-color">#</span><span>JetBrains</span></a>
-        <a><span class="link-tag-color">#</span><span>CATALINA_BASE</span></a>
-        <a><span class="link-tag-color">#</span><span>parameters</span></a>
-        <a><span class="link-tag-color">#</span><span>CATALINA_HOME</span></a>
-        <c:forEach var="keyword" items="${topKeywordList}">
-<%--            ${topKeywordList}<HR>--%>
-            ${keyword.key}
-            ${keyword.value}
-            <BR>
-
+        <c:forEach var="keywordBox" items="${topKeywordList}">
+            <c:choose>
+                <c:when test="${requestScope.keyword eq keywordBox.key}">
+                    <a>
+                        <span class="link-tag-color">#${keywordBox.key}</span><BR>
+                        <span style="font-size: 0.7em">❤(${keywordBox.value})</span>
+                    </a>
+                </c:when>
+                <c:otherwise>
+                    <a href="${path}/community?keyword=${keywordBox.key}">
+                        <span>#${keywordBox.key}</span><BR>
+                        <span style="font-size: 0.7em">❤(${keywordBox.value})</span>
+                    </a>
+                </c:otherwise>
+            </c:choose>
         </c:forEach>
 
     </article>
@@ -50,7 +49,7 @@
                         </a>
                     </td>
                     <td style="vertical-align: middle;">
-                        ${board.mbr_nickname}
+                            ${board.mbr_nickname}
                     </td>
                     <td style="vertical-align: middle;">
                             ${board.created_date}
