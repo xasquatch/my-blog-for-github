@@ -101,12 +101,14 @@ var like = {
     upToBoard: function (boardNo) {
         myAjax.submit('POST', 'https://myblog.xasquatch.net/boards/' + boardNo + '/like/up', function (data) {
             like.readToBoard(boardNo);
+            alert(data);
 
         }, 'FORM', null);
     },
     downToBoard: function (boardNo) {
         myAjax.submit('POST', 'https://myblog.xasquatch.net/boards/' + boardNo + '/like/down', function (data) {
             like.readToBoard(boardNo);
+            alert(data);
 
         }, 'FORM', null);
     },
