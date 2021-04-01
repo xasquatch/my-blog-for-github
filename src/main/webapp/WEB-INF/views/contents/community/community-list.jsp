@@ -27,8 +27,12 @@
                 </c:otherwise>
             </c:choose>
         </c:forEach>
-
     </article>
+    <div style="text-align: right;">
+        <button class="btn-link-red dot-key" style="margin: 1px;" onclick="location.href='${path}/boards/new?method=create'">
+            새 글 작성
+        </button>
+    </div>
     <article id="myblog-board-list-contents" class="dot-key table-responsive">
         <table class="table table-hover table-condensed">
             <thead>
