@@ -81,6 +81,16 @@ public class ManagementController {
         model.addAttribute("noticeList", "management-board-list");
         model.addAttribute("mainContents", "management-board-list");
 
+        try {
+            model.addAttribute("searchTarget", parsingSearchValue[0]);
+            model.addAttribute("searchValue", parsingSearchValue[1].substring(1, parsingSearchValue[1].length() - 1));
+
+        } catch (NullPointerException e) {
+            log.debug("viewList {}", e.getMessage());
+            model.addAttribute("searchTarget", "keyword");
+        }
+
+
         return "index";
     }
 
