@@ -22,20 +22,40 @@ public class MemberBuilder {
         }}.toString();
     }
 
-    public static String selectAllMember(String typeAuthReference, String searchTarget, String searchValue) {
-        if (!typeAuthReference.equals("manager")) return null;
+    public static String selectAllMember(int currentPage, int pageLimit, String searchTarget, String searchValue) {
         return new SQL() {{
             SELECT("m.no AS no, a.rank AS authorization, m.email AS email, " +
                     "m.name AS mbr_nickname, m.img AS img");
             FROM("mbr m");
             LEFT_OUTER_JOIN("authorization a ON m.authorization_no = a.no");
             WHERE("a.rank != 'manager' AND m.name != 'GUEST'");
-            if (searchTarget != null && !searchTarget.equals("")
-                    && searchValue != null && !searchValue.equals("")) {
-                AND();
-                WHERE(searchTarget + " LIKE %" + searchValue + "%");
+            if (searchTarget.equals("member-number")) {
+                WHERE("m.no LIKE '%" + searchValue + "%'");
+
+            } else if (searchTarget.equals("member-name")) {
+                WHERE("m.name LIKE '%" + searchValue + "%'");
+
             }
+            LIMIT(currentPage + ", " + pageLimit);
             ORDER_BY("m.no DESC");
+        }}.toString();
+    }
+
+    public static String selectAllMemberCount(String searchTarget, String searchValue) {
+        return new SQL() {{
+            SELECT("COUNT(m.no)");
+            FROM("mbr m");
+            LEFT_OUTER_JOIN("authorization a ON m.authorization_no = a.no");
+            if (searchTarget.equals("member-number")) {
+                WHERE("a.rank != 'manager' AND m.name != 'GUEST' AND m.no LIKE '%" + searchValue + "%'");
+
+            } else if (searchTarget.equals("member-name")) {
+                WHERE("a.rank != 'manager' AND m.name != 'GUEST' AND m.name LIKE '%" + searchValue + "%'");
+
+            } else {
+                WHERE("a.rank != 'manager' AND m.name != 'GUEST'");
+
+            }
         }}.toString();
     }
 

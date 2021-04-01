@@ -131,6 +131,8 @@ public interface MemberMapper {
     String selectNo(String email, String name);
 
     @SelectProvider(type = MemberBuilder.class, method = "selectAllMember")
-    List<Map<String, Object>> selectAllMember(String typeAuthReference, String searchTarget, String searchValue);
+    List<Map<String, Object>> selectAllMember(int currentPage, int pageLimit, String searchTarget, String searchValue);
 
+    @SelectProvider(type = MemberBuilder.class, method = "selectAllMemberCount")
+    int selectAllMemberCount(String searchTarget, String searchValue);
 }
