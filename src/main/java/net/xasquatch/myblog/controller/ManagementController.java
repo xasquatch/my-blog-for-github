@@ -70,7 +70,7 @@ public class ManagementController {
         String[] parsingSearchValue = boardService.parsingSearchValue(keyword, title, contents, titleOrContents);
 
         Map<String, Object> boardUnit =
-                boardService.getBoardList("all", pageLimit, currentPageBlock, parsingSearchValue);
+                boardService.getBoardList("all-management", pageLimit, currentPageBlock, parsingSearchValue);
 
         List<Map<String, Object>> boardList = (List<Map<String, Object>>) boardUnit.get("boardList");
         Object pageBlockList = boardUnit.get("pageBlockList");

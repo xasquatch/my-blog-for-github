@@ -160,6 +160,53 @@ public class Pagination {
         return blockList;
     }
 
+    public List<String> manageBoardBlockList(int pageLimit, int currentPageBlock, int totalCount, String searchTarget, String searchValue) {
+
+        int[] pageBlocks = calculationToPage(pageLimit, currentPageBlock, totalCount);
+
+        int prevPageBlock = pageBlocks[0];
+        int nextPageBlock = pageBlocks[1];
+        int endPageBlock = pageBlocks[2];
+
+        if (searchTarget == null) {
+            searchTarget = "";
+            searchValue = "";
+
+        } else if (searchValue != null) {
+            searchValue = searchValue.replaceAll("%", "");
+
+        }
+
+        List<String> blockList = new ArrayList<String>();
+        for (int i = prevPageBlock; i <= nextPageBlock; i++) {
+            if (i != 0) {
+                if (i == currentPageBlock) {
+                    blockList.add("<a class='myblog-page-block current-page'>" + i + "</a>");
+
+                } else if (i == prevPageBlock) {
+                    blockList.add("<a class='myblog-page-block' href='/management/boards?"
+                            + "page-limit=" + pageLimit + "&"
+                            + "current-page-block=" + i + "&"
+                            + searchTarget + "=" + searchValue + "'>prev</a>");
+
+                } else if (i == nextPageBlock && i != endPageBlock) {
+                    blockList.add("<a class='myblog-page-block' href='/management/boards?"
+                            + "page-limit=" + pageLimit + "&"
+                            + "current-page-block=" + i + "&"
+                            + searchTarget + "=" + searchValue + "'>next</a>");
+
+                } else {
+                    blockList.add("<a class='myblog-page-block' href='/management/boards?"
+                            + "page-limit=" + pageLimit + "&"
+                            + "current-page-block=" + i + "&"
+                            + searchTarget + "=" + searchValue + "'>" + i + "</a>");
+
+                }
+            }
+        }
+        return blockList;
+    }
+
     public List<String> getNoticeBlockList(int pageLimit, int currentPageBlock, int totalCount, String searchTarget, String searchValue) {
 
         int[] pageBlocks = calculationToPage(pageLimit, currentPageBlock, totalCount);

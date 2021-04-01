@@ -58,7 +58,7 @@ public class BoardService {
         CheckTargetString.forEach((key, value) -> {
             for (String word : prohibitedWords) {
                 if (!key.equals("msg") && value.contains(word)) {
-                    CheckTargetString.put("msg", "[script Error] \"" + key + "\"부분의 스크립트를 제거해주시기바랍니다.");
+                    CheckTargetString.put("msg", "[script Error] 스크립트를 제거해주시기바랍니다.");
                 }
             }
         });
@@ -193,7 +193,7 @@ public class BoardService {
         return top10KeywordList;
     }
 
-    public Map<String, Object> getBoardList(Object memberNo, int pageLimit, int currentPageBlock, String[] searchValue) {
+    public Map<String, Object> getBoardList(Object typeAuthReference, int pageLimit, int currentPageBlock, String[] searchValue) {
 
         int currentPage = 0;
         try {
@@ -203,17 +203,22 @@ public class BoardService {
             log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
         }
 
+        Object memberNo = typeAuthReference.equals("all-management") ? "all" : typeAuthReference;
+
         List<Map<String, Object>> boardList
                 = boardDao.selectBoardList(memberNo, currentPage, pageLimit, searchValue[0], searchValue[1]);
 
         int totalCount = boardDao.selectBoardCount(memberNo, searchValue[0], searchValue[1]);
 
         List<String> pageBlockList;
-        if (memberNo.equals("all")) {
+        if (typeAuthReference.equals("all-management")) {
+            pageBlockList = new Pagination().manageBoardBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+
+        } else if (typeAuthReference.equals("all")) {
             pageBlockList = new Pagination().getBoardBlockList("all", pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         } else {
-            pageBlockList = new Pagination().getBoardBlockList(memberNo, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+            pageBlockList = new Pagination().getBoardBlockList(typeAuthReference, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         }
 
