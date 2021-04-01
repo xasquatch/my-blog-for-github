@@ -10,9 +10,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Slf4j
@@ -31,15 +29,15 @@ public class MemberService {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
-    public Map<String, Long> getAuthorization(){
+    public Map<String, Long> getAuthorization() {
         return memberDao.selectAuthorization();
     }
 
-    public boolean updateRank(long number, String email){
+    public boolean updateRank(long number, String email) {
         return memberDao.updateRank(number, email);
     }
 
-    public long findNumberForEmail(String email){
+    public long findNumberForEmail(String email) {
 
         return memberDao.selectOneNo(email);
     }
@@ -58,9 +56,47 @@ public class MemberService {
 
     }
 
-    public List<Map<String, Object>> manageAllMember(String typeAuthReference, String searchTarget, String searchValue){
+    public String[] parsingSearchValue(String memberNo, String memberName) {
+        Map<String, String> map = new HashMap<String, String>();
+        String[] searchValue = new String[2];
+
+        map.put("member-number", memberNo);
+        map.put("member-name", memberName);
+
+        map.forEach((key, value) -> {
+            if (!key.equals("") && !key.equals("undefined")
+                    || (!value.equals("") && !value.equals("undefined"))) {
+                searchValue[0] = key;
+                searchValue[1] = '%' + value + '%';
+            }
+        });
+
+        return searchValue;
+    }
+
+
+    public Map<String, Object> manageAllMember(String typeAuthReference, int pageLimit, int currentPageBlock, String[] searchValue) {
         if (!typeAuthReference.equals("manager")) return null;
-        return memberDao.selectAllMember(typeAuthReference, searchTarget, searchValue);
+
+        int currentPage = 0;
+        try {
+            currentPage = (currentPageBlock - 1) * pageLimit;
+
+        } catch (ArithmeticException e) {
+            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
+        }
+
+        List<Map<String, Object>> memberList
+                = memberDao.selectAllMember(currentPage, pageLimit, searchValue[0], searchValue[1]);
+        int totalCount = memberDao.selectAllMemberCount(searchValue[0], searchValue[1]);
+
+        List<String> memberPageBlockList = new Pagination().getMemberBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+
+        Map<String, Object> memberListUnit = new HashMap<String, Object>();
+        memberListUnit.put("memberList", memberList);
+        memberListUnit.put("memberPageBlockList", memberPageBlockList);
+
+        return memberListUnit;
 
     }
 
@@ -115,7 +151,7 @@ public class MemberService {
         sessionMember.setLoginOAuth(false);
     }
 
-    public boolean saveForToken(Member member){
+    public boolean saveForToken(Member member) {
         boolean result = false;
         result = memberDao.insertMbrForToken(member);
 
@@ -201,20 +237,20 @@ public class MemberService {
         return result;
     }
 
-    public String searchEmail(String name){
+    public String searchEmail(String name) {
         return memberDao.selectEmail(name);
     }
 
-    public boolean searchPwd(Member member){
+    public boolean searchPwd(Member member) {
         boolean result = false;
 
-        String memberNo = memberDao.selectNo(member.getEmail(),member.getName());
-        if (memberNo != null){
+        String memberNo = memberDao.selectNo(member.getEmail(), member.getName());
+        if (memberNo != null) {
             String pwdToken = mailService.createToken(8);
             mailService.createMainContents(member.getName() + "님<BR>My Blog By Xasquatch에<BR>요청한 임시비밀번호입니다.",
                     "            password: " + pwdToken,
                     "<a href=\"https://myblog.xasquatch.net\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">로그인 하러가기</a>");
-            mailService.sendAuthMail(member.getEmail(),member.getName() + "님 My Blog By Xasquatch에 요청한 임시비밀번호입니다");
+            mailService.sendAuthMail(member.getEmail(), member.getName() + "님 My Blog By Xasquatch에 요청한 임시비밀번호입니다");
             member.setNo(Long.valueOf(memberNo));
             member.setPwd(pwdToken);
             result = memberDao.updateMbrDefault(member);

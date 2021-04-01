@@ -99,19 +99,39 @@ public class ManagementController {
     }
 
     @GetMapping("/users")
-    public String userList(Model model) {
+    public String userList(Model model,
+                           @RequestParam(value = "page-limit", required = false, defaultValue = "50") int pageLimit,
+                           @RequestParam(value = "current-page-block", required = false, defaultValue = "1") int currentPageBlock,
+                           @RequestParam(value = "member-number", required = false, defaultValue = "") String memberNo,
+                           @RequestParam(value = "member-name", required = false, defaultValue = "") String memberName) {
 
         if (!checkSessionController.isCheckManager())
             return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.");
 
-        List<Map<String, Object>> memberList
-                = memberService.manageAllMember("manager", "", "");
+        String[] searchValue = memberService.parsingSearchValue(memberNo, memberName);
+
+        Map<String, Object> memberListUnit = memberService.manageAllMember("manager", pageLimit, currentPageBlock, searchValue);
+        List<Map<String, Object>> memberList = (List<Map<String, Object>>) memberListUnit.get("memberList");
+        List<String> pageBlockList = (List<String>) memberListUnit.get("memberPageBlockList");
 
         model.addAttribute("memberList", memberList);
+        model.addAttribute("pageBlockList", pageBlockList);
         model.addAttribute("mainContents", "management-user-list");
 
         return "index";
 
     }
+
+    @GetMapping("/members/{memberNo}/edit")
+    public String info(Model model, @PathVariable String memberNo) {
+        if (checkSessionController.isCheckManager()) {
+            model.addAttribute("mainContents", "management-user-edit");
+            return "index";
+
+        }
+        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.");
+
+    }
+
 
 }

@@ -32,8 +32,12 @@ public class MemberDao {
 
     }
 
-    public List<Map<String, Object>> selectAllMember(String typeAuthReference, String searchTarget, String searchValue){
-        return memberMapper.selectAllMember(typeAuthReference, searchTarget, searchValue);
+    public List<Map<String, Object>> selectAllMember(int currentPage, int pageLimit, String searchTarget, String searchValue) {
+        return memberMapper.selectAllMember(currentPage, pageLimit, searchTarget, searchValue);
+    }
+
+    public int selectAllMemberCount(String searchTarget, String searchValue) {
+        return memberMapper.selectAllMemberCount(searchTarget, searchValue);
     }
 
     public String selectNo(String email, String name) {
