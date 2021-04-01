@@ -28,12 +28,14 @@ public class MemberBuilder {
                     "m.name AS mbr_nickname, m.img AS img");
             FROM("mbr m");
             LEFT_OUTER_JOIN("authorization a ON m.authorization_no = a.no");
-            WHERE("a.rank != 'manager' AND m.name != 'GUEST'");
-            if (searchTarget.equals("member-number")) {
-                WHERE("m.no LIKE '%" + searchValue + "%'");
+            if (searchTarget == null) {
+                WHERE("a.rank != 'manager' AND m.name != 'GUEST'");
+
+            } else if (searchTarget.equals("member-number")) {
+                WHERE("a.rank != 'manager' AND m.name != 'GUEST' AND m.no LIKE '%" + searchValue + "%'");
 
             } else if (searchTarget.equals("member-name")) {
-                WHERE("m.name LIKE '%" + searchValue + "%'");
+                WHERE("a.rank != 'manager' AND m.name != 'GUEST' AND m.name LIKE '%" + searchValue + "%'");
 
             }
             LIMIT(currentPage + ", " + pageLimit);
@@ -46,14 +48,14 @@ public class MemberBuilder {
             SELECT("COUNT(m.no)");
             FROM("mbr m");
             LEFT_OUTER_JOIN("authorization a ON m.authorization_no = a.no");
-            if (searchTarget.equals("member-number")) {
+            if (searchTarget == null) {
+                WHERE("a.rank != 'manager' AND m.name != 'GUEST'");
+
+            } else if (searchTarget.equals("member-number")) {
                 WHERE("a.rank != 'manager' AND m.name != 'GUEST' AND m.no LIKE '%" + searchValue + "%'");
 
             } else if (searchTarget.equals("member-name")) {
                 WHERE("a.rank != 'manager' AND m.name != 'GUEST' AND m.name LIKE '%" + searchValue + "%'");
-
-            } else {
-                WHERE("a.rank != 'manager' AND m.name != 'GUEST'");
 
             }
         }}.toString();
