@@ -3,3 +3,9 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sForm" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<section id="myblog-main-section">
+    <c:forEach var="member" items="${memberList}">
+        ${member}<BR>
+
+    </c:forEach>
+</section>

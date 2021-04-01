@@ -130,4 +130,7 @@ public interface MemberMapper {
     @Select("SELECT no FROM mbr WHERE email = #{arg0} AND name = #{arg1}")
     String selectNo(String email, String name);
 
+    @SelectProvider(type = MemberBuilder.class, method = "selectAllMember")
+    List<Map<String, Object>> selectAllMember(String typeAuthReference, String searchTarget, String searchValue);
+
 }

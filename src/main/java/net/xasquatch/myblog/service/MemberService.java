@@ -58,6 +58,12 @@ public class MemberService {
 
     }
 
+    public List<Map<String, Object>> manageAllMember(String typeAuthReference, String searchTarget, String searchValue){
+        if (!typeAuthReference.equals("manager")) return null;
+        return memberDao.selectAllMember(typeAuthReference, searchTarget, searchValue);
+
+    }
+
     public String login(Member member) {
 
         Map<String, Object> resultMap = memberDao.selectOneMbr(member);

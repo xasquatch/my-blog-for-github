@@ -3,6 +3,7 @@ package net.xasquatch.myblog.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.xasquatch.myblog.model.Member;
 import net.xasquatch.myblog.service.BoardService;
+import net.xasquatch.myblog.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,9 @@ public class ManagementController {
 
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private MemberService memberService;
 
     @Resource(name = "sessionMember")
     private Member sessionMember;
@@ -100,8 +104,12 @@ public class ManagementController {
         if (!checkSessionController.isCheckManager())
             return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.");
 
-        model.addAttribute("userList", "management-user-list");
+        List<Map<String, Object>> memberList
+                = memberService.manageAllMember("manager", "", "");
+
+        model.addAttribute("memberList", memberList);
         model.addAttribute("mainContents", "management-user-list");
+
         return "index";
 
     }

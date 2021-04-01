@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -29,6 +30,10 @@ public class MemberDao {
     public String selectEmail(String name) {
         return memberMapper.selectEmail(name);
 
+    }
+
+    public List<Map<String, Object>> selectAllMember(String typeAuthReference, String searchTarget, String searchValue){
+        return memberMapper.selectAllMember(typeAuthReference, searchTarget, searchValue);
     }
 
     public String selectNo(String email, String name) {
