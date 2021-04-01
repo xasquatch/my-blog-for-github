@@ -29,7 +29,7 @@ public class MemberBuilder {
                     "m.name AS mbr_nickname, m.img AS img");
             FROM("mbr m");
             LEFT_OUTER_JOIN("authorization a ON m.authorization_no = a.no");
-            WHERE("a.rank != 'manager'");
+            WHERE("a.rank != 'manager' AND m.name != 'GUEST'");
             if (searchTarget != null && !searchTarget.equals("")
                     && searchValue != null && !searchValue.equals("")) {
                 AND();
