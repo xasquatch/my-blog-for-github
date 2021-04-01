@@ -76,7 +76,8 @@ public class BoardService {
         map.put("title-or-contents", titleOrContents);
 
         map.forEach((key, value) -> {
-            if (!value.equals("") && !value.equals("undefined")) {
+            if (!key.equals("") && !key.equals("undefined")
+                    || (!value.equals("") && !value.equals("undefined"))) {
                 searchValue[0] = key;
                 searchValue[1] = '%' + value + '%';
             }

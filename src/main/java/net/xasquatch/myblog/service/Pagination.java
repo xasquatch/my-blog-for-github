@@ -37,6 +37,44 @@ public class Pagination {
         return new int[]{prevPageBlock, nextPageBlock, endPageBlock};
     }
 
+    public List<String> getMemberBlockList(int pageLimit, int currentPageBlock, int totalCount, String searchTarget, String searchValue) {
+
+        int[] pageBlocks = calculationToPage(pageLimit, currentPageBlock, totalCount);
+        int prevPageBlock = pageBlocks[0];
+        int nextPageBlock = pageBlocks[1];
+        int endPageBlock = pageBlocks[2];
+
+        List<String> blockList = new ArrayList<String>();
+        for (int i = prevPageBlock; i <= nextPageBlock; i++) {
+            if (i != 0) {
+                if (i == currentPageBlock) {
+                    blockList.add("<a class='myblog-page-block btn btn-link-red current-page'>" + i + "</a>");
+
+                } else if (i == prevPageBlock) {
+                    blockList.add("<a class='myblog-page-block btn btn-link-red' href='/management/users?"
+                            + searchTarget + "=" + searchValue + "&"
+                            + "page-limit=" + pageLimit + "&"
+                            + "current-page-block=" + i + "'>prev</a>");
+
+                } else if (i == nextPageBlock && i != endPageBlock) {
+                    blockList.add("<a class='myblog-page-block btn btn-link-red' href='/management/users?"
+                            + searchTarget + "=" + searchValue + "&"
+                            + "page-limit=" + pageLimit + "&"
+                            + "current-page-block=" + i + "'>next</a>");
+
+                } else {
+                    blockList.add("<a class='myblog-page-block btn btn-link-red' href='/management/users?"
+                            + searchTarget + "=" + searchValue + "&"
+                            + "page-limit=" + pageLimit + "&"
+                            + "current-page-block=" + i + "'>" + i + "</a>");
+
+                }
+            }
+        }
+        return blockList;
+    }
+
+
     public List<String> getCommunityBlockList(int pageLimit, int currentPageBlock, int totalCount, String keyword) {
 
         int[] pageBlocks = calculationToPage(pageLimit, currentPageBlock, totalCount);
