@@ -28,7 +28,7 @@
             <td>${member.email}</td>
             <td style="text-align: center; width: 50px;">
                 <a class="btn btn-link-red"
-                   href="${path}/management/members/${member.no}/edit">
+                   href="${path}/management/members/${member.email}/edit">
                     <span class="glyphicon glyphicon-user"></span>
                 </a>
             </td>
