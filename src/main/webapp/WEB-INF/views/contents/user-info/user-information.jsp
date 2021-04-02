@@ -77,8 +77,6 @@
     }
 
     function modifyProfile(e) {
-        // e.preventDefault();
-
         document.querySelector('#imgFile').innerHTML = document.querySelector('#user-info-imageFit').innerHTML;
 
         var userForm = document.querySelector('#user-info');
@@ -113,7 +111,6 @@
 
     }
 
-
     function checkPwd(element) {
         var userPwdExplain = document.querySelector('#user-info-explain-pwd');
 
@@ -127,14 +124,12 @@
             userPwdExplain.style.color = 'GREEN';
 
         }
-
     }
 
     function isAvailablePwdRegExp(data) {
         var regExp = /^[A-Za-z0-9]{8,20}$/;
         return regExp.test(data);
     }
-
 
     function confirmPwd(element) {
         var pwd = document.querySelector('#user-info-pwd');
