@@ -242,12 +242,11 @@ public class MemberController {
     @PostMapping("/sign-up")
     @ResponseBody
     public String signUp(@Valid Member member, BindingResult bindingResult) {
-        boolean result = false;
-        if (!bindingResult.hasErrors()) {
-            result = memberService.save(member);
+        String result = "false";
+        if (!bindingResult.hasErrors())
+            result = memberService.updateMember(member);
 
-        }
-        return String.valueOf(result);
+        return result;
     }
 
     /*TODO:회원탈퇴*/
