@@ -150,12 +150,12 @@ public class MemberService {
         memberDao.insertMbrForToken(member);
     }
 
-    //TODO:img파일 저장 및 경로 설정 + result false시 해당 폴더 제거 구현 필요
     public String updateMember(Member member) {
         String imgFile = member.getImgFile();
         String imgPath = null;
 
-        if (!(imgFile == null || imgFile.equals("") || imgFile.equals("null") || imgFile.equals("undefined"))) {
+        // 이미지 소스값이 비어있지않으면
+        if (imgFile.contains("<img src=\"data:image/png")) {
             ImgParser imgParser = ImgParser.getImgParser(imgFile);
             while (imgParser.isCuttableImgSrc()) imgParser.addImgList();
             List<String> imgSrcList = imgParser.getImgSrcList();
@@ -168,6 +168,7 @@ public class MemberService {
             }
             imgParser.resetImgParser();
 
+            //img파일 저장 및 경로 설정 + result false시 해당 폴더 제거
             if (!memberDao.updateMbrImg(member)) fileService.removeFiles(imgPath);
 
         }
