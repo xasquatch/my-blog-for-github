@@ -75,7 +75,7 @@ public class MemberController {
     /*TODO: information페이지 이동*/
     @RequestMapping(path = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
     public String info(Model model, @PathVariable String memberNo, String checkPassword) {
-        if (checkSessionController.isCheckSession(memberNo))
+        if (!checkSessionController.isCheckSession(memberNo))
             return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
 
         if ((sessionMember.isCheckSession() && memberService.checkMember(checkPassword))
