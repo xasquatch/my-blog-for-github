@@ -56,11 +56,12 @@ public class MemberService {
 
     }
 
-    public String[] parsingSearchValue(String memberNo, String memberName) {
+    public String[] parsingSearchValue(String memberNo, String memberEmail, String memberName) {
         Map<String, String> map = new HashMap<String, String>();
         String[] searchValue = new String[2];
 
         map.put("member-number", memberNo);
+        map.put("member-email", memberEmail);
         map.put("member-name", memberName);
 
         map.forEach((key, value) -> {

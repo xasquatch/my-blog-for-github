@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -103,12 +105,13 @@ public class ManagementController {
                            @RequestParam(value = "page-limit", required = false, defaultValue = "50") int pageLimit,
                            @RequestParam(value = "current-page-block", required = false, defaultValue = "1") int currentPageBlock,
                            @RequestParam(value = "member-number", required = false, defaultValue = "") String memberNo,
+                           @RequestParam(value = "member-email", required = false, defaultValue = "") String memberEmail,
                            @RequestParam(value = "member-name", required = false, defaultValue = "") String memberName) {
 
         if (!checkSessionController.isCheckManager())
             return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.");
 
-        String[] searchValue = memberService.parsingSearchValue(memberNo, memberName);
+        String[] searchValue = memberService.parsingSearchValue(memberNo, memberEmail, memberName);
 
         Map<String, Object> memberListUnit = memberService.manageAllMember("manager", pageLimit, currentPageBlock, searchValue);
         List<Map<String, Object>> memberList = (List<Map<String, Object>>) memberListUnit.get("memberList");
@@ -116,15 +119,19 @@ public class ManagementController {
 
         model.addAttribute("memberList", memberList);
         model.addAttribute("pageBlockList", pageBlockList);
+        model.addAttribute("searchTarget", searchValue[0] == null ? "member-name" : searchValue[0]);
+        model.addAttribute("searchValue", searchValue[1]);
+        model.addAttribute("pageLimit", pageLimit);
         model.addAttribute("mainContents", "management-user-list");
 
         return "index";
 
     }
 
-    @GetMapping("/members/{memberNo}/edit")
-    public String info(Model model, @PathVariable String memberNo) {
+    @GetMapping("/members/{memberEmail}/edit")
+    public String info(Model model, @PathVariable String memberEmail) {
         if (checkSessionController.isCheckManager()) {
+            model.addAttribute("member", memberService.getMember(memberEmail));
             model.addAttribute("mainContents", "management-user-edit");
             return "index";
 
@@ -133,5 +140,32 @@ public class ManagementController {
 
     }
 
+
+    //TODO: 회원정보 변경
+    @PutMapping("/members/{memberNo}")
+    @ResponseBody
+    public String update(Member member) {
+        String result = "false";
+        if (checkSessionController.isCheckManager())
+            result = memberService.updateMember(member);
+
+        return result;
+
+    }
+
+    //회원 삭제
+    @DeleteMapping("/members/{memberNo}")
+    @ResponseBody
+    public String delete(@PathVariable long memberNo) {
+        String result = "false";
+        if (checkSessionController.isCheckManager())
+            result = memberService.delete(
+                    Member.builder()
+                            .no(memberNo)
+                            .build()
+            );
+
+        return result;
+    }
 
 }
