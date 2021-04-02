@@ -5,6 +5,12 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <section class="banner main-banner dot-key">
     <section>
+        <c:if test="${sessionMember.rank eq 'manager'}">
+            <div onclick="itemFocus(this)">
+                <img src="${path}/img/banner-white/members.png">
+                <p>Members Management</p>
+            </div>
+        </c:if>
         <div onclick="itemFocus(this)">
             <img src="${path}/img/banner-white/star.png">
             <p>고객지원</p>
@@ -67,6 +73,36 @@
                 itemFocusGuestInfo();
 
             }
+                <c:if test="${sessionMember.rank eq 'manager'}">
+            else if (inputData === 'Members Management') {
+                itemFocusManagement();
+            }
+
+            </c:if>
+        }
+
+
+        function itemFocusManagement() {
+            var footerTarget = document.querySelector('#main-footer>div');
+
+            var contents1 = document.createElement('a');
+            contents1.setAttribute('href', '${path}/management/notice');
+            footerTarget.appendChild(contents1);
+            textScript.insertText('#main-footer>div>a:nth-child(1)',
+                '<img src="${path}/img/banner-white/light-bulb.png" style="max-height : 100px; max-width:100px;"><BR>공지 사항 관리', 10);
+
+            var contents2 = document.createElement('a');
+            contents2.setAttribute('href', '${path}/management/users');
+            footerTarget.appendChild(contents2);
+            textScript.insertText('#main-footer>div>a:nth-child(2)',
+                '<img src="${path}/img/banner-white/members.png" style="max-height : 100px; max-width:100px;"><BR>회원 목록', 10);
+
+            var contentsLast = document.createElement('a');
+            contentsLast.setAttribute('href', '${path}/management/boards');
+            footerTarget.appendChild(contentsLast);
+            textScript.insertText('#main-footer>div>a:last-child',
+                '<img src="${path}/img/banner-white/all-boards.png" style="max-height : 100px; max-width:100px;"><BR>전체 글 목록', 10);
+
 
         }
 
