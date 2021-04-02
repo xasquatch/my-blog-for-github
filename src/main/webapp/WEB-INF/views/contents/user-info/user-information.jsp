@@ -61,7 +61,7 @@
     function deleteMember(memberNo) {
         var inputPrompt = window.prompt('회원탈퇴를 진행하시겠습니까? 계속 진행하시려면 \n"회원탈퇴: ${sessionMember.email}"를 입력해주세요.');
         if (inputPrompt === ('회원탈퇴: ${sessionMember.email}') && window.confirm('회원탈퇴를 진행합니다.')) {
-            myAjax.submit('DELETE', '${path}/members/' + memberNo + '/delete', function (data) {
+            myAjax.submit('DELETE', '${path}/members/' + memberNo , function (data) {
                 if (data === 'false'){
                     window.alert('회원탈퇴 과정에 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.');
 
@@ -83,7 +83,7 @@
 
         var userForm = document.querySelector('#user-info');
         var userFormData = new FormData(userForm);
-        myAjax.submit('PUT', '${path}/members/${sessionMember.no}/update', function (data) {
+        myAjax.submit('PUT', '${path}/members/${sessionMember.no}', function (data) {
 
             if (data === 'false') {
                 window.alert('정보 수정에 실패하였습니다. 수정조건을 확인 후 다시 시도해주세요.\n\n예시) 비밀번호, 닉네임 (영문또는 숫자로 8~20자이내)');

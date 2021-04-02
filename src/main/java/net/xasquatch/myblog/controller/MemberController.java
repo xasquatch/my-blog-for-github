@@ -89,7 +89,7 @@ public class MemberController {
     }
 
     //TODO: 회원정보 변경
-    @PutMapping("/{memberNo}/update")
+    @PutMapping("/{memberNo}")
     @ResponseBody
     public String update(@Valid Member member, BindingResult bindingResult, @PathVariable String memberNo) {
         String result = "false";
@@ -251,7 +251,7 @@ public class MemberController {
     }
 
     /*TODO:회원탈퇴*/
-    @DeleteMapping("/{memberNo}/delete")
+    @DeleteMapping("/{memberNo}")
     @ResponseBody
     public String delete(@PathVariable String memberNo) {
         String result = "false";
