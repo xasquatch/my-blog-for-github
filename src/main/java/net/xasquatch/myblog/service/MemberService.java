@@ -75,36 +75,6 @@ public class MemberService {
         return searchValue;
     }
 
-    public Map<String, Object> getMember(String memberEmail) {
-
-        return memberDao.selectOneMbrForManagement(memberEmail);
-    }
-
-    public Map<String, Object> manageAllMember(String typeAuthReference, int pageLimit, int currentPageBlock, String[] searchValue) {
-        if (!typeAuthReference.equals("manager")) return null;
-
-        int currentPage = 0;
-        try {
-            currentPage = (currentPageBlock - 1) * pageLimit;
-
-        } catch (ArithmeticException e) {
-            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
-        }
-
-        List<Map<String, Object>> memberList
-                = memberDao.selectAllMember(currentPage, pageLimit, searchValue[0], searchValue[1]);
-        int totalCount = memberDao.selectAllMemberCount(searchValue[0], searchValue[1]);
-
-        List<String> memberPageBlockList = new Pagination().getMemberBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
-
-        Map<String, Object> memberListUnit = new HashMap<String, Object>();
-        memberListUnit.put("memberList", memberList);
-        memberListUnit.put("memberPageBlockList", memberPageBlockList);
-
-        return memberListUnit;
-
-    }
-
     public String login(Member member) {
 
         Map<String, Object> resultMap = memberDao.selectOneMbr(member);
@@ -210,4 +180,64 @@ public class MemberService {
 
         return result;
     }
+
+    //------------------------------------------management------------------
+
+    public Map<String, Object> getMember(String memberEmail) {
+
+        return memberDao.selectOneMbrForManagement(memberEmail);
+    }
+
+    public Map<String, Object> manageAllMember(String typeAuthReference, int pageLimit, int currentPageBlock, String[] searchValue) {
+        if (!typeAuthReference.equals("manager")) return null;
+
+        int currentPage = 0;
+        try {
+            currentPage = (currentPageBlock - 1) * pageLimit;
+
+        } catch (ArithmeticException e) {
+            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
+        }
+
+        List<Map<String, Object>> memberList
+                = memberDao.selectAllMember(currentPage, pageLimit, searchValue[0], searchValue[1]);
+        int totalCount = memberDao.selectAllMemberCount(searchValue[0], searchValue[1]);
+
+        List<String> memberPageBlockList = new Pagination().getMemberBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+
+        Map<String, Object> memberListUnit = new HashMap<String, Object>();
+        memberListUnit.put("memberList", memberList);
+        memberListUnit.put("memberPageBlockList", memberPageBlockList);
+
+        return memberListUnit;
+
+    }
+
+    public String updateMemberForManagement(Member member) {
+        String imgFile = member.getImgFile();
+        String imgPath = null;
+
+        // 이미지 소스값이 비어있지않으면
+        if (imgFile.contains("<img src=\"data:image/png")) {
+            ImgParser imgParser = ImgParser.getImgParser(imgFile);
+            while (imgParser.isCuttableImgSrc()) imgParser.addImgList();
+            List<String> imgSrcList = imgParser.getImgSrcList();
+            imgPath = File.separator + member.getNo();
+            for (String imgSrc : imgSrcList) {
+                byte[] decodedImgSrc = fileService.decodeBase64(imgSrc);
+                String src = fileService.writeFile(decodedImgSrc, imgPath, new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + ".png");
+                member.setImg(src);
+
+            }
+            imgParser.resetImgParser();
+
+            //img파일 저장 및 경로 설정 + result false시 해당 폴더 제거
+            if (!memberDao.updateMbrImg(member)) fileService.removeFiles(imgPath);
+
+        }
+
+        return String.valueOf(memberDao.updateMbrDefault(member));
+    }
+
+
 }

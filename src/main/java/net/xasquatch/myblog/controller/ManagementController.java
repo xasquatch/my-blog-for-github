@@ -147,7 +147,7 @@ public class ManagementController {
     public String update(Member member) {
         String result = "false";
         if (checkSessionController.isCheckManager())
-            result = memberService.updateMember(member);
+            result = memberService.updateMemberForManagement(member);
 
         return result;
 
