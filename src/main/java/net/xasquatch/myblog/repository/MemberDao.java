@@ -131,8 +131,8 @@ public class MemberDao {
 
     public boolean updateMbrDefault(Member member) {
         boolean result = false;
-
-        member.setPwd(encryptPwd(member.getPwd()));
+        String memberPwd = member.getPwd();
+        if (!memberPwd.equals("")) member.setPwd(encryptPwd(memberPwd));
         if (memberMapper.updateMbrDefault(member) == 1) result = true;
 
         return result;
@@ -173,4 +173,12 @@ public class MemberDao {
         return String.format("%0128x", new BigInteger(1, md.digest()));
     }
 
+    public boolean updateMbrForManagement(Member member) {
+        boolean result = false;
+        String memberPwd = member.getPwd();
+        if (!memberPwd.equals("")) member.setPwd(encryptPwd(memberPwd));
+        if (memberMapper.updateMbrWithAuthorization(member) == 1) result = true;
+
+        return result;
+    }
 }

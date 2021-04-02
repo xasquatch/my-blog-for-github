@@ -1,5 +1,6 @@
 package net.xasquatch.myblog.mapper.builder;
 
+import net.xasquatch.myblog.model.Member;
 import org.apache.ibatis.jdbc.SQL;
 
 public class MemberBuilder {
@@ -69,4 +70,32 @@ public class MemberBuilder {
         }}.toString();
     }
 
+    public static String updateMbrWithAuthorization(Member member) {
+        return new SQL() {{
+            String authorization_no;
+            switch (member.getRank()) {
+                case "regular":
+                    authorization_no = "2";
+                    break;
+                default:
+                    authorization_no = "9";
+                    break;
+            }
+
+            UPDATE("mbr");
+            if (member.getPwd() == null || member.getPwd().equals("")) {
+                SET("authorization_no = '" + authorization_no + "'," +
+                        "email = '" + member.getEmail() + "'," +
+                        "name = '" + member.getName() + "'");
+
+            } else {
+                SET("authorization_no = '" + authorization_no + "', " +
+                        "email = '" + member.getEmail() + "', " +
+                        "pwd = '" + member.getPwd() + "', " +
+                        "name = '" + member.getName() + "'");
+
+            }
+            WHERE("no = '" + member.getNo() + "'");
+        }}.toString();
+    }
 }

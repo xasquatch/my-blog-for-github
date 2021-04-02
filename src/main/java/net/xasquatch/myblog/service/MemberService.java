@@ -236,7 +236,7 @@ public class MemberService {
 
         }
 
-        return String.valueOf(memberDao.updateMbrDefault(member));
+        return String.valueOf(memberDao.updateMbrForManagement(member));
     }
 
 

@@ -135,4 +135,7 @@ public interface MemberMapper {
 
     @SelectProvider(type = MemberBuilder.class, method = "selectAllMemberCount")
     int selectAllMemberCount(String searchTarget, String searchValue);
+
+    @UpdateProvider(type = MemberBuilder.class, method = "updateMbrWithAuthorization")
+    int updateMbrWithAuthorization(Member member);
 }
