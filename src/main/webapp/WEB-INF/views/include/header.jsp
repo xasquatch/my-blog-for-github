@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="${path}/css/reset.css">
     <link rel="stylesheet" href="${path}/css/home-style.css">
     <link rel="stylesheet" href="${path}/css/list-style.css">
+    <link rel="stylesheet" href="${path}/css/community-style.css">
     <%--END: custom css --%>
 
     <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -34,13 +35,17 @@
 <header id="main-header" class="dot-key">
     <a href="${path}/" id="header-left">
         <img src="${path}/img/Xasquatch.png"/>
-        <h1 id="main-header-logo"></h1>
+        <div class="dot-key">
+            <h1 id="main-header-logo"></h1>
+            <div id="main-header-member-name"></div>
+        </div>
     </a>
     <div id="header-center" style="color: red;">
 
     </div>
     <div id="header-right">
-        <c:if test="${mainContents != 'members' && mainContents != 'main' && sessionMember.no != null && sessionMember.no != ''
+        <c:if test="${mainContents != 'members' && mainContents != 'main' && mainContents != 'home'
+            && sessionMember.no != null && sessionMember.no != ''
             && !(mainContents.contains('check')||mainContents.contains('find'))}">
             <button style="font-size: 20px;" type="button" id="mobile-hamburger" class="dot-key btn btn-link-red" onclick="popUpAside();">
                 <B>More</B>

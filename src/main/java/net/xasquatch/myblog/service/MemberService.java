@@ -10,9 +10,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Slf4j
@@ -31,15 +29,15 @@ public class MemberService {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
-    public Map<String, Long> getAuthorization(){
+    public Map<String, Long> getAuthorization() {
         return memberDao.selectAuthorization();
     }
 
-    public boolean updateRank(long number, String email){
+    public boolean updateRank(long number, String email) {
         return memberDao.updateRank(number, email);
     }
 
-    public long findNumberForEmail(String email){
+    public long findNumberForEmail(String email) {
 
         return memberDao.selectOneNo(email);
     }
@@ -58,30 +56,40 @@ public class MemberService {
 
     }
 
+    public String[] parsingSearchValue(String memberNo, String memberEmail, String memberName) {
+        Map<String, String> map = new HashMap<String, String>();
+        String[] searchValue = new String[2];
+
+        map.put("member-number", memberNo);
+        map.put("member-email", memberEmail);
+        map.put("member-name", memberName);
+
+        map.forEach((key, value) -> {
+            if (!key.equals("") && !key.equals("undefined")
+                    && (!value.equals("") && !value.equals("undefined"))) {
+                searchValue[0] = key;
+                searchValue[1] = value;
+            }
+        });
+
+        return searchValue;
+    }
+
     public String login(Member member) {
 
         Map<String, Object> resultMap = memberDao.selectOneMbr(member);
 
-        try {
-            long sessionMemberNo = ((BigInteger) resultMap.get("no")).longValue();
-            sessionMember.setNo(sessionMemberNo);
-
-        } catch (Exception e) {
-            log.warn("CLASS CAST EXCEPTION: member no->{}", "null");
-            return "false";
-        }
-        sessionMember.setRank((String) resultMap.get("rank"));
-        sessionMember.setEmail((String) resultMap.get("email"));
-        sessionMember.setName((String) resultMap.get("name"));
-        sessionMember.setImg((String) resultMap.get("img"));
-
-        return String.valueOf(sessionMember.getNo());
+        return setSessionMember(resultMap);
     }
 
     public String loginForToken(Member member) {
 
         Map<String, Object> resultMap = memberDao.selectOneMbrForToken(member);
 
+        return setSessionMember(resultMap);
+    }
+
+    public String setSessionMember(Map<String, Object> resultMap) {
         try {
             long sessionMemberNo = ((BigInteger) resultMap.get("no")).longValue();
             sessionMember.setNo(sessionMemberNo);
@@ -109,75 +117,34 @@ public class MemberService {
         sessionMember.setLoginOAuth(false);
     }
 
-    public boolean saveForToken(Member member){
-        boolean result = false;
-        result = memberDao.insertMbrForToken(member);
-
-        return result;
-    }
-
-    //TODO:img파일 저장 및 경로 설정 + result false시 해당 폴더 제거 구현 필요
-    public boolean save(Member member) {
-        boolean result = false;
-
-        ImgParser imgParser = ImgParser.getImgParser(member.getImgFile());
-
-        while (imgParser.isCuttableImgSrc()) {
-            imgParser.addImgList();
-
-        }
-        result = memberDao.insertMbrExceptionImg(member);
-
-
-        List<String> imgSrcList = imgParser.getImgSrcList();
-        String path = File.separator + member.getNo();
-        for (int i = 0; i < imgSrcList.size(); i++) {
-            byte[] decodedImgSrc = fileService.decodeBase64(imgSrcList.get(i));
-            String src = fileService.writeFile(decodedImgSrc, path, new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + ".png");
-            member.setImg(src);
-
-        }
-
-        imgParser.resetImgParser();
-
-        if (!memberDao.updateMbrImg(member)) {
-            fileService.removeFiles(path);
-            delete(member);
-            result = false;
-        }
-
-        return result;
+    public void saveForToken(Member member) {
+        memberDao.insertMbrForToken(member);
     }
 
     public String updateMember(Member member) {
-        boolean result = false;
+        String imgFile = member.getImgFile();
+        String imgPath = null;
 
-        ImgParser imgParser = ImgParser.getImgParser(member.getImgFile());
+        // 이미지 소스값이 비어있지않으면
+        if (imgFile.contains("<img src=\"data:image/png")) {
+            ImgParser imgParser = ImgParser.getImgParser(imgFile);
+            while (imgParser.isCuttableImgSrc()) imgParser.addImgList();
+            List<String> imgSrcList = imgParser.getImgSrcList();
+            imgPath = File.separator + member.getNo();
+            for (String imgSrc : imgSrcList) {
+                byte[] decodedImgSrc = fileService.decodeBase64(imgSrc);
+                String src = fileService.writeFile(decodedImgSrc, imgPath, new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + ".png");
+                member.setImg(src);
 
-        while (imgParser.isCuttableImgSrc()) {
-            imgParser.addImgList();
+            }
+            imgParser.resetImgParser();
+
+            //img파일 저장 및 경로 설정 + result false시 해당 폴더 제거
+            if (!memberDao.updateMbrImg(member)) fileService.removeFiles(imgPath);
 
         }
-        result = memberDao.updateMbrDefault(member);
 
-
-        List<String> imgSrcList = imgParser.getImgSrcList();
-        String path = File.separator + member.getNo();
-        for (int i = 0; i < imgSrcList.size(); i++) {
-            byte[] decodedImgSrc = fileService.decodeBase64(imgSrcList.get(i));
-            String src = fileService.writeFile(decodedImgSrc, path, new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + ".png");
-            member.setImg(src);
-
-        }
-
-        imgParser.resetImgParser();
-
-        if (!memberDao.updateMbrImg(member)) {
-            fileService.removeFiles(path);
-            delete(member);
-        }
-
-        return String.valueOf(result);
+        return String.valueOf(memberDao.updateMbrDefault(member));
     }
 
     public boolean checkMember(String pwdKey) {
@@ -188,27 +155,24 @@ public class MemberService {
         return result;
     }
 
-    public boolean delete(Member member) {
-        boolean result = false;
-        result = memberDao.deleteOneMbr(member);
-
-        return result;
+    public String delete(Member member) {
+        return String.valueOf(memberDao.deleteOneMbr(member));
     }
 
-    public String searchEmail(String name){
+    public String searchEmail(String name) {
         return memberDao.selectEmail(name);
     }
 
-    public boolean searchPwd(Member member){
+    public boolean searchPwd(Member member) {
         boolean result = false;
 
-        String memberNo = memberDao.selectNo(member.getEmail(),member.getName());
-        if (memberNo != null){
+        String memberNo = memberDao.selectNo(member.getEmail(), member.getName());
+        if (memberNo != null) {
             String pwdToken = mailService.createToken(8);
             mailService.createMainContents(member.getName() + "님<BR>My Blog By Xasquatch에<BR>요청한 임시비밀번호입니다.",
                     "            password: " + pwdToken,
                     "<a href=\"https://myblog.xasquatch.net\" style=\"text-decoration: none; color: darkred; font-weight: bold;\">로그인 하러가기</a>");
-            mailService.sendAuthMail(member.getEmail(),member.getName() + "님 My Blog By Xasquatch에 요청한 임시비밀번호입니다");
+            mailService.sendAuthMail(member.getEmail(), member.getName() + "님 My Blog By Xasquatch에 요청한 임시비밀번호입니다");
             member.setNo(Long.valueOf(memberNo));
             member.setPwd(pwdToken);
             result = memberDao.updateMbrDefault(member);
@@ -216,4 +180,64 @@ public class MemberService {
 
         return result;
     }
+
+    //------------------------------------------management------------------
+
+    public Map<String, Object> getMember(String memberEmail) {
+
+        return memberDao.selectOneMbrForManagement(memberEmail);
+    }
+
+    public Map<String, Object> manageAllMember(String typeAuthReference, int pageLimit, int currentPageBlock, String[] searchValue) {
+        if (!typeAuthReference.equals("manager")) return null;
+
+        int currentPage = 0;
+        try {
+            currentPage = (currentPageBlock - 1) * pageLimit;
+
+        } catch (ArithmeticException e) {
+            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
+        }
+
+        List<Map<String, Object>> memberList
+                = memberDao.selectAllMember(currentPage, pageLimit, searchValue[0], searchValue[1]);
+        int totalCount = memberDao.selectAllMemberCount(searchValue[0], searchValue[1]);
+
+        List<String> memberPageBlockList = new Pagination().getMemberBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+
+        Map<String, Object> memberListUnit = new HashMap<String, Object>();
+        memberListUnit.put("memberList", memberList);
+        memberListUnit.put("memberPageBlockList", memberPageBlockList);
+
+        return memberListUnit;
+
+    }
+
+    public String updateMemberForManagement(Member member) {
+        String imgFile = member.getImgFile();
+        String imgPath = null;
+
+        // 이미지 소스값이 비어있지않으면
+        if (imgFile.contains("<img src=\"data:image/png")) {
+            ImgParser imgParser = ImgParser.getImgParser(imgFile);
+            while (imgParser.isCuttableImgSrc()) imgParser.addImgList();
+            List<String> imgSrcList = imgParser.getImgSrcList();
+            imgPath = File.separator + member.getNo();
+            for (String imgSrc : imgSrcList) {
+                byte[] decodedImgSrc = fileService.decodeBase64(imgSrc);
+                String src = fileService.writeFile(decodedImgSrc, imgPath, new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()) + ".png");
+                member.setImg(src);
+
+            }
+            imgParser.resetImgParser();
+
+            //img파일 저장 및 경로 설정 + result false시 해당 폴더 제거
+            if (!memberDao.updateMbrImg(member)) fileService.removeFiles(imgPath);
+
+        }
+
+        return String.valueOf(memberDao.updateMbrForManagement(member));
+    }
+
+
 }

@@ -19,7 +19,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @Controller
-@RequestMapping(value = "/members", produces = "text/plain;charset=UTF-8")
+@RequestMapping(path = "/members", produces = "text/plain;charset=UTF-8")
 public class MemberController {
 
     @Autowired
@@ -49,7 +49,7 @@ public class MemberController {
     }
 
     /*TODO: 회원 api 클립보드 페이지로 이동*/
-    @RequestMapping(value = "/{memberNo}/api/clipboard", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = "/{memberNo}/api/clipboard", method = {RequestMethod.GET, RequestMethod.POST})
     public String goApiClipBoard(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSession(memberNo)) {
             model.addAttribute("mainContents", "user-api-clipboard");
@@ -61,7 +61,7 @@ public class MemberController {
     }
 
     /*TODO: 회원 api QUICK GUIDE PAGE로 이동*/
-    @RequestMapping(value = "/{memberNo}/api/quick-guide", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = "/{memberNo}/api/quick-guide", method = {RequestMethod.GET, RequestMethod.POST})
     public String goApiQuickGuide(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSession(memberNo)) {
             model.addAttribute("mainContents", "user-api-quick-guide");
@@ -73,24 +73,23 @@ public class MemberController {
     }
 
     /*TODO: information페이지 이동*/
-    @RequestMapping(value = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = "/{memberNo}/information", method = {RequestMethod.GET, RequestMethod.POST})
     public String info(Model model, @PathVariable String memberNo, String checkPassword) {
-        if (checkSessionController.isCheckSession(memberNo)) {
-            if ((sessionMember.isCheckSession() && memberService.checkMember(checkPassword)) || sessionMember.isLoginOAuth()) {
-                model.addAttribute("mainContents", "user-information");
-                return "index";
+        if (!checkSessionController.isCheckSession(memberNo))
+            return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
 
-            } else {
-                return "redirect:/members/" + sessionMember.getNo() + "/check-password";
+        if ((sessionMember.isCheckSession() && memberService.checkMember(checkPassword))
+                || sessionMember.isLoginOAuth()) {
+            model.addAttribute("mainContents", "user-information");
+            return "index";
 
-            }
         }
+        return "redirect:/members/" + sessionMember.getNo() + "/check-password";
 
-        return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
     //TODO: 회원정보 변경
-    @PutMapping("/{memberNo}/update")
+    @PutMapping("/{memberNo}")
     @ResponseBody
     public String update(@Valid Member member, BindingResult bindingResult, @PathVariable String memberNo) {
         String result = "false";
@@ -105,7 +104,7 @@ public class MemberController {
     }
 
     /*TODO:회원 비밀번호 인증으로 이동*/
-    @RequestMapping(value = "/{memberNo}/check-password", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = "/{memberNo}/check-password", method = {RequestMethod.GET, RequestMethod.POST})
     public String checkPassword(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSession(memberNo)) {
             model.addAttribute("mainContents", "user-check-password");
@@ -117,7 +116,7 @@ public class MemberController {
     }
 
     /*TODO: 회원 이메일 변경페이지로 이동*/
-    @RequestMapping(value = "/{memberNo}/change-email", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = "/{memberNo}/change-email", method = {RequestMethod.GET, RequestMethod.POST})
     public String changeEmail(Model model, @PathVariable String memberNo) {
         if (checkSessionController.isCheckSession(memberNo)) {
             model.addAttribute("mainContents", "user-change-email");
@@ -129,7 +128,7 @@ public class MemberController {
     }
 
     /*TODO: 회원 이메일 인증페이지로 이동*/
-    @RequestMapping(value = "/{memberNo}/check-email", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = "/{memberNo}/check-email", method = {RequestMethod.GET, RequestMethod.POST})
     public String checkEmail(Model model, @PathVariable String memberNo, @RequestParam(value = "checkEmail", required = false, defaultValue = "empty") String checkEmail) {
         if (checkSessionController.isCheckSession(memberNo)) {
             if (!checkEmail.equals("empty")) {
@@ -159,21 +158,21 @@ public class MemberController {
     }
 
     /*TODO: 회원 이메일 찾기*/
-    @RequestMapping(value = "/search/email", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = "/search/email", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String searchEmail(Member member) {
         return memberService.searchEmail(member.getName());
     }
 
     /*TODO: 회원 임시 비밀번호 찾기*/
-    @RequestMapping(value = "/search/password", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = "/search/password", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String searchPwd(Member member) {
         return String.valueOf(memberService.searchPwd(member));
     }
 
     /*TODO: 회원 이메일 인증*/
-    @PatchMapping(value = "/{memberNo}/auth-email", params = {"authorizationToken"})
+    @PatchMapping(path = "/{memberNo}/auth-email", params = {"authorizationToken"})
     @ResponseBody
     public String authorizationEmail(@PathVariable String memberNo, String authorizationToken) {
         String result = "false";
@@ -186,7 +185,7 @@ public class MemberController {
     }
 
     /*TODO: 로그아웃 처리 후 루트페이지로 리다이렉트*/
-    @RequestMapping(value = "/log-out", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = "/log-out", method = {RequestMethod.GET, RequestMethod.POST})
     public String logOut(HttpServletRequest request, HttpServletResponse response) {
 
         request.getSession().removeAttribute("sessionMember");
@@ -243,21 +242,20 @@ public class MemberController {
     @PostMapping("/sign-up")
     @ResponseBody
     public String signUp(@Valid Member member, BindingResult bindingResult) {
-        boolean result = false;
-        if (!bindingResult.hasErrors()) {
-            result = memberService.save(member);
+        String result = "false";
+        if (!bindingResult.hasErrors())
+            result = memberService.updateMember(member);
 
-        }
-        return String.valueOf(result);
+        return result;
     }
 
     /*TODO:회원탈퇴*/
-    @DeleteMapping("/{memberNo}/delete")
+    @DeleteMapping("/{memberNo}")
     @ResponseBody
     public String delete(@PathVariable String memberNo) {
         String result = "false";
         if (checkSessionController.isCheckSession(memberNo)) {
-            result = String.valueOf(memberService.delete(sessionMember));
+            result = memberService.delete(sessionMember);
             memberService.reset(sessionMember);
         }
         return result;

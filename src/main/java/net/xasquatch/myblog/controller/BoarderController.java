@@ -52,7 +52,7 @@ public class BoarderController {
 
         String[] searchValue = boardService.parsingSearchValue(keyword, title, contents, titleOrContents);
         Map<String, Object> boardUnit;
-        if (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString())) {
+        if (memberNo.equals("all") && checkSessionController.isCheckManager()) {
             boardUnit = boardService.getBoardList("all", pageLimit, currentPageBlock, searchValue);
             model.addAttribute("mainContents", "management-boards");
 
@@ -129,13 +129,13 @@ public class BoarderController {
     }
 
     //TODO: 작성글 수정페이지로 이동
-    @GetMapping("/blob/{boardNo}")
+    @GetMapping("/{boardNo}/blob")
     public String modify(Model model,
                          @PathVariable String boardNo,
                          @RequestParam String pwd,
                          @RequestParam String memberNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
-                (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
+                (memberNo.equals("all") && checkSessionController.isCheckManager())) {
             if (sessionMember.getName().equals("GUEST") && !boardService.isConfirmBoardPwd(boardNo, pwd))
                 return checkSessionController.forwardingMembersPageAndErrorMsg(model, "패스워드 오류<BR>비밀번호를 다시 확인해주세요.");
             Map<String, Object> board = boardService.viewDetail(boardNo);
@@ -169,7 +169,7 @@ public class BoarderController {
                               @RequestParam String memberNo,
                               @PathVariable String boardNo) {
         if (checkSessionController.isCheckSessionAndAuth(memberNo) ||
-                (memberNo.equals("all") && checkSessionController.isCheckManager(sessionMember.getNo().toString()))) {
+                (memberNo.equals("all") && checkSessionController.isCheckManager())) {
             if (sessionMember.getName().equals("GUEST") && !boardService.isConfirmBoardPwd(boardNo, pwd))
                 return "false";
             if (boardService.delete(boardNo))
@@ -182,8 +182,10 @@ public class BoarderController {
     // TODO: 해당 게시판의 코멘트 초회
     @GetMapping("/{boardNo}/comments")
     @ResponseBody
-    public String viewCommentList(@PathVariable long boardNo) {
-        return commentService.getCommentList(boardNo);
+    public String viewCommentList(@PathVariable long boardNo,
+                                  @RequestParam(value = "page-limit", required = false, defaultValue = "5") String pageLimit,
+                                  @RequestParam(value = "current-page-block", required = false, defaultValue = "1") String currentPageBlock) {
+        return commentService.getCommentList(boardNo, currentPageBlock, pageLimit);
     }
 
 }

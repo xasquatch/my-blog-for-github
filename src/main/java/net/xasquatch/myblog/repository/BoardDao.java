@@ -77,4 +77,9 @@ public class BoardDao {
 
         return result;
     }
+
+    public List<String> selectAllKeywordList() {
+        return boardMapper.selectAllKeywordList();
+
+    }
 }

@@ -101,12 +101,14 @@ var like = {
     upToBoard: function (boardNo) {
         myAjax.submit('POST', 'https://myblog.xasquatch.net/boards/' + boardNo + '/like/up', function (data) {
             like.readToBoard(boardNo);
+            alert(data);
 
         }, 'FORM', null);
     },
     downToBoard: function (boardNo) {
         myAjax.submit('POST', 'https://myblog.xasquatch.net/boards/' + boardNo + '/like/down', function (data) {
             like.readToBoard(boardNo);
+            alert(data);
 
         }, 'FORM', null);
     },
@@ -117,14 +119,17 @@ var like = {
         });
     },
     upToComment: function (commentNo) {
+
         myAjax.submit('POST', 'https://myblog.xasquatch.net/comments/' + commentNo + '/like/up', function (data) {
             like.readToComment(commentNo);
+            alert(data);
 
         }, 'FORM', null);
     },
     downToComment: function (commentNo) {
         myAjax.submit('POST', 'https://myblog.xasquatch.net/comments/' + commentNo + '/like/down', function (data) {
             like.readToComment(commentNo);
+            alert(data);
 
         }, 'FORM', null);
     },

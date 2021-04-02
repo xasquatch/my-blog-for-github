@@ -117,7 +117,7 @@ var board = {
                 if (pwd === null) return;
 
             }
-            location.href = '/boards/blob/' + boardKey + '?pwd=' + pwd + '&memberNo=' + memberKey + '&method=modify';
+            location.href = '/boards/' + boardKey + '/blob?pwd=' + pwd + '&memberNo=' + memberKey + '&method=modify';
 
         }
     }
@@ -156,13 +156,13 @@ var resources = {
         emptyContentsDiv.appendChild(modifyForm);
 
         modal.changeForm('[Serial Number:' + serialNumber + '] ' +
-            '<button type="button" class="btn-link-red" onclick="resources.removeResource()">' +
+            '<button type="button" class="btn-link-red" onclick="resources.removeResource(' + serialNumber + ')">' +
             '<span class="glyphicon glyphicon-trash"></span>' +
             '</button>' +
             emptyTitleDiv.innerHTML,
             emptyContentsDiv.innerHTML);
         var confirmBtn = document.querySelector('#modal-confirm-btn');
-        confirmBtn.setAttribute('onclick', 'resources.modifyResource();');
+        confirmBtn.setAttribute('onclick', 'resources.modifyResource(' + serialNumber + ');');
     },
 
     createModifyForm: function (serialNumber) {
@@ -187,7 +187,7 @@ var resources = {
         return form;
     },
 
-    modifyResource: function () {
+    modifyResource: function (resourceNo) {
         if (window.confirm('현재 내용으로 수정하시겠습니까?') === false) {
             return;
         }
@@ -207,8 +207,8 @@ var resources = {
 
         var formData = new FormData(targetForm);
 
-        var uniform = url.getUniform('/resource/', '/list');
-        myAjax.submit('PUT', '/resource/' + uniform + '/modify', function (data) {
+        //세션값으로 member no 넘김
+        myAjax.submit('PUT', '/resources/' + resourceNo, function (data) {
             console.log(data);
             if (data === 'false') {
                 window.alert('수정에 실패하였습니다. 잠시 후 다시시도해주세요')
@@ -223,7 +223,7 @@ var resources = {
 
     },
 
-    removeResource: function () {
+    removeResource: function (resourceNo) {
         if (window.confirm('정말 삭제하시겠습니까?')) {
             var targetForm = document.querySelector('#resource-target-form');
             var title = document.querySelector('#resource-target-title');
@@ -233,9 +233,9 @@ var resources = {
             contents.value = document.querySelector('#resource-contents').value;
 
             var formData = new FormData(targetForm);
-            var uniform = url.getUniform('/resource/', '/list');
 
-            myAjax.submit('DELETE', '/resource/' + uniform + '/delete', function (data) {
+            //세션값으로 member no 넘김
+            myAjax.submit('DELETE', '/resources/' + resourceNo, function (data) {
                 if (data === 'false') {
                     window.alert('삭제에 실패하였습니다. 잠시 후 다시시도해주세요')
 
@@ -273,7 +273,7 @@ var resources = {
         if (lastNumber === undefined) lastNumber = Number.MAX_SAFE_INTEGER;
 
 
-        myAjax.submit('GET', '/resource/' + memberNo + '/AdditionalList?last-number=' + lastNumber + '&search=' + searchValue, function (data) {
+        myAjax.submit('GET', '/resources/more?last-number=' + lastNumber + '&search=' + searchValue, function (data) {
             if (data === 'false') {
                 window.alert('리소스 가져오기에 실패하였습니다. 잠시 후 다시 시도해주세요.')
 
@@ -294,8 +294,12 @@ var resources = {
                         labelElement.innerText = resource.no;
                         var h3Element = document.createElement('h3');
                         h3Element.innerText = resource.title;
-                        var paragraphElement = document.createElement('p');
-                        paragraphElement.innerText = resource.contents;
+                        var paragraphElement = document.createElement('textarea');
+                        paragraphElement.style.width = '100%';
+                        paragraphElement.style.height = '120px';
+                        paragraphElement.style.resize = 'none';
+                        paragraphElement.disabled = 'disabled';
+                        paragraphElement.value = resource.contents;
 
                         divContainerElement.appendChild(labelElement);
                         divContainerElement.appendChild(h3Element);
@@ -427,8 +431,20 @@ var footerEffect = {
 
         loadingFooter.classList.remove('padding-100vh-align-center');
         loadingFooter.classList.remove('opacity-half');
-    }
+    },
 
+    alert: function (massage) {
+        var tmpTag = document.createElement('h1');
+        footerEffect.addFooterState();
+        tmpTag.innerHTML = massage;
+        document.querySelector('#main-footer').append(tmpTag);
+
+        setTimeout(function(){
+            document.querySelector('#main-footer').removeChild(tmpTag);
+            footerEffect.removeFooterState();
+        },1000);
+
+    }
 
 }
 var boardListScript = {

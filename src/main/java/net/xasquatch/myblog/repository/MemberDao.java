@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -29,6 +30,14 @@ public class MemberDao {
     public String selectEmail(String name) {
         return memberMapper.selectEmail(name);
 
+    }
+
+    public List<Map<String, Object>> selectAllMember(int currentPage, int pageLimit, String searchTarget, String searchValue) {
+        return memberMapper.selectAllMember(currentPage, pageLimit, searchTarget, searchValue);
+    }
+
+    public int selectAllMemberCount(String searchTarget, String searchValue) {
+        return memberMapper.selectAllMemberCount(searchTarget, searchValue);
     }
 
     public String selectNo(String email, String name) {
@@ -122,8 +131,8 @@ public class MemberDao {
 
     public boolean updateMbrDefault(Member member) {
         boolean result = false;
-
-        member.setPwd(encryptPwd(member.getPwd()));
+        String memberPwd = member.getPwd();
+        if (!memberPwd.equals("")) member.setPwd(encryptPwd(memberPwd));
         if (memberMapper.updateMbrDefault(member) == 1) result = true;
 
         return result;
@@ -144,6 +153,11 @@ public class MemberDao {
         return memberMapper.selectOneMbrForToken(email);
     }
 
+    public Map<String, Object> selectOneMbrForManagement(String memberEmail) {
+
+        return memberMapper.selectOneMbrForToken(memberEmail);
+    }
+
     public String encryptPwd(String pwd) {
 
         MessageDigest md = null;
@@ -159,4 +173,12 @@ public class MemberDao {
         return String.format("%0128x", new BigInteger(1, md.digest()));
     }
 
+    public boolean updateMbrForManagement(Member member) {
+        boolean result = false;
+        String memberPwd = member.getPwd();
+        if (!memberPwd.equals("")) member.setPwd(encryptPwd(memberPwd));
+        if (memberMapper.updateMbrWithAuthorization(member) == 1) result = true;
+
+        return result;
+    }
 }

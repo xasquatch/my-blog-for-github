@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping(value = "/resource", produces = "text/plain;charset=UTF-8")
+@RequestMapping(path = "/resources", produces = "text/plain;charset=UTF-8")
 public class ResourceController {
 
     @Lazy
@@ -23,11 +23,10 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
-    @GetMapping("/{memberNo}/list")
-    public String viewList(Model model, @PathVariable String memberNo,
-                           @RequestParam(name = "search", required = false, defaultValue = "") String searchValue) {
+    @GetMapping
+    public String viewList(Model model, @RequestParam(name = "search", required = false, defaultValue = "") String searchValue) {
         List<Resource> resources;
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+        if (checkSessionController.isCheckSessionAndAuth()) {
             resources = resourceService.viewList(0, searchValue);
             model.addAttribute("mainContents", "resource-list");
             model.addAttribute("resources", resources);
@@ -38,56 +37,54 @@ public class ResourceController {
 
     }
 
-    @GetMapping("/{memberNo}/AdditionalList")
+    @GetMapping("/more")
     @ResponseBody
-    public String additionalViewList(@PathVariable String memberNo,
-                                     @RequestParam(name = "last-number", required = true, defaultValue = "100000000000") String lastNumber,
+    public String additionalViewList(@RequestParam(name = "last-number", required = true, defaultValue = "100000000000") String lastNumber,
                                      @RequestParam(name = "search", required = false, defaultValue = "") String searchValue) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo))
+        if (checkSessionController.isCheckSessionAndAuth())
             return resourceService.AdditionalViewList(lastNumber, searchValue);
-
 
         return "false";
 
     }
 
-    @GetMapping("/{memberNo}/create")
-    public String create(Model model, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+    @GetMapping("/new")
+    public String create(Model model) {
+        if (checkSessionController.isCheckSessionAndAuth()) {
             model.addAttribute("mainContents", "resource-create");
             return "index";
         }
         return checkSessionController.forwardingMembersPageAndErrorMsg(model, "권한이 없습니다.<BR>로그인 후 다시 시도해주세요");
     }
 
-    @PostMapping("/{memberNo}/upload")
+    @PostMapping("/upload")
     @ResponseBody
-    public String uploadData(Resource resource, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+    public String uploadData(Resource resource) {
+        if (checkSessionController.isCheckSessionAndAuth()) {
 
             return String.valueOf(resourceService.upload(resource));
         }
         return "false";
     }
 
-    @PutMapping("/{memberNo}/modify")
+    @PutMapping("/{ressourceNo}")
     @ResponseBody
-    public String modifyData(Resource resource, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+    public String modifyData(Resource resource) {
+        if (checkSessionController.isCheckSessionAndAuth()) {
 
             return String.valueOf(resourceService.modify(resource));
         }
         return "false";
     }
 
-    @DeleteMapping("/{memberNo}/delete")
+    @DeleteMapping("/{ressourceNo}")
     @ResponseBody
-    public String deleteData(Resource resource, @PathVariable String memberNo) {
-        if (checkSessionController.isCheckSessionAndAuth(memberNo)) {
+    public String deleteData(Resource resource) {
+        if (checkSessionController.isCheckSessionAndAuth()) {
 
             return String.valueOf(resourceService.delete(resource));
         }
         return "false";
-    }
+    }   
 
 }

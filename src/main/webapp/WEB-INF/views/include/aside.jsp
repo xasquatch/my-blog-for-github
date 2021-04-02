@@ -11,46 +11,50 @@
             <h2 style="font-weight: bold;">
                 Members<BR>Management
             </h2>
-            <hr>
             <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
                 <li role="presentation">
-                    <a href="${path}/notice/list">
+                    <a href="${path}/management/notice">
                         <img style="width: 30px; height: auto;" src="${path}/img/banner-black/light-bulb.png">
                         공지 사항 관리
                     </a>
                 </li>
                 <li role="presentation">
-                    <a href="${path}/${sessionMember.no}/management/users">
+                    <a href="${path}/management/users">
                         <img style="width: 30px; height: auto;" src="${path}/img/banner-black/members.png">
                         회원 목록
                     </a>
                 </li>
                 <li role="presentation">
-                    <a href="${path}/boards/all/list">
+                    <a href="${path}/management/boards">
                         <img style="width: 30px; height: auto;" src="${path}/img/banner-black/all-boards.png">
                         전체 글 목록
                     </a>
                 </li>
             </ul>
+            <hr>
         </c:if>
         <c:if test="${sessionMember.no ne '' && sessionMember.no ne null}">
-            <hr>
-            <a class="dot-key btn btn-link-red" style="font-size: 20px"
+            <a class="dot-key btn btn-link-red" style="margin: 0 auto; display:block; font-size: 20px"
                href="${path}/members/${sessionMember.no}">
                 메인화면으로 이동<BR>
                 (Members: 회원전용)
             </a>
-            <hr>
         </c:if>
+        <HR>
         <h2 style="font-weight: bold;">
-            Notice
+            고객지원
         </h2>
-        <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
-                <a href="${path}/notice/list">
+                <a href="${path}/management/notice">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/light-bulb.png">
                     공지 사항
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="${path}/community">
+                    <img style="width: 30px; height: auto;" src="${path}/img/banner-black/talk.png">
+                    커뮤니티
                 </a>
             </li>
             <li role="presentation">
@@ -60,10 +64,10 @@
                 </a>
             </li>
         </ul>
+        <hr>
         <h2 style="font-weight: bold;">
             블로그 관리
         </h2>
-        <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
                 <a href="${path}/boards/new?method=create">
@@ -72,7 +76,7 @@
                 </a>
             </li>
             <li role="presentation">
-                <a href="${path}/resource/${sessionMember.no}/create">
+                <a href="${path}/resources/new">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/add-resource.png">
                     새 저장소 만들기
                 </a>
@@ -84,16 +88,16 @@
                 </a>
             </li>
             <li role="presentation">
-                <a href="${path}/resource/${sessionMember.no}/list">
+                <a href="${path}/resources?memberNo=${sessionMember.no}">
                     <img style="width: 30px; height: auto;" src="${path}/img/banner-black/resource.png">
                     내 저장소 목록
                 </a>
             </li>
         </ul>
+        <hr>
         <h2 style="font-weight: bold;">
             마이 페이지
         </h2>
-        <hr>
         <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
             <li role="presentation">
                 <a href="${path}/members/${sessionMember.no}/api/clipboard">
@@ -124,53 +128,3 @@
         </ul>
     </c:if>
 </aside>
-
-
-<script>
-
-    function changeFeedbackForm() {
-        modal.changeForm('<div class="dot-key">피드백보내기</div>',
-            '<form id="feedback-form">' +
-            '<h5 class="dot-key">제목</h5>' +
-            '<input class="form-control" type="text" name="feedbackTitle"' +
-            'placeholder="제목을 입력해주세요" value="Send Feedback">' +
-            '<h5 class="dot-key">피드백 내용</h5>' +
-            '<textarea class="form-control" name="feedbackContents"' +
-            ' style="resize: none; min-height: 200px;"' +
-            'placeholder="상세한 내용을 작성해주세요:)"></textarea>' +
-            '</form>')
-
-        var confirmBtn = document.querySelector('#modal-confirm-btn');
-        confirmBtn.setAttribute('onclick', 'sendFeedback();');
-
-        $('#myModal').modal('show');
-    }
-
-
-    function sendFeedback() {
-        if (window.confirm('작성한 피드백을 전송하시겠습니까?')) {
-            var feedbackForm = document.querySelector('#feedback-form');
-            var feedback = new FormData(feedbackForm);
-            myAjax.submit('POST', '${path}/feedback/${sessionMember.no}', function (data) {
-
-                if (data.includes('Failed')) {
-                    switch (data) {
-                        case 'Failed Check Session':
-                            window.alert('[' + data + ']\n' + '세션정보가 일치하지않습니다.\n다시 로그인 후 시도해주시기바랍니다.');
-                            break;
-                        case 'Failed feedback':
-                            window.alert('[' + data + ']\n' + '알 수 없는 원인으로 인해 전송에 실패하였습니다.\n 잠시 후 다시 시도해주세요');
-                            break;
-                    }
-                } else {
-                    window.alert('[' + data + ']\n' + '피드백 전송이 완료되었습니다');
-
-                }
-            }, "FORMFILE", feedback)
-
-            $('#myModal').modal('hide');
-        }
-    }
-
-
-</script>

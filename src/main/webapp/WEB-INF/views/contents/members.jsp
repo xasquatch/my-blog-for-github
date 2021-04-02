@@ -254,7 +254,6 @@
 
             }
 
-
         }, 'FORM', 'email=' + element.value);
 
     }

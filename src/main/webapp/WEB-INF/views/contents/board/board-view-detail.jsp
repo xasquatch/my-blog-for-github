@@ -53,14 +53,16 @@
     <article style="text-align: center; padding: 20px;">
         <section style="text-align: center;">
             <h2>
-                <c:if test="${sessionMember ne null}">
+                <c:if test="${sessionMember ne null && sessionMember.name ne 'GUEST'}">
                     <a href="javascript:like.downToBoard(${board.no})">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
-                    <span id="like-board-symbol">❤</span>
-                    <span id="like-board-count">
-                            ${board.like}
-                    </span>
+                </c:if>
+                <span id="like-board-symbol">❤</span>
+                <span id="like-board-count">
+                    ${board.like}
+                </span>
+                <c:if test="${sessionMember ne null && sessionMember.name ne 'GUEST'}">
                     <a href="javascript:like.upToBoard(${board.no})">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
@@ -102,8 +104,8 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="5" style="text-align: center;">
-                    1
+                <td id="comment-list-block" colspan="5" style="text-align: center;">
+
                 </td>
             </tr>
             </tfoot>
@@ -141,7 +143,7 @@
 
         formData.append("boardNo", '${board.no}');
 
-        myAjax.submit('POST', "${path}/comments", function (data) {
+        myAjax.submit('POST', "${path}/comments/new", function (data) {
             if (data === 'false') {
                 alert('댓글작성에 실패하였습니다. 잠시 후 다시 시도해주시기바랍니다');
 
@@ -174,12 +176,25 @@
         });
     }
 
-    function getCommentList() {
-        myAjax.submit('GET', '${path}/boards/${board.no}/comments', function (data) {
-            var dataList = JSON.parse(data);
+    function getCommentList(url, pageLimit, currentPageBlock) {
+
+        if (pageLimit === null || pageLimit === '' || pageLimit === undefined)
+            pageLimit = 5;
+        if (currentPageBlock === null || currentPageBlock === '' || currentPageBlock === undefined)
+            currentPageBlock = 1;
+        if (url === null || url === '' || url === undefined)
+            url = '${path}/boards/${board.no}/comments?page-limit=' + pageLimit + '&current-page-block=' + currentPageBlock;
+
+        myAjax.submit('GET', url, function (data) {
+            var parsedData = JSON.parse(data);
+            var commentList = parsedData['commentList'];
+            var pageBlockList = parsedData['pageBlockList'];
+
             var commentListTable = document.querySelector('#comment-list-table');
+            var commentListBlock = document.querySelector('#comment-list-block');
             commentListTable.innerHTML = '';
-            for (var comment of dataList) {
+            commentListBlock.innerHTML = '';
+            for (var comment of commentList) {
                 var trTag = document.createElement('tr');
                 var tdProfileTag = document.createElement('td');
                 tdProfileTag.style.textAlign = 'center';
@@ -199,23 +214,27 @@
                 tdDeleteTag.style.textAlign = 'center';
 
                 var sessionNo = ${sessionMember.no} +0;
-                if (sessionNo === comment.mbr_no)
-                    tdDeleteTag.innerHTML = '<a href="javascript:like.downToComment(' + comment.no + ')">' +
-                        // TODO: <
-                        '<div>❤</div>' +
-                        '<span class="glyphicon glyphicon-chevron-left"></span>' +
-                        '</a>' +
-                        '<span id="myblog-like-comment-' + comment.no + '-count">' +
-                        comment.like +
-                        '</span>' +
-                        '<a href="javascript:like.upToComment(' + comment.no + ')">' +
-                        // TODO: >
-                        '<span class="glyphicon glyphicon-chevron-right"></span>' +
-                        '</a>' +
-                        '<BR>' +
-                        '<BR>' +
-                        '<a href="javascript:deleteBoardComment(\'${path}\/comments\/' + comment.no + '\')">삭제</a>';
-
+                tdDeleteTag.innerHTML =
+                    '<div>❤</div>' +
+                    // TODO: <
+                    <c:if test="${sessionMember ne null && sessionMember.name ne 'GUEST'}">
+                    '<a href="javascript:like.downToComment(' + comment.no + ')">' +
+                    '<span class="glyphicon glyphicon-chevron-left"></span>' +
+                    '</a>' +
+                    </c:if>
+                    '<span id="myblog-like-comment-' + comment.no + '-count">' +
+                    comment.like +
+                    '</span>' +
+                    // TODO: >
+                    <c:if test="${sessionMember ne null && sessionMember.name ne 'GUEST'}">
+                    '<a href="javascript:like.upToComment(' + comment.no + ')">' +
+                    '<span class="glyphicon glyphicon-chevron-right"></span>' +
+                    '</a>' +
+                    </c:if>
+                    '<BR>' +
+                    '<BR>';
+                if (sessionNo !== 0 && sessionNo === comment.mbr_no)
+                    tdDeleteTag.innerHTML += '<a href="javascript:deleteBoardComment(\'${path}\/comments\/' + comment.no + '\')">삭제</a>';
 
                 commentListTable.appendChild(trTag);
                 trTag.appendChild(tdProfileTag);
@@ -224,6 +243,20 @@
 
             }
 
+            for (var block of pageBlockList) {
+                commentListBlock.innerHTML += block;
+
+            }
+
+            var blockList = commentListBlock.querySelectorAll('a');
+            for (var pageBlock of blockList) {
+                pageBlock.classList.add('btn');
+                pageBlock.classList.add('btn-link-red');
+                pageBlock.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    getCommentList(event.target.href);
+                })
+            }
 
         });
     }
@@ -232,4 +265,5 @@
 
         getCommentList();
     }
+
 </script>

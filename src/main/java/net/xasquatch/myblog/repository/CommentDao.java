@@ -14,9 +14,14 @@ public class CommentDao {
     @Autowired
     private CommentMapper commentMapper;
 
-    public List<Map<String, Object>> selectCommentList(Object boardNo) {
+    public List<Map<String, Object>> selectCommentList(Object boardNo, Object currentPage) {
 
-        return commentMapper.selectCommentList(boardNo);
+        return commentMapper.selectCommentList(boardNo, currentPage);
+    }
+
+    public int selectCountComment(Object boardNo) {
+        return commentMapper.selectCountComment(boardNo);
+
     }
 
     public int deleteComment(Object commentNo, Object pwd) {

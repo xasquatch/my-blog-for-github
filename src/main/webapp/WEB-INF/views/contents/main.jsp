@@ -5,9 +5,15 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <section class="banner main-banner dot-key">
     <section>
+        <c:if test="${sessionMember.rank eq 'manager'}">
+            <div onclick="itemFocus(this)">
+                <img src="${path}/img/banner-white/members.png">
+                <p>Members Management</p>
+            </div>
+        </c:if>
         <div onclick="itemFocus(this)">
-            <img src="${path}/img/banner-white/light-bulb.png">
-            <p>Notice</p>
+            <img src="${path}/img/banner-white/star.png">
+            <p>고객지원</p>
         </div>
         <div onclick="itemFocus(this)">
             <img src="${path}/img/banner-white/user.png">
@@ -51,8 +57,8 @@
             document.querySelector('#main-footer>div').innerHTML = '';
 
             // element의 케이스에 맞춰 분기
-            if (inputData === 'Notice') {
-                itemFocusNotice();
+            if (inputData === '고객지원') {
+                itemFocusStar();
 
             } else if (inputData === 'My Page') {
                 itemFocusUserInfo();
@@ -67,17 +73,52 @@
                 itemFocusGuestInfo();
 
             }
+                <c:if test="${sessionMember.rank eq 'manager'}">
+            else if (inputData === 'Members Management') {
+                itemFocusManagement();
+            }
 
+            </c:if>
         }
 
-        function itemFocusNotice() {
+
+        function itemFocusManagement() {
             var footerTarget = document.querySelector('#main-footer>div');
 
             var contents1 = document.createElement('a');
-            contents1.setAttribute('href', '${path}/notice/list');
+            contents1.setAttribute('href', '${path}/management/notice');
+            footerTarget.appendChild(contents1);
+            textScript.insertText('#main-footer>div>a:nth-child(1)',
+                '<img src="${path}/img/banner-white/light-bulb.png" style="max-height : 100px; max-width:100px;"><BR>공지 사항 관리', 10);
+
+            var contents2 = document.createElement('a');
+            contents2.setAttribute('href', '${path}/management/users');
+            footerTarget.appendChild(contents2);
+            textScript.insertText('#main-footer>div>a:nth-child(2)',
+                '<img src="${path}/img/banner-white/members.png" style="max-height : 100px; max-width:100px;"><BR>회원 목록', 10);
+
+            var contentsLast = document.createElement('a');
+            contentsLast.setAttribute('href', '${path}/management/boards');
+            footerTarget.appendChild(contentsLast);
+            textScript.insertText('#main-footer>div>a:last-child',
+                '<img src="${path}/img/banner-white/all-boards.png" style="max-height : 100px; max-width:100px;"><BR>전체 글 목록', 10);
+
+
+        }
+
+        function itemFocusStar() {
+            var footerTarget = document.querySelector('#main-footer>div');
+
+            var contents1 = document.createElement('a');
+            contents1.setAttribute('href', '${path}/management/notice');
             footerTarget.appendChild(contents1);
             textScript.insertText('#main-footer>div>a:nth-child(1)',
                 '<img src="${path}/img/banner-white/info.png" style="max-height : 100px; max-width:100px;"><BR>공지사항<BR>여러분의 피드백으로<BR>개선된 점을 안내해드립니다.', 10);
+            var contents2 = document.createElement('a');
+            contents2.setAttribute('href', '${path}/community');
+            footerTarget.appendChild(contents2);
+            textScript.insertText('#main-footer>div>a:nth-child(2)',
+                '<img src="${path}/img/banner-white/talk.png" style="max-height : 100px; max-width:100px;"><BR>커뮤니티<BR>여러 유저분들이 <BR>작성한 게시글을 구경해보세요', 10);
 
             var contentsLast = document.createElement('a');
             contentsLast.setAttribute('href', 'javascript:');
@@ -87,50 +128,6 @@
                 '<img src="${path}/img/banner-white/paper-plane.png" style="max-height : 100px; max-width:100px;"><BR>피드백보내기<BR>불편한 점을 개선하기위해<BR> 여러분이 참여해주세요', 10);
 
 
-        }
-
-        function changeFeedbackForm() {
-            modal.changeForm('<div class="dot-key">피드백보내기</div>',
-                '<form id="feedback-form">' +
-                '<h5 class="dot-key">제목</h5>' +
-                '<input class="form-control" type="text" name="feedbackTitle"' +
-                'placeholder="제목을 입력해주세요" value="Send Feedback">' +
-                '<h5 class="dot-key">피드백 내용</h5>' +
-                '<textarea class="form-control" name="feedbackContents"' +
-                ' style="resize: none; min-height: 200px;"' +
-                'placeholder="상세한 내용을 작성해주세요:)"></textarea>' +
-                '</form>')
-
-            var confirmBtn = document.querySelector('#modal-confirm-btn');
-            confirmBtn.setAttribute('onclick', 'sendFeedback();');
-
-            $('#myModal').modal('show');
-        }
-
-
-        function sendFeedback() {
-            if (window.confirm('작성한 피드백을 전송하시겠습니까?')) {
-                var feedbackForm = document.querySelector('#feedback-form');
-                var feedback = new FormData(feedbackForm);
-                myAjax.submit('POST', '${path}/feedback/${sessionMember.no}', function (data) {
-
-                    if (data.includes('Failed')) {
-                        switch (data) {
-                            case 'Failed Check Session':
-                                window.alert('[' + data + ']\n' + '세션정보가 일치하지않습니다.\n다시 로그인 후 시도해주시기바랍니다.');
-                                break;
-                            case 'Failed feedback':
-                                window.alert('[' + data + ']\n' + '알 수 없는 원인으로 인해 전송에 실패하였습니다.\n 잠시 후 다시 시도해주세요');
-                                break;
-                        }
-                    } else {
-                        window.alert('[' + data + ']\n' + '피드백 전송이 완료되었습니다');
-
-                    }
-                }, "FORMFILE", feedback)
-
-                $('#myModal').modal('hide');
-            }
         }
 
         function itemFocusUserInfo() {
@@ -163,7 +160,7 @@
                 '<img src="${path}/img/banner-white/boardList.png" style="max-height : 100px; max-width:100px;"><BR>글 목록<BR>작성한 글목록을<BR>확인할 수 있습니다.', 10);
 
             var contents2 = document.createElement('a');
-            contents2.setAttribute('href', '${path}/resource/${sessionMember.no}/list');
+            contents2.setAttribute('href', '${path}/resources?memberNo=${sessionMember.no}');
             footerTarget.appendChild(contents2);
             textScript.insertText('#main-footer>div>a:nth-child(2)',
                 '<img src="${path}/img/banner-white/all-resources.png" style="max-height : 100px; max-width:100px;"><BR>리소스 목록<BR>작성한 리소스 목록을<BR>확인할 수 있습니다.', 10);

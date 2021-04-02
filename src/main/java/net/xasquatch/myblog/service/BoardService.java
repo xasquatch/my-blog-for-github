@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -61,7 +58,7 @@ public class BoardService {
         CheckTargetString.forEach((key, value) -> {
             for (String word : prohibitedWords) {
                 if (!key.equals("msg") && value.contains(word)) {
-                    CheckTargetString.put("msg", "[script Error] \"" + key + "\"부분의 스크립트를 제거해주시기바랍니다.");
+                    CheckTargetString.put("msg", "[script Error] 스크립트를 제거해주시기바랍니다.");
                 }
             }
         });
@@ -79,7 +76,8 @@ public class BoardService {
         map.put("title-or-contents", titleOrContents);
 
         map.forEach((key, value) -> {
-            if (!value.equals("") && !value.equals("undefined")) {
+            if (!key.equals("") && !key.equals("undefined")
+                    && (!value.equals("") && !value.equals("undefined"))) {
                 searchValue[0] = key;
                 searchValue[1] = '%' + value + '%';
             }
@@ -88,7 +86,7 @@ public class BoardService {
         return searchValue;
     }
 
-    public boolean isConfirmBoardPwd(Object Boardno, String pwd){
+    public boolean isConfirmBoardPwd(Object Boardno, String pwd) {
 
         return boardDao.selectOneBoardColumnPwd(Boardno, pwd);
 
@@ -119,7 +117,7 @@ public class BoardService {
         return data;
     }
 
-    public Map<String, Object> getBoardList(Object memberNo, int pageLimit, int currentPageBlock, String[] searchValue) {
+    public Map<String, Object> getCommunityList(int pageLimit, int currentPageBlock, String keyword) {
 
         int currentPage = 0;
         try {
@@ -130,16 +128,98 @@ public class BoardService {
         }
 
         List<Map<String, Object>> boardList
+                = boardDao.selectBoardList("all", currentPage, pageLimit, "keyword", keyword);
+
+        int totalCount = boardDao.selectBoardCount("all", "keyword", keyword);
+
+        List<String> pageBlockList = new Pagination().getCommunityBlockList(pageLimit, currentPageBlock, totalCount, keyword);
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("boardList", boardList);
+        data.put("pageBlockList", pageBlockList);
+        data.put("topKeywordList", getTopKeywordList());
+
+        return data;
+    }
+
+    private Map<String, Integer> getTopKeywordList() {
+
+        List<String> topKeywordListString = boardDao.selectAllKeywordList();
+        StringBuilder parsedKeywordString = new StringBuilder();
+        for (String keywords : topKeywordListString) {
+            if (parsedKeywordString.toString().equals("")) {
+                parsedKeywordString.append(keywords);
+            } else {
+                parsedKeywordString.append(",").append(keywords);
+            }
+        }
+
+        Map<String, Integer> topKeywordMap = new HashMap<String, Integer>();
+        String[] keywordArray = parsedKeywordString.toString().split(",");
+        for (String keyword : keywordArray) {
+            try {
+                Integer population = topKeywordMap.get(keyword);
+                population += 1;
+                topKeywordMap.put(keyword, population);
+            } catch (NullPointerException e) {
+                topKeywordMap.put(keyword, 1);
+            }
+        }
+
+        List<Map.Entry<String, Integer>> listEntries = new ArrayList<Map.Entry<String, Integer>>(topKeywordMap.entrySet());
+
+        listEntries.sort(new Comparator<Map.Entry<String, Integer>>() {
+            public int compare(Map.Entry<String, Integer> obj1, Map.Entry<String, Integer> obj2) {
+                return obj2.getValue().compareTo(obj1.getValue());
+            }
+        });
+
+        int count = 0;
+        Map<String, Integer> top10KeywordList = new HashMap<String, Integer>();
+        for (Map.Entry<String, Integer> entry : listEntries) {
+            if (count >= 10) break;
+
+            count++;
+
+            if (entry.getKey().equals("null")) {
+                count--;
+
+            } else {
+                top10KeywordList.put(entry.getKey(), entry.getValue());
+
+            }
+
+        }
+
+        return top10KeywordList;
+    }
+
+    public Map<String, Object> getBoardList(Object typeAuthReference, int pageLimit, int currentPageBlock, String[] searchValue) {
+
+        int currentPage = 0;
+        try {
+            currentPage = (currentPageBlock - 1) * pageLimit;
+
+        } catch (ArithmeticException e) {
+            log.warn("[ArithmeticException]pageLimit: {}", pageLimit);
+        }
+
+        Object memberNo = typeAuthReference.equals("all-management") ? "all" : typeAuthReference;
+
+        List<Map<String, Object>> boardList
                 = boardDao.selectBoardList(memberNo, currentPage, pageLimit, searchValue[0], searchValue[1]);
 
         int totalCount = boardDao.selectBoardCount(memberNo, searchValue[0], searchValue[1]);
 
         List<String> pageBlockList;
-        if (memberNo.equals("all")) {
-            pageBlockList = new Pagination().getBoardBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+        if (typeAuthReference.equals("all-management")) {
+            pageBlockList = new Pagination().manageBoardBlockList(pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+
+        } else if (typeAuthReference.equals("all")) {
+            pageBlockList = new Pagination().getBoardBlockList("all", pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         } else {
-            pageBlockList = new Pagination().getBoardBlockList(memberNo, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
+            pageBlockList = new Pagination().getBoardBlockList(typeAuthReference, pageLimit, currentPageBlock, totalCount, searchValue[0], searchValue[1]);
 
         }
 

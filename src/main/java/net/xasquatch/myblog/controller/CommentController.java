@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/comments", produces = "text/plain;charset=UTF-8")
-public class commentController {
+public class CommentController {
 
     @Autowired
     private AccessorInfo accessorInfo;
@@ -30,13 +30,13 @@ public class commentController {
     @Resource(name = "sessionMember")
     private Member sessionMember;
 
-    @PostMapping("")
+    @PostMapping("/new")
     public String createComment(HttpServletRequest request, @Valid Comment comment,
                                 @RequestParam long boardNo, BindingResult bindingResult) {
         String result = "false";
         if (bindingResult.hasErrors()) return result;
 
-        if (checkSessionController.isCheckSession(String.valueOf(sessionMember.getNo()))) {
+        if (checkSessionController.isCheckSession()) {
             comment.setMbr_no(sessionMember.getNo());
             comment.setBoard_no(boardNo);
             comment.setCreated_ip(accessorInfo.getIpAddress(request));

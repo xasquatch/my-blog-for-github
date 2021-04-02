@@ -60,4 +60,7 @@ public interface BoardMapper {
 
     @Select("SELECT COUNT(no) FROM board WHERE no = #{arg0} AND pwd = #{arg1}")
     int selectOneBoardColumnPwd(Object boardno, String pwd);
+
+    @Select("SELECT keyword FROM board ORDER BY keyword ASC")
+    List<String> selectAllKeywordList();
 }
