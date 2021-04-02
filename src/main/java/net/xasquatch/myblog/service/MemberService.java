@@ -184,8 +184,8 @@ public class MemberService {
         return result;
     }
 
-    public boolean delete(Member member) {
-        return memberDao.deleteOneMbr(member);
+    public String delete(Member member) {
+        return String.valueOf(memberDao.deleteOneMbr(member));
     }
 
     public String searchEmail(String name) {

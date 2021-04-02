@@ -255,7 +255,7 @@ public class MemberController {
     public String delete(@PathVariable String memberNo) {
         String result = "false";
         if (checkSessionController.isCheckSession(memberNo)) {
-            result = String.valueOf(memberService.delete(sessionMember));
+            result = memberService.delete(sessionMember);
             memberService.reset(sessionMember);
         }
         return result;
