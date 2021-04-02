@@ -153,6 +153,11 @@ public class MemberDao {
         return memberMapper.selectOneMbrForToken(email);
     }
 
+    public Map<String, Object> selectOneMbrForManagement(String memberEmail) {
+
+        return memberMapper.selectOneMbrForToken(memberEmail);
+    }
+
     public String encryptPwd(String pwd) {
 
         MessageDigest md = null;
