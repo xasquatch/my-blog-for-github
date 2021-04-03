@@ -40,15 +40,12 @@
             <div id="main-header-member-name"></div>
         </div>
     </a>
-    <div id="header-center" style="color: red;">
-
-    </div>
     <div id="header-right">
         <c:if test="${mainContents != 'members' && mainContents != 'main' && mainContents != 'home'
             && sessionMember.no != null && sessionMember.no != ''
             && !(mainContents.contains('check')||mainContents.contains('find'))}">
             <button style="font-size: 20px;" type="button" id="mobile-hamburger" class="dot-key btn btn-link-red" onclick="popUpAside();">
-                <B>More</B>
+                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
             </button>
         </c:if>
         <c:choose>

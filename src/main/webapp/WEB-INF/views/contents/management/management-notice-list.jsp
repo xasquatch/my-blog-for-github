@@ -40,7 +40,7 @@
                 <tr>
                     <td>
                         <a href="${path}/boards/${board.no}">
-                            <span style="display: inline-block; width: 200px; overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
+                            <span style="display: inline-block; overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
                                     ${board.title}
                             </span>
                         </a>
