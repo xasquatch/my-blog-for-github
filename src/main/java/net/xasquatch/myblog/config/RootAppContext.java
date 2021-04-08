@@ -3,7 +3,6 @@ package net.xasquatch.myblog.config;
 import net.xasquatch.myblog.mapper.*;
 import net.xasquatch.myblog.model.Member;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperFactoryBean;

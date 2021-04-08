@@ -38,7 +38,7 @@ public class HomeController {
     @Autowired
     private BoardService boardService;
 
-    protected boolean isCheckManager(){
+    protected boolean isCheckManager() {
         return isCheckManager(String.valueOf(sessionMember.getNo()));
     }
 
@@ -57,9 +57,10 @@ public class HomeController {
 
     }
 
-    protected boolean isCheckSessionAndAuth(){
+    protected boolean isCheckSessionAndAuth() {
         return isCheckSessionAndAuth(String.valueOf(sessionMember.getNo()));
     }
+
     protected boolean isCheckSessionAndAuth(String inputSessionNumber) {
         boolean guestResult = false;
         boolean sessionResult = false;
@@ -77,7 +78,7 @@ public class HomeController {
         return guestResult || sessionResult;
     }
 
-    protected boolean isCheckSessionWithOutGuest(){
+    protected boolean isCheckSessionWithOutGuest() {
         return isCheckSessionWithOutGuest(String.valueOf(sessionMember.getNo()));
     }
 
@@ -98,7 +99,7 @@ public class HomeController {
         return guestResult && sessionResult;
     }
 
-    protected boolean isCheckSession(){
+    protected boolean isCheckSession() {
         return isCheckSession(String.valueOf(sessionMember.getNo()));
     }
 
@@ -170,7 +171,6 @@ public class HomeController {
 
         return "success feedback";
     }
-
 
     @PostMapping("/members/{memberNo}/boards/{boardNo}/images")
     @ResponseBody
